@@ -9,11 +9,19 @@
         <div class="col-3 border-end mb-5">
             <h1 class="mb-3">Initial Parameter</h1>
             <form id="form-start-parameter" class="form-horizontal">
+                <div class="row align-items-center">
+                    <label for="settingPresets" class="col col-form-label">Presets:</label>
+                    <div class="col-8">
+                        <select class="form-select form-select-sm" id="settingPreset">
+                            <option value="-1" class="text-muted" selected>no preset selected</option>
+                          </select>
+                    </div>
+                </div>
                 <div class="row g-3 align-items-center">
                     <label for="batteryMaxVoltage" class="col col-form-label">max. Voltage:</label>
                     <div class="col">
                         <div class="input-group input-group-sm">
-                            <input type="number" class="form-control" id="batteryMaxVoltage" min="0" step=".1" placeholder="4.2" value="4.2"aria-describedby="batteryMaxVoltageUnit">
+                            <input type="number" class="form-control" id="batteryMaxVoltage" min="0" step=".1" placeholder="4.2" value="4.2" aria-describedby="batteryMaxVoltageUnit">
                             <span class="input-group-text" id="batteryMaxVoltageUnit">v</span>
                         </div>
                     </div>
@@ -22,7 +30,7 @@
                     <label for="batteryMinVoltage" class="col col-form-label">min. Voltage:</label>
                     <div class="col">
                         <div class="input-group input-group-sm">
-                            <input type="number" class="form-control" id="batteryMinVoltage" min="0" max="12.6" step=".1" placeholder="2.7"  value="2.7"aria-describedby="batteryMinVoltageUnit">
+                            <input type="number" class="form-control" id="batteryMinVoltage" min="0" max="12.6" step=".1" placeholder="2.7" value="2.7" aria-describedby="batteryMinVoltageUnit">
                             <span class="input-group-text" id="batteryMinVoltageUnit">v</span>
                         </div>
                     </div>
@@ -65,9 +73,9 @@
                 </div>
                 <div class="row">
                     <div class="btn-group" role="group">
-                        <button type="submit" class="btn btn-success">Start</button>
-                        <button type="button" class="btn btn-danger">Stop</button>
-                        <button type="button" class="btn btn-warning">Pause</button>
+                        <button type="button" class="btn btn-success" id="startBtn">Start</button>
+                        <button type="button" class="btn btn-danger" id="stopBtn">Stop</button>
+                        <button type="button" class="btn btn-warning" id="pauseBtn">Pause</button>
                   </div>
                 </div>
             </form>
@@ -82,7 +90,7 @@
                     </tr>
                     <tr>
                         <td>Start time:</td>
-                        <td id="currentVoltage" class="text-end">invalid</td>
+                        <td id="startTime" class="text-end">invalid</td>
                     </tr>
                     <tr>
                         <td>Voltage:</td>
@@ -105,7 +113,7 @@
                         <td>sec.</td>
                     </tr>
                     <tr>
-                        <td>Remaining time:</td>
+                        <td>Time left:</td>
                         <td id="currentRemainingTime" class="text-end">invalid</td>
                         <td>min.</td>
                     </tr>

@@ -12,5 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/battery.js', 'public/js')
+    .js('resources/js/consoleText.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
+    .css('resources/css/dark-mode.css', 'public/css')
+    .css('resources/css/custom.css', 'public/css')
     .sourceMaps();

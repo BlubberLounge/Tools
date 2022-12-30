@@ -13,21 +13,133 @@ var setVal = (id, val) => {
 var setIH = (id, txt) => {
     getEl(id).innerHTML = txt;
 };
+var updateIfDifferent = (id, val) => {
+    getEl(id).innerHTML == val ? 'invalid' : setIH(id, val); 
+};
+var Z = (n) => {    // adds a leading zero
+    return n < 10 ? "0" + n : n;
+};
+
+// initial parameter setting presets
+var settings = {
+    'Default 18650': {
+        'batteryMaxVoltage': 4.2,
+        'batteryMinVoltage': 2.7,
+        'batteryCapacity': 3500,
+        'batteryLevel': 100,
+        'readInterval': 5000,
+        'staticLoad': 450,
+    },
+    'low Capacity 18650':
+    {
+        'batteryMaxVoltage': 4.2,
+        'batteryMinVoltage': 2.6,
+        'batteryCapacity': 2600,
+        'batteryLevel': 100,
+        'readInterval': 10000,
+        'staticLoad': 450,
+    },
+    '1/2 full 18650':
+    {
+        'batteryMaxVoltage': 4.2,
+        'batteryMinVoltage': 2.7,
+        'batteryCapacity': 3500,
+        'batteryLevel': 50,
+        'readInterval': 5000,
+        'staticLoad': 450,
+    },
+    '2S3P Battery (18650)':
+    {
+        'batteryMaxVoltage': 3.6*2,
+        'batteryMinVoltage': 2.6,
+        'batteryCapacity': 2500*3,
+        'batteryLevel': 100,
+        'readInterval': 5000,
+        'staticLoad': 450,
+    },
+};
+
+function generatePresets()
+{
+    var selEl = getEl('settingPreset');
+    Object.keys(settings).forEach(opt =>
+    { 
+        let option = document.createElement("option");
+        option.value = opt;
+        option.text = opt;
+        selEl.appendChild(option);
+    });
+
+    selEl.options[0].remove();
+    applyPreset(Object.keys(settings)[0]);
+    
+    selEl.addEventListener('change', function() {
+        applyPreset(this.value);
+    });
+}
+
+function applyPreset(opt)
+{
+    Object.entries(settings[opt]).forEach(o =>
+    {
+        setVal(o[0], o[1]);
+    });
+    
+}
+
+var timeNow = () =>
+{ 
+    let d = new Date(); // new Date().toLocaleString();
+    let hh = Z(d.getHours());
+    let mm = Z(d.getMinutes());
+    let ss = Z(d.getSeconds());
+    return [hh, mm, ss].join(':');
+}
+
+var dateNow = () =>
+{
+    let d = new Date(); // new Date().toLocaleString();
+    let dd = Z(d.getDate());
+    let mm = Z(d.getMonth()+1);
+    let yyyy = Z(d.getFullYear());
+    return "<span class='small text-muted'>"+ [dd, mm, yyyy].join('.') + "</span>";;
+}
+
+function currentTime()
+{  
+    let timeString = dateNow() +" - "+ timeNow();
+    setIH('currentTime', timeString);
+    setTimeout(currentTime, 1000);
+}
 
 
+/**
+ * represents a single battery cell
+ * 
+ */
 class battery
 {
     constructor(maxVoltage, minVoltage, capacity, level)
     {
         this.type = 'unkown';
+        this.voltage = maxVoltage - minVoltage;
+        this.capacity = capacity;   // calculated
+        this.level = capacity;      // calculated
+
+        this.initlevel = level;         // max. / inittial
+        this.initCapacity = capacity;   // max. / inittial
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;
-        this.capacity = capacity;
-        this.level = level;
+
         console.log("Battery loaded.");
     }
 }
 
+
+/**
+ * main class
+ * 
+ */
 class simApp
 {
     // state enum
@@ -41,9 +153,27 @@ class simApp
 
     constructor(state = 0, readInterval, staticLoad)
     {
+        this.instance = this;
         this.state = state;
         this.readInterval = readInterval;
         this.staticLoad = staticLoad;
+
+        this.addBattery(getVal('batteryMaxVoltage'), getVal('batteryMinVoltage'), getVal('batteryCapacity'), getVal('batteryLevel'));
+
+        // updates current time field
+        currentTime();
+        this.loop();
+
+        getEl('startBtn').addEventListener('click', function() {
+            app.start();
+        });
+        getEl('stopBtn').addEventListener('click', function() {
+            app.stop();
+        });
+        getEl('pauseBtn').addEventListener('click', function() {
+            app.pause();
+        });
+
         console.log("Simulation application loaded.");
     }
 
@@ -54,59 +184,59 @@ class simApp
 
     async loop()
     {
-        // do
-        // {
+        // update front-end infos
+        this.displayInfo();
 
-        // } while(true);
+        if(this.state == 0)
 
+        if(this.state == 1)
+            console.log("running");
+        
+        if(this.state == 2)
+            console.log("paused");
+        
+        if(this.state == 3)
+            console.log("stopped");
+
+        console.log('loop');
+        setTimeout(() => {this.loop()}, 1000);
     }
 
     start()
     {
-        if(this.state == 3) return;
+        if(this.state == 3 || this.state == 1) return;
         this.state = 1;
+        this.startTime = timeNow();
+        console.log("started");
     }
 
-    startTime()
+    pause()
     {
-        
+        this.state = 2;
+        console.log("paused");
+    }
+
+    stop()
+    {
+        this.state = 3;
+        console.log("stopped");
+    }
+
+    displayInfo()
+    {
+        updateIfDifferent('startTime', this.startTime);
+        // updateIfDifferent('currentVoltage', this.battery.voltage);
+        // updateIfDifferent('currentCapacity', this.battery.capacity);
+        // updateIfDifferent('currentPercentage', this.battery.level);
+        // updateIfDifferent('currentNextUpdate', 'not calculated');
+        // updateIfDifferent('currentRemainingTime', 'not calculated');
     }
 
 }
- 
 
-function currentTime()
-{  
-    let Z = (n) => {
-        return n < 10 ? "0" + n : n;
-    };
-    let d = new Date(); // new Date().toLocaleString();
-    let dd = Z(d.getDay());
-    let mm = Z(d.getMonth());
-    let yyyy = Z(d.getFullYear());
-    let hh = Z(d.getHours());
-    let m = Z(d.getMinutes());
-    let ss = Z(d.getSeconds()); 
+export var app = new simApp(0, getVal('readInterval'), getVal('staticLoad'));
 
-    let date = "<span class='small text-muted'>"+ dd +"."+ mm +"."+ yyyy + "</span>";
-    let time = hh +":"+ m +":"+ ss;
-    let timeString = date +" - "+ time;
-
-    setIH('currentTime', timeString);
-    setTimeout(currentTime, 1000);
-}
-
-function initSim()
-{
-    var app = new simApp(0, getVal('readInterval'), getVal('staticLoad'));
-    app.addBattery(getVal('batteryMaxVoltage'), getVal('batteryMinVoltage'), getVal('batteryCapacity'), getVal('batteryLevel'));
-    
-    // updates current time field
-    currentTime();
-}
-
-initSim();
-
+generatePresets();
 
 
 

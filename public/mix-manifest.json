@@ -1,4 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/battery.js": "/js/battery.js",
+    "/js/consoleText.js": "/js/consoleText.js",
+    "/css/app.css": "/css/app.css",
+    "/css/custom.css": "/css/custom.css",
+    "/css/dark-mode.css": "/css/dark-mode.css"
 }
