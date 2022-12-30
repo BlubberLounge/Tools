@@ -30,6 +30,9 @@
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#"> History </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/battery') }}"> Battery </a>
+                    </li>
                 </ul>
             @endauth
 

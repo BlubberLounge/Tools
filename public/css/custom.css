@@ -48,3 +48,7 @@ a {
                 translate(var(--radius)) 
                 rotate(calc(var(--rotation)*-1));
 }
+
+.small {
+    font-size: .75em;
+}

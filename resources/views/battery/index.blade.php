@@ -1,0 +1,131 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    
+    @include('battery.includes.title')
+
+    <div class="row justify-content-between g-5">
+        <div class="col-3 border-end mb-5">
+            <h1 class="mb-3">Initial Parameter</h1>
+            <form id="form-start-parameter" class="form-horizontal">
+                <div class="row g-3 align-items-center">
+                    <label for="batteryMaxVoltage" class="col col-form-label">max. Voltage:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="batteryMaxVoltage" min="0" step=".1" placeholder="4.2" value="4.2"aria-describedby="batteryMaxVoltageUnit">
+                            <span class="input-group-text" id="batteryMaxVoltageUnit">v</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                    <label for="batteryMinVoltage" class="col col-form-label">min. Voltage:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="batteryMinVoltage" min="0" max="12.6" step=".1" placeholder="2.7"  value="2.7"aria-describedby="batteryMinVoltageUnit">
+                            <span class="input-group-text" id="batteryMinVoltageUnit">v</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                    <label for="batteryCapacity" class="col col-form-label">Battery Capacity:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="batteryCapacity" min="0" max="4000" step="100" placeholder="3500" value="3500" aria-describedby="batteryCapacityUnit">
+                            <span class="input-group-text" id="batteryCapacityUnit">mAh</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                    <label for="batteryLevel" class="col col-form-label">Battery Level:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="batteryLevel" min="0" max="100" step="1" placeholder="100" value="100" aria-describedby="batteryLevelUnit">
+                            <span class="input-group-text" id="batteryLevelUnit">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                    <label for="readInterval" class="col col-form-label">Interval:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="readInterval" min="0" max="60000" step="500" placeholder="5000" value="5000"aria-describedby="readIntervalUnit">
+                            <span class="input-group-text" id="readIntervalUnit">ms</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center mb-3">
+                    <label for="staticLoad" class="col col-form-label">Static load:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="staticLoad" min="0" max="2000" step="50" placeholder="450" value="450" aria-describedby="staticLoadUnit">
+                            <span class="input-group-text" id="staticLoadUnit">mA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-success">Start</button>
+                        <button type="button" class="btn btn-danger">Stop</button>
+                        <button type="button" class="btn btn-warning">Pause</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 border-end">
+            <h1>Information</h1>
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td width="35%">Time:</td>
+                        <td id="currentTime" class="text-end">invalid</td>
+                    </tr>
+                    <tr>
+                        <td>Start time:</td>
+                        <td id="currentVoltage" class="text-end">invalid</td>
+                    </tr>
+                    <tr>
+                        <td>Voltage:</td>
+                        <td id="currentVoltage" class="text-end">invalid</td>
+                        <td>v</td>
+                    </tr>
+                    <tr>
+                        <td>Capacity:</td>
+                        <td id="currentCapacity" class="text-end">invalid</td>
+                        <td>mAh</td>
+                    </tr>
+                    <tr>
+                        <td>Percentage:</td>
+                        <td id="currentPercentage" class="text-end">invalid</td>
+                        <td>%</td>
+                    </tr>
+                    <tr>
+                        <td>Next update:</td>
+                        <td id="currentNextUpdate" class="text-end">invalid</td>
+                        <td>sec.</td>
+                    </tr>
+                    <tr>
+                        <td>Remaining time:</td>
+                        <td id="currentRemainingTime" class="text-end">invalid</td>
+                        <td>min.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h1>Current Voltage</h1>
+            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        </div>
+    </div>
+    <div class="row justify-content-between g-5">
+        <div class="col-6">
+            <h1>Other cool stuff</h1>
+            <canvas id="myChart1" style="width:100%;max-width:500px"></canvas>
+        </div>
+        <div class="col-6">
+            <h1>more things</h1>
+            <canvas id="myChart2" style="width:100%;max-width:500px"></canvas>
+        </div>
+    </div>
+</div>
+@endsection
