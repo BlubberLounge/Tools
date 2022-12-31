@@ -127,8 +127,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-6">
-            <h1>Current Voltage</h1>
+        <div class="col-6 text-center">
+            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger" style="font-size: .45em;"></i> Live History</h1>
             <canvas id="currentVoltageChart" style="width:100%;max-width:700px"></canvas>
         </div>
     </div>

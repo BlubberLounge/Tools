@@ -1,4 +1,5 @@
 import Chart from 'chart.js/auto';
+import 'chartjs-adapter-luxon';
 
 var d = document;
 var getEl = (id) => {
@@ -24,7 +25,7 @@ var flip = (obj) => {
       ret[obj[key]] = key;
       return ret;
     }, {});
-  }
+}
 
 // initial parameter setting presets
 var settings = {
@@ -139,6 +140,100 @@ function currentTime()
     setIH('currentTime', timeString);
     setTimeout(currentTime, 1000);
 }
+
+/**
+ * 
+ * 
+ * Charts / Graphs 
+ * cool Graphical area of things and stuff
+ * 
+ * 
+ */
+
+var generateLabels = (max) => 
+{
+    let list = [];
+    let lastMillis = 0;
+
+    for(var i=0; i < max; i++) {
+        let millis = list.length >= 1 ? lastMillis+100: now();
+        lastMillis = millis;
+        list.push(new Date(millis));
+    }
+
+    return list;
+};
+
+var generateSampleData = (num) =>
+{
+    let list = [];
+    let lastMillis = 0;
+
+    for(var i=0; i < num; i++) {
+        let millis = list.length >= 1 ? lastMillis+100: now();
+        lastMillis = millis;
+
+        let el = {};
+        el.x = new Date(millis);
+        el.y = Math.floor(Math.random() * 101);
+        
+        list.push(el);
+    }
+    
+    return list;
+};
+
+var dat = {
+    labels: generateLabels(100),
+    datasets: [
+        {
+            label: 'Battery#1',
+            data: [],//generateSampleData(60),
+            borderColor: "red",
+            fill: false,
+            pointStyle: 'crossRot',
+            pointRadius: 0,//5
+            // pointHoverRadius: 8,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }
+    ]
+};
+
+var cfg = {
+    // legend: {
+    //     display: false
+    // },
+    scales: {
+        x: {
+            type: 'time',
+            time: {
+                unit: 'millisecond',
+                tooltipFormat: 'YYYY-MM-DD HH:mm',
+                displayFormats: {
+                    millisecond: 'HH:mm:ss.SSS',
+                    second: 'HH:mm:ss',
+                    minute: 'HH:mm',
+                    hour: 'HH'
+                }
+            },
+            ticks: {
+                stepSize: 1000
+            },
+            title: {
+                display: true,
+                text: 'millis'
+            }
+        },
+        y: {
+            title: {
+                display: true,
+                text: 'voltage'
+            },
+            beginAtZero: true
+          }
+    }
+};
 
 
 /**
@@ -262,6 +357,12 @@ class simApp
 
         this.addBattery(getVal('batteryMaxVoltage'), getVal('batteryMinVoltage'), getVal('batteryCapacity'), getVal('batteryLevel'));
 
+        this.currentVoltageChart = new Chart("currentVoltageChart", {
+            type: "line",
+            data: dat,
+            options: cfg
+        });
+
         // updates current time field
         currentTime();
         this.loop();
@@ -287,10 +388,12 @@ class simApp
             this.displayInfo();
             console.log('info update');
             this.battery.calculateStats();
+            if(this.state == 1) this.addData(this.currentVoltageChart, this.battery.capacity);
         }
 
         if(this.state == 1) {
             this.battery.currentLoad(this.staticLoad);
+            
         }
 
         // if(this.state == 2)
@@ -374,98 +477,41 @@ class simApp
         updateIHIfDifferent('currentRemainingTime', 'not calculated');
     }
 
+    
+
+    addData(chart, val)
+    {
+        let data = chart.data;
+        
+        if (data.datasets.length > 0) {
+            let el = {};
+            el.x = new Date(now());
+            el.y = val ?? Math.floor(Math.random() * 101);
+            data.datasets[0].data.push(el);
+
+            chart.update();
+        }
+};
+
 }
 
 export var app = new simApp(0, getVal('readInterval'), getVal('staticLoad'));
 
 generatePresets();
 
-/**
- * 
- * 
- * Charts / Graphs 
- * cool Graphical area of things and stuff
- * 
- * 
- */
-
-// as
-var volVals = (max) => 
-{
-    let list = [];
-
-    for(var i=0; i < max; i++) {
-        list.push(i);
-    }
-
-    return list
-};
-
-new Chart("currentVoltageChart", {
-    type: "line",
-    data: {
-        labels: volVals(50),
-        datasets: [{
-            data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-            borderColor: "red",
-            fill: false
-        }, {
-            data: volVals(40),
-            borderColor: "green",
-            fill: true
-        }]
-    },
-    options: {
-        legend: {display: false}
-    }
-});
 
 
 
 
 
 
-
-
-
-var xValues = [100,200,300,400,500,600,700,800,900,650];
-const MONTHS = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  
-  function months(config) {
-    var cfg = config || {};
-    var count = cfg.count || 12;
-    var section = cfg.section;
-    var values = [];
-    var i, value;
-  
-    for (i = 0; i < count; ++i) {
-      value = MONTHS[Math.ceil(i) % 12];
-      values.push(value.substring(0, section));
-    }
-  
-    return values;
-  }
-const labels = months({count: 7});
 
 
 const ctx = document.getElementById('myChart');
 new Chart("myChart1", {
     type: 'bar',
     data: {
-        labels: labels,
+        labels: generateLabels(10),
         datasets: [{
           label: 'My First Dataset',
           data: [65, 59, 80, 81, 56, 55, 40],
@@ -494,7 +540,7 @@ new Chart("myChart1", {
   new Chart("myChart2", {
     type: 'bar',
     data: {
-        labels: labels,
+        labels: generateLabels(10),
         datasets: [{
           label: 'My First Dataset',
           data: [65, 59, 80, 81, 56, 55, 40],

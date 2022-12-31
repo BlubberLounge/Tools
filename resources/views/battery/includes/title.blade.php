@@ -8,7 +8,7 @@
 @endif
 
 <div class="row pb-2 pt-2">
-    <h3 class="col-8">
+    <h3 class="col-5">
         Battery
         <small class="text-muted">{{ substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@") + 1) == "index" ? "Dashboard" : substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@")) }}</small>
     </h3>

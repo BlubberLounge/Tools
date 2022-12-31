@@ -1,3 +1,18 @@
+::-moz-selection {
+    background-color: #222;
+    color: white;
+}
+
+::selection {
+    background-color: #222;
+    color: white;
+}
+
+:root
+{
+    
+}
+
 body {
     font-family: 'Nunito', sans-serif;
 }
