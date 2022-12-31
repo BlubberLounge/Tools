@@ -25,7 +25,11 @@ var flip = (obj) => {
       ret[obj[key]] = key;
       return ret;
     }, {});
-}
+};
+var timeDelta = () =>
+{
+    return;
+};
 
 // initial parameter setting presets
 var settings = {
@@ -223,7 +227,9 @@ var cfg = {
             title: {
                 display: true,
                 text: 'millis'
-            }
+            },
+            suggestedMin: now(),
+            suggestedMax: now()+100000,
         },
         y: {
             title: {
@@ -242,6 +248,7 @@ var cfg = {
  */
 class battery
 {
+    // https://www.batterypowertips.com/how-to-read-battery-discharge-curves-faq/
     underLoad = false;
     underSameLoadSince = 0;
     loadBuffer = [];
@@ -258,6 +265,8 @@ class battery
         this.initCapacity = capacity;   // max. / inittial
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;
+        this.cRating = undefined;
+        this.internalResistance = undefined;
 
         console.log("Battery loaded.");
     }
@@ -282,7 +291,7 @@ class battery
 
             this.log.push(e);
 
-            this.capacity -= e.value / e.timer;
+            this.capacity -= e.timer / e.value;
         });
     }
 
@@ -300,7 +309,7 @@ class battery
     addToBuffer(load)
     {
         if(this.loadBuffer.length >= 1)
-            // trying to reduce buffer entries
+            // trying to reduce buffer entries, especially when having static loads
             if(load == this.loadBuffer[this.loadBuffer.length-1].value) {
                 // if the battery is under the same load for 3 sec go ahead
                 if(now() - this.underSameLoadSince < 3000) {
@@ -473,7 +482,7 @@ class simApp
         updateIHIfDifferent('currentVoltage', this.battery.voltage);
         updateIHIfDifferent('currentCapacity', this.battery.capacity);
         updateIHIfDifferent('currentPercentage', this.battery.level);
-        updateIHIfDifferent('currentNextUpdate', 'not calculated');
+        // updateIHIfDifferent('currentNextUpdate', now()-this.prevUpdateInfo);
         updateIHIfDifferent('currentRemainingTime', 'not calculated');
     }
 

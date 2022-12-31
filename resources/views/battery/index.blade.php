@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                         <td>State:</td>
-                        <td id="stateInfo" class="text-end text-primary" colspan="2"> NOT STARTED </td>
+                        <td id="stateInfo" class="text-end fw-bold text-primary" colspan="2"> NOT STARTED </td>
                     </tr>
                     <tr>
                         <td>Started @</td>
@@ -114,7 +114,7 @@
                         <td id="currentPercentage" class="text-end">invalid</td>
                         <td>%</td>
                     </tr>
-                    <tr>
+                    <tr class="text-muted">
                         <td>Next update:</td>
                         <td id="currentNextUpdate" class="text-end">invalid</td>
                         <td>sec.</td>
@@ -128,8 +128,8 @@
             </table>
         </div>
         <div class="col-6 text-center">
-            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger" style="font-size: .45em;"></i> Live History</h1>
-            <canvas id="currentVoltageChart" style="width:100%;max-width:700px"></canvas>
+            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger me-2" style="font-size: .45em;"></i>Live Data</h1>
+            <canvas id="currentVoltageChart" style="width:100%;max-width:800px"></canvas>
         </div>
     </div>
     <div class="row justify-content-between g-5">
