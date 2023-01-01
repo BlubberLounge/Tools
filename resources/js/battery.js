@@ -26,10 +26,6 @@ var flip = (obj) => {
       return ret;
     }, {});
 };
-var timeDelta = () =>
-{
-    return;
-};
 
 // initial parameter setting presets
 var settings = {
@@ -40,6 +36,15 @@ var settings = {
         'batteryLevel': 100,
         'readInterval': 5000,
         'staticLoad': 450,
+    },
+    'High load 18650':
+    {
+        'batteryMaxVoltage': 4.2,
+        'batteryMinVoltage': 2.7,
+        'batteryCapacity': 3500,
+        'batteryLevel': 100,
+        'readInterval': 10000,
+        'staticLoad': 350000,
     },
     'low Capacity 18650':
     {
@@ -241,6 +246,42 @@ var cfg = {
     }
 };
 
+var datDischarge = {
+    labels: [],
+    datasets: [
+        {
+            label: 'Battery #1 Discharge Curve',
+            data: [],//generateSampleData(60),
+            borderColor: "red",
+            fill: false,
+            pointStyle: 'crossRot',
+            pointRadius: 0,//5
+            // pointHoverRadius: 8,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        }
+    ]
+};
+
+var cfgDischarge = {
+    scales: {
+        x: {
+            title: {
+                display: true,
+                text: 'Capacity (mAh)'
+            },
+            beginAtZero: true
+        },
+        y: {
+            title: {
+                display: true,
+                text: 'voltage'
+            },
+            beginAtZero: true
+          }
+    }
+};
+
 
 /**
  * represents a single battery cell
@@ -249,6 +290,13 @@ var cfg = {
 class battery
 {
     // https://www.batterypowertips.com/how-to-read-battery-discharge-curves-faq/
+    // https://electronics.stackexchange.com/questions/107049/working-out-mah-from-current-and-time
+    // Average consumption = (Consumption1 × Time1 + Consumption2 × Time2) / (Time1 + Time2)
+    
+    // To calculate the battery size for a varying load which requires I1 in the interval t1 and I2 in the remaining time:
+    // Estimate the average load current — Iav = (I1 × t1 / t) + (I2 × [t - t1 / t]).
+    // Substitute I = Iav in the equation for battery capacity of lithium-ion. B = 100 × I × t / (100 - q) where B is the battery capacity, I is the load current, t is the duration of power supply, and q is the percentage of charge which should remain in the battery after the discharge.
+    
     underLoad = false;
     underSameLoadSince = 0;
     loadBuffer = [];
@@ -262,19 +310,14 @@ class battery
         this.level = level;      // calculated
 
         this.initlevel = level;         // max. / inittial
-        this.initCapacity = capacity;   // max. / inittial
+        this.initCapacity = capacity;   // max. / inittial, Nominal capacity
         this.maxVoltage = maxVoltage;
         this.minVoltage = minVoltage;
-        this.cRating = undefined;
+        this.cRate = undefined;
         this.internalResistance = undefined;
 
         console.log("Battery loaded.");
     }
-
-    // subtractCapacityByRunningTime(timeRan, load)
-    // {
-
-    // }
 
     calculateStats()
     {
@@ -291,7 +334,9 @@ class battery
 
             this.log.push(e);
 
-            this.capacity -= e.timer / e.value;
+            this.capacity -= e.dischargeCurrent * (e.timer / 60 / 60 / 1000);
+            // this.level = this.linearMap(this.voltage, this.minVoltage, this.maxVoltage); 
+            this.level = this.linearMap(this.capacity, 0, this.initCapacity); 
         });
     }
 
@@ -306,11 +351,11 @@ class battery
         this.underLoad = true;
     }
 
-    addToBuffer(load)
+    addToBuffer(dischargeCurrent)
     {
         if(this.loadBuffer.length >= 1)
             // trying to reduce buffer entries, especially when having static loads
-            if(load == this.loadBuffer[this.loadBuffer.length-1].value) {
+            if(dischargeCurrent == this.loadBuffer[this.loadBuffer.length-1].dischargeCurrent) {
                 // if the battery is under the same load for 3 sec go ahead
                 if(now() - this.underSameLoadSince < 3000) {
                     return; 
@@ -324,7 +369,7 @@ class battery
         l.startTime = now();
         l.endTime = undefined;
         l.timer = 0; // track load time for later calculation
-        l.value = load;
+        l.dischargeCurrent = dischargeCurrent;
 
         // fill last entries endTime and calculate the startTime and endTime delta = timer
         if(this.loadBuffer.length >= 1) {
@@ -333,6 +378,26 @@ class battery
         }
 
         this.loadBuffer.push(l);
+    }
+
+    calculateCRate(current)
+    {
+        return this.cRate = this.capacity / current;
+    }
+
+    calculateDischargeCurrent()
+    {
+        return this.cRate * this.capacity;
+    }
+
+    calculateRunTime()
+    {
+        return this.runTime = 1 / this.cRate;
+    }
+
+    linearMap(v, min, max)
+    {
+        return (v-min)*100/ (max-min);
     }
 }
 
@@ -357,6 +422,8 @@ class simApp
     updateInfoInterval = 500;// update Info section every xxx ms
     prevUpdateInfo = 0;
 
+    runTime = 0;
+
     constructor(state = 0, readInterval, staticLoad)
     {
         this.instance = this;
@@ -366,10 +433,16 @@ class simApp
 
         this.addBattery(getVal('batteryMaxVoltage'), getVal('batteryMinVoltage'), getVal('batteryCapacity'), getVal('batteryLevel'));
 
-        this.currentVoltageChart = new Chart("currentVoltageChart", {
+        this.liveDataChart = new Chart("liveDataChart", {
             type: "line",
             data: dat,
             options: cfg
+        });
+
+        this.dischargeCurveChart = new Chart("dischargeCurveChart", {
+            type: "line",
+            data: datDischarge,
+            options: cfgDischarge
         });
 
         // updates current time field
@@ -397,12 +470,14 @@ class simApp
             this.displayInfo();
             console.log('info update');
             this.battery.calculateStats();
-            if(this.state == 1) this.addData(this.currentVoltageChart, this.battery.capacity);
+            if(this.state == 1) this.addData(this.liveDataChart, this.battery.capacity);
         }
+
+        if(this.battery.capacity <= 0)
+            this.state = 2;
 
         if(this.state == 1) {
             this.battery.currentLoad(this.staticLoad);
-            
         }
 
         // if(this.state == 2)
@@ -424,6 +499,8 @@ class simApp
 
         this.displayInfo();     // immediately update the info
         this.updateBattery();   // update battery with new start parameter
+        this.readInterval = getVal('readInterval');
+        this.staticLoad = getVal('staticLoad');
         disableInputs();
     }
 
@@ -484,9 +561,10 @@ class simApp
         updateIHIfDifferent('currentPercentage', this.battery.level);
         // updateIHIfDifferent('currentNextUpdate', now()-this.prevUpdateInfo);
         updateIHIfDifferent('currentRemainingTime', 'not calculated');
-    }
-
-    
+        let dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), 3);
+        updateIHIfDifferent('currentDischargingTime', dischargeTime.val);
+        updateIHIfDifferent('currentDischargingTimeUnit', dischargeTime.unit);
+    }   
 
     addData(chart, val)
     {
@@ -500,7 +578,66 @@ class simApp
 
             chart.update();
         }
-};
+    }
+
+    dynamicTimeUnit(time, unitId)
+    {        
+        let unitString = [
+            'ms',
+            'sec',
+            'min',
+            'hour',
+            'day'
+        ];
+
+        let toPlural = (txt) =>
+        {
+            return txt + "s";
+        };
+
+        let t = 0;
+        let res = {};
+
+        // normilize time to ms
+        switch(unitId)
+        {
+            case 1: // seconds
+                t = time * 1000;
+                break;
+            case 2: // minutes
+                t = time * 60 * 1000;
+                break;
+            case 3: // hours
+                t = time * 60 * 60 * 1000;
+                break;            
+            case 4: // days
+                t = time * 24 * 60 * 60 * 1000;
+                break;
+            case 0: // milliseconds
+            default:
+                t = time;
+                break;
+        }
+
+        if(t <= 1000) { // milliseconds
+            res.val = t;
+            res.unit = unitString[0];
+        }else if(t <= (60*1000)) { // seconds
+            res.val = t / 1000;
+            res.unit = unitString[1]; 
+        }else if(t <= (60*60*1000)) { // minutes
+            res.val = t / 60 / 1000;
+            res.unit = unitString[2];
+        }else if(t <= (24*60*60*1000)) { // hours
+            res.val = t / 60 / 60 / 1000;
+            res.unit = unitString[3];
+        }else if(t > (24*60*60*1000)) { // days
+            res.val = t / 24 / 60 / 60 / 1000;
+            res.unit = unitString[4];
+        }
+
+        return res;
+    }
 
 }
 
@@ -510,42 +647,6 @@ generatePresets();
 
 
 
-
-
-
-
-
-
-const ctx = document.getElementById('myChart');
-new Chart("myChart1", {
-    type: 'bar',
-    data: {
-        labels: generateLabels(10),
-        datasets: [{
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)'
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)'
-          ],
-          borderWidth: 1
-        }]
-      }
-  });
   new Chart("myChart2", {
     type: 'bar',
     data: {

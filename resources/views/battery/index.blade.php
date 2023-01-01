@@ -83,11 +83,11 @@
             </form>
         </div>
         <div class="col-3 border-end">
-            <h1>Information</h1>
+            <h1 class="text-center">Information</h1>
             <table class="table table-sm">
                 <tbody>
                     <tr>
-                        <td width="35%">Time:</td>
+                        <td width="40%">Time:</td>
                         <td id="currentTime" class="text-end" colspan="2">invalid</td>
                     </tr>
                     <tr>
@@ -124,22 +124,27 @@
                         <td id="currentRemainingTime" class="text-end">invalid</td>
                         <td>min.</td>
                     </tr>
+                    <tr>
+                        <td>Discharge time:</td>
+                        <td id="currentDischargingTime" class="text-end">invalid</td>
+                        <td id="currentDischargingTimeUnit">hours</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="col-6 text-center">
             <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger me-2" style="font-size: .45em;"></i>Live Data</h1>
-            <canvas id="currentVoltageChart" style="width:100%;max-width:800px"></canvas>
+            <canvas id="liveDataChart" style="width:100%;max-width:800px"></canvas>
         </div>
     </div>
     <div class="row justify-content-between g-5">
         <div class="col-6">
             <h1>Other cool stuff</h1>
-            <canvas id="myChart1" style="width:100%;max-width:500px"></canvas>
+            <canvas id="myChart2" style="width:100%;max-width:500px"></canvas>
         </div>
         <div class="col-6">
-            <h1>more things</h1>
-            <canvas id="myChart2" style="width:100%;max-width:500px"></canvas>
+            <h1>Discharge Curve</h1>
+            <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
 </div>
