@@ -126,8 +126,8 @@
                     </tr>
                     <tr>
                         <td>Discharge time:</td>
-                        <td id="currentDischargingTime" class="text-end">invalid</td>
-                        <td id="currentDischargingTimeUnit">hours</td>
+                        <td id="currentDischargeTime" class="text-end">invalid</td>
+                        <td id="currentDischargeTimeUnit">hours</td>
                     </tr>
                 </tbody>
             </table>
@@ -143,7 +143,7 @@
             <canvas id="myChart2" style="width:100%;max-width:500px"></canvas>
         </div>
         <div class="col-6">
-            <h1>Discharge Curve</h1>
+            <h1>Discharge Curves</h1>
             <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>

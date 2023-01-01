@@ -1,3 +1,4 @@
+"use strict";
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
 
@@ -16,6 +17,9 @@ var setIH = (id, val) => {
 };
 var updateIHIfDifferent = (id, val) => {
     return (getEl(id).innerHTML == val ? null : setIH(id, val ?? 'invalid')) === null ? false : true;
+};
+var uInfo = (id, val, unit = undefined) => {
+    return updateIHIfDifferent(id, val) || (typeof unit !== "undefined" ? updateIHIfDifferent(id+"Unit", unit) : false); 
 };
 var Z = (n) => {    // adds a leading zero
     return n < 10 ? "0" + n : n;
@@ -191,6 +195,15 @@ var generateSampleData = (num) =>
     
     return list;
 };
+var CHART_COLORS = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+ };
 
 var dat = {
     labels: generateLabels(100),
@@ -198,7 +211,8 @@ var dat = {
         {
             label: 'Battery#1',
             data: [],//generateSampleData(60),
-            borderColor: "red",
+            borderColor: 'red',//CHART_COLORS.green,
+            // borderWidth: 3,
             fill: false,
             pointStyle: 'crossRot',
             pointRadius: 0,//5
@@ -231,7 +245,7 @@ var cfg = {
             },
             title: {
                 display: true,
-                text: 'millis'
+                text: 'milliseconds (ms)'
             },
             suggestedMin: now(),
             suggestedMax: now()+100000,
@@ -239,46 +253,73 @@ var cfg = {
         y: {
             title: {
                 display: true,
-                text: 'voltage'
+                text: 'Capacity (mAh)'
             },
             beginAtZero: true
           }
     }
 };
-
+var ddddd = () => {let d=[];for(var i=5000; i >= 0; i-=1) {d.push(i);} return d;}
 var datDischarge = {
-    labels: [],
+    labels: ddddd(),
     datasets: [
         {
-            label: 'Battery #1 Discharge Curve',
+            label: 'Linear Curve',
             data: [],//generateSampleData(60),
-            borderColor: "red",
+            borderColor: CHART_COLORS.yellow,
             fill: false,
-            pointStyle: 'crossRot',
-            pointRadius: 0,//5
-            // pointHoverRadius: 8,
+            pointRadius: 0,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        },
+        {
+            label: 'Symmetric sigmoidal',
+            data: [],//generateSampleData(60),
+            borderColor: CHART_COLORS.red,
+            fill: false,
+            pointRadius: 0,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+        },
+        {
+            label: 'Asymmetric sigmoidal',
+            data: [],//generateSampleData(60),
+            borderColor: CHART_COLORS.blue,
+            fill: false,
+            pointRadius: 0,
             cubicInterpolationMode: 'monotone',
             tension: 0.4
         }
     ]
 };
-
+// const data = [];
+// const data2 = [];
+// let prev = 100;
+// let prev2 = 80;
+// for (let i = 0; i < 1000; i++) {
+//   prev += 5 - Math.random() * 10;
+//   data.push({x: i, y: prev});
+//   prev2 += 5 - Math.random() * 10;
+//   data2.push({x: i, y: prev2});
+// }
 var cfgDischarge = {
+    interaction: {
+      intersect: false
+    },
     scales: {
         x: {
             title: {
                 display: true,
-                text: 'Capacity (mAh)'
+                text: 'Discharged Capacity (mAh)'
             },
             beginAtZero: true
         },
         y: {
             title: {
                 display: true,
-                text: 'voltage'
-            },
-            beginAtZero: true
-          }
+                text: 'Voltage'
+            }
+        }
     }
 };
 
@@ -305,14 +346,14 @@ class battery
     constructor(maxVoltage, minVoltage, capacity, level)
     {
         this.type = 'unkown';
-        this.voltage = maxVoltage;
-        this.capacity = capacity;   // calculated
-        this.level = level;      // calculated
+        this.voltage = parseFloat(maxVoltage);
+        this.capacity = Number(capacity);   // calculated
+        this.level = Number(level);      // calculated
 
-        this.initlevel = level;         // max. / inittial
-        this.initCapacity = capacity;   // max. / inittial, Nominal capacity
-        this.maxVoltage = maxVoltage;
-        this.minVoltage = minVoltage;
+        this.initlevel = this.level;         // max. / inittial
+        this.initCapacity = this.capacity;   // max. / inittial, Nominal capacity
+        this.maxVoltage = parseFloat(maxVoltage);
+        this.minVoltage = parseFloat(minVoltage);
         this.cRate = undefined;
         this.internalResistance = undefined;
 
@@ -397,7 +438,39 @@ class battery
 
     linearMap(v, min, max)
     {
-        return (v-min)*100/ (max-min);
+        let p = (v-min)*100/ (max-min); 
+        return p >= 100 ? 100 : p <= 0 ? 0 : p;
+    }
+
+    /**
+     * Symmetric sigmoidal approximation
+     * https://www.desmos.com/calculator/7m9lu26vpy
+     *
+     * c - c / (1 + k*x/v)^3
+     */
+    sigmoidal(v, min, max)
+    {
+	// slow
+	// uint8_t result = 110 - (110 / (1 + pow(1.468 * (voltage - minVoltage)/(maxVoltage - minVoltage), 6)));
+
+	// steep
+	// uint8_t result = 102 - (102 / (1 + pow(1.621 * (voltage - minVoltage)/(maxVoltage - minVoltage), 8.1)));
+
+	// normal
+        let result = 105 - (105 / (1 + Math.pow(1.724 * (v - min)/(max - min), 5.5)));
+        return result >= 100 ? 100 : result;
+    }
+
+    /**
+     * Asymmetric sigmoidal approximation
+     * https://www.desmos.com/calculator/oyhpsu8jnw
+     *
+     * c - c / [1 + (k*x/v)^4.5]^3
+     */
+    asigmoidal(v, min, max)
+    {
+        let result = 101 - (101 / Math.pow(1 + Math.pow(1.33 * (v - min)/(max - min) ,4.5), 3));
+        return result >= 100 ? 100 : result;
     }
 }
 
@@ -424,6 +497,8 @@ class simApp
 
     runTime = 0;
 
+    dischargeTime = {val: 0.0, unit: 3, unitString: 'hours'};
+
     constructor(state = 0, readInterval, staticLoad)
     {
         this.instance = this;
@@ -445,6 +520,8 @@ class simApp
             options: cfgDischarge
         });
 
+        this.generateDischargeCurveData();
+
         // updates current time field
         currentTime();
         this.loop();
@@ -458,7 +535,6 @@ class simApp
         getEl('pauseBtn').addEventListener('click', function() {
             app.pause();
         });
-
         console.log("Simulation application loaded.");
     }
 
@@ -470,6 +546,7 @@ class simApp
             this.displayInfo();
             console.log('info update');
             this.battery.calculateStats();
+            // this.dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), this.dischargeTime.unit);
             if(this.state == 1) this.addData(this.liveDataChart, this.battery.capacity);
         }
 
@@ -502,6 +579,7 @@ class simApp
         this.readInterval = getVal('readInterval');
         this.staticLoad = getVal('staticLoad');
         disableInputs();
+        this.generateDischargeCurveData();
     }
 
     pause()
@@ -555,15 +633,16 @@ class simApp
             }
         }
 
-        updateIHIfDifferent('startTime', this.startTime);
-        updateIHIfDifferent('currentVoltage', this.battery.voltage);
-        updateIHIfDifferent('currentCapacity', this.battery.capacity);
-        updateIHIfDifferent('currentPercentage', this.battery.level);
+        uInfo('startTime', this.startTime || 'not started');
+        uInfo('currentVoltage', this.battery.voltage);
+        uInfo('currentCapacity', this.battery.capacity);
+        uInfo('currentPercentage', this.battery.level);
         // updateIHIfDifferent('currentNextUpdate', now()-this.prevUpdateInfo);
-        updateIHIfDifferent('currentRemainingTime', 'not calculated');
-        let dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), 3);
-        updateIHIfDifferent('currentDischargingTime', dischargeTime.val);
-        updateIHIfDifferent('currentDischargingTimeUnit', dischargeTime.unit);
+        uInfo('currentRemainingTime', 'not calculated');
+        // uInfo('currentDischargeTime', this.dischargeTime.val, this.dischargeTime.unitString);
+        this.dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), 3);
+        updateIHIfDifferent('currentDischargeTime', this.dischargeTime.val);
+        updateIHIfDifferent('currentDischargeTimeUnit', this.dischargeTime.unitString);
     }   
 
     addData(chart, val)
@@ -580,6 +659,32 @@ class simApp
         }
     }
 
+    generateDischargeCurveData()
+    {
+        let fncs = [this.battery.linearMap, this.battery.sigmoidal, this.battery.asigmoidal];
+
+        fncs.forEach((f, i) =>
+        {   
+            this.dischargeCurveChart.data.datasets[i].data = [];
+            let data = [];
+            let index = i;
+            for(var i=this.battery.maxVoltage; i > this.battery.minVoltage ; i-=.1)
+            {
+                let d = {};
+                d.x = Number(((f(i, this.battery.minVoltage, this.battery.maxVoltage) / 100) * this.battery.capacity).toFixed(0));
+                d.y = Number(i.toFixed(2));
+                data.push(d);
+            }
+        
+            data.forEach(e =>
+            {
+                this.dischargeCurveChart.data.datasets[index].data.push(e);
+            });
+        });
+
+        this.dischargeCurveChart.update();
+    }
+
     dynamicTimeUnit(time, unitId)
     {        
         let unitString = [
@@ -589,11 +694,6 @@ class simApp
             'hour',
             'day'
         ];
-
-        let toPlural = (txt) =>
-        {
-            return txt + "s";
-        };
 
         let t = 0;
         let res = {};
@@ -621,20 +721,28 @@ class simApp
 
         if(t <= 1000) { // milliseconds
             res.val = t;
-            res.unit = unitString[0];
+            res.unit = 0;
+            res.unitString = unitString[0];
         }else if(t <= (60*1000)) { // seconds
             res.val = t / 1000;
-            res.unit = unitString[1]; 
+            res.unit = 1;
+            res.unitString = unitString[1]; 
         }else if(t <= (60*60*1000)) { // minutes
             res.val = t / 60 / 1000;
-            res.unit = unitString[2];
+            res.unit = 2;
+            res.unitString = unitString[2];
         }else if(t <= (24*60*60*1000)) { // hours
             res.val = t / 60 / 60 / 1000;
-            res.unit = unitString[3];
+            res.unit = 3;
+            res.unitString = unitString[3];
         }else if(t > (24*60*60*1000)) { // days
             res.val = t / 24 / 60 / 60 / 1000;
-            res.unit = unitString[4];
+            res.unit = 4;
+            res.unitString = unitString[4];
         }
+
+        if(res.val > 1 && t > 1000)
+            res.unitString = res.unitString + "s";
 
         return res;
     }
