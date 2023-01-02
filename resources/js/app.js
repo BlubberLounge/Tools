@@ -1,3 +1,3 @@
 require('./bootstrap');
 require('./consoleText');
-require('./battery');
+require('./simApp');
