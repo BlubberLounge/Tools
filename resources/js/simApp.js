@@ -4,6 +4,7 @@
  * 
  */
 import Chart from 'chart.js/auto';
+import { DateTime } from "luxon";
 import 'chartjs-adapter-luxon';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import * as UTILS from './utils';
@@ -95,6 +96,13 @@ class SimApp
 
     dischargeTime = {val: 0.0, unit: 3, unitString: 'hours'};
 
+    // Settings / Options
+    mode = ['REALTIME', 'QUICK'];
+
+    show50Marks = false;
+    showCutOffMarks = false;
+    dynamicUnits = false;
+    iconsAsUnits = true;
 
 
     constructor(state = 0, readInterval, staticLoad)
@@ -601,6 +609,8 @@ class SimApp
 
         if(res.val > 1 && t > 1000)
             res.unitString = res.unitString + "s";
+
+        res.val = res.val <= 0 ? 0 : Math.abs(res.val);
 
         return res;
     }
