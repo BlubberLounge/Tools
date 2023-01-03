@@ -8,6 +8,11 @@ export function srand(seed) {
 
 var d = document;
 
+export function roundIfNumber(val)
+{
+    return typeof val === "number" ? val.toFixed(2) : val
+}
+
 export function getEl(id)
 {
     return d.getElementById(id);
@@ -25,12 +30,13 @@ export function setVal(id, val)
 
 export function setIH(id, val)
 {
-    getEl(id).innerHTML = typeof val === "number" ? val.toFixed(2) : val;   // round every number
+    getEl(id).innerHTML = roundIfNumber(val);   // round every number
 }
 
 export function updateIHIfDifferent(id, val)
 {
-    return (getEl(id).innerHTML == val ? null : setIH(id, val ?? 'invalid')) === null ? false : true;
+    console.log([id, (getEl(id).innerHTML == roundIfNumber(val))]);
+    return (getEl(id).innerHTML == roundIfNumber(val) ? null : setIH(id, val ?? 'invalid')) === null ? false : true;
 }
 
 export function uInfo(id, val, unit = undefined)
@@ -97,6 +103,32 @@ export function enableInputs()
     getEl('fieldsetParameter').disabled = false;
 }
 
+export function chartGradient(id)
+{
+    var ctx = getEl('dischargeCurveChart').getContext('2d');
+
+    const g = ctx.createLinearGradient(0, 0, 0, 350)
+    g.addColorStop(0, 'rgba(58,123,213,1)');
+    g.addColorStop(1, 'rgba(0,210,255,.275)');
+
+    return g
+}
+
+// https://web.archive.org/web/20090717035140if_/javascript.about.com/od/problemsolving/a/modulobug.htm
+export function mod(n, m)
+{
+    return ((n % m) + m) % m;
+}
+
+
+/* =============================================================================
+ * |
+ * |            COLOR utils
+ * |
+ * =============================================================================
+ */
+
+
 export const CHART_COLORS = {
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -105,4 +137,103 @@ export const CHART_COLORS = {
     blue: 'rgb(54, 162, 235)',
     purple: 'rgb(153, 102, 255)',
     grey: 'rgb(201, 203, 207)'
+};
+
+export class CRGB
+{
+    constructor(r, g, b, a = 1)
+    {
+        this.instance = this;
+
+        this.setRGBA(r, g, b, a);
+        return this;
+    }
+
+    normalize() 
+    {
+        // make sure that value are in 0 ... 1 format
+        // instead of 0 .. 255
+        /*
+        this.r = Number.isInteger(r) && r > 1 ?  r / 256 : r;
+        this.g = Number.isInteger(g) && g > 1 ?  g / 256 : g; 
+        this.b = Number.isInteger(b) && b > 1 ?  b / 256 : b;
+        */
+
+        this.r /= 255;
+        this.g /= 255; 
+        this.b /= 255;
+
+        return this;
+    }
+
+    to8Bit() 
+    {
+        let r = this.r * 255;
+        let g = this.g * 255;
+        let b = this.b * 255;
+        let a = this.a * 255;
+        return [r, g, b, a];
+    }
+
+    setRGB(r, g, b)
+    {
+        this.setRGBA(r, g, b, 1);
+        return this;
+    }
+
+    setRGBA(r, g, b, a)
+    {
+        this.r = Number(r);
+        this.g = Number(g);
+        this.b = Number(b);
+        this.a = Number(a);
+        
+        this.normalize();
+        
+        return this;
+    }
+
+    toString()
+    {
+        return 'rgba('+this.to8Bit().join(', ')+')';
+    }
+
+    color = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)',
+        // Bootstrap colors
+        primary: '#0d6efd',
+        secondary: '#6c757d',
+        success: '#198754',
+        info: '#0dcaf0',
+        warning: '#ffc107',
+        danger: '#dc3545',
+        light: '#f8f9fa',
+        dark: '#212529',
+    };
+
+    // get r() 
+    // {
+    //     return this.r * 255;
+    // }
+
+    // get g() 
+    // {
+    //     return this.g * 255;
+    // }
+
+    // get b() 
+    // {
+    //     return this.g * 255;
+    // }
+
+    // get a() 
+    // {
+    //     return this.a;
+    // }
 };

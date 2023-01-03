@@ -5,10 +5,12 @@
  */
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-luxon';
+import annotationPlugin from 'chartjs-plugin-annotation';
 import * as UTILS from './utils';
 import Battery from './battery';
+Chart.register(annotationPlugin);
 
-// const UTILS = require('./utils.js');
+var ddddd = () => {let d=[];for(var i=100; i >= 0; i-=1) {d.push(i);} return d;}
 
 // initial parameter setting presets
 var settings = {
@@ -66,31 +68,20 @@ function applyPreset(opt)
     });
 }
 
-/**
- * 
- * 
- * Charts / Graphs 
- * cool Graphical area of things and stuff
- * 
- * 
- */
-
-var ddddd = () => {let d=[];for(var i=4000; i >= 0; i-=1) {d.push(i);} return d;}
-
 
 
 /**
  * main class
  * 
  */
-class simApp
+class SimApp
 {
     // state enum
-    // states = {
-    //     NOT_STARTED,
-    //     STARTED,
-    //     PAUSED,
-    //     STOPPED
+    // static states = {
+    //     NOT_STARTED: 0,
+    //     STARTED: 1,
+    //     PAUSED: 2,
+    //     STOPPED: 3
     // };
     states = ['NOT_STARTED', 'STARTED', 'PAUSED', 'STOPPED'];
     
@@ -100,6 +91,7 @@ class simApp
     prevUpdateInfo = 0;
 
     runTime = 0;
+    startTime = 0;
 
     dischargeTime = {val: 0.0, unit: 3, unitString: 'hours'};
 
@@ -112,9 +104,208 @@ class simApp
         this.readInterval = readInterval;
         this.staticLoad = staticLoad;
 
-        this.addBattery(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel'));
+        this.battery = new Battery(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel'));
         
         this.generatePresets();
+
+        this.ldcConfig = {
+            animations: {
+                y: { duration: 0 },
+            },
+            scales: {
+                x: {
+                    type: 'time',//'timeseries',
+                    time: {
+                        unit: 'millisecond',
+                        tooltipFormat: 'YYYY-MM-DD HH:mm',
+                        displayFormats: {
+                            millisecond: 'HH:mm:ss.SSS',
+                            second: 'HH:mm:ss',
+                            minute: 'HH:mm',
+                            hour: 'HH'
+                        }
+                    },
+                    ticks: {
+                        stepSize: 1000,
+                        // callback: function(val) {return val - app.startTime}
+                    },
+                    title: {
+                        display: true,
+                        text: 'milliseconds (ms)'
+                    }
+                    // suggestedMin: UTILS.now(),
+                    // suggestedMax: UTILS.now()+10000,
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Capacity (mAh)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        };
+
+        this.initDDCData = {
+            labels: ddddd(),
+            datasets: [
+                {
+                    hidden: false,
+                    label: 'Linear Curve',
+                    data: this.generateDCCData(0),//generateSampleData(60),
+                    // fill: {
+                    //     target: {
+                    //         value: 2.8,
+                    //     },
+                    //     below: 'red',
+                    //     above: UTILS.chartGradient,
+                    // },
+                    fill: true,
+                    backgroundColor: UTILS.chartGradient,
+                    pointBackgroundColor: 'rgba(189, 195, 199)',
+                },
+                {
+                    hidden: true,
+                    label: 'Symmetric sigmoidal',
+                    data: this.generateDCCData(1),//generateSampleData(60),
+                    borderColor: UTILS.CHART_COLORS.red,
+                    fill: true,
+                },
+                {
+                    hidden: true,
+                    label: 'Asymmetric sigmoidal',
+                    data: this.generateDCCData(2),//generateSampleData(60),
+                    borderColor: '#fff',//UTILS.CHART_COLORS.blue,
+                    fill: true,
+                    backgroundColor: UTILS.chartGradient(),
+                    pointBackgroundColor: 'rgba(189, 195, 199)',
+                }
+            ]
+        };
+
+        
+        var thing = (x) =>
+        {
+            let delta = (a, b) =>
+            {
+                return a < b ? b-a : a-b;
+            }
+            let d = this.generateDCCData(0);
+            let c1 = d[0];
+            let c2 = d[d.length-1];
+            let xDelta = delta(c1.x, c2.x);
+            let yDelta = delta(c1.y, c2.y);
+            let g = yDelta/xDelta;
+            let c = c2.y-(g*c2.x);
+            let f = g*x+c;
+            return f;
+        };
+
+        const SOCrpower = Math.sqrt(this.integral(thing, 0, 100));
+        const SOCpower = 100-Math.sqrt(this.integral(this.battery.linearMap, 0, 100));
+
+        this.ddcConfig = {
+            animation: {
+                onComplete: () => {
+                delayed = true;
+                },
+                delay: (context) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                    delay = context.dataIndex * 200 + context.datasetIndex * 100;
+                }
+                return delay;
+                },
+            },
+            radius: 4,
+            hitRadius: 30,
+            hoverRadius: 10,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.35,
+            plugins: {
+                autocolors: false,
+                annotation: {
+                  annotations: {
+                        A50: {                              
+                            label: {
+                                backgroundColor: 'red',
+                                content: ['50%', 'SOC capacity'],
+                                display: true,
+                                yAdjust: 80,                        
+                                font: {
+                                    size: 9
+                                },
+                        },
+                        type: 'line',
+                        xMin: 50,
+                        xMax: 50,
+                        // yMin: 2.6,
+                        // yMax: 4.2,
+                        borderDash: [5, 5],
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 2,
+                        },
+                        SOCrpower: {  
+                            label: {
+                                backgroundColor: 'orange',
+                                content: ['50%', 'SOC usable power'],//[(100-SOCrpower).toFixed(1)+'%', 'usable'],
+                                display: true,
+                                yAdjust: 45,                                
+                                font: {
+                                    size: 9
+                                },
+                            },
+                            type: 'line',
+                            xMin: SOCrpower,
+                            xMax: SOCrpower,
+                            // yMin: 2.6,
+                            // yMax: 4.2,
+                            borderDash: [5, 5],
+                            borderColor: 'orange',
+                            borderWidth: 2,
+                        },
+                        SOCpower: {  
+                            label: {
+                                backgroundColor: 'blue',
+                                content: ['50%', 'SOC power'], //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                                display: true,
+                                yAdjust: 85,                                
+                                font: {
+                                    size: 9
+                                },
+                        },
+                        type: 'line',
+                        xMin: SOCpower,
+                        xMax: SOCpower,
+                        // yMin: 2.6,
+                        // yMax: 4.2,
+                        borderDash: [5, 5],
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        },
+                    } 
+                }
+            },     
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Remaining Capacity (%)'//'Discharged Capacity (mAh)'
+                    },
+                    // beginAtZero: true,
+                    // suggestedMin: -500,
+                    // suggestedMax: 4500
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Voltage',
+                    },
+                    // beginAtZero: true,
+                    // min: 2.8,
+                }
+            }
+        };
 
         // ldc = LiveDataChart
         this.ldc = new Chart("liveDataChart", {
@@ -129,8 +320,6 @@ class simApp
             data: this.initDDCData,
             options: this.ddcConfig
         });
-
-        this.generateDCCData();
 
         // updates current time field
         UTILS.currentTime();
@@ -169,7 +358,7 @@ class simApp
 
         if(this.state == 1) {
             this.battery.currentLoad(this.staticLoad);
-        }
+        }   
 
         // if(this.state == 2)
         //     console.log("paused");
@@ -195,7 +384,7 @@ class simApp
         
         UTILS.disableInputs();
 
-        this.generateDCCData();
+        // this.generateDCCData();
     }
 
     pause()
@@ -209,11 +398,6 @@ class simApp
         this.state = 3;
         this.displayInfo();     // immediately update the info
         enableInputs();
-    }
-
-    addBattery(maxVoltage, minVoltage, capacity, level)
-    {
-        this.battery = new Battery(maxVoltage, minVoltage, capacity, level); 
     }
 
     updateBattery()
@@ -252,10 +436,38 @@ class simApp
         UTILS.uInfo('startTime', this.startTime || 'not started');
         UTILS.uInfo('currentVoltage', this.battery.voltage);
         UTILS.uInfo('currentCapacity', this.battery.capacity);
-        UTILS.uInfo('currentPercentage', this.battery.level);
+        if(UTILS.uInfo('currentPercentage', this.battery.level))
+        {   // TODO: optimize
+            let crgb = new UTILS.CRGB().color;
+            let col = null;
+            if(this.battery.level <= 33) {
+                col = crgb.danger;
+            } else if(this.battery.level <= 66) {
+                col = crgb.warning;
+            } else {
+                col = crgb.success;
+            }
+
+            UTILS.getEl('currentPercentageUnit').style.color = col;
+            let cl = UTILS.getEl('currentPercentageUnit').classList;
+            const l = ['fa-battery-empty', 'fa-battery-quarter', 'fa-battery-half', 'fa-battery-three-quarters', 'fa-battery-full'];
+            
+            cl.remove('fa-battery-empty', 'fa-battery-quarter', 'fa-battery-half', 'fa-battery-three-quarters', 'fa-battery-full');
+            if(this.battery.level <= 10) {
+                cl.add(l[0]);
+            }else if(this.battery.level <= 33) {
+                cl.add(l[1]);
+            } else if(this.battery.level <= 50) {
+                cl.add(l[2]);
+            } else if(this.battery.level <= 66) {
+                cl.add(l[3]);
+            } else if(this.battery.level > 75) {
+                cl.add(l[4]);
+            }
+        }
         // updateIHIfDifferent('currentNextUpdate', now()-this.prevUpdateInfo);
         UTILS.uInfo('currentRemainingTime', 'not calculated');
-        UTILS.uInfo('currentDischargeTime', this.dischargeTime.val, 3);
+        UTILS.uInfo('currentDischargeTime', this.dischargeTime.val, this.dischargeTime.unitString);
     }   
 
     addData(chart, val)
@@ -264,10 +476,14 @@ class simApp
         
         if (data.datasets.length > 0) {
             let el = {};
+            
+            // data.labels = new Date(UTILS.now()+100);
+
             el.x = new Date(UTILS.now());
             el.y = val ?? Math.floor(Math.random() * 101);
             data.datasets[0].data.push(el);
 
+            // chart.update('none');
             chart.update();
         }
     }
@@ -277,7 +493,7 @@ class simApp
         let list = [];
         let lastMillis = 0;
 
-        for(var i=0; i < 100; i++) {
+        for(var i=0; i < 250; i++) {
             let millis = list.length >= 1 ? lastMillis+100 : UTILS.now();
             lastMillis = millis;
             list.push(new Date(millis));
@@ -304,30 +520,27 @@ class simApp
         return data;
     };
 
-    generateDCCData()
+    generateDCCData(id)
     {
-        let fncs = [this.battery.linearMap, this.battery.sigmoidal, this.battery.asigmoidal];
+        let f = [this.battery.linearMap, this.battery.sigmoidal, this.battery.asigmoidal];
 
-        fncs.forEach((f, i) =>
-        {   
-            this.dcc.data.datasets[i].data = [];
-            let data = [];
-            let index = i;
-            for(var i=this.battery.maxVoltage; i >= this.battery.minVoltage ; i-=.1)
-            {
-                let d = {};
-                d.x = Number(((f(i, this.battery.minVoltage, this.battery.maxVoltage) / 100) * this.battery.capacity).toFixed(0));
-                d.y = Number(i.toFixed(2));
-                data.push(d);
-            }
+        var data = [];
+        for(var i=this.battery.maxVoltage; i >= this.battery.minVoltage-.1; i-=.1)
+        {
+            let d = {};
+            d.x = Number(((f[id](i, this.battery.minVoltage, this.battery.maxVoltage)).toFixed(0)));//Number(((f(i, this.battery.minVoltage, this.battery.maxVoltage) / 100) * this.battery.capacity).toFixed(0));
+            d.y = Number(i.toFixed(2));
+            data.push(d);
+        }
         
-            data.forEach(e =>
-            {
-                this.dcc.data.datasets[index].data.push(e);
-            });
-        });
+        //     data.forEach(e =>
+        //     {
+        //         this.dcc.data.datasets[index].data.push(e);
+        //     });
 
-        this.dcc.update();
+        // this.dcc.update();
+
+        return data;
     }
 
     dynamicTimeUnit(time, unitId)
@@ -410,96 +623,21 @@ class simApp
             applyPreset(this.value);
         });
     }
-
-    ldcConfig = {
-        scales: {
-            x: {
-                type: 'time',
-                time: {
-                    unit: 'millisecond',
-                    tooltipFormat: 'YYYY-MM-DD HH:mm',
-                    displayFormats: {
-                        millisecond: 'HH:mm:ss.SSS',
-                        second: 'HH:mm:ss',
-                        minute: 'HH:mm',
-                        hour: 'HH'
-                    }
-                },
-                ticks: {
-                    stepSize: 1000
-                },
-                title: {
-                    display: true,
-                    text: 'milliseconds (ms)'
-                },
-                suggestedMin: UTILS.now(),
-                suggestedMax: UTILS.now()+10000,
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Capacity (mAh)'
-                },
-                beginAtZero: true
-              }
+    
+    integral(f, s, e, acc = .01) {
+        let area = 0;
+        do
+        {
+            area += Math.abs ( f(s, 0, 100) ) * acc;
+            //func finds the height of the rect & delta is the width
+            // we use abs because a negative area doesn't make sense
+            s += acc; //move forward by the width of the rect
         }
-    };
-
-    initDDCData = {
-        labels: ddddd(),
-        datasets: [
-            {
-                label: 'Linear Curve',
-                data: [],//generateSampleData(60),
-                borderColor: UTILS.CHART_COLORS.yellow,
-                fill: false,
-                pointRadius: 0,
-                cubicInterpolationMode: 'monotone',
-                tension: 0.4
-            },
-            {
-                label: 'Symmetric sigmoidal',
-                data: [],//generateSampleData(60),
-                borderColor: UTILS.CHART_COLORS.red,
-                fill: false,
-                pointRadius: 0,
-                cubicInterpolationMode: 'monotone',
-                tension: 0.4
-            },
-            {
-                label: 'Asymmetric sigmoidal',
-                data: [],//generateSampleData(60),
-                borderColor: UTILS.CHART_COLORS.blue,
-                fill: false,
-                pointRadius: 0,
-                cubicInterpolationMode: 'monotone',
-                tension: 0.4
-            }
-        ]
-    };
-
-    ddcConfig = {
-        interaction: {
-          intersect: false
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Discharged Capacity (mAh)'
-                },
-                beginAtZero: true,
-                suggestedMin: -500,
-                suggestedMax: 4500
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Voltage'
-                }
-            }
-        }
-    };
+        while ( s <= e ) ; //go until we reach the end
+    
+        return area.toFixed(5);
+    }
 }
+var delayed;
 
-var app = new simApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
+var app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));

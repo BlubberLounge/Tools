@@ -4,7 +4,7 @@ import * as UTILS from './utils';
  * represents a single battery cell
  * 
  */
-export default class battery
+export default class Battery
 {
     // https://www.batterypowertips.com/how-to-read-battery-discharge-curves-faq/
     // https://electronics.stackexchange.com/questions/107049/working-out-mah-from-current-and-time
@@ -20,22 +20,23 @@ export default class battery
     loadBuffer = [];
     log = [];
 
-    capacity = 3500;
-
     // not used yet
     type = 'unkown';
     cRate = undefined;
     temperature = undefined;
     internalResistance = undefined;
+    stateOfHealth = undefined;  // SOH
+    DepthOfCharge = undefined; // DOP
 
     constructor(maxVoltage, minVoltage, capacity, level)
     {
         this.voltage = parseFloat(maxVoltage);
-        this.capacity = Number(capacity);   // calculated
-        this.level = Number(level);      // calculated
+        this.capacity = Number(capacity);                           // calculated
+        this.level = Number(level);                                 // calculated, SOC = State Of Charge
+        this.power = Number((maxVoltage-minVoltage)*this.capacity);   // nominal voltage * capacity
 
-        this.initlevel = this.level;         // max. / inittial
-        this.initCapacity = this.capacity;   // max. / inittial, Nominal capacity
+        this.initlevel = this.level;                                // max. / inittial
+        this.initCapacity = this.capacity;                          // max. / inittial, Nominal capacity
         this.maxVoltage = parseFloat(maxVoltage);
         this.minVoltage = parseFloat(minVoltage);
 
@@ -116,6 +117,11 @@ export default class battery
     calculateRunTime()
     {
         return this.runTime = 1 / this.cRate;
+    }
+
+    calculateSOCPower()
+    {
+        return this.linearMap(this.power, 0, this.power);
     }
 
     linearMap(v, min, max)

@@ -5,7 +5,7 @@
     
     @include('battery.includes.title')
 
-    <div class="row justify-content-between g-5">
+    <div class="row justify-content-between g-5 pb-1">
         <div class="col-3 border-end mb-5">
             <h1 class="mb-3">Initial Parameter</h1>
             <form id="form-start-parameter" class="form-horizontal">
@@ -40,7 +40,7 @@
                         <label for="batteryCapacity" class="col col-form-label">Battery Capacity:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
-                                <input type="number" class="form-control" id="batteryCapacity" min="0" max="4000" step="100" placeholder="3500" value="3500" aria-describedby="batteryCapacityUnit">
+                                <input type="number" class="form-control" id="batteryCapacity" min="0" step="100" placeholder="3500" value="3500" aria-describedby="batteryCapacityUnit">
                                 <span class="input-group-text" id="batteryCapacityUnit">mAh</span>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <label for="staticLoad" class="col col-form-label">Static load:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
-                                <input type="number" class="form-control" id="staticLoad" min="0" max="2000" step="50" placeholder="450" value="450" aria-describedby="staticLoadUnit">
+                                <input type="number" class="form-control" id="staticLoad" min="0" step="50" placeholder="450" value="450" aria-describedby="staticLoadUnit">
                                 <span class="input-group-text" id="staticLoadUnit">mA</span>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                     <tr>
                         <td>Percentage:</td>
                         <td id="currentPercentage" class="text-end">invalid</td>
-                        <td>%</td>
+                        <td><i id="currentPercentageUnit" class="fa-solid fa-battery-half fa-lg" style="color:green;"></i></td>
                     </tr>
                     <tr class="text-muted">
                         <td>Next update:</td>
@@ -133,18 +133,41 @@
             </table>
         </div>
         <div class="col-6 text-center">
-            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger me-2" style="font-size: .45em;"></i>Live Data</h1>
-            <canvas id="liveDataChart" style="width:100%;max-width:800px"></canvas>
+            <h1>Discharge Curves</h1>
+            <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
     <div class="row justify-content-between g-5">
-        <div class="col-6">
-            <h1>Other cool stuff</h1>
-            <canvas id="myChart2" style="width:100%;max-width:500px"></canvas>
+        <div class="col border-end text-center">
+            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger me-2" style="font-size: .45em;"></i>Live Data</h1>
+            <canvas id="liveDataChart" style="width:100%;max-height:300px;margin:0;"></canvas>
         </div>
-        <div class="col-6">
-            <h1>Discharge Curves</h1>
-            <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
+        <div class="col-2">
+            <h2 class="mb-3">Options</h2>
+            <form id="form-options" class="form-horizontal">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchRealtimeMode" checked>
+                    <label class="form-check-label" for="switchRealtimeMode">Realtime Sim</label>
+                </div>
+                <hr class="my-2">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switch50Marks" checked>
+                    <label class="form-check-label" for="switch50Marks">Show 50% marks</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCutOffs">
+                    <label class="form-check-label" for="switchCutOffs">Show Cut-offs</label>
+                </div>
+                <hr class="my-2">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchDynamicUnits" checked>
+                    <label class="form-check-label" for="switchDynamicUnits">Dynamic units</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchIconUnits">
+                    <label class="form-check-label" for="switchIconUnits">Icons as units</label>
+                </div>
+            </form>
         </div>
     </div>
 </div>
