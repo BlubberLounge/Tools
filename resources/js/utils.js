@@ -35,7 +35,7 @@ export function setIH(id, val)
 
 export function updateIHIfDifferent(id, val)
 {
-    console.log([id, (getEl(id).innerHTML == roundIfNumber(val))]);
+    // console.log([id, (getEl(id).innerHTML == roundIfNumber(val))]);
     return (getEl(id).innerHTML == roundIfNumber(val) ? null : setIH(id, val ?? 'invalid')) === null ? false : true;
 }
 
