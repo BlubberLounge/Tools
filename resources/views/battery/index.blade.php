@@ -75,9 +75,9 @@
                 </fieldset>
                 <div class="row">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success" id="startBtn">Start</button>
-                        <button type="button" class="btn btn-danger" id="stopBtn">Stop</button>
-                        <button type="button" class="btn btn-warning" id="pauseBtn">Pause</button>
+                        <button type="button" class="btn btn-success" id="startBtn"><i class="fa-solid fa-play"></i></button> <!-- Start -->
+                        <button type="button" class="btn btn-danger" id="stopBtn"><i class="fa-solid fa-stop"></i></button> <!-- Stop -->
+                        <button type="button" class="btn btn-warning" id="pauseBtn"><i class="fa-solid fa-pause"></i></button> <!-- Pause -->
                     </div>
                 </div>
             </form>
@@ -160,11 +160,11 @@
                 </div>
                 <hr class="my-2">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="switchDynamicUnits" checked>
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchDynamicUnits" checked disabled>
                     <label class="form-check-label" for="switchDynamicUnits">Dynamic units</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="switchIconUnits">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchIconUnits" disabled>
                     <label class="form-check-label" for="switchIconUnits">Icons as units</label>
                 </div>
             </form>

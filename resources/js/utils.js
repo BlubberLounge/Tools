@@ -86,6 +86,11 @@ export function onClick(id, callback)
     getEl(id).addEventListener('click', callback);
 }
 
+export function onChange(id, callback)
+{
+    getEl(id).addEventListener('change', callback);
+}
+
 export function disableInputs()
 {
     // Object.keys(settings['Default 18650']).forEach(o =>

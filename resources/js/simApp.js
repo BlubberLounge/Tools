@@ -78,13 +78,12 @@ function applyPreset(opt)
 class SimApp
 {
     // state enum
-    // static states = {
-    //     NOT_STARTED: 0,
-    //     STARTED: 1,
-    //     PAUSED: 2,
-    //     STOPPED: 3
-    // };
-    states = ['NOT_STARTED', 'STARTED', 'PAUSED', 'STOPPED'];
+    states = [
+        'NOT_STARTED',
+        'STARTED',
+        'PAUSED',
+        'STOPPED'
+    ];
     
     cycleTime = 100; //ms
 
@@ -191,27 +190,6 @@ class SimApp
             ]
         };
 
-        
-        var thing = (x) =>
-        {
-            let delta = (a, b) =>
-            {
-                return a < b ? b-a : a-b;
-            }
-            let d = this.generateDCCData(0);
-            let c1 = d[0];
-            let c2 = d[d.length-1];
-            let xDelta = delta(c1.x, c2.x);
-            let yDelta = delta(c1.y, c2.y);
-            let g = yDelta/xDelta;
-            let c = c2.y-(g*c2.x);
-            let f = g*x+c;
-            return f;
-        };
-
-        const SOCrpower = Math.sqrt(this.integral(thing, 0, 100));
-        const SOCpower = 100-Math.sqrt(this.integral(this.battery.linearMap, 0, 100));
-
         this.ddcConfig = {
             animation: {
                 onComplete: () => {
@@ -233,66 +211,8 @@ class SimApp
             plugins: {
                 autocolors: false,
                 annotation: {
-                  annotations: {
-                        A50: {                              
-                            label: {
-                                backgroundColor: 'red',
-                                content: ['50%', 'SOC capacity'],
-                                display: true,
-                                yAdjust: 80,                        
-                                font: {
-                                    size: 9
-                                },
-                        },
-                        type: 'line',
-                        xMin: 50,
-                        xMax: 50,
-                        // yMin: 2.6,
-                        // yMax: 4.2,
-                        borderDash: [5, 5],
-                        borderColor: 'rgb(255, 99, 132)',
-                        borderWidth: 2,
-                        },
-                        SOCrpower: {  
-                            label: {
-                                backgroundColor: 'orange',
-                                content: ['50%', 'SOC usable power'],//[(100-SOCrpower).toFixed(1)+'%', 'usable'],
-                                display: true,
-                                yAdjust: 45,                                
-                                font: {
-                                    size: 9
-                                },
-                            },
-                            type: 'line',
-                            xMin: SOCrpower,
-                            xMax: SOCrpower,
-                            // yMin: 2.6,
-                            // yMax: 4.2,
-                            borderDash: [5, 5],
-                            borderColor: 'orange',
-                            borderWidth: 2,
-                        },
-                        SOCpower: {  
-                            label: {
-                                backgroundColor: 'blue',
-                                content: ['50%', 'SOC power'], //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
-                                display: true,
-                                yAdjust: 85,                                
-                                font: {
-                                    size: 9
-                                },
-                        },
-                        type: 'line',
-                        xMin: SOCpower,
-                        xMax: SOCpower,
-                        // yMin: 2.6,
-                        // yMax: 4.2,
-                        borderDash: [5, 5],
-                        borderColor: 'blue',
-                        borderWidth: 2,
-                        },
-                    } 
-                }
+                    annotations: this.generateAnnotations()
+                },
             },     
             scales: {
                 x: {
@@ -333,16 +253,26 @@ class SimApp
         UTILS.currentTime();
         this.loop();
 
-        UTILS.onClick('startBtn', function() {
+        UTILS.onClick('startBtn', function(e) {
             app.start();
         });
 
-        UTILS.onClick('stopBtn', function() {
+        UTILS.onClick('stopBtn', function(e) {
             app.stop();
         });
 
-        UTILS.onClick('pauseBtn', function() {
+        UTILS.onClick('pauseBtn', function(e) {
             app.pause();
+        });
+
+        UTILS.onChange('switch50Marks', function(e)
+        {
+            let b = UTILS.getEl('switch50Marks').checked === true;
+            let a = app.dcc.options.plugins.annotation.annotations;
+            a.A50.display = b;
+            a.SOCrpower.display = b;
+            a.SOCpower.display = b;
+            app.dcc.update();
         });
 
         console.log("Simulation application loaded.");
@@ -381,7 +311,7 @@ class SimApp
 
     start()
     {
-        if(this.state == 3 || this.state == 1) return;
+        if(this.state == 1 || this.state == 3) return;
         this.state = 1;
         this.startTime = UTILS.timeNow();
 
@@ -397,15 +327,18 @@ class SimApp
 
     pause()
     {
-        this.state = 2;
-        this.displayInfo();     // immediately update the info
+        if(this.state == 1) {
+            this.state = 2;
+            this.displayInfo();     // immediately update the info
+        }
     }
 
     stop()
     {
+        if(this.state == 0 || this.state == 3) return;
         this.state = 3;
         this.displayInfo();     // immediately update the info
-        enableInputs();
+        UTILS.enableInputs();
     }
 
     updateBattery()
@@ -476,7 +409,7 @@ class SimApp
         // updateIHIfDifferent('currentNextUpdate', now()-this.prevUpdateInfo);
         UTILS.uInfo('currentRemainingTime', 'not calculated');
         UTILS.uInfo('currentDischargeTime', this.dischargeTime.val, this.dischargeTime.unitString);
-    }   
+    }
 
     addData(chart, val)
     {
@@ -494,6 +427,124 @@ class SimApp
             // chart.update('none');
             chart.update();
         }
+    }
+
+    generateAnnotations()
+    {
+        
+        var thing = (x) =>
+        {
+            let delta = (a, b) =>
+            {
+                return a < b ? b-a : a-b;
+            }
+            let d = this.generateDCCData(0);
+            let c1 = d[0];
+            let c2 = d[d.length-1];
+            let xDelta = delta(c1.x, c2.x);
+            let yDelta = delta(c1.y, c2.y);
+            let g = yDelta/xDelta;
+            let c = c2.y-(g*c2.x);
+            let f = g*x+c;
+            return f;
+        };
+
+        const SOCrpower = Math.sqrt(this.integral(thing, 0, 100));
+        const SOCpower = 100-Math.sqrt(this.integral(this.battery.linearMap, 0, 100));
+
+        return {
+            A50: {                              
+                label: {
+                    backgroundColor: 'red',
+                    content: ['50%', 'SOC capacity'],
+                    display: true,
+                    yAdjust: 80,                        
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                xMin: 50,
+                xMax: 50,
+                // yMin: 2.6,
+                // yMax: 4.2,
+                borderDash: [5, 5],
+                borderColor: 'rgb(255, 99, 132)',
+                borderWidth: 2,
+            },
+            SOCrpower: {  
+                label: {
+                    backgroundColor: 'orange',
+                    content: ['50%', 'SOC usable power'],//[(100-SOCrpower).toFixed(1)+'%', 'usable'],
+                    display: true,
+                    yAdjust: 45,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                xMin: SOCrpower,
+                xMax: SOCrpower,
+                // yMin: 2.6,
+                // yMax: 4.2,
+                borderDash: [5, 5],
+                borderColor: 'orange',
+                borderWidth: 2,
+            },
+            SOCpower: {  
+                label: {
+                    backgroundColor: 'blue',
+                    content: ['50%', 'SOC power'], //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                    display: true,
+                    yAdjust: 85,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                xMin: SOCpower,
+                xMax: SOCpower,
+                // yMin: 2.6,
+                // yMax: 4.2,
+                borderDash: [5, 5],
+                borderColor: 'blue',
+                borderWidth: 2,
+            },            
+            COlow: {  
+                label: {
+                    backgroundColor: 'green',
+                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                    display: true,
+                    xAdjust: 200,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                yMin: this.battery.minVoltage,
+                yMax: this.battery.minVoltage,
+                borderDash: [5, 5],
+                borderColor: 'green',
+                borderWidth: 2,
+            },            
+            COhigh: {  
+                label: {
+                    backgroundColor: 'green',
+                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                    display: true,
+                    xAdjust: 200,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                yMin: this.battery.maxVoltage,
+                yMax: this.battery.maxVoltage,
+                borderDash: [5, 5],
+                borderColor: 'green',
+                borderWidth: 2,
+            }
+        };
     }
     
     generateLDCData ()
@@ -649,5 +700,9 @@ class SimApp
     }
 }
 var delayed;
+var app;
 
-var app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
+window.addEventListener('DOMContentLoaded', () =>
+{
+    app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
+})
