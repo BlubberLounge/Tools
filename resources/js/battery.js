@@ -8,13 +8,63 @@ export default class Battery
 {
     // https://www.batterypowertips.com/how-to-read-battery-discharge-curves-faq/
     // https://electronics.stackexchange.com/questions/107049/working-out-mah-from-current-and-time
-   // https://www.youtube.com/watch?v=rOwcxFErcvQ SOC Stafe of charge SOC = Remaining capacity (Ah) / total capacity (Ah)
+    // https://www.youtube.com/watch?v=rOwcxFErcvQ SOC Stafe of charge SOC = Remaining capacity (Ah) / total capacity (Ah)
     // Average consumption = (Consumption1 × Time1 + Consumption2 × Time2) / (Time1 + Time2)
     
     // To calculate the battery size for a varying load which requires I1 in the interval t1 and I2 in the remaining time:
     // Estimate the average load current — Iav = (I1 × t1 / t) + (I2 × [t - t1 / t]).
     // Substitute I = Iav in the equation for battery capacity of lithium-ion. B = 100 × I × t / (100 - q) where B is the battery capacity, I is the load current, t is the duration of power supply, and q is the percentage of charge which should remain in the battery after the discharge.
     
+    
+    // initial parameter setting presets
+    availablePresets = {
+        'Default 18650':
+        {
+            'batteryMaxVoltage': 4.2,
+            'batteryMinVoltage': 2.7,
+            'batteryCapacity': 3500,
+            'batteryLevel': 100,
+            'readInterval': 5000,
+            'staticLoad': 450,
+        },
+        'High load 18650':
+        {
+            'batteryMaxVoltage': 4.2,
+            'batteryMinVoltage': 2.7,
+            'batteryCapacity': 3500,
+            'batteryLevel': 100,
+            'readInterval': 10000,
+            'staticLoad': 350000,
+        },
+        'low Capacity 18650':
+        {
+            'batteryMaxVoltage': 4.2,
+            'batteryMinVoltage': 2.6,
+            'batteryCapacity': 2600,
+            'batteryLevel': 100,
+            'readInterval': 10000,
+            'staticLoad': 450,
+        },
+        '1/2 full 18650':
+        {
+            'batteryMaxVoltage': 4.2,
+            'batteryMinVoltage': 2.7,
+            'batteryCapacity': 3500,
+            'batteryLevel': 50,
+            'readInterval': 5000,
+            'staticLoad': 450,
+        },
+        '2S3P Battery (18650)':
+        {
+            'batteryMaxVoltage': 3.6*2,
+            'batteryMinVoltage': 2.6,
+            'batteryCapacity': 2500*3,
+            'batteryLevel': 100,
+            'readInterval': 5000,
+            'staticLoad': 450,
+        },
+    };
+
     underLoad = false;
     underSameLoadSince = 0;
     loadBuffer = [];
@@ -39,8 +89,6 @@ export default class Battery
         this.initCapacity = this.capacity;                          // max. / inittial, Nominal capacity
         this.maxVoltage = parseFloat(maxVoltage);
         this.minVoltage = parseFloat(minVoltage);
-
-        console.log("Battery loaded.");
     }
 
     calculateStats()

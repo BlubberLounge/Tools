@@ -109,6 +109,14 @@ export function enableInputs()
     getEl('fieldsetParameter').disabled = false;
 }
 
+export function applyPreset(l, opt)
+{
+    Object.entries(l[opt]).forEach(o =>
+    {
+       setVal(o[0], o[1]);
+    });
+}
+
 export function chartGradient(id)
 {
     var ctx = getEl('dischargeCurveChart').getContext('2d');
@@ -124,6 +132,22 @@ export function chartGradient(id)
 export function mod(n, m)
 {
     return ((n % m) + m) % m;
+}
+
+    
+export function integral(f, s, e, acc = .01)
+{
+    let area = 0;
+    do
+    {
+        area += Math.abs ( f(s, 0, 100) ) * acc;
+        //func finds the height of the rect & delta is the width
+        // we use abs because a negative area doesn't make sense
+        s += acc; //move forward by the width of the rect
+    }
+    while ( s <= e ) ; //go until we reach the end
+
+    return area.toFixed(5);
 }
 
 

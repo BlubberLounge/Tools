@@ -9,67 +9,13 @@ import 'chartjs-adapter-luxon';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import * as UTILS from './utils';
 import Battery from './battery';
+import LiPo from './lipo';
 Chart.register(annotationPlugin);
 
 var ddddd = () => {let d=[];for(var i=100; i >= 0; i-=1) {d.push(i);} return d;}
 
-// initial parameter setting presets
-var settings = {
-    'Default 18650': {
-        'batteryMaxVoltage': 4.2,
-        'batteryMinVoltage': 2.7,
-        'batteryCapacity': 3500,
-        'batteryLevel': 100,
-        'readInterval': 5000,
-        'staticLoad': 450,
-    },
-    'High load 18650':
-    {
-        'batteryMaxVoltage': 4.2,
-        'batteryMinVoltage': 2.7,
-        'batteryCapacity': 3500,
-        'batteryLevel': 100,
-        'readInterval': 10000,
-        'staticLoad': 350000,
-    },
-    'low Capacity 18650':
-    {
-        'batteryMaxVoltage': 4.2,
-        'batteryMinVoltage': 2.6,
-        'batteryCapacity': 2600,
-        'batteryLevel': 100,
-        'readInterval': 10000,
-        'staticLoad': 450,
-    },
-    '1/2 full 18650':
-    {
-        'batteryMaxVoltage': 4.2,
-        'batteryMinVoltage': 2.7,
-        'batteryCapacity': 3500,
-        'batteryLevel': 50,
-        'readInterval': 5000,
-        'staticLoad': 450,
-    },
-    '2S3P Battery (18650)':
-    {
-        'batteryMaxVoltage': 3.6*2,
-        'batteryMinVoltage': 2.6,
-        'batteryCapacity': 2500*3,
-        'batteryLevel': 100,
-        'readInterval': 5000,
-        'staticLoad': 450,
-    },
-};
-
-function applyPreset(opt)
-{
-    Object.entries(settings[opt]).forEach(o =>
-    {
-        UTILS.setVal(o[0], o[1]);
-    });
-}
-
-
+var app;
+var delayed;
 
 /**
  * main class
@@ -111,7 +57,7 @@ class SimApp
         this.readInterval = readInterval;
         this.staticLoad = staticLoad;
 
-        this.battery = new Battery(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel'));
+        this.battery = new LiPo(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel'));
         
         this.generatePresets();
 
@@ -193,14 +139,14 @@ class SimApp
         this.ddcConfig = {
             animation: {
                 onComplete: () => {
-                delayed = true;
+                    delayed = true;
                 },
                 delay: (context) => {
-                let delay = 0;
-                if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                    delay = context.dataIndex * 200 + context.datasetIndex * 100;
-                }
-                return delay;
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 200 + context.datasetIndex * 100;
+                    }
+                    return delay;
                 },
             },
             radius: 4,
@@ -343,7 +289,7 @@ class SimApp
 
     updateBattery()
     {   // juut overwrite it for now
-        this.battery = new Battery(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel')); 
+        this.battery = new LiPo(UTILS.getVal('batteryMaxVoltage'), UTILS.getVal('batteryMinVoltage'), UTILS.getVal('batteryCapacity'), UTILS.getVal('batteryLevel')); 
     }
 
     displayInfo()
@@ -449,8 +395,8 @@ class SimApp
             return f;
         };
 
-        const SOCrpower = Math.sqrt(this.integral(thing, 0, 100));
-        const SOCpower = 100-Math.sqrt(this.integral(this.battery.linearMap, 0, 100));
+        const SOCrpower = Math.sqrt(UTILS.integral(thing, 0, 100));
+        const SOCpower = 100-Math.sqrt(UTILS.integral(this.battery.linearMap, 0, 100));
 
         return {
             A50: {                              
@@ -669,7 +615,7 @@ class SimApp
     generatePresets()
     {
         var selEl = UTILS.getEl('settingPreset');
-        Object.keys(settings).forEach(opt =>
+        Object.keys(this.battery.availablePresets).forEach(opt =>
         { 
             let option = document.createElement("option");
             option.value = opt;
@@ -678,31 +624,15 @@ class SimApp
         });
 
         selEl.options[0].remove();
-        applyPreset(Object.keys(settings)[0]);
+        UTILS.applyPreset(this.battery.availablePresets, Object.keys(this.battery.availablePresets)[0]);
         
-        selEl.addEventListener('change', function() {
-            applyPreset(this.value);
+        UTILS.onChange('settingPreset', function() {
+            UTILS.applyPreset(app.battery.availablePresets, this.value);
         });
     }
-    
-    integral(f, s, e, acc = .01) {
-        let area = 0;
-        do
-        {
-            area += Math.abs ( f(s, 0, 100) ) * acc;
-            //func finds the height of the rect & delta is the width
-            // we use abs because a negative area doesn't make sense
-            s += acc; //move forward by the width of the rect
-        }
-        while ( s <= e ) ; //go until we reach the end
-    
-        return area.toFixed(5);
-    }
-}
-var delayed;
-var app;
 
-window.addEventListener('DOMContentLoaded', () =>
-{
+}
+
+window.addEventListener('DOMContentLoaded', () => {
     app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
-})
+});
