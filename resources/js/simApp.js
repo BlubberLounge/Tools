@@ -398,7 +398,41 @@ class SimApp
         const SOCrpower = Math.sqrt(UTILS.integral(thing, 0, 100));
         const SOCpower = 100-Math.sqrt(UTILS.integral(this.battery.linearMap, 0, 100));
 
-        return {
+        return {            
+            COlow: {  
+                label: {
+                    backgroundColor: 'green',
+                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                    display: true,
+                    xAdjust: 200,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                yMin: this.battery.minVoltage,
+                yMax: this.battery.minVoltage,
+                borderDash: [5, 5],
+                borderColor: 'green',
+                borderWidth: 2,
+            },            
+            COhigh: {  
+                label: {
+                    backgroundColor: 'green',
+                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
+                    display: true,
+                    xAdjust: 200,                                
+                    font: {
+                        size: 9
+                    },
+                },
+                type: 'line',
+                yMin: this.battery.maxVoltage,
+                yMax: this.battery.maxVoltage,
+                borderDash: [5, 5],
+                borderColor: 'green',
+                borderWidth: 2,
+            },
             A50: {                              
                 label: {
                     backgroundColor: 'red',
@@ -454,40 +488,6 @@ class SimApp
                 // yMax: 4.2,
                 borderDash: [5, 5],
                 borderColor: 'blue',
-                borderWidth: 2,
-            },            
-            COlow: {  
-                label: {
-                    backgroundColor: 'green',
-                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
-                    display: true,
-                    xAdjust: 200,                                
-                    font: {
-                        size: 9
-                    },
-                },
-                type: 'line',
-                yMin: this.battery.minVoltage,
-                yMax: this.battery.minVoltage,
-                borderDash: [5, 5],
-                borderColor: 'green',
-                borderWidth: 2,
-            },            
-            COhigh: {  
-                label: {
-                    backgroundColor: 'green',
-                    content: 'Cut-Off', //[(100-SOCpower).toFixed(1)+'%', 'SOC power'],
-                    display: true,
-                    xAdjust: 200,                                
-                    font: {
-                        size: 9
-                    },
-                },
-                type: 'line',
-                yMin: this.battery.maxVoltage,
-                yMax: this.battery.maxVoltage,
-                borderDash: [5, 5],
-                borderColor: 'green',
                 borderWidth: 2,
             }
         };
