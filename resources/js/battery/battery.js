@@ -1,4 +1,4 @@
-import * as UTILS from './utils';
+import * as UTILS from '../utils';
 
 /**
  * represents a single battery cell

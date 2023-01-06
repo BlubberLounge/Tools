@@ -53,11 +53,11 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
                             {{ Auth::user()->name }}
-                        </a>
+                        </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             
                             <li><a class="dropdown-item" href="#"> Settings </a></li>
                             @can('viewAny', App\Models\User::class)
@@ -83,7 +83,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                        <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
                           <i class="bi my-1 fa-solid fa-moon theme-icon-active" data-bs-theme-icon="fa-moon"></i>
                           <span class="d-lg-none ms-2">Toggle theme</span>
                         </button>

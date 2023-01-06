@@ -8,8 +8,7 @@ import { DateTime } from "luxon";
 import 'chartjs-adapter-luxon';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import * as UTILS from './utils';
-import Battery from './battery';
-import LiPo from './lipo';
+import LiPo from './battery/lipo';
 Chart.register(annotationPlugin);
 
 var ddddd = () => {let d=[];for(var i=100; i >= 0; i-=1) {d.push(i);} return d;}
@@ -144,7 +143,7 @@ class SimApp
                 delay: (context) => {
                     let delay = 0;
                     if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                        delay = context.dataIndex * 200 + context.datasetIndex * 100;
+                        delay = context.dataIndex * 150 + context.datasetIndex * 50;
                     }
                     return delay;
                 },
