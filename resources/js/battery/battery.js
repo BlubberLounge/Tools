@@ -101,15 +101,26 @@ export default class Battery
             if(!e.timer)    // ignore running periods / last period in the best case
                 return;
 
+            this.log.push(e);
             // clear buffer
             this.loadBuffer.splice(i, 1);
 
-            this.log.push(e);
-
-            this.capacity -= e.dischargeCurrent * (e.timer / 60 / 60 / 1000);
-            // this.level = this.linearMap(this.voltage, this.minVoltage, this.maxVoltage); 
-            this.level = this.linearMap(this.capacity, 0, this.initCapacity); 
+            this.discharge(e.dischargeCurrent, this.toMS(e.timer))
         });
+    }
+
+    discharge(current, time)
+    {
+        this.capacity -= current * (time / 60 / 60 / 1000); // convert time to hours
+        this.voltage = this.maxVoltage - (this.maxVoltage - this.minVoltage) * (this.capacity / this.initCapacity);
+        this.level = this.linearMap(this.capacity, 0, this.initCapacity);
+    }
+    
+    charge(current, time)
+    {
+        this.capacity += current * (time / 60 / 60 / 1000); // convert time to hours
+        this.voltage = this.minVoltage + (this.maxVoltage - this.minVoltage) * (this.capacity / this.initCapacity);
+        this.level = this.linearMap(this.capacity, 0, this.initCapacity);
     }
 
     currentLoad(load)
@@ -170,6 +181,37 @@ export default class Battery
     calculateSOCPower()
     {
         return this.linearMap(this.power, 0, this.power);
+    }
+
+    /**
+     * Convert a given time with the kown given unit to milliseconds
+     * 
+     * @param {number} time 
+     * @param {number} unit - 0 = ms, 1 = sec, 2 = min, 3 = hour, 4 = day, 5 = week
+     */
+    toMS(time, unit)    // To-Do for training try to make it a recursive method
+    {
+        var t = 0;
+
+        // convert time to ms
+        switch(unit)
+        {
+            case 1: // seconds
+                return time * 1000;
+            case 2: // minutes
+                return time * 60 * 1000;
+            case 3: // hours
+                return time * 60 * 60 * 1000;
+            case 4: // days
+                return time * 24 * 60 * 60 * 1000;
+            case 5: // Weeks
+                return time * 7 * 24 * 60 * 60 * 1000;
+            case 0: // milliseconds or a not defined unit
+            default:
+                return time;
+        }
+
+        return -1;
     }
 
     linearMap(v, min, max)

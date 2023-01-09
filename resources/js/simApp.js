@@ -9,6 +9,7 @@ import 'chartjs-adapter-luxon';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import * as UTILS from './utils';
 import LiPo from './battery/lipo';
+import LiOn from './battery/lion';
 Chart.register(annotationPlugin);
 
 var ddddd = () => {let d=[];for(var i=100; i >= 0; i-=1) {d.push(i);} return d;}
