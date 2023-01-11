@@ -39,7 +39,15 @@ class SimApp
     runTime = 0;
     startTime = 0;
 
-    dischargeTime = {val: 0.0, unit: 3, unitString: 'hours'};
+    dischargeTime = {
+        val: 0.0, 
+        unit: 3, 
+        unitString: 'hours'
+    };
+
+    // exponentialSmoothing = {};
+    // movingAverage = {};
+    // weightedMovingAverage = {};
 
     // Settings / Options
     mode = ['REALTIME', 'QUICK'];
@@ -546,6 +554,11 @@ class SimApp
         // this.dcc.update();
 
         return data;
+    }
+
+    exponentialSmoothing()
+    {
+
     }
 
     dynamicTimeUnit(time, unitId)

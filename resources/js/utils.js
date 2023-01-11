@@ -50,7 +50,6 @@ export function Z(n)
     return n < 10 ? "0" + n : n;
 };
 
-
 export function timeNow()
 { 
     let d = new Date(); // new Date().toLocaleString();
@@ -148,6 +147,46 @@ export function integral(f, s, e, acc = .01)
     while ( s <= e ) ; //go until we reach the end
 
     return area.toFixed(5);
+}
+
+class BaseData
+{
+    data = {};
+    constructor()
+    {
+
+    }
+
+    exec()
+    {
+        console.log("not implemented."); 
+    }
+}
+
+export class ExponentialSmoothing extends BaseData
+{
+    constructor()
+    {
+        super();
+    }
+
+    exec()
+    {
+
+    }
+}
+
+export class MovingAverage extends BaseData
+{
+    constructor()
+    {
+        super();
+    }
+
+    exec()
+    {
+        
+    }
 }
 
 
