@@ -153,6 +153,26 @@
                     <input class="form-check-input" type="checkbox" role="switch" id="switchRealtimeMode" checked>
                     <label class="form-check-label" for="switchRealtimeMode">Realtime Sim</label>
                 </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchRandomDeviations" checked>
+                    <label class="form-check-label" for="switchRandomDeviations">Random deviations</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchSmoothData" checked disabled>
+                    <label class="form-check-label" for="switchSmoothData">Show Smoothed data</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchExponentialSmoothing" checked disabled>
+                    <label class="form-check-label small-75" for="switchExponentialSmoothing">Exponential smoothing</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchMovingAverage" disabled>
+                    <label class="form-check-label" for="switchMovingAverage">Moving average</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchWeightedMovingAverage" disabled>
+                    <label class="form-check-label small-75" for="switchWeightedMovingAverage">Weighted moving average</label>
+                </div>
                 <hr class="my-2">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="switch50Marks" checked>

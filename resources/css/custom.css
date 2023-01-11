@@ -66,6 +66,14 @@ a {
                 rotate(calc(var(--rotation)*-1));
 }
 
-.small {
+.small-80 {
+    font-size: .80em;
+}
+
+.small-75 {
     font-size: .75em;
+}
+
+.small-70 {
+    font-size: .70em ;
 }
