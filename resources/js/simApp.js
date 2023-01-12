@@ -37,7 +37,7 @@ class SimApp
     prevUpdateInfo = 0;
 
     runTime = 0;
-    startTime = 0;
+    startTime = UTILS.now();
 
     dischargeTime = {
         val: 0.0, 
@@ -80,19 +80,19 @@ class SimApp
                         unit: 'millisecond',
                         tooltipFormat: 'YYYY-MM-DD HH:mm',
                         displayFormats: {
-                            millisecond: 'HH:mm:ss.SSS',
+                            millisecond: 'ss.SSS',
                             second: 'HH:mm:ss',
                             minute: 'HH:mm',
                             hour: 'HH'
                         }
                     },
                     ticks: {
-                        stepSize: 1000,
-                        // callback: function(val) {return val - app.startTime}
+                        stepSize: 100,
+                        callback: (val) => {console.log(val, this.startTime);return val - this.startTime}
                     },
                     title: {
                         display: true,
-                        text: 'milliseconds (ms)'
+                        text: 'Time in milliseconds (ms)'
                     }
                     // suggestedMin: UTILS.now(),
                     // suggestedMax: UTILS.now()+10000,
@@ -100,7 +100,7 @@ class SimApp
                 y: {
                     title: {
                         display: true,
-                        text: 'Capacity (mAh)'
+                        text: 'Capacity (%)'
                     },
                     beginAtZero: true
                 }
@@ -260,7 +260,7 @@ class SimApp
     {
         if(this.state == 1 || this.state == 3) return;
         this.state = 1;
-        this.startTime = UTILS.timeNow();
+        this.startTime = UTILS.now();
 
         this.displayInfo();     // immediately update the info
         this.updateBattery();   // update battery with new start parameter
@@ -321,7 +321,7 @@ class SimApp
             }
         }
 
-        UTILS.uInfo('startTime', this.startTime || 'not started');
+        UTILS.uInfo('startTime', UTILS.msToString(this.startTime) || 'not started');
         UTILS.uInfo('currentVoltage', this.battery.voltage);
         UTILS.uInfo('currentCapacity', this.battery.capacity);
         if(UTILS.uInfo('currentPercentage', this.battery.level))
@@ -569,11 +569,6 @@ class SimApp
         return data;
     }
 
-    exponentialSmoothing()
-    {
-
-    }
-
     dynamicTimeUnit(time, unitId)
     {        
         let unitString = [
@@ -659,6 +654,7 @@ class SimApp
 
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () =>
+{
     app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
 });

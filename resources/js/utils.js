@@ -73,6 +73,15 @@ export function now()
     return Date.now();
 }
 
+export function msToString(ms)
+{
+    let d = new Date(ms);
+    let hh = Z(d.getHours());
+    let mm = Z(d.getMinutes());
+    let ss = Z(d.getSeconds());
+    return [hh, mm, ss].join(':');
+}
+
 export function currentTime()
 {  
     let timeString = dateNow() +" - "+ timeNow();
