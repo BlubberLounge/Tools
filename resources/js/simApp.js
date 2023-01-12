@@ -219,15 +219,8 @@ class SimApp
             app.pause();
         });
 
-        UTILS.onChange('switch50Marks', function(e)
-        {
-            let b = UTILS.getEl('switch50Marks').checked === true;
-            let a = app.dcc.options.plugins.annotation.annotations;
-            a.A50.display = b;
-            a.SOCrpower.display = b;
-            a.SOCpower.display = b;
-            app.dcc.update();
-        });
+        UTILS.toggleChartAnnotaion('switch50Marks', 1, this.dcc);
+        UTILS.toggleChartAnnotaion('switchCutOffs', 2, this.dcc);
 
         console.log("Simulation application loaded.");
     }
@@ -417,6 +410,10 @@ class SimApp
                         size: 9
                     },
                 },
+                display: (c, o) =>
+                {
+                    return UTILS.displayAnnotation(c, o);
+                },
                 type: 'line',
                 yMin: this.battery.minVoltage,
                 yMax: this.battery.minVoltage,
@@ -434,6 +431,10 @@ class SimApp
                         size: 9
                     },
                 },
+                display: (c, o) =>
+                {
+                    return UTILS.displayAnnotation(c, o);
+                },
                 type: 'line',
                 yMin: this.battery.maxVoltage,
                 yMax: this.battery.maxVoltage,
@@ -450,6 +451,10 @@ class SimApp
                     font: {
                         size: 9
                     },
+                },
+                display: (c, o) =>
+                {
+                    return UTILS.displayAnnotation(c, o);
                 },
                 type: 'line',
                 xMin: 50,
@@ -469,6 +474,10 @@ class SimApp
                     font: {
                         size: 9
                     },
+                },                    
+                display: (c, o) =>
+                {
+                    return UTILS.displayAnnotation(c, o);
                 },
                 type: 'line',
                 xMin: SOCrpower,
@@ -488,6 +497,10 @@ class SimApp
                     font: {
                         size: 9
                     },
+                },
+                display: (c, o) =>
+                {
+                    return UTILS.displayAnnotation(c, o);
                 },
                 type: 'line',
                 xMin: SOCpower,

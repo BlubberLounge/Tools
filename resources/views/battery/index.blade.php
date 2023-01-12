@@ -136,8 +136,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-6 text-center">
+        <div class="col-6 text-center position-relative">
             <h1>Discharge Curves</h1>
+            
+            {{-- <button type="button" class="btn btn-dark position-absolute end-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-gear"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+            </button> --}}
+
             <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
@@ -194,5 +199,22 @@
             </form>
         </div>
     </div>
+
+    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Avanced Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 </div>
 @endsection

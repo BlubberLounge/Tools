@@ -127,6 +127,35 @@ export function chartGradient(id)
     return g
 }
 
+export function toggleChartAnnotaion(switchId, AnnId, chart)
+{
+    onChange(switchId, function(e)
+    {
+        let b = getEl(switchId).checked === true;
+        let a = chart.options.plugins.annotation.annotations;
+        if(AnnId == 1) { 
+            a.A50.display = b;
+            a.SOCrpower.display = b;
+            a.SOCpower.display = b;
+        } else if(AnnId == 2) {
+            a.COlow.display = b;
+            a.COhigh.display = b;
+        }
+        chart.update();
+    });
+}
+
+export function displayAnnotation(c, o)
+{
+    let id = c.id;
+    if(id === "COlow" || id === "COhigh")
+        return getEl("switchCutOffs").checked === true;
+    else if(id === "A50" || id === "SOCrpower" || id === "SOCpower")
+        return getEl("switch50Marks").checked === true;
+
+    return true;
+}
+
 // https://web.archive.org/web/20090717035140if_/javascript.about.com/od/problemsolving/a/modulobug.htm
 export function mod(n, m)
 {
