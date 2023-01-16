@@ -88,7 +88,7 @@ class SimApp
                     },
                     ticks: {
                         stepSize: 100,
-                        callback: (val) => {console.log(val, this.startTime);return val - this.startTime}
+                        callback: (val) => {return val - this.startTime}
                     },
                     title: {
                         display: true,
@@ -234,7 +234,6 @@ class SimApp
             this.battery.calculateStats();
             this.dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), 3); // 3 = hours, because capacity is in mAh
 
-            console.log('info update');
             if(this.state == 1) this.addData(this.ldc, this.battery.capacity);
         }
 

@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center mb-3">
+                    <div class="row g-3 align-items-center">
                         <label for="staticLoad" class="col col-form-label">Static load:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -77,11 +77,14 @@
                         </div>
                     </div>
                 </fieldset>
-                <div class="row">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success" id="startBtn"><i class="fa-solid fa-play"></i></button> <!-- Start -->
-                        <button type="button" class="btn btn-danger" id="stopBtn"><i class="fa-solid fa-stop"></i></button> <!-- Stop -->
-                        <button type="button" class="btn btn-warning" id="pauseBtn"><i class="fa-solid fa-pause"></i></button> <!-- Pause -->
+                <hr class="my-2">
+                <div class="row g-3 align-items-center">
+                    <label for="staticLoad" class="col col-form-label">Current load:</label>
+                    <div class="col">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="currentLoad" min="0" step="50" placeholder="255" aria-describedby="currentLoadUnit">
+                            <span class="input-group-text" id="currentLoadUnit">mA</span>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -118,11 +121,11 @@
                         <td id="currentPercentage" class="text-end">invalid</td>
                         <td><i id="currentPercentageUnit" class="fa-solid fa-battery-half fa-lg" style="color:green;"></i></td>
                     </tr>
-                    <tr class="text-muted">
+                    {{-- <tr class="text-muted">
                         <td>Next update:</td>
                         <td id="currentNextUpdate" class="text-end">invalid</td>
                         <td>sec.</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Time left:</td>
                         <td id="currentRemainingTime" class="text-end">invalid</td>
@@ -135,6 +138,13 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="row">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success" id="startBtn"><i class="fa-solid fa-play"></i></button> <!-- Start -->
+                    <button type="button" class="btn btn-danger" id="stopBtn"><i class="fa-solid fa-stop"></i></button> <!-- Stop -->
+                    <button type="button" class="btn btn-warning" id="pauseBtn"><i class="fa-solid fa-pause"></i></button> <!-- Pause -->
+                </div>
+            </div>
         </div>
         <div class="col-6 text-center position-relative">
             <h1>Discharge Curves</h1>
