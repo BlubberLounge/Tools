@@ -62,7 +62,7 @@
                             <li><a class="dropdown-item" href="#"> Settings </a></li>
                             @can('viewAny', App\Models\User::class)
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('audit-log') }}">
                                         Audit Log
                                     </a>
                                 </li>
