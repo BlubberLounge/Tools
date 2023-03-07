@@ -15,6 +15,7 @@ mix
     .js('resources/js/app.js', 'public/js')                 // Main js file
     .js('resources/js/dark-mode.js', 'public/js')           // Manages theme toggling
     .js('resources/js/simApp.js', 'public/js')
+    .js('resources/js/sw.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .css('resources/css/custom.css', 'public/css')
     .version()

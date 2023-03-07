@@ -1,0 +1,18 @@
+{
+    "lang": "en-us",
+    "name": "Blubber Lounge app",
+    "short_name": "Blubber Lounge",
+    "description": "Blubber Lounge, Brandenburg an der Havel",
+    "start_url": "/",
+    "id": "/",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/img/ora_2_512x512.png",
+            "sizes": "512x512"
+        }
+    ]
+}

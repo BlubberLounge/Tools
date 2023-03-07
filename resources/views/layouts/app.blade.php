@@ -15,5 +15,9 @@
         </main>
 
     </div>
+
+    <script>
+          navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    </script>
 </body>
 </html>
