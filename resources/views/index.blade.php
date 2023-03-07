@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
-    
+
     @include('includes.head')
-    
+
     <body class="antialiased">
         <div class="background-test relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
@@ -28,7 +28,7 @@
 
                 <div class="flex flex-column justify-center mt-4">
                     <div class="flex items-center justify-content-evenly">
-                        <div>                     
+                        <div>
                             <i class="fa-brands fa-github fa-lg ml-4 -mt-px w-5 text-gray-400"></i>
                             <a href="https://github.com/BlubberLounge/Dart-WebApp" class="underline d-inline">
                                 GitHub Repo
@@ -48,5 +48,8 @@
                 </div>
             </div>
         </div>
+        <script>
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      </script>
     </body>
 </html>
