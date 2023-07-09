@@ -11,8 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
-    use
-        HasFactory,
+    use HasFactory,
         Notifiable,
         HasRoleAndPermission,
         \OwenIt\Auditing\Auditable;
@@ -27,8 +26,10 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         'firstname',
         'lastname',
         'email',
+        'dob',
+        'img',
         'password',
-        'role_id'
+        'locked',
     ];
 
     /**
@@ -47,6 +48,32 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      * @var array<string, string>
      */
     protected $casts = [
+        'dob' => 'date',
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        //
+    ];
+
+    /**
+     *
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     *
+     */
+    public function isLocked(): bool
+    {
+        return $this->locked;
+    }
 }

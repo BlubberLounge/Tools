@@ -14,7 +14,8 @@
 
     <div class="row d-flex justify-content-between">
         <div class="col-6 d-flex justify-content-end align-items-center">
-            <form action="{{ route('utillity.viewCheckouts') }}" method="GET" id="checkoutForm">
+            <form action="{{ route('dart.showCheckout') }}" method="GET" id="checkoutForm">
+                @csrf
                 <div class="row g-3 align-items-center pb-4">
                     <div class="col-auto">
                         <label for="score" class="col-form-label"> Score </label>
@@ -67,7 +68,7 @@
             </div>
         </div>
     </div>
-    
+
     @if($checkoutNumOfPossibilities)
         <div class="row">
             <p> Calculated {{ $checkoutNumOfPossibilities }} possible checkouts ({{ $execTime }} seconds)</p>
@@ -101,7 +102,7 @@
                                         <td scope="row">{{ $checkouts_0[$checkoutBestOption][3] }}</td>
                                     @endif
                                 </tr>
-                            @else 
+                            @else
                                 <tr class="table-success">
                                     <th scope="row"> BEST #{{ $checkoutBestOption }}</th>
                                     <td scope="row">{{ $checkouts_1[$checkoutBestOption][0] }}</td>

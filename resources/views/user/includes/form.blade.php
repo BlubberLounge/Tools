@@ -54,14 +54,14 @@
             @enderror
         </div>
 
-        <div class="mb-3">
+        {{-- <div class="mb-3">
             <label for="role" class="form-check-label">{{ __('Role') }}</label>
             <select id="role" name="role" form="userform" class="form-select" size="5" aria-label="size 5 select example" required>
                 @foreach($roles as $role)
                     <option value="{{ $role->id }}" {{ isset($user) ? ($user->role_id === $role->id) ? 'selected' : '' : '' }}>{{ $role->name }}</option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
 
         <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
     </form>

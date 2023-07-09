@@ -8,6 +8,7 @@ use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
+    Route::get('/checkouts/dartboard', [DartController::class, 'showDartboard'])->name('dart.showDartboard');
+    Route::get('/checkouts/{score?}', [DartController::class, 'showCheckout'])->name('dart.showCheckout');
 
     Route::resource('/hookah', HookahController::class);
     Route::resource('/user', UserController::class);

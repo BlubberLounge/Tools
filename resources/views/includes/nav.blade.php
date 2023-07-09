@@ -13,7 +13,10 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Dart </a>
+                        <a class="nav-link" href="#"> Dart Game </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Dart Management </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#"> Hookahs </a>
@@ -32,6 +35,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('battery') }}"> Battery </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" data-bs-toggle="dropdown"> Other Tools </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ route('dart.showDartboard') }}"> Dartboard </a></li>
+                            <li><a class="dropdown-item" href="{{ route('dart.showCheckout') }}"> Dart Checkout calculator </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                        </ul>
                     </li>
                 </ul>
             @endauth
