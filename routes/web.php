@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BatteryController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
@@ -28,7 +29,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 /*
- * email verification routes 
+ * email verification routes
  */
 // Route::get('/email', function () {
 //     return view('auth.verify');
@@ -36,24 +37,25 @@ Auth::routes(['verify' => true]);
 
 // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfill();
- 
+
 //     return redirect('/home');
 // })->middleware(['auth'])->name('verification.verify');
 
 // Route::post('/email/verification-notification', function (Request $request) {
 //     $request->user()->sendEmailVerificationNotification();
- 
+
 //     return back()->with('message', 'Verification link sent!');
 // })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-/* 
+/*
  * protected routes
  */
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
+    Route::get('/event', [EventController::class, 'index'])->name('event');
     Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');
 
     Route::resource('/hookah', HookahController::class);
