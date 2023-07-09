@@ -14,7 +14,7 @@ class AuditLogController extends Controller
      */
     public function index()
     {
-        $u = Audit::get();
+        $u = Audit::orderBy('id', 'desc')->paginate(15);
         $data['audits'] = $u;
 
         return view('audit-log.index', $data);

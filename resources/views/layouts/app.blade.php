@@ -1,23 +1,14 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@mobile
+    @include('layouts.app_mobile')
+@endmobile
 
-@include('includes.head')
+{{-- may block requests from desktop soon --}}
+@desktop
+    @include('layouts.app_mobile')
+@enddesktop
 
-<body>
-    <div id="app">
-
-        @include('includes.nav')
-
-        @include('includes.alerts')
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-
-    </div>
-
-    <script>
-          navigator.serviceWorker.register('/sw.js', { scope: '/' });
-    </script>
-</body>
-</html>
+{{--
+@browser('isBot')
+    <p>Bots can be identified too :)</p>
+@endbrowser
+--}}

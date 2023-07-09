@@ -1,8 +1,9 @@
 {
     "/js/app.js": "/js/app.js?id=06dba20db7b84eccedfef2275a99bf18",
     "/js/dark-mode.js": "/js/dark-mode.js?id=fe771523193426c2098dcd4a84fc8098",
-    "/js/simApp.js": "/js/simApp.js?id=65ffc335f28794f29642afce9bf5696e",
-    "/js/sw.js": "/js/sw.js?id=72af2c6d1b77bf8a8e1a1ce267f97154",
+    "/js/simApp.js": "/js/simApp.js?id=f36ae03ff28b8b3791e97ca42b7dbee1",
+    "/js/sw.js": "/js/sw.js?id=30882013768225ebdfdad31fa6dd551d",
+    "/js/auth.js": "/js/auth.js?id=e1291bef91a8c220c06a04d1f0a358b1",
     "/css/app.css": "/css/app.css?id=50116b857197418382b6a46b839a20a7",
-    "/css/custom.css": "/css/custom.css?id=a1cf3126232f8f169ed78976a8840ddf"
+    "/css/custom.css": "/css/custom.css?id=98f624dc3892febf5a7f3a382be89fd9"
 }

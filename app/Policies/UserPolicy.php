@@ -21,13 +21,7 @@ class UserPolicy
      */
     public function before(User $user, $ability)
     {
-        if(!$user->role)
-            return false;
-
-        if($user->role->id > Role::ADMIN)
-            return false;
-        
-        return true;
+        return $user->hasRole('root');
     }
 
     /**

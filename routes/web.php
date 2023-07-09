@@ -5,11 +5,9 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BatteryController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UtillityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +24,12 @@ Route::get('/', function () {
     return view('index');
 });
 
-Auth::routes(['verify' => true]);
+// https://github.com/laravel/ui/blob/4.x/src/AuthRouteMethods.php
+// if (App::environment('local')) {
+    Auth::routes(['verify' => true]);
+// } else {
+//     Auth::routes(['verify' => true, 'register' => false]);
+// }
 
 /*
  * email verification routes
@@ -55,9 +58,25 @@ Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
-    Route::get('/event', [EventController::class, 'index'])->name('event');
-    Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log');
 
     Route::resource('/hookah', HookahController::class);
     Route::resource('/user', UserController::class);
+
+    /**
+     * LOCAL only Routes
+     */
+    if (App::environment(['local', 'development']))
+    {
+        // Mail Design Testing
+        Route::get('/mail', function(){
+            $mail = new App\Mail\TestMail();
+            return $mail->render();
+        });
+    }
+
+    // ADMIN routes
+    Route::group(['middleware' => ['level:5']], function ()
+    {
+        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('auditLog');
+    });
 });

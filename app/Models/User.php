@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
-    use HasFactory, Notifiable, \OwenIt\Auditing\Auditable;
+    use
+        HasFactory,
+        Notifiable,
+        HasRoleAndPermission,
+        \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,22 +49,4 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * UserModel, RoleModel Relation. Get the users role.
-     */
-    public function role() 
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
-     * Get name of users role
-     */
-    public function getRoleName()
-    {
-        return $this->role !== null 
-            ? $this->role->name
-            : '-'; 
-    }
 }
