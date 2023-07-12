@@ -13,17 +13,17 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Dart Game </a>
+                        <a class="nav-link" href="{{ route('dart.game.index') }}"> Dart Game </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"> Dart Management </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link disabled" href="#"> Hookahs </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#"> Tabaccos </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{-- request()->routeIs('utillity.viewCheckouts') || request()->routeIs('utillity.viewDartboard')? 'active' : '' --}}" id="navbarDropdown" href="#" data-bs-toggle="dropdown"> Calculators </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

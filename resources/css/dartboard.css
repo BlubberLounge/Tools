@@ -1,0 +1,40 @@
+.c-Dartboard {
+    stroke: silver;
+    stroke-width: 2px;
+}
+
+.c-Dartboard-borders {
+    fill: black;
+}
+.c-Dartboard-borderLabel {
+    font-family: sans-serif;
+    fill: white;
+    stroke-width: 0;
+}
+
+.c-Dartboard-bed.isDark {
+    fill: black;
+}
+
+.c-Dartboard-bed.isLight {
+    fill: ivory;
+}
+
+.c-Dartboard-double .c-Dartboard-bed.isDark,
+.c-Dartboard-triple .c-Dartboard-bed.isDark,
+.c-Dartboard-innerBull .c-Dartboard-bed.isDark,
+.c-Dartboard-outerBull .c-Dartboard-bed.isDark {
+    fill: #E3292E;
+}
+
+.c-Dartboard-double .c-Dartboard-bed.isLight,
+.c-Dartboard-triple .c-Dartboard-bed.isLight,
+.c-Dartboard-innerBull .c-Dartboard-bed.isLight,
+.c-Dartboard-outerBull .c-Dartboard-bed.isLight {
+    fill: #32a63b;
+}
+
+.c-Dartboard-bed:hover, .c-Dartboard-border:hover {
+    fill-opacity: 0.6;
+    cursor: pointer;
+}

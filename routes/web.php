@@ -59,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
+    Route::get('/dart', [DartController::class, 'gameIndex'])->name('dart.game.index');
     Route::get('/checkouts/dartboard', [DartController::class, 'showDartboard'])->name('dart.showDartboard');
     Route::get('/checkouts/{score?}', [DartController::class, 'showCheckout'])->name('dart.showCheckout');
 

@@ -1,9 +1,11 @@
 {
-    "/js/app.js": "/js/app.js?id=06dba20db7b84eccedfef2275a99bf18",
+    "/js/app.js": "/js/app.js?id=94964108236ceabfb510cb28df2d6bc3",
     "/js/dark-mode.js": "/js/dark-mode.js?id=fe771523193426c2098dcd4a84fc8098",
-    "/js/simApp.js": "/js/simApp.js?id=f36ae03ff28b8b3791e97ca42b7dbee1",
+    "/js/simApp.js": "/js/simApp.js?id=d7499b611ee5d62fd902314cc8cb1240",
     "/js/sw.js": "/js/sw.js?id=30882013768225ebdfdad31fa6dd551d",
-    "/js/auth.js": "/js/auth.js?id=e1291bef91a8c220c06a04d1f0a358b1",
+    "/js/auth.js": "/js/auth.js?id=0ee3a30faf8fa856204b45c345f99fac",
+    "/js/dart.js": "/js/dart.js?id=25401d8f2567c834d71693c7f2c406a2",
     "/css/app.css": "/css/app.css?id=50116b857197418382b6a46b839a20a7",
+    "/css/dartboard.css": "/css/dartboard.css?id=f0c95b4865361baf642c898d66d13582",
     "/css/custom.css": "/css/custom.css?id=98f624dc3892febf5a7f3a382be89fd9"
 }

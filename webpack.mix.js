@@ -17,7 +17,9 @@ mix
     .js('resources/js/simApp.js', 'public/js')
     .js('resources/js/sw.js', 'public/js')
     .js('resources/js/auth.js', 'public/js')
+    .js('resources/js/dart.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .css('resources/css/custom.css', 'public/css')
+    .css('resources/css/dartboard.css', 'public/css')
     .version()
     .sourceMaps();

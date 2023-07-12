@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Classes\Dartboard;
 
+use App\Models\User;
+
 
 class DartController extends Controller
 {
@@ -17,6 +19,16 @@ class DartController extends Controller
     public function __construct()
     {
 
+    }
+
+    /**
+     *
+     */
+    public function gameIndex()
+    {
+        $data['users'] = User::all();
+
+        return view('dart.game.index', $data);
     }
 
     /**

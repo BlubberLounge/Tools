@@ -82,7 +82,8 @@
     </div>
 
     <script>
-          navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        if(navigator.serviceWorker)
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
     </script>
 </body>
 </html>
