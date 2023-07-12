@@ -127,12 +127,12 @@
                         @endforeach
                     @else
                         <tr class="text-center table-danger">
-                            <th scope="row" colspan="4" >not enough data.</th>
+                            <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}" >not enough data.</th>
                         </tr>
                         @foreach([".....", "....", "...", "..", "."] as $c)
                             {{--<tr class="text-center opacity-{{75-$loop->index*25}}">--}}
                             <tr class="text-center" style="opacity:{{.75-$loop->index*.2}};">
-                                <th scope="row" colspan="4">{{ $c }}</th>
+                                <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}">{{ $c }}</th>
                             </tr>
                         @endforeach
                     @endif
@@ -167,12 +167,12 @@
                         @endforeach
                     @else
                         <tr class="text-center table-danger">
-                            <th scope="row" colspan="4" >not enough data.</th>
+                            <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}" >not enough data.</th>
                         </tr>
                         @foreach([".....", "....", "...", "..", "."] as $c)
                             {{--<tr class="text-center opacity-{{75-$loop->index*25}}">--}}
                             <tr class="text-center" style="opacity:{{.75-$loop->index*.2}};">
-                                <th scope="row" colspan="4">{{ $c }}</th>
+                                <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}">{{ $c }}</th>
                             </tr>
                         @endforeach
                     @endif
