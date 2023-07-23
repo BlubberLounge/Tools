@@ -38,3 +38,12 @@
     fill-opacity: 0.6;
     cursor: pointer;
 }
+
+.hitMarker {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #000;
+    border: 2px solid #fff ;
+}

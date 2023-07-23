@@ -42,7 +42,7 @@ export function updateIHIfDifferent(id, val)
 
 export function uInfo(id, val, unit = undefined)
 {
-    return updateIHIfDifferent(id, val) || (typeof unit !== "undefined" ? updateIHIfDifferent(id+"Unit", unit) : false); 
+    return updateIHIfDifferent(id, val) || (typeof unit !== "undefined" ? updateIHIfDifferent(id+"Unit", unit) : false);
 }
 
 export function Z(n)
@@ -51,7 +51,7 @@ export function Z(n)
 };
 
 export function timeNow()
-{ 
+{
     let d = new Date(); // new Date().toLocaleString();
     let hh = Z(d.getHours());
     let mm = Z(d.getMinutes());
@@ -83,7 +83,7 @@ export function msToString(ms)
 }
 
 export function currentTime()
-{  
+{
     let timeString = dateNow() +" - "+ timeNow();
     setIH('currentTime', timeString);
     setTimeout(currentTime, 1000);
@@ -142,7 +142,7 @@ export function toggleChartAnnotaion(switchId, AnnId, chart)
     {
         let b = getEl(switchId).checked === true;
         let a = chart.options.plugins.annotation.annotations;
-        if(AnnId == 1) { 
+        if(AnnId == 1) {
             a.A50.display = b;
             a.SOCrpower.display = b;
             a.SOCpower.display = b;
@@ -171,7 +171,7 @@ export function mod(n, m)
     return ((n % m) + m) % m;
 }
 
-    
+
 export function integral(f, s, e, acc = .01)
 {
     let area = 0;
@@ -187,6 +187,19 @@ export function integral(f, s, e, acc = .01)
     return area.toFixed(5);
 }
 
+export function cartesian2Polar(x, y)
+{
+    let distance = Math.sqrt(x*x + y*y);
+    let radians = Math.atan2(y,x);
+
+    return { distance:distance, radians:radians, degrees: radians * (180/Math.PI) };
+}
+
+export function asPercent(number)
+{
+    return (number / 100).toFixed(2)
+}
+
 class BaseData
 {
     data = {};
@@ -197,7 +210,7 @@ class BaseData
 
     exec()
     {
-        console.log("not implemented."); 
+        console.log("not implemented.");
     }
 }
 
@@ -223,7 +236,7 @@ export class MovingAverage extends BaseData
 
     exec()
     {
-        
+
     }
 }
 
@@ -256,24 +269,24 @@ export class CRGB
         return this;
     }
 
-    normalize() 
+    normalize()
     {
         // make sure that value are in 0 ... 1 format
         // instead of 0 .. 255
         /*
         this.r = Number.isInteger(r) && r > 1 ?  r / 256 : r;
-        this.g = Number.isInteger(g) && g > 1 ?  g / 256 : g; 
+        this.g = Number.isInteger(g) && g > 1 ?  g / 256 : g;
         this.b = Number.isInteger(b) && b > 1 ?  b / 256 : b;
         */
 
         this.r /= 255;
-        this.g /= 255; 
+        this.g /= 255;
         this.b /= 255;
 
         return this;
     }
 
-    to8Bit() 
+    to8Bit()
     {
         let r = this.r * 255;
         let g = this.g * 255;
@@ -294,15 +307,46 @@ export class CRGB
         this.g = Number(g);
         this.b = Number(b);
         this.a = Number(a);
-        
+
         this.normalize();
-        
+
         return this;
     }
 
     toString()
     {
         return 'rgba('+this.to8Bit().join(', ')+')';
+    }
+
+    gammaAdjust()
+    {
+        const LOW_GAMMA_THRESHOLD = 0.03928;
+        const LOW_GAMMA_ADJUSTMENT_COEFFICIENT = 12.92;
+        let r = this.r <= LOW_GAMMA_THRESHOLD ? this.r / LOW_GAMMA_ADJUSTMENT_COEFFICIENT : this.highGammaAdjust(this.r);
+        let g = this.g <= LOW_GAMMA_THRESHOLD ? this.g / LOW_GAMMA_ADJUSTMENT_COEFFICIENT : this.highGammaAdjust(this.g);
+        let b = this.b <= LOW_GAMMA_THRESHOLD ? this.b / LOW_GAMMA_ADJUSTMENT_COEFFICIENT : this.highGammaAdjust(this.b);
+
+        return {r: r, g: g, b: b};
+    }
+
+    highGammaAdjust(val)
+    {
+        return Math.pow((val + 0.055) / 1.055, 2.4);
+    }
+
+    relativeLuminance()
+    {
+        let adjustedColor = this.gammaAdjust();
+        return 0.2126 * adjustedColor.r + 0.7152 * adjustedColor.g + 0.0722 * adjustedColor.b;
+    }
+
+    contrastRatio(CRGB)
+    {
+        let clr1 = this.relativeLuminance();
+        let clr2 = CRGB.relativeLuminance();
+        let l1 =  Math.max(clr1, clr2);
+        let l2 =  Math.min(clr1, clr2);
+        return (l1 + 0.05) / (l2 + 0.05);
     }
 
     color = {
@@ -324,22 +368,22 @@ export class CRGB
         dark: '#212529',
     };
 
-    // get r() 
+    // get r()
     // {
     //     return this.r * 255;
     // }
 
-    // get g() 
+    // get g()
     // {
     //     return this.g * 255;
     // }
 
-    // get b() 
+    // get b()
     // {
     //     return this.g * 255;
     // }
 
-    // get a() 
+    // get a()
     // {
     //     return this.a;
     // }

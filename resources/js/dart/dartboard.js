@@ -1,108 +1,11 @@
 import * as d3 from 'd3';
+import * as UTILS from '../utils';
+import Hit from './hit';
 
-function _asPercent(number) {
-    return (number / 100).toFixed(2)
-}
-
-function _createBoardSvg(board) {
-    return board.element.append('svg')
-        .attr('width', board.width)
-        .attr('height', board.height)
-        .append('g')
-        .attr('transform', `translate(${board.radius}, ${board.radius}) rotate(${board.rotation})`)
-}
-
-function _addRingToBeds(ring, beds) {
-    const bedsWithRings = []
-    beds.forEach(bed => {
-        let bedWithRing = JSON.parse(JSON.stringify(bed))
-        bedWithRing.ring = ring
-        bedsWithRings.push(bedWithRing)
-    })
-
-    return bedsWithRings
-}
-
-function _dispatchThrowEvent(boardContainer, bed, event)
-{
-    // // e = Mouse click event. = Mouse click event.
-    let rect = document.getElementById('dartboard').getBoundingClientRect();
-    let x = event.clientX - rect.left; //x position within the element.
-    let y = event.clientY - rect.top;  //y position within the element.
-
-    let div = document.createElement("i");
-    div.style.position = "absolute";
-    div.style.setProperty("top", y+"px");
-    div.style.setProperty("left", x+"px");
-    div.style.width = "10px";
-    div.style.height = "10px";
-    div.style.borderRadius = "50%";
-    div.style.backgroundColor = "#0396a3";
-    // div.classList.add('fa-solid', 'fa-x', 'fa-lg'); // fa-xmark
-    // div.style.color = "blue";
-    // div.style.fontWeight = "bold";
-
-    document.getElementById('dartboard').append(div);
-
-    const detail = {
-        bed: bed.ring.abbr + bed.frame,
-        ring: bed.ring.name,
-        score: bed.frame * bed.ring.multiplier,
-        x: x,
-        y: y
-    };
-
-    boardContainer.dispatchEvent(new CustomEvent('throw', { detail }))
-}
-
-function _renderSegments(board, ring, beds, outerRadius, innerRadius) {
-    const classname = `c-Dartboard-${ring.name}`
-
-    const segments = board.svg.append('g')
-        .classed(classname, true)
-        .selectAll('arc')
-            .data(board.pie(_addRingToBeds(ring, beds)))
-            .enter()
-                .append('g')
-                    .attr('class', bed => `c-Dartboard-bed ${classname}--${bed.data.frame} is${bed.data.color}`)
-                    .on('click', (event, bed) => _dispatchThrowEvent(board.container, bed.data, event))
-
-    segments.append('path').attr('d', d3.arc().outerRadius(outerRadius).innerRadius(innerRadius))
-}
-
-function _renderBorders(board, ring, beds, outerRadius, innerRadius) {
-    const borderArc = d3.arc().outerRadius(outerRadius).innerRadius(innerRadius)
-    const borderSegments = board.svg.append('g')
-        .classed('c-Dartboard-borders', true)
-        .selectAll('arc')
-            .data(board.pie(_addRingToBeds(ring, beds)))
-            .enter()
-                .append('g')
-                    .attr('class', bed => `c-Dartboard-border c-Dartboard-border--${bed.data.frame}`)
-                    .on('click', (event, bed) => _dispatchThrowEvent(board.container, bed.data, event))
-    borderSegments.append('path').attr('d', borderArc)
-
-    function _determineRotation(bedData) {
-        return -board.rotation + (board.segmentWidth * (bedData.position - 1))
-    }
-    function determineX(bed) {
-        return borderArc.centroid(bed)[0]
-    }
-    function determineY(bed) {
-        return borderArc.centroid(bed)[1]
-    }
-
-    borderSegments.append('text')
-        .classed('c-Dartboard-borderLabel', true)
-        .attr('x', determineX)
-        .attr('y', determineY)
-        .attr('dy', '.35em')
-        .attr('transform', bed => `rotate(${_determineRotation(bed.data)}, ${determineX(bed)}, ${determineY(bed)})`)
-        .attr('text-anchor', 'middle')
-        .text(bed => bed.data.frame)
-}
-
-class Dartboard
+/**
+ *
+ */
+export default class Dartboard
 {
     constructor(containerSelector = null)
     {
@@ -160,17 +63,17 @@ class Dartboard
         board.height = board.width;
         board.radius = board.width / 2;
         board.rotation = board.segmentWidth / -2; // rotate so center of first segment is on top
-        board.svg = _createBoardSvg(board);
+        board.svg = this._createBoardSvg(board);
         this.board = board;
 
         this.sizes = {
-            border: board.radius * _asPercent(this.options.borderPercent),
-            double: board.radius * _asPercent(this.options.doublePercent),
-            outerSingle: board.radius * _asPercent(this.options.outerSinglePercent),
-            triple: board.radius * _asPercent(this.options.triplePercent),
-            innerSingle: board.radius * _asPercent(this.options.innerSinglePercent),
-            outerBull: board.radius * _asPercent(this.options.outerBullPercent),
-            innerBull: board.radius * _asPercent(this.options.innerBullPercent),
+            border: board.radius * UTILS.asPercent(this.options.borderPercent),
+            double: board.radius * UTILS.asPercent(this.options.doublePercent),
+            outerSingle: board.radius * UTILS.asPercent(this.options.outerSinglePercent),
+            triple: board.radius * UTILS.asPercent(this.options.triplePercent),
+            innerSingle: board.radius * UTILS.asPercent(this.options.innerSinglePercent),
+            outerBull: board.radius * UTILS.asPercent(this.options.outerBullPercent),
+            innerBull: board.radius *UTILS.asPercent(this.options.innerBullPercent),
         };
     }
 
@@ -182,36 +85,129 @@ class Dartboard
 
         let innerRadius = 0;
         let outerRadius = innerRadius + this.sizes.innerBull;
-        _renderSegments(this.board, this.rings.INNER_BULL, [{ frame: 50, color: 'Dark' }],
-            outerRadius, innerRadius);
+        this._renderSegments(this.rings.INNER_BULL, [{ frame: 50, color: 'Dark' }], outerRadius, innerRadius);
 
         innerRadius = outerRadius;
         outerRadius = innerRadius + this.sizes.outerBull;
-        _renderSegments(this.board, this.rings.OUTER_BULL, [{ frame: 25, color: 'Light' }],
-            outerRadius, innerRadius);
+        this._renderSegments(this.rings.OUTER_BULL, [{ frame: 25, color: 'Light' }], outerRadius, innerRadius);
 
         innerRadius = outerRadius;
         outerRadius = innerRadius + this.sizes.innerSingle;
-        _renderSegments(this.board, this.rings.INNER_SINGLE, this.beds, outerRadius, innerRadius);
+        this._renderSegments(this.rings.INNER_SINGLE, this.beds, outerRadius, innerRadius);
 
         innerRadius = outerRadius;
         outerRadius = innerRadius + this.sizes.triple;
-        _renderSegments(this.board, this.rings.TRIPLE, this.beds, outerRadius, innerRadius);
+        this._renderSegments(this.rings.TRIPLE, this.beds, outerRadius, innerRadius);
 
         innerRadius = outerRadius;
         outerRadius = innerRadius + this.sizes.outerSingle;
-        _renderSegments(this.board, this.rings.OUTER_SINGLE, this.beds, outerRadius, innerRadius);
+        this._renderSegments(this.rings.OUTER_SINGLE, this.beds, outerRadius, innerRadius);
 
         innerRadius = outerRadius;
         outerRadius = innerRadius + this.sizes.double;
-        _renderSegments(this.board, this.rings.DOUBLE, this.beds, outerRadius, innerRadius);
+        this._renderSegments(this.rings.DOUBLE, this.beds, outerRadius, innerRadius);
 
         innerRadius = this.board.radius - this.sizes.border;
         outerRadius = this.board.radius;
-        _renderBorders(this.board, this.rings.BORDER, this.beds, outerRadius, innerRadius);
+        this._renderBorders(this.rings.BORDER, this.beds, outerRadius, innerRadius);
     }
-}
 
-export {
-    Dartboard as default,
+    _handleClick(event, bed)
+    {
+        const bedData = bed.data;
+        // // e = Mouse click event. = Mouse click event.
+        const rect = document.getElementById('dartboard').getBoundingClientRect();
+        const x = event.clientX - rect.left; //x position within the element.
+        const y = event.clientY - rect.top;  //y position within the element.
+
+        const points = bedData.frame * bedData.ring.multiplier;
+        const fieldName = bedData.ring.abbr + bedData.frame;
+        const ringName = bedData.ring.name;
+
+        const hit = new Hit(x, y, points, fieldName, ringName);
+
+        // dartHit event
+        this._dispatchThrowEvent(hit);
+    }
+
+    _dispatchThrowEvent(hit)
+    {
+        this.board.container.dispatchEvent(new CustomEvent('dartHit',
+        {
+            detail: hit,
+        }));
+    }
+
+    _renderSegments(ring, beds, outerRadius, innerRadius)
+    {
+        const classname = `c-Dartboard-${ring.name}`;
+        const board = this.board;
+
+        const segments = board.svg.append('g')
+            .classed(classname, true)
+            .selectAll('arc')
+                .data(board.pie(this._addRingToBeds(ring, beds)))
+                .enter()
+                    .append('g')
+                        .attr('class', bed => `c-Dartboard-bed ${classname}--${bed.data.frame} is${bed.data.color}`)
+                        .on('click', (event, bed) => this._handleClick(event, bed))
+
+        segments.append('path').attr('d', d3.arc().outerRadius(outerRadius).innerRadius(innerRadius))
+    }
+
+    _renderBorders(ring, beds, outerRadius, innerRadius)
+    {
+        const borderArc = d3.arc().outerRadius(outerRadius).innerRadius(innerRadius);
+        const board = this.board;
+
+        const borderSegments = board.svg.append('g')
+            .classed('c-Dartboard-borders', true)
+            .selectAll('arc')
+                .data(board.pie(this._addRingToBeds(ring, beds)))
+                .enter()
+                    .append('g')
+                        .attr('class', bed => `c-Dartboard-border c-Dartboard-border--${bed.data.frame}`)
+                        .on('click', (event, bed) => this._handleClick(event, bed))
+        borderSegments.append('path').attr('d', borderArc)
+
+        var _determineRotation = (bedData) => {
+            return -this.board.rotation + (this.board.segmentWidth * (bedData.position - 1))
+        };
+        var determineX = (bed) => {
+            return borderArc.centroid(bed)[0]
+        }
+        var determineY = (bed) => {
+            return borderArc.centroid(bed)[1]
+        }
+
+        borderSegments.append('text')
+            .classed('c-Dartboard-borderLabel', true)
+            .attr('x', determineX)
+            .attr('y', determineY)
+            .attr('dy', '.35em')
+            .attr('transform', bed => `rotate(${_determineRotation(bed.data)}, ${determineX(bed)}, ${determineY(bed)})`)
+            .attr('text-anchor', 'middle')
+            .text(bed => bed.data.frame)
+    }
+
+    _createBoardSvg(board)
+    {
+        return board.element.append('svg')
+            .attr('width', board.width)
+            .attr('height', board.height)
+            .append('g')
+            .attr('transform', `translate(${board.radius}, ${board.radius}) rotate(${board.rotation})`)
+    }
+
+    _addRingToBeds(ring, beds)
+    {
+        const bedsWithRings = []
+        beds.forEach(bed => {
+            let bedWithRing = JSON.parse(JSON.stringify(bed))
+            bedWithRing.ring = ring
+            bedsWithRings.push(bedWithRing)
+        })
+
+        return bedsWithRings
+    }
 }

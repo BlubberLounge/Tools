@@ -69,6 +69,11 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $this->firstname . ' ' . $this->lastname;
     }
 
+    public function scopeLike($query, $field, $value)
+    {
+        return $query->where($field, 'LIKE', "%$value%");
+    }
+
     /**
      *
      */
