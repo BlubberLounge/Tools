@@ -25,7 +25,7 @@ export default class playerFactory
     {
         return axios({
             method: 'get',
-            url: 'api/v1/user/'+id,
+            url: '/api/v1/user/'+id,
         });
     }
 }

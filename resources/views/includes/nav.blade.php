@@ -13,7 +13,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dart.game.index') }}"> Dart Game </a>
+                        <a class="nav-link" href="{{ route('dart.index') }}"> Dart Game </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"> Dart Management </a>

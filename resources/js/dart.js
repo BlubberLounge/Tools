@@ -13,6 +13,7 @@ $(function()
     console.log(clrRatio);
 
     var dartGame = new Dart('#dartboard');
+    // dartGame.init();
 
     const debounce = (fn, delay = 1000) => {
         let timerId = null;
@@ -27,20 +28,11 @@ $(function()
         let input = $(e.target).val();
 
         if(input)
-            dartGame.searchUser($(e.target).val())
-    }, 250));
+            dartGame.searchUser($(e.target).val());
 
-    // $('.form-check-input').on('click', function()
-    // {
-    //     let id = $(this).val();
-    //     if($(this).prop('checked')) {
-    //         dartGame.addPlayer(id);
-    //     } else {
-    //         dartGame.removePlayer(id);
-    //     }
-    // });
+    }, 400));
 
-    $('#contact-tab').on('click', e =>
+    $('#startGame').on('click', e =>
     {
         dartGame.init();
     });

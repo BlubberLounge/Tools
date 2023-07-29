@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@push('scripts')
+{{-- @push('scripts')
     <script src="{{ mix('js/auth.js') }}" defer></script>
-@endpush
+@endpush --}}
 
 @section('content')
 <div class="container">

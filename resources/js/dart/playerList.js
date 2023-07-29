@@ -8,36 +8,59 @@ export default class PlayerList
 {
     players = [];
 
-    constructor()
+    constructor(players = null)
     {
         this.playerFactory = new PlayerFactory();
         this.isLocked = false;
+
+        if(players)
+            this.addBatch(players);
     }
 
-    add(id)
+    add(player)
     {
         if(this.isLocked)
             return;
 
-        this.playerFactory.createByID(id).then(r =>
-        {
-            if(r instanceof Player) {
-                r.position = this.players.length;
-                this.players.push(r);
-            }
-        });
+        player.position = this.players.length;
+
+        if(player instanceof Player) {
+            this.players.push(user);
+        } else {
+            this.players.push(new Player(player.id, player.name, player.position));
+        }
 
         console.log('Player Added to the List');
 
-        return this;
+        // await this.playerFactory.createByID(id).then(r =>
+        // {
+        //     if(r instanceof Player) {
+        //         r.position = this.players.length;
+        //         this.players.push(r);
+        //         console.log('Player Added to the List');
+        //     }
+        // });
+
+        return this.players[this.players.length > 0 ? this.players.length-1 : 0];
     }
 
-    remove(id)
+    addBatch(players)
     {
         if(this.isLocked)
             return;
 
-        this.players = this.players.filter( player => player.id !== id );
+        players.forEach(player =>
+        {
+            this.add(player);
+        });
+    }
+
+    remove(user)
+    {
+        if(this.isLocked)
+            return;
+
+        this.players = this.players.filter( player => player.id !== user.id );
         return this;
     }
 

@@ -3,28 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreDartGameRequest;
+use App\Http\Requests\UpdateDartGameRequest;
 
 use App\Classes\Dartboard;
-
+use App\Models\DartGame;
 use App\Models\User;
 
-
-class DartController extends Controller
+class DartGameController extends Controller
 {
     /**
-     * Create the controller instance.
-     *
-     * @return void
+     * Display a listing of the resource.
      */
-    public function __construct()
-    {
-
-    }
-
-    /**
-     *
-     */
-    public function gameIndex()
+    public function index()
     {
         $data['users'] = User::all();
 
@@ -32,6 +23,57 @@ class DartController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request)
+    {
+        $data['dartGameType'] = $request->type;
+        // var_dump($request);
+
+        return view('dart.game.create', $data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreDartGameRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(DartGame $dartGame)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(DartGame $dartGame)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateDartGameRequest $request, DartGame $dartGame)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(DartGame $dartGame)
+    {
+        //
+    }
+
+     /**
      * evaluate each checkout option by calculating and appyling a weight
      *
      * @param array &$checkouts to evaluate

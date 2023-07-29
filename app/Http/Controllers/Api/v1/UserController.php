@@ -30,6 +30,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $data['user'] = $user;
+
         return $this->sendResponse($data, 'ok');
     }
 
@@ -55,7 +56,7 @@ class UserController extends Controller
     public function search(Request $request, string $name)
     {
         $data['users'] = User::like('name', $name)->get();
-        return $this->sendResponse($data, 'ok');
 
+        return $this->sendResponse($data, 'ok');
     }
 }

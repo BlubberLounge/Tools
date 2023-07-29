@@ -8,7 +8,7 @@ use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DartController;
+use App\Http\Controllers\DartGameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +59,17 @@ Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
-    Route::get('/dart', [DartController::class, 'gameIndex'])->name('dart.game.index');
-    Route::get('/checkouts/dartboard', [DartController::class, 'showDartboard'])->name('dart.showDartboard');
-    Route::get('/checkouts/{score?}', [DartController::class, 'showCheckout'])->name('dart.showCheckout');
+
+    Route::resource('/dart', DartGameController::class);
+    // route: /dart/*
+    // name: dart.*
+    Route::prefix('dart')->group(function () {
+        Route::name('dart.')->group(function ()
+        {
+            Route::get('/checkouts/dartboard', [DartGameController::class, 'showDartboard'])->name('showDartboard');
+            Route::get('/checkouts/{score?}', [DartGameController::class, 'showCheckout'])->name('showCheckout');
+        });
+    });
 
     Route::resource('/hookah', HookahController::class);
     Route::resource('/user', UserController::class);
