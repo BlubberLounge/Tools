@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateDartGameRequest;
 
 use App\Classes\Dartboard;
 use App\Models\DartGame;
+use App\Models\DartX01Game;
+use App\Models\DartAroundTheClockGame;
 use App\Models\User;
 
 class DartGameController extends Controller
@@ -38,7 +40,9 @@ class DartGameController extends Controller
      */
     public function store(StoreDartGameRequest $request)
     {
-        //
+        $id = 0;
+
+        return redirect()->route('dart.show', ['dart' => $id]);
     }
 
     /**
@@ -46,7 +50,9 @@ class DartGameController extends Controller
      */
     public function show(DartGame $dartGame)
     {
-        //
+        $data['users'] = User::all();
+
+        return view('dart.game.show', $data);
     }
 
     /**

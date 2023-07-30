@@ -1,11 +1,11 @@
 @extends('layouts.dart')
 
 @push('scripts')
-    <script src="{{ mix('js/dart.js') }}"></script>
+    <script src="{{ mix('js/dartSetup.js') }}"></script>
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboard.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/dart.css') }}" />
 @endpush
 
 @section('content')
@@ -33,12 +33,6 @@
                 </div>
             </div>
         </section>
-
-        {{-- <div class="row justify-center pt-4">
-            <div class="col-md-6">
-                <div id="dartboard" style="width: 400px; height: 400px; position: relative;">
-            </div>
-        </div> --}}
 
         <section id="dart-game-settings" class="mb-4">
             @if(Str::endsWith($dartGameType, '01') && Str::length($dartGameType) == 3)

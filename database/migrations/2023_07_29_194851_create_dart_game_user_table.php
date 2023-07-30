@@ -8,12 +8,10 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('event', function (Blueprint $table) {
+        Schema::create('dart_game_user', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -21,11 +19,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('dart_game_user');
     }
 };

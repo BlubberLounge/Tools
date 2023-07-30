@@ -8,12 +8,21 @@ use Illuminate\Auth\Access\Response;
 
 class DartGamePolicy
 {
+
+    /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, $ability): bool
+    {
+        return true;
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +30,7 @@ class DartGamePolicy
      */
     public function view(User $user, DartGame $dartGame): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +38,7 @@ class DartGamePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +46,7 @@ class DartGamePolicy
      */
     public function update(User $user, DartGame $dartGame): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +54,7 @@ class DartGamePolicy
      */
     public function delete(User $user, DartGame $dartGame): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +62,7 @@ class DartGamePolicy
      */
     public function restore(User $user, DartGame $dartGame): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +70,6 @@ class DartGamePolicy
      */
     public function forceDelete(User $user, DartGame $dartGame): bool
     {
-        //
+        return true;
     }
 }
