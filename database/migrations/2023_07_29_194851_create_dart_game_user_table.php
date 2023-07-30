@@ -11,10 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dart_game_user', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('dart_game_user'))
+            Schema::create('dart_game_user', function (Blueprint $table)
+            {
+                $table->id();
+
+                $table->foreignUuid('dart_game_id')
+                    ->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+                $table->foreignId('user_id')
+                    ->constrained()
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
+                $table->timestamps();
+
+                // composite unique key
+                $table->unique(['dart_game_id', 'user_id']);
+            });
     }
 
     /**

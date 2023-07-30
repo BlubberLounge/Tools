@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -80,5 +82,13 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function isLocked(): bool
     {
         return $this->locked;
+    }
+
+    /**
+     * The DartGames that belong to the user.
+     */
+    public function dartGames(): BelongsToMany
+    {
+        return $this->belongsToMany(DartGame::class);
     }
 }

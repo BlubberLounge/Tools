@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('dart_x01_games'))
+        if(!Schema::hasTable('dart_games'))
             Schema::create('dart_games', function (Blueprint $table)
             {
                 $table->uuid('id')
                     ->primary();
 
-                $table->enum('type', ['XO1', 'aroundTheClock','cricket'])
-                    ->default('XO1');
-                $table->enum('status', ['unkown', 'created', 'started', 'running', 'done', 'aborted'])
+                $table->enum('type', ['X01', 'aroundTheClock', 'cricket']); // Don't use DartGameType::cases()
+                $table->enum('status', ['unkown', 'created', 'started', 'running', 'done', 'aborted', 'error']) // Don't use DartGameStatus::cases()
                     ->default('unkown');
                 $table->boolean('private')
                     ->default(false);
@@ -29,7 +28,7 @@ return new class extends Migration
 
                 $table->integer('points')
                     ->nullable()
-                    ->comment('used in XO1 games');
+                    ->comment('used in X01 games');
 
                 $table->integer('start')
                     ->nullable()
@@ -64,8 +63,9 @@ return new class extends Migration
                 $table->timestamps();
                 $table->softDeletes();
 
+                // index keys
                 $table->index('status');
-                $table->index('title');
+                $table->index(['status', 'private']);
             });
     }
 
