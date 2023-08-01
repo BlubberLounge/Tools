@@ -9,13 +9,13 @@ use App\Interfaces\EnumTypeOrStatus;
  */
 enum DartGameStatus: string implements EnumTypeOrStatus
 {
-    case unkown = 'unkown';
-    case created = 'created';
-    case started = 'started';
-    case running = 'running';
-    case done = 'done';
-    case aborted = 'aborted';
-    case error = 'error';
+    case UNKOWN = 'unkown';
+    case CREATED = 'created';
+    case STARTED = 'started';
+    case RUNNING = 'running';
+    case DONE = 'done';
+    case ABORTED = 'aborted';
+    case ERROR = 'error';
 
     public static function fromString(string $string): DartGameStatus
     {
@@ -30,13 +30,13 @@ enum DartGameStatus: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartGameStatus::unkown => 'no color',
-            DartGameStatus::created => 'no color',
-            DartGameStatus::started => 'no color',
-            DartGameStatus::running => 'no color',
-            DartGameStatus::done => 'no color',
-            DartGameStatus::aborted => 'no color',
-            DartGameStatus::error => 'no color',
+            DartGameStatus::UNKOWN => 'no color',
+            DartGameStatus::CREATED => 'no color',
+            DartGameStatus::STARTED => 'no color',
+            DartGameStatus::RUNNING => 'no color',
+            DartGameStatus::DONE => 'no color',
+            DartGameStatus::ABORTED => 'no color',
+            DartGameStatus::ERROR => 'no color',
         };
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Enums\DartGameType;
@@ -64,8 +65,16 @@ class DartGame extends Model
     /**
      * The users that belong to the DartGame.
      */
-    public function users(): HasMany
+    public function users(): BelongsToMany
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    /**
+     * Get all of the throws for the project.
+     */
+    public function dartThrows(): HasMany
+    {
+        return $this->hasMany(DartThrow::class);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -85,10 +86,34 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
+     *
+     */
+    public static function getRootUser(): User
+    {
+        return User::where('name', 'root')->first();
+    }
+
+    /**
      * The DartGames that belong to the user.
      */
-    public function dartGames(): BelongsToMany
+    public function DartGames(): BelongsToMany
     {
-        return $this->belongsToMany(DartGame::class);
+        return $this->belongsToMany(DartGame::class)->withTimestamps();
+    }
+
+    /**
+     * Get all of the throws for the uder.
+     */
+    public function DartThrows(): HasMany
+    {
+        return $this->hasMany(DartThrow::class);
+    }
+
+    /**
+     * Get all of the throws for a user by game id
+     */
+    public function throwsByGame(): HasMany
+    {
+        return $this->throws()->where('dart_game_id', '99c7dc3b-7e5f-4db5-8fb2-313660a1b1a5');
     }
 }

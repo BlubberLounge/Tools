@@ -10,7 +10,9 @@ use App\Classes\Dartboard;
 use App\Models\DartGame;
 use App\Models\DartX01Game;
 use App\Models\DartAroundTheClockGame;
+use App\Models\DartThrow;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DartGameController extends Controller
 {
@@ -20,6 +22,14 @@ class DartGameController extends Controller
     public function index()
     {
         $data['users'] = User::all();
+
+        // $game = DartGame::find('99c77ebd-fa56-49c4-a81b-43188bb19b97');
+        // dd($game->users()->get());
+
+        // $throw = DartThrow::find('1');
+        // dd($throw->user()->get());
+
+        dd(Auth::user()->testThrows('1')->get());
 
         return view('dart.game.index', $data);
     }

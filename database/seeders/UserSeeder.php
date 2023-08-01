@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\DartGame;
 
 class UserSeeder extends Seeder
 {
@@ -41,6 +42,9 @@ class UserSeeder extends Seeder
             $userRole = config('roles.models.role')::where('name', 'User')->first();
             User::factory()
                 ->count(rand(10, 18))
+                ->hasAttached(
+                    DartGame::factory()->count(5)
+                )
                 ->create()
                 ->each( function($user) use ($userRole) {
                     $user->attachRole($userRole);

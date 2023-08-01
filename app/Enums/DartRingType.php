@@ -7,13 +7,13 @@ use App\Interfaces\EnumTypeOrStatus;
 /**
  * DartFieldType enumaration
  */
-enum DartFieldType: string implements EnumTypeOrStatus
+enum DartRingType: string implements EnumTypeOrStatus
 {
-    case S = 'single';
-    case D = 'double';
-    case T = 'tripple';
+    case S = 'S';   // Single
+    case D = 'D';   // Double
+    case T = 'T';   // Tripple
 
-    public static function fromString(string $string): DartFieldType
+    public static function fromString(string $string): DartRingType
     {
         foreach (self::cases() as $type)
             if (strtoupper($string) === $type->name)
@@ -26,9 +26,9 @@ enum DartFieldType: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartFieldType::S => 'no color',
-            DartFieldType::D => 'no color',
-            DartFieldType::T => 'no color',
+            DartRingType::S => 'no color',
+            DartRingType::D => 'no color',
+            DartRingType::T => 'no color',
         };
     }
 }
