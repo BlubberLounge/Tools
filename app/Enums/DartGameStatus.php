@@ -30,13 +30,13 @@ enum DartGameStatus: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartGameStatus::UNKOWN => 'no color',
-            DartGameStatus::CREATED => 'no color',
-            DartGameStatus::STARTED => 'no color',
-            DartGameStatus::RUNNING => 'no color',
-            DartGameStatus::DONE => 'no color',
-            DartGameStatus::ABORTED => 'no color',
-            DartGameStatus::ERROR => 'no color',
+            DartGameStatus::UNKOWN => 'var(--bs-gray)',
+            DartGameStatus::CREATED => 'var(--bs-success)',
+            DartGameStatus::STARTED => 'var(--bs-success)',
+            DartGameStatus::RUNNING => 'var(--bs-primary)',
+            DartGameStatus::DONE => 'var(--bs-warning)',
+            DartGameStatus::ABORTED => 'var(--bs-pink)',
+            DartGameStatus::ERROR => 'var(--bs-danger)',
         };
     }
 }

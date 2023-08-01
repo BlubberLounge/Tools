@@ -19,18 +19,19 @@ class DartGameSeeder extends Seeder
     public function run(): void
     {
         $numberOfGames = 25;
+        $rootUser = User::getRootUser();
 
         // Probably could be done better
         for($i = 0; $i < $numberOfGames; $i++)
         {
-            $playerPerGame = rand(1, 4);
+            $playerPerGame = rand(1, 3);
             $turnsPerGame = rand(3, 20);
             $throwsPerUser = 3;
 
-            $game = DartGame::factory(1)->create();
+            $game = DartGame::factory(1)->for($rootUser, 'createdBy')->create();
 
-            $users = User::inRandomOrder()->limit($playerPerGame)->get();
-            $users->push(User::getRootUser());
+            $users = User::inRandomOrder()->whereNot('id', $rootUser->id)->limit($playerPerGame)->get();
+            $users->push($rootUser);
 
             foreach($users as $user) {
                 $user->DartGames()->attach($game);

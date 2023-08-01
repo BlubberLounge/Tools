@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Classes\Utillity;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DartGame>
@@ -44,9 +45,10 @@ class DartGameFactory extends Factory
     private function commomDefinitions()
     {
         return [
+            'created_by' => User::inRandomOrder()->first('id'),
             'status' => $this->getWeigthedStatus(),
-            'private' => fake()->boolean(5),
-            'title' => fake()->sentence(5),
+            'private' => fake()->boolean(10),
+            'title' => fake()->sentence(fake()->numberBetween(2, 10)),
             'comment' => fake()->text(),
             'singleOut' => fake()->boolean(90),
             'doubleOut' => fake()->boolean(90),

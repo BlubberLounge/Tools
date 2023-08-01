@@ -20,7 +20,7 @@
         </small>
     </div>
 
-    <div class="row mb-4 g-1 g-md-3">
+    <div class="row mb-4 g-1 g-md-3 justify-center">
         @for($i = 3; $i <= 7; $i++)
             <div class="col-auto">
                 <a href="{{ route('dart.create', ['type' => $i.'01']) }}" id="btnGameType-{{ $i }}01" class="btn btn-primary" data-bl-dart-game-type="{{ $i }}01" role="button">
@@ -33,11 +33,11 @@
         @endfor
     </div>
 
-    <div class="row mb-4 g-1 g-md-3">
+    <div class="row mb-5 g-1 g-md-3 justify-center">
         <div class="col-auto">
             <a href="{{ route('dart.create', ['type' => 'aroundTheClock']) }}" class="btn btn-primary" role="button">
                 <div class="p-2 p-md-4 d-flex flex-column text-center">
-                    <i class="fa-solid fa-arrows-rotate mb-3" style="font-size: 2rem;"></i>
+                    <i class="fa-solid fa-repeat mb-3" style="font-size: 2rem;"></i>
                     Around the Clock
                 </div>
             </a>
@@ -52,12 +52,30 @@
             </a>
         </div>
         <div class="col-auto">
-            <a href="{{ route('dart.create', ['type' => 'cricket']) }}" class="btn btn-primary" role="button">
+            <a href="{{ route('dart.create', ['type' => 'cricket']) }}" class="btn btn-primary disabled" role="button">
                 <div class="p-2 p-md-4 d-flex flex-column text-center">
-                    <i class="fa-solid fa-shield-heart mb-3" style="font-size: 2rem;"></i>
-                    Cricket
+                    <i class="fa-solid fa-golf-ball-tee mb-3" style="font-size: 2rem;"></i>
+                    Golf
                 </div>
             </a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col">
+            <ul class="list-group">
+                @foreach ($games as $game)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @mobile
+                            {{ Str::limit($game->title, 40) }}
+                        @endmobile
+                        @desktop
+                            {{ $game->title }}
+                        @enddesktop
+                        <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span>
+                    </li>
+                @endforeach
+              </ul>
         </div>
     </div>
 </div>

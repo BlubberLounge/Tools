@@ -7,6 +7,8 @@ use App\Http\Requests\StoreDartGameRequest;
 use App\Http\Requests\UpdateDartGameRequest;
 
 use App\Classes\Dartboard;
+use App\Enums\DartGameStatus;
+use App\Enums\DartGameType;
 use App\Models\DartGame;
 use App\Models\DartX01Game;
 use App\Models\DartAroundTheClockGame;
@@ -23,13 +25,7 @@ class DartGameController extends Controller
     {
         $data['users'] = User::all();
 
-        // $game = DartGame::find('99c77ebd-fa56-49c4-a81b-43188bb19b97');
-        // dd($game->users()->get());
-
-        // $throw = DartThrow::find('1');
-        // dd($throw->user()->get());
-
-        dd(Auth::user()->testThrows('1')->get());
+        $data['games'] = Auth::user()->DartGames()->open()->get();
 
         return view('dart.game.index', $data);
     }
@@ -50,9 +46,24 @@ class DartGameController extends Controller
      */
     public function store(StoreDartGameRequest $request)
     {
-        $id = 0;
+        $game = new DartGame();
+        $game->type = DartGameType::X01;
+        $game->status = DartGameStatus::CREATED;
+        $game->private = $request->private ?? 0;
+        $game->title = $request->title ?? Auth::user()->getGameTitle();
+        $game->comment = $request->comment ?? null;
+        $game->points = $request->points ?? null;
+        $game->start = $request->start ?? null;
+        $game->end = $request->end ?? null;
+        $game->singleOut = $request->singleOut ?? 1;
+        $game->doubleOut = $request->doubleOut ?? 1;
+        $game->trippleOut = $request->trippleOut ?? 1;
+        $game->singleIn = $request->singleIn ?? 1;
+        $game->doubleIn = $request->doubleIn ?? 1;
+        $game->trippleIn = $request->trippleIn ?? 1;
+        $game->save();
 
-        return redirect()->route('dart.show', ['dart' => $id]);
+        return redirect()->route('dart.show', ['dart' => $game->id]);
     }
 
     /**

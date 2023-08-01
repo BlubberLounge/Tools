@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -95,6 +96,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
 
     /**
      * The DartGames that belong to the user.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function DartGames(): BelongsToMany
     {
@@ -110,10 +113,27 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
+     * The DartGame that this user created
+     *
+     */
+    public function createdGame(): HasMany
+    {
+        return $this->hasMany(DartGame::class, 'created_by');
+    }
+
+    /**
      * Get all of the throws for a user by game id
      */
-    public function throwsByGame(): HasMany
+    // public function throwsByGame(): HasMany
+    // {
+    //     return $this->throws()->where('dart_game_id', '99c7dc3b-7e5f-4db5-8fb2-313660a1b1a5');
+    // }
+
+    /**
+     *
+     */
+    public function getGameTitle(): string
     {
-        return $this->throws()->where('dart_game_id', '99c7dc3b-7e5f-4db5-8fb2-313660a1b1a5');
+        return $this->full_name.'\'s Game #'. Str::padLeft($this->DartGames->count(), 3, 0);
     }
 }

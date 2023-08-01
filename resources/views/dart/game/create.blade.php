@@ -37,7 +37,7 @@
         <section id="dart-game-settings" class="mb-4">
             @if(Str::endsWith($dartGameType, '01') && Str::length($dartGameType) == 3)
                 <h5> General </h5>
-                <x-form.input-text attribute="gameTitle" label="Game title" />
+                <x-form.input-text attribute="title" label="Game title" />
                 <x-form.input-checkbox attribute="private" label="Private" />
                 {{--
                 <h5> Checkin </h5>

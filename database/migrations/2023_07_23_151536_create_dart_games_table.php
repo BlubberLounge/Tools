@@ -17,6 +17,11 @@ return new class extends Migration
                 $table->uuid('id')
                     ->primary();
 
+                $table->foreignId('created_by')
+                    ->constrained('users')
+                    ->comment('game created by user')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
                 $table->enum('type', ['X01', 'aroundTheClock', 'cricket']); // Don't use DartGameType::cases()
                 $table->enum('status', ['unkown', 'created', 'started', 'running', 'done', 'aborted', 'error']) // Don't use DartGameStatus::cases()
                     ->default('unkown');
