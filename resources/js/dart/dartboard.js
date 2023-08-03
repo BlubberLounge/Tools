@@ -116,15 +116,17 @@ export default class Dartboard
     {
         const bedData = bed.data;
         // // e = Mouse click event. = Mouse click event.
-        const rect = document.getElementById('dartboard').getBoundingClientRect();
-        const x = event.clientX - rect.left; //x position within the element.
-        const y = event.clientY - rect.top;  //y position within the element.
+        const rect = document.getElementsByClassName('c-Dartboard')[0].getBoundingClientRect();
+        const x = event.clientX - rect.left; // x position within the element.
+        const y = event.clientY - rect.top;  // y position within the element.
 
         const points = bedData.frame * bedData.ring.multiplier;
         const fieldName = bedData.ring.abbr + bedData.frame;
         const ringName = bedData.ring.name;
 
         const hit = new Hit(x, y, points, fieldName, ringName);
+
+        console.log(hit);
 
         // dartHit event
         this._dispatchThrowEvent(hit);

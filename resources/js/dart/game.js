@@ -1,5 +1,6 @@
 import GameType from "./enums/gameType";
 import GameSettings from "./gameSettings";
+import PlayerList from "./playerList";
 
 /**
  *
@@ -31,9 +32,37 @@ export default class Game
         this.doubleIn = true;
         this.trippleIn = true;
 
+        this.currentSet = 1;
+        this.currentLeg = 1;
+        this.currentTurn = 1;
+        this.currentPlayer = null;
+
+        this.dartboardSize = null;
+
         this.settings = new GameSettings();
 
         this._init();
+    }
+
+    nextTurn()
+    {
+        this._saveTurn();
+        this.currentTurn++;
+    }
+
+    nextPlayer()
+    {
+        this.currentPlayer = this.users.next();
+    }
+
+    addThrow(x, y)
+    {
+        this.currentPlayer.addThrow(this.currentSet, this.currentLeg, this.currentTurn, x, y, this.dartboardSize/2);
+    }
+
+    _saveTurn()
+    {
+        // send to api
     }
 
     _init()
@@ -41,8 +70,9 @@ export default class Game
         console.info('<========== Initalising DartGame ==========>');
         this.id = document.getElementById('gameId').getAttribute('value');
 
-
         let details = this._fetchDetails().game;
+
+        this.users = new PlayerList(details.users);
 
         this.createdBy = details.created_by.firstname +' '+ details.created_by.lastname;
         this.type = GameType.fromString(details.type);
@@ -70,6 +100,8 @@ export default class Game
         this.singleIn = details.singleIn;
         this.doubleIn = details.doubleIn;
         this.trippleIn = details.trippleIn;
+
+        this.nextPlayer();
     }
 
     _fetchDetails()
@@ -79,7 +111,7 @@ export default class Game
         //     url: '/api/v1/dart/'+this.id,
         // }).data;
 
-         let result = $.ajax({
+        let result = $.ajax({
             url: '/api/v1/dart/'+this.id,
             type: "GET",
             async: false,
@@ -111,10 +143,5 @@ export default class Game
         });
 
         return result.responseJSON.data;
-    }
-
-    run()
-    {
-
     }
 }

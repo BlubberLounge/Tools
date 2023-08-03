@@ -3,7 +3,7 @@
     <div class="row pb-3 g-2"> {{--style="overflow-x: auto;white-space: nowrap;"--}}
 @endif
     <div class="col-6">
-        <div class="card d-inline-block w-100">
+        <div class="card d-inline-block w-100" data-user-id="{{ $user->id }}">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-auto" style="font-size: 2rem">

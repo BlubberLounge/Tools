@@ -1,5 +1,4 @@
 import Player from './player';
-import PlayerFactory from './playerFactory';
 
 /**
  *
@@ -10,8 +9,8 @@ export default class PlayerList
 
     constructor(players = null)
     {
-        this.playerFactory = new PlayerFactory();
         this.isLocked = false;
+        this.pointer = -1;
 
         if(players)
             this.addBatch(players);
@@ -32,15 +31,6 @@ export default class PlayerList
         }
 
         console.log('Player Added to the List');
-
-        // await this.playerFactory.createByID(id).then(r =>
-        // {
-        //     if(r instanceof Player) {
-        //         r.position = this.players.length;
-        //         this.players.push(r);
-        //         console.log('Player Added to the List');
-        //     }
-        // });
 
         return this.players[this.players.length > 0 ? this.players.length-1 : 0];
     }
@@ -63,6 +53,28 @@ export default class PlayerList
 
         this.players = this.players.filter( player => player.id !== user.id );
         return this;
+    }
+
+    next()
+    {
+        this._incrementPointer();
+        return this.players[this.pointer];
+    }
+
+    previous()
+    {
+        this._decrementPointer();
+        return this.players[this.pointer];
+    }
+
+    _incrementPointer()
+    {
+        return this.pointer++;
+    }
+
+    _decrementPointer()
+    {
+        return this.pointer--;
     }
 
     sortByPosition()
