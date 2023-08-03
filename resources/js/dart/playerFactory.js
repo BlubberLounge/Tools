@@ -18,7 +18,10 @@ export default class playerFactory
             data = (await this._fetchUserByID(id)).data;
 
         let user = data.data.user;
-        return new Player(id, user.name);
+        let name = user.name;
+        let fullName = user.firstname +' '+ user.lastname;
+
+        return new Player(id, name, fullName);
     }
 
     _fetchUserByID(id)

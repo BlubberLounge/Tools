@@ -1,13 +1,16 @@
 .c-Dartboard {
-    stroke: silver;
+    stroke: rgb(133, 133, 133);
     stroke-width: 2px;
+    /* stroke: silver;
+    stroke-width: 2px; */
 }
 
 .c-Dartboard-borders {
     fill: black;
 }
 .c-Dartboard-borderLabel {
-    font-family: sans-serif;
+    font-family: 'Roboto';
+    font-weight: bold;
     fill: white;
     stroke-width: 0;
 }

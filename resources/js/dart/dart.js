@@ -7,6 +7,8 @@
 import * as UTILS from '../utils';
 import Dartboard from './dartboard';
 import PlayerList from './playerList';
+import Game from "./game";
+import GameX01 from "./gameX01";
 
 /**
  * Singleton Dart entry class
@@ -39,6 +41,20 @@ export default class Dart
         this.playerList.lock();
         this.playerList.sortByPosition();
 
+
+        let t = document.getElementById('gameType').getAttribute('value');
+        if(t == 'X01') {
+            this.game = new GameX01();
+        } else if(t == 'aroundTheClock') {
+            // this.game = new GameAroundTheClock();
+        } else if(t == 'cricket') {
+            // this.game = new GameCricket();
+        }
+
+        if(!this.game instanceof Game)
+            console.error('GameType is unkown.');
+
+
         this.addListeners();
 
         this.initialized = true;
@@ -55,10 +71,11 @@ export default class Dart
 
     placeHitMarker(hit)
     {
-        console.log(hit);
-        console.log(this.playerList.players);
         let hitMarker = document.createElement("i");
+        // let hitMarker = document.createElement('img');
+        // hitMarker.setAttribute('src', '/img/dart-arrow.svg');
         hitMarker.classList.add('hitMarker');
+        // hitMarker.classList.add('fa-solid', 'fa-location-pin');
 
         let topPosition = hit.y - (8/2); // center hitMarker on cursor tip
         let leftPosition = hit.x - (8/2); // center hitMarker on cursor tip

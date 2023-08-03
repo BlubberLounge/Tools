@@ -113,10 +113,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
-     * The DartGame that this user created
-     *
+     * The DartGames that this user created
      */
-    public function createdGame(): HasMany
+    public function createdGames(): HasMany
     {
         return $this->hasMany(DartGame::class, 'created_by');
     }
@@ -134,6 +133,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function getGameTitle(): string
     {
-        return $this->full_name.'\'s Game #'. Str::padLeft($this->DartGames->count(), 3, 0);
+        return $this->full_name.'\'s Game #'. Str::padLeft($this->createdGames->count(), 3, 0);
     }
 }

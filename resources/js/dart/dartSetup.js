@@ -39,23 +39,24 @@ export default class DartSetup
         list.innerHTML = '';
 
         var totalHeight = 0;
-        var newDiv = () => document.createElement("div");
+        var newDiv = () => document.createElement('div');
 
-        usersList.players.forEach(e =>
+        usersList.players.forEach(user =>
         {
-            let row = document.createElement("li");
+            let row = document.createElement('li');
             row.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
             let rowData = newDiv();
             rowData.classList.add('me-auto');
-            rowData.innerHTML = e.name;
+            rowData.innerHTML = user.name;
 
             let addButton = document.createElement('button');
             addButton.classList.add('btn', 'btn-add-player');
+            addButton.setAttribute('type', 'button');
             addButton.setAttribute('style', 'color:var(--bs-success)');
             addButton.addEventListener('click', h =>
             {
-                this.addPlayer(e);
+                this.addPlayer(user);
 
                 let el = h.target.closest('li');
                 el.style.transition = "opacity .5s ease";
@@ -97,10 +98,16 @@ export default class DartSetup
         row.style.opacity = 0;
         row.style.transition = "opacity .5s ease";
 
+        let inputHidden = document.createElement('input');
+        inputHidden.setAttribute('type', 'hidden');
+        inputHidden.setAttribute('name', 'users['+addedUser.id+']');
+        inputHidden.setAttribute('value', addedUser.id);
+        row.appendChild(inputHidden);
+
         let colName = newDiv();
         colName.classList.add('col', 'fs-5');
         colName.setAttribute('data-user-id', addedUser.id);
-        colName.innerHTML = addedUser.name;
+        colName.innerHTML = addedUser.fullName;
         row.appendChild(colName);
 
         let colActions = newDiv();
@@ -109,6 +116,7 @@ export default class DartSetup
 
         let addButton = document.createElement('button');
         addButton.classList.add('btn', 'btn-add-player');
+        addButton.setAttribute('type', 'button');
         addButton.setAttribute('style', 'color:var(--bs-danger)');
         addButton.addEventListener('click', h =>
         {

@@ -13,7 +13,7 @@
             class="form-check-input @error('{{ $attribute }}') is-invalid @enderror"
             type="checkbox"
             name="{{ $attribute }}"
-            value="{{ old($attribute) ? old($attribute) : '' }}"
+            {{-- value="{{ old($attribute) ? old($attribute) : '' }}" --}}
             style="font-size:1.5em"
             {{ $isChecked ? 'checked' : '' }}
             autocomplete="off"

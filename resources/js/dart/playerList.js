@@ -25,9 +25,10 @@ export default class PlayerList
         player.position = this.players.length;
 
         if(player instanceof Player) {
-            this.players.push(user);
+            this.players.push(player);
         } else {
-            this.players.push(new Player(player.id, player.name, player.position));
+            let fullName = player.firstname +' '+ player.lastname;
+            this.players.push(new Player(player.id, player.name, fullName, player.position));
         }
 
         console.log('Player Added to the List');

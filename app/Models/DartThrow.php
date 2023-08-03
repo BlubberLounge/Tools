@@ -25,6 +25,8 @@ class DartThrow extends Model
         'value',
         'field',
         'ring',
+        'x',
+        'y',
     ];
 
     /**

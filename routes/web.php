@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
 
-    Route::resource('/dart', DartGameController::class);
+    Route::resource('/dart', DartGameController::class)->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping
     // route: /dart/*
     // name: dart.*
     Route::prefix('dart')->group(function () {

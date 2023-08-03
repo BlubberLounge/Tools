@@ -10,44 +10,20 @@
 @endpush
 
 @section('content')
-<div class="container px-4">
-    <div class="p-3" style="overflow-x: auto;white-space: nowrap;">
-        @foreach ($users as $user)
-            <div class="card d-inline-block me-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-auto">
-                            301
-                        </div>
-                        <div class="col">
-                            {{ $user->full_name }}
-                        </div>
-                        <div class="col">
-                            Wins: 0
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            1
-                        </div>
-                        <div class="col">
-                            2
-                        </div>
-                        <div class="col">
-                            3
-                        </div>
-                        <div class="col">
-                            Total
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-    <div class="row justify-center mt-4">
-        <div class="col-md-6">
-            <div id="dartboard" style="width: 350px; height: 350px; position: relative;">
-        </div>
+<div class="container px-2">
+    <input type="hidden" id="gameId" name="id" value="{{ $id }}">
+    <input type="hidden" id="gameType" name="type" value="{{ $type }}">
+
+    @if($type === App\Enums\DartGameType::X01)
+        @include('dart.game.showX01')
+    @elseif ($type === App\Enums\DartGameType::aroundTheClock)
+        @include('dart.game.showAroundTheClock')
+    @elseif ($type === App\Enums\DartGameType::cricket)
+        @include('dart.game.showCricket')
+    @endif
+
+    <div class="row justify-center mt-4 align-items-center">
+        <div id="dartboard" style="position:relative; display:flex; justify-content:center;">
     </div>
 </div>
 @endsection

@@ -10,13 +10,13 @@ export default class Dartboard
     constructor(containerSelector = null)
     {
         this.options = {
-            size: null,
-            borderPercent: 9,
-            doublePercent: 9,
-            outerSinglePercent: 29,
-            triplePercent: 8,
+            size: 360,
+            borderPercent: 13,
+            doublePercent: 8,
+            outerSinglePercent: 28,
+            triplePercent: 7,
             innerSinglePercent: 32,
-            outerBullPercent: 7,
+            outerBullPercent: 6,
             innerBullPercent: 6,
         };
 
@@ -185,7 +185,8 @@ export default class Dartboard
             .attr('x', determineX)
             .attr('y', determineY)
             .attr('dy', '.35em')
-            .attr('transform', bed => `rotate(${_determineRotation(bed.data)}, ${determineX(bed)}, ${determineY(bed)})`)
+            // .attr('transform', bed => `rotate(${_determineRotation(bed.data)}, ${determineX(bed)}, ${determineY(bed)})`)
+            .attr('transform', bed => `rotate(9, ${determineX(bed)}, ${determineY(bed)})`)
             .attr('text-anchor', 'middle')
             .text(bed => bed.data.frame)
     }

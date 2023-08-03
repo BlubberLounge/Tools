@@ -46,7 +46,11 @@ class DartGameController extends Controller
      */
     public function store(StoreDartGameRequest $request)
     {
+        // $data = $request->validated();
+        // dd($data);
+
         $game = new DartGame();
+        $game->created_by = Auth::user()->id;
         $game->type = DartGameType::X01;
         $game->status = DartGameStatus::CREATED;
         $game->private = $request->private ?? 0;
@@ -55,15 +59,18 @@ class DartGameController extends Controller
         $game->points = $request->points ?? null;
         $game->start = $request->start ?? null;
         $game->end = $request->end ?? null;
-        $game->singleOut = $request->singleOut ?? 1;
-        $game->doubleOut = $request->doubleOut ?? 1;
-        $game->trippleOut = $request->trippleOut ?? 1;
+        $game->singleOut = $request->singleOut ? 1 : 0;
+        $game->doubleOut = $request->doubleOut ? 1 : 0;
+        $game->trippleOut = $request->trippleOut ? 1 : 0;
         $game->singleIn = $request->singleIn ?? 1;
         $game->doubleIn = $request->doubleIn ?? 1;
         $game->trippleIn = $request->trippleIn ?? 1;
         $game->save();
 
-        return redirect()->route('dart.show', ['dart' => $game->id]);
+        $users = User::findMany($request->input('users.*'));
+        $users->each(fn($user) => $user->DartGames()->attach($game));
+
+        return redirect()->route('dart.show', ['dartGame' => $game->id]);
     }
 
     /**
@@ -71,7 +78,9 @@ class DartGameController extends Controller
      */
     public function show(DartGame $dartGame)
     {
-        $data['users'] = User::all();
+        $data['id'] = $dartGame->id;
+        $data['type'] = $dartGame->type;
+        $data['users'] = $dartGame->Users;
 
         return view('dart.game.show', $data);
     }

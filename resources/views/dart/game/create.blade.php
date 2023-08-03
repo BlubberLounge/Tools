@@ -63,6 +63,7 @@
             <h6> Selected Player </h6>
             <div class="mb-5" id="selectedUserList">
                 <div class="row">
+                    <input type="hidden" name="users[{{ Auth::user()->id  }}]" value="{{ Auth::user()->id  }}">
                     <div class="col fs-5">
                         Ich ({{ Auth::user()->full_name }})
                     </div>

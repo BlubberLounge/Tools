@@ -54,8 +54,9 @@
         <div class="col-auto">
             <a href="{{ route('dart.create', ['type' => 'cricket']) }}" class="btn btn-primary disabled" role="button">
                 <div class="p-2 p-md-4 d-flex flex-column text-center">
-                    <i class="fa-solid fa-golf-ball-tee mb-3" style="font-size: 2rem;"></i>
-                    Golf
+                    <i class="fa-solid fa-graduation-cap mb-3" style="font-size: 2rem;"></i>
+                    {{-- <i class="fa-solid fa-golf-ball-tee mb-3" style="font-size: 2rem;"></i> --}}
+                    Practise
                 </div>
             </a>
         </div>

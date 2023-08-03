@@ -41,6 +41,13 @@ return new class extends Migration
                     ->comment('0 to 20 and 25 aka bull');
                 $table->enum('ring', ['S', 'D', 'T'])
                     ->comment('aka. multiplier; S = Single 1x, D = Double 2x, T = Tripple 3x');
+                $table->decimal('x', 5, 4)
+                    ->comment('relative normalised representation of a Throws X coordinate to the Board origin (0,0). value range: 0 to 1');
+                $table->decimal('y', 5, 4)
+                    ->comment('relative normalised representation of a Throws Y coordinate to the Board origin (0,0). value range: 0 to 1');
+                $table->enum('data_input_type', ['NUMPAD', 'DARTBOARD', 'API'])
+                    ->comment('NumPad = number field in the frontend. With this input method no positions can be saved; Dartboard = Graphical Dartboard to click a exact postion; Api = external data input')
+                    ->default('NUMPAD');
                 // $table->foreignId('dart_game_user_id')
                 //     ->constrained('dart_game_user') // remember: pivot table
                 //     ->onUpdate('cascade')
@@ -53,8 +60,10 @@ return new class extends Migration
                 $table->unique(['dart_game_id', 'user_id', 'set', 'leg', 'turn', 'throw']);
 
                 // composite index keys
+                $table->index(['dart_game_id', 'user_id', 'data_input_type']);
                 $table->index(['dart_game_id', 'user_id', 'set', 'leg', 'turn', 'throw']);
                 $table->index(['set', 'leg', 'turn', 'throw']);
+                $table->index(['set', 'leg', 'turn', 'throw', 'data_input_type']);
             });
     }
 
