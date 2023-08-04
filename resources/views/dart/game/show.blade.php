@@ -22,8 +22,27 @@
         @include('dart.game.showCricket')
     @endif
 
-    <div class="row justify-center mt-4 align-items-center">
-        <div id="dartboard" style="position:relative; display:flex; justify-content:center;">
-    </div>
+    <section class="mt-4 mb-5">
+        <div class="row justify-center align-items-center">
+            {{-- <div id="skeleton-dartboard" class="placeholder-wave" style="position:relative; display:flex; justify-content:center; width: 360px; height: 360px;">
+                <span class="placeholder col"></span>
+            </div> --}}
+            <div id="skeleton-dartboard" class=" d-flex justify-center align-items-center" style="width: 360px; height: 360px;">
+                <div class="spinner-border">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div id="dartboard" style="position:relative; display:flex; justify-content:center;"></div>
+        </div>
+    </section>
+
+    <section class="mt-3 mb-4">
+        <div class="row justify-center align-items-center">
+            <div class="btn-group col-6 col-md-5">
+                <button type="button" class="btn btn-danger"> Abort </button>
+                <button type="button" class="btn btn-warning disabled"> Pause </button>
+            </div>
+    </section>
 </div>
 @endsection

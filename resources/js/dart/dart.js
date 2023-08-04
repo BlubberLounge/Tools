@@ -34,7 +34,7 @@ export default class Dart
         if(this.initialized)
             return;
 
-        console.log('Dart initializing');
+        // console.log('Dart initializing');
 
         this.dartboard = new Dartboard(this.boardContainer);
         this.dartboard.render();

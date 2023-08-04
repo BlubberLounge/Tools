@@ -80,10 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function ()
     if (App::environment(['local', 'development']))
     {
         // Mail Design Testing
-        Route::get('/mail', function(){
-            $mail = new App\Mail\TestMail();
-            return $mail->render();
-        });
+        // Route::get('/mail', function(){
+        //     $mail = new App\Mail\TestMail();
+        //     return $mail->render();
+        // });
     }
 
     // ADMIN routes

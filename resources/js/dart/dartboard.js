@@ -9,6 +9,8 @@ export default class Dartboard
 {
     constructor(containerSelector = null)
     {
+        this.identifier = document.getElementById('gameId').getAttribute('value');
+
         this.options = {
             size: 360,
             borderPercent: 13,
@@ -79,6 +81,10 @@ export default class Dartboard
 
     render()
     {
+        let skeletonDartboard = document.getElementById('skeleton-dartboard');
+        if(skeletonDartboard)
+            skeletonDartboard.remove();
+
         this.board.pie = d3.pie()
             .sort((a, b) => (a.position - b.position))
             .value(() => this.board.segmentWidth);
@@ -110,6 +116,8 @@ export default class Dartboard
         innerRadius = this.board.radius - this.sizes.border;
         outerRadius = this.board.radius;
         this._renderBorders(this.rings.BORDER, this.beds, outerRadius, innerRadius);
+
+        sessionStorage.setItem(this.identifier, true);
     }
 
     _handleClick(event, bed)
@@ -151,7 +159,8 @@ export default class Dartboard
                 .data(board.pie(this._addRingToBeds(ring, beds)))
                 .enter()
                     .append('g')
-                        .attr('class', bed => `c-Dartboard-bed ${classname}--${bed.data.frame} is${bed.data.color}`)
+                        .attr('class', bed => `c-Dartboard-bed ${classname}--${bed.data.frame} is${bed.data.color} fade-in`)
+                        .attr('style', bed => `animation-delay:`+ (this._animate() ? (bed.data.position != undefined ? bed.data.position * 100 : 2000) : 0 ) +`ms;`)
                         .on('click', (event, bed) => this._handleClick(event, bed))
 
         segments.append('path').attr('d', d3.arc().outerRadius(outerRadius).innerRadius(innerRadius))
@@ -168,7 +177,8 @@ export default class Dartboard
                 .data(board.pie(this._addRingToBeds(ring, beds)))
                 .enter()
                     .append('g')
-                        .attr('class', bed => `c-Dartboard-border c-Dartboard-border--${bed.data.frame}`)
+                        .attr('class', bed => `c-Dartboard-border c-Dartboard-border--${bed.data.frame} fade-in`)
+                        .attr('style', bed => `animation-delay: `+ (this._animate() ? bed.data.position * 100 : 0 ) +`ms;`)
                         .on('click', (event, bed) => this._handleClick(event, bed))
         borderSegments.append('path').attr('d', borderArc)
 
@@ -212,5 +222,10 @@ export default class Dartboard
         })
 
         return bedsWithRings
+    }
+
+    _animate()
+    {
+        return sessionStorage.getItem(this.identifier) ? false : true;
     }
 }
