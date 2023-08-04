@@ -134,7 +134,7 @@ export default class Dartboard
 
         const hit = new Hit(x, y, points, fieldName, ringName);
 
-        console.log(hit);
+        // console.log(hit);
 
         // dartHit event
         this._dispatchThrowEvent(hit);

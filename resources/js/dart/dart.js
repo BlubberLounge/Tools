@@ -41,22 +41,24 @@ export default class Dart
         this.playerList.lock();
         this.playerList.sortByPosition();
 
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage?retiredLocale=de#saving_text_between_refreshes
 
         let t = document.getElementById('gameType').getAttribute('value');
         if(t == 'X01') {
             this.game = new GameX01();
         } else if(t == 'aroundTheClock') {
             // this.game = new GameAroundTheClock();
+            this.game = null;
         } else if(t == 'cricket') {
             // this.game = new GameCricket();
         }
 
+        // needs better error handling
         if(!this.game instanceof Game)
             console.error('GameType is unkown.');
 
         this.game.dartboardSize = this.dartboard.board.width;
         this.game.run();
-
 
         this.addListeners();
 
@@ -68,6 +70,7 @@ export default class Dart
         document.querySelector(this.boardContainer).addEventListener('dartHit', h =>
         {
             const hit = h.detail;
+            this.game.addThrow(hit.points, hit.fieldName, hit.ringName, hit.x, hit.y);
             this.placeHitMarker(hit);
         });
     }
@@ -88,8 +91,6 @@ export default class Dart
         // console.log(UTILS.cartesian2Polar(hit.x-200, hit.y-200));
 
         document.getElementsByClassName('c-Dartboard')[0].append(hitMarker);
-
-        this.game.addThrow(hit.x, hit.y);
 
         return hitMarker;
     }

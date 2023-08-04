@@ -5,14 +5,20 @@
  */
 export default class Throw
 {
-    constructor(set, leg, turn, x, y, radius)
+    constructor(set, leg, turn, throwNum, value, field, ring, x, y, radius)
     {
         this.set = set;
         this.leg = leg;
         this.turn = turn;
+        this.throwNum = throwNum;
+        this.value = value;
+        this.field = field;
+        this.ring = ring;
         this.x = x - radius;
         this.y = (y - radius) * -1; // JS Fuckery idk why only Y flips to a negative value
         this.radius = radius; // only x_origin = y_origin, since a dartboard is always round
+
+        this.id = this._getId();
 
         this.x_normalized = this._normalize(this.x);
         this.y_normalized = this._normalize(this.y);
@@ -66,5 +72,26 @@ export default class Throw
     _normalize(val)
     {
         return val / this.radius;
+    }
+
+    /**
+     *
+     *
+     */
+    _getId()
+    {
+        return Throw.makeId(this.set, this.leg, this.turn, this.throwNum);
+    }
+
+    static makeId(set, leg, turn, throwNum)
+    {
+        let idParts = [
+            set,
+            leg,
+            turn,
+            throwNum,
+        ];
+
+        return idParts.join('-');
     }
 }

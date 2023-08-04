@@ -21,13 +21,13 @@ export default class PlayerList
         if(this.isLocked)
             return;
 
-        player.position = this.players.length;
+        player.pos = this.players.length;
 
         if(player instanceof Player) {
             this.players.push(player);
         } else {
             let fullName = player.firstname +' '+ player.lastname;
-            this.players.push(new Player(player.id, player.name, fullName, player.position));
+            this.players.push(new Player(player.id, player.name, fullName, player.pos));
         }
 
         console.log('Player Added to the List');
@@ -55,26 +55,33 @@ export default class PlayerList
         return this;
     }
 
+    getFirst()
+    {
+        this.pointer = 0;
+        return this._getPlayer();
+    }
+
+    getLast()
+    {
+        this.pointer = this.player.length - 1;
+        return this._getPlayer();
+    }
+
     next()
     {
         this._incrementPointer();
-        return this.players[this.pointer];
+        return this._getPlayer();
     }
 
     previous()
     {
         this._decrementPointer();
-        return this.players[this.pointer];
+        return this._getPlayer();
     }
 
-    _incrementPointer()
+    count()
     {
-        return this.pointer++;
-    }
-
-    _decrementPointer()
-    {
-        return this.pointer--;
+        return this.players.length;
     }
 
     sortByPosition()
@@ -90,5 +97,20 @@ export default class PlayerList
     unlock()
     {
         this.isLocked = false;
+    }
+
+    _incrementPointer()
+    {
+        return this.pointer++;
+    }
+
+    _decrementPointer()
+    {
+        return this.pointer--;
+    }
+
+    _getPlayer()
+    {
+        return this.players[this.pointer];
     }
 }

@@ -27,11 +27,49 @@ export default class GameX01 extends Game
 
     run()
     {
-        console.log(document.querySelectorAll('[data-user-id]'));
-        this.currentPlayer.addThrow(this.currentSet, this.currentLeg, this.currentTurn, this.dartboardSize/2, this.dartboardSize/2, this.dartboardSize/2);
+        let isNextTurn = this.detectNextTurn();
 
+        if(isNextTurn) {
+            console.log('Next Turn');
+            this.nextTurn();
+        }
+
+        if(!isNextTurn)
+            if(this.detectNextPlayer()) {
+                console.log('Next Player');
+                this.nextPlayer();
+            }
+
+    }
+
+    test()
+    {
+        console.log(document.querySelectorAll('[data-user-id]'));
+        this.addThrow(60, 'T20', 'triple', 177, 95.4375);
+        this.addThrow(60, 'T20', 'triple', 200, 95.4375);
+        console.log(this.currentPlayer);
+        this.nextPlayer();
+        this.addThrow(50, 'DB', 'bull', 180, 180);
+        this.addThrow(50, 'DB', 'bull', 180, 180);
+        console.log(this.currentPlayer);
+        console.log('==========================');
+        this.nextTurn();
+
+        this.addThrow(60, 'T20', 'triple', 177, 95.4375);
+        this.addThrow(60, 'T20', 'triple', 200, 95.4375);
+        console.log(this.currentPlayer);
+        this.nextPlayer();
+        this.addThrow(50, 'DB', 'bull', 180, 180);
+        this.addThrow(50, 'DB', 'bull', 180, 180);
         console.log(this.currentPlayer);
     }
+
+    addThrow(points, fieldName, ringName, x, y)
+    {
+        super.addThrow(points, fieldName, ringName, x, y);
+        this.run();
+    }
+
 
     _buildUserInformation()
     {

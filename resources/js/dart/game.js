@@ -1,3 +1,4 @@
+import { thresholdFreedmanDiaconis } from "d3";
 import GameType from "./enums/gameType";
 import GameSettings from "./gameSettings";
 import PlayerList from "./playerList";
@@ -12,6 +13,7 @@ export default class Game
     constructor()
     {
         this.id = null;
+        this.users = null;
         this.createdBy = null;
         this.type = null;
         this.status = null;
@@ -44,10 +46,23 @@ export default class Game
         this._init();
     }
 
-    nextTurn()
+    nextTurn(reset = false)
     {
         this._saveTurn();
-        this.currentTurn++;
+        this.currentTurn = reset ? 0 : this.currentTurn + 1;
+        this.currentPlayer = this.users.getFirst();
+    }
+
+    nextLeg(reset = false)
+    {
+        this.nextTurn(true)
+        this.currentLeg = reset ? 0 : this.currentLeg + 1;
+    }
+
+    nextSet()
+    {
+        this.nextLeg(true)
+        this.currentSet++;
     }
 
     nextPlayer()
@@ -55,14 +70,34 @@ export default class Game
         this.currentPlayer = this.users.next();
     }
 
-    addThrow(x, y)
+    addThrow(points, fieldName, ringName, x, y)
     {
-        this.currentPlayer.addThrow(this.currentSet, this.currentLeg, this.currentTurn, x, y, this.dartboardSize/2);
+        this.currentPlayer.addThrow(this.currentSet, this.currentLeg, this.currentTurn, points, fieldName, ringName, x, y, this.dartboardSize/2);
+    }
+
+    detectNextPlayer()
+    {
+        return this.currentPlayer.getNextThrowNumber(this.currentSet, this.currentLeg, this.currentTurn) > this.settings.maxThrowsPerTurn;
+    }
+
+    detectNextTurn()
+    {
+        return (this.currentPlayer.pos+1 > this.users.count()-1) && this.detectNextPlayer();
+    }
+
+    detectNextLeg()
+    {
+        return false;
+    }
+
+    detectNextSet()
+    {
+        return false;
     }
 
     _saveTurn()
     {
-        // send to api
+        // send to api and or local session storage
     }
 
     _init()
@@ -73,6 +108,8 @@ export default class Game
         let details = this._fetchDetails().game;
 
         this.users = new PlayerList(details.users);
+        this.users.lock();
+        console.log(this.users);
 
         this.createdBy = details.created_by.firstname +' '+ details.created_by.lastname;
         this.type = GameType.fromString(details.type);
