@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local')) {
             // Mail::alwaysTo('info@blubber-lounge.de');
             Mail::alwaysTo('maximilian.mewes@gmx.de');
+        }
+
+        if($this->app->environment('production')) {
+            URL::forceScheme('https');
         }
     }
 }
