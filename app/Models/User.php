@@ -6,10 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmail
+use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
+use OwenIt\Auditing\Contracts\Auditable;
+
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
-    use HasFactory, Notifiable;
+    use HasFactory,
+        Notifiable,
+        HasRoleAndPermission,
+        \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +30,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'firstname',
         'lastname',
         'email',
+        'dob',
+        'img',
         'password',
-        'role_id'
+        'locked',
     ];
 
     /**
@@ -41,24 +52,87 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
+        'dob' => 'date',
         'email_verified_at' => 'datetime',
     ];
 
     /**
-     * UserModel, RoleModel Relation. Get the users role.
+     * Attributes to include in the Audit.
+     *
+     * @var array
      */
-    public function role() 
+    protected $auditInclude = [
+        //
+    ];
+
+    /**
+     *
+     */
+    public function getFullNameAttribute()
     {
-        return $this->belongsTo(Role::class);
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function scopeLike($query, $field, $value)
+    {
+        return $query->where($field, 'LIKE', "%$value%");
     }
 
     /**
-     * Get name of users role
+     *
      */
-    public function getRoleName()
+    public function isLocked(): bool
     {
-        return $this->role !== null 
-            ? $this->role->name
-            : '-'; 
+        return $this->locked;
+    }
+
+    /**
+     *
+     */
+    public static function getRootUser(): User
+    {
+        return User::where('name', 'root')->first();
+    }
+
+    /**
+     * The DartGames that belong to the user.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function DartGames(): BelongsToMany
+    {
+        return $this->belongsToMany(DartGame::class)->withTimestamps();
+    }
+
+    /**
+     * Get all of the throws for the uder.
+     */
+    public function DartThrows(): HasMany
+    {
+        return $this->hasMany(DartThrow::class);
+    }
+
+    /**
+     * The DartGames that this user created
+     */
+    public function createdGames(): HasMany
+    {
+        return $this->hasMany(DartGame::class, 'created_by');
+    }
+
+    /**
+     * Get all of the throws for a user by game id
+     */
+    // public function throwsByGame(): HasMany
+    // {
+    //     return $this->throws()->where('dart_game_id', '99c7dc3b-7e5f-4db5-8fb2-313660a1b1a5');
+    // }
+
+    /**
+     *
+     */
+    public function getGameTitle(): string
+    {
+        return $this->full_name.'\'s Game #'. Str::padLeft($this->createdGames->count(), 3, 0);
     }
 }

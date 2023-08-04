@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\User;
-use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -29,7 +28,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $data['users'] = User::orderBy('id','asc')->paginate(15);
         return view('user.index', $data);
     }
@@ -41,8 +40,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        $data['roles'] = Role::orderBy('id','desc')->get();
-
         return view('user.create', $data);
     }
 
@@ -60,7 +57,6 @@ class UserController extends Controller
         $u->lastname = $request->lastname;
         $u->email = $request->email;
         $u->password = Hash::make($request->password);
-        $u->role_id = $request->role;
 
         $u->save();
 
@@ -88,8 +84,6 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $data['user'] = $user;
-        $data['roles'] = Role::orderBy('id','desc')->get();
-
         return view('user.edit', $data);
     }
 
@@ -108,7 +102,6 @@ class UserController extends Controller
         $u->lastname = $request->lastname;
         $u->email = $request->email;
         $u->password = $request->password ? Hash::make($request->password) : $user->password;
-        $u->role_id = $request->role;
 
         $u->save();
 

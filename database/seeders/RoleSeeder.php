@@ -53,7 +53,7 @@ class RoleSeeder extends Seeder
             'firstname' => 'Blubber',
             'lastname' => 'Lounge',
             'email' => 'admin@blubber-lounge.de',
-            'role_id' => 1,
+            'role_id' => Role::ADMIN,
             'password' => Hash::make('123'),
         ]);
     }

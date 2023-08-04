@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    
+
     @include('user.includes.title')
 
     <div class="row justify-content-center">
@@ -26,7 +26,11 @@
                         <td scope="row">{{ $user->firstname }}</td>
                         <td scope="row">{{ $user->lastname }}</td>
                         <td scope="row">{{ $user->email }}</td>
-                        <td scope="row">{{ $user->getRoleName() }}</td>
+                        <td scope="row">
+                            @foreach ($user->getRoles() as $k => $role)
+                                {{ $role->name . (count($user->getRoles())-1 != $k ? ', ' : '') }}
+                            @endforeach
+                        </td>
                         <td scope="row" class="actions text-center">
                             <form action="{{ route('user.destroy',$user->id) }}" method="Post">
                                 <a href="{{ route('user.edit',$user->id) }}">

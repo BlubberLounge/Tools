@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BatteryController;
+use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UtillityController;
+use App\Http\Controllers\DartGameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +25,15 @@ Route::get('/', function () {
     return view('index');
 });
 
-Auth::routes(['verify' => true]);
+// https://github.com/laravel/ui/blob/4.x/src/AuthRouteMethods.php
+// if (App::environment('local')) {
+    Auth::routes(['verify' => true]);
+// } else {
+//     Auth::routes(['verify' => true, 'register' => false]);
+// }
 
 /*
- * email verification routes 
+ * email verification routes
  */
 // Route::get('/email', function () {
 //     return view('auth.verify');
@@ -33,24 +41,54 @@ Auth::routes(['verify' => true]);
 
 // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfill();
- 
+
 //     return redirect('/home');
 // })->middleware(['auth'])->name('verification.verify');
 
 // Route::post('/email/verification-notification', function (Request $request) {
 //     $request->user()->sendEmailVerificationNotification();
- 
+
 //     return back()->with('message', 'Verification link sent!');
 // })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-/* 
+/*
  * protected routes
  */
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
 
+    Route::resource('/dart', DartGameController::class)->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping
+    // route: /dart/*
+    // name: dart.*
+    Route::prefix('dart')->group(function () {
+        Route::name('dart.')->group(function ()
+        {
+            Route::get('/checkouts/dartboard', [DartGameController::class, 'showDartboard'])->name('showDartboard');
+            Route::get('/checkouts/{score?}', [DartGameController::class, 'showCheckout'])->name('showCheckout');
+        });
+    });
 
+    Route::resource('/hookah', HookahController::class);
     Route::resource('/user', UserController::class);
+
+    /**
+     * LOCAL only Routes
+     */
+    if (App::environment(['local', 'development']))
+    {
+        // Mail Design Testing
+        Route::get('/mail', function(){
+            $mail = new App\Mail\TestMail();
+            return $mail->render();
+        });
+    }
+
+    // ADMIN routes
+    Route::group(['middleware' => ['level:5']], function ()
+    {
+        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('auditLog');
+    });
 });
