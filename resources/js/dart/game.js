@@ -51,6 +51,7 @@ export default class Game
         this._saveTurn();
         this.currentTurn = reset ? 0 : this.currentTurn + 1;
         this.currentPlayer = this.users.getFirst();
+        this._dispatchEvent('dartClearBoard', []);
     }
 
     nextLeg(reset = false)
@@ -68,6 +69,7 @@ export default class Game
     nextPlayer()
     {
         this.currentPlayer = this.users.next();
+        this._dispatchEvent('dartClearBoard', []);
     }
 
     addThrow(points, fieldName, ringName, x, y)
@@ -95,9 +97,45 @@ export default class Game
         return false;
     }
 
-    _saveTurn()
+    async _saveTurn()
     {
         // send to api and or local session storage
+        let data = [];
+
+        this.users.players.forEach( user => {
+            user.getThrowsByTurn(this.currentSet, this.currentLeg, this.currentTurn).forEach( wurf => {
+                let ThrowData = {
+                    game: this.id,
+                    user: user.id,
+                    set: wurf.set,
+                    leg: wurf.leg,
+                    turn: wurf.turn,
+                    throw: wurf.throwNum,
+                    value: wurf.value,
+                    // field: wurf.field,
+                    // ring: wurf.ring,
+                    x: wurf.x_normalized,
+                    y: wurf.y_normalized,
+                    data_input_type: 'DARTBOARD',
+                }
+
+                data.push(ThrowData);
+            });
+        });
+
+        let result = await axios.post('/api/v1/throw', data).then( response => {
+            let data = response.data.data;
+            this._dispatchEvent('dartTurnSaved', {
+                set: data.currentSet,
+                leg: data.currentLeg,
+                turn: data.currentTurn,
+            });
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.error('Throws could not get saved!');
+            }
+        });
     }
 
     _init()
@@ -139,6 +177,15 @@ export default class Game
         this.trippleIn = details.trippleIn;
 
         this.nextPlayer();
+
+        document.addEventListener('dartTurnSaved', h =>
+        {
+            let data = h.detail;
+            // console.log(data);
+
+            this.users.getFirst().setThrowsByTurnSaved(data.set, data.leg, data.turn);
+            // console.log(this.users.getFirst().getThrowsByTurn(data.set, data.leg, data.turn));
+        });
     }
 
     _fetchDetails()
@@ -180,5 +227,12 @@ export default class Game
         });
 
         return result.responseJSON.data;
+    }
+
+    _dispatchEvent(eventName, content)
+    {
+        document.dispatchEvent(new CustomEvent(eventName, {
+            detail: content,
+        }));
     }
 }

@@ -20,6 +20,8 @@ export default class Throw
 
         this.id = this._getId();
 
+        this.hasBeenSaved = false;
+
         this.x_normalized = this._normalize(this.x);
         this.y_normalized = this._normalize(this.y);
     }
@@ -62,6 +64,14 @@ export default class Throw
             x: x,
             y: y,
         };
+    }
+
+    /**
+     *
+     */
+    saved()
+    {
+        this.hasBeenSaved = true;
     }
 
     /**

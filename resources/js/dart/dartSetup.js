@@ -24,10 +24,7 @@ export default class DartSetup
 
     async searchUser(name)
     {
-        let result = (await axios({
-            method: 'get',
-            url: '/api/v1/user/search/'+name,
-        })).data;
+        let result = (await axios.get('/api/v1/user/search/'+name)).data;
 
         let fetchedUsersList = new PlayerList(result.data.users);
         this.populateUserList(fetchedUsersList);

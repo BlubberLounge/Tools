@@ -70,12 +70,17 @@ export default class Dart
         document.querySelector(this.boardContainer).addEventListener('dartHit', h =>
         {
             const hit = h.detail;
+            this._placeHitMarker(hit);
             this.game.addThrow(hit.points, hit.fieldName, hit.ringName, hit.x, hit.y);
-            this.placeHitMarker(hit);
+        });
+
+        document.addEventListener('dartClearBoard', h =>
+        {
+            this._clearHitMarker();
         });
     }
 
-    placeHitMarker(hit)
+    _placeHitMarker(hit)
     {
         let hitMarker = document.createElement("i");
         // let hitMarker = document.createElement('img');
@@ -90,8 +95,18 @@ export default class Dart
         hitMarker.style.setProperty("left", leftPosition+"px");
         // console.log(UTILS.cartesian2Polar(hit.x-200, hit.y-200));
 
+        // console.log('hit placed');
+
         document.getElementsByClassName('c-Dartboard')[0].append(hitMarker);
 
         return hitMarker;
+    }
+
+    _clearHitMarker()
+    {
+        let hitMarkers = document.querySelectorAll('.hitMarker');
+        // console.log(hitMarkers);
+
+        hitMarkers.forEach( marker => marker.remove() );
     }
 }

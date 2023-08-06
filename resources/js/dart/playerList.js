@@ -63,7 +63,7 @@ export default class PlayerList
 
     getLast()
     {
-        this.pointer = this.player.length - 1;
+        this.pointer = this.count() - 1;
         return this._getPlayer();
     }
 
@@ -101,12 +101,12 @@ export default class PlayerList
 
     _incrementPointer()
     {
-        return this.pointer++;
+        return ++this.pointer > 0 ? this.count()-1 : this.pointer;
     }
 
     _decrementPointer()
     {
-        return this.pointer--;
+        return --this.pointer < 0 ? 0 : this.pointer;
     }
 
     _getPlayer()

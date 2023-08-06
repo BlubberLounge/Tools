@@ -31,37 +31,18 @@ export default class GameX01 extends Game
 
         if(isNextTurn) {
             console.log('Next Turn');
+            this._deselectPlayer();
             this.nextTurn();
+            this._selectPlayer();
         }
 
         if(!isNextTurn)
             if(this.detectNextPlayer()) {
                 console.log('Next Player');
+                this._deselectPlayer();
                 this.nextPlayer();
+                this._selectPlayer();
             }
-
-    }
-
-    test()
-    {
-        console.log(document.querySelectorAll('[data-user-id]'));
-        this.addThrow(60, 'T20', 'triple', 177, 95.4375);
-        this.addThrow(60, 'T20', 'triple', 200, 95.4375);
-        console.log(this.currentPlayer);
-        this.nextPlayer();
-        this.addThrow(50, 'DB', 'bull', 180, 180);
-        this.addThrow(50, 'DB', 'bull', 180, 180);
-        console.log(this.currentPlayer);
-        console.log('==========================');
-        this.nextTurn();
-
-        this.addThrow(60, 'T20', 'triple', 177, 95.4375);
-        this.addThrow(60, 'T20', 'triple', 200, 95.4375);
-        console.log(this.currentPlayer);
-        this.nextPlayer();
-        this.addThrow(50, 'DB', 'bull', 180, 180);
-        this.addThrow(50, 'DB', 'bull', 180, 180);
-        console.log(this.currentPlayer);
     }
 
     addThrow(points, fieldName, ringName, x, y)
@@ -70,9 +51,15 @@ export default class GameX01 extends Game
         this.run();
     }
 
-
-    _buildUserInformation()
+    _selectPlayer()
     {
+        let playerCard = document.querySelector(`[data-user-id='${this.currentPlayer.id}']`);
+        playerCard.classList.add('text-bg-secondary');
+    }
 
+    _deselectPlayer()
+    {
+        let playerCard = document.querySelector(`[data-user-id='${this.currentPlayer.id}']`);
+        playerCard.classList.remove('text-bg-secondary');
     }
 }

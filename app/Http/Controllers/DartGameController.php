@@ -47,7 +47,7 @@ class DartGameController extends Controller
     public function store(StoreDartGameRequest $request)
     {
         // $data = $request->validated();
-        // dd($data);
+        //dd($request);
 
         $game = new DartGame();
         $game->created_by = Auth::user()->id;

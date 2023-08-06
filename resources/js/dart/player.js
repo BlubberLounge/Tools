@@ -71,4 +71,10 @@ export default class Player
         return this.throws.filter(wurf => wurf.set == set);
     }
 
+    setThrowsByTurnSaved(set, leg, turn)
+    {
+        this.getThrowsByTurn(set, leg, turn).map( t => t.saved());
+        // this.getThrow(set, leg, turn, 1).saved();
+    }
+
 }

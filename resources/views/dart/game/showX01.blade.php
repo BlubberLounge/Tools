@@ -3,7 +3,7 @@
     <div class="row pb-3 g-2"> {{--style="overflow-x: auto;white-space: nowrap;"--}}
 @endif
     <div class="col-6">
-        <div class="card d-inline-block w-100" data-user-id="{{ $user->id }}">
+        <div @class(["card d-inline-block w-100", "text-bg-secondary" => $loop->first]) data-user-id="{{ $user->id }}">
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-auto" style="font-size: 2rem">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                AVG: 300
+                                AVG: 0
                             </div>
                         </div>
                     </div>
@@ -34,16 +34,16 @@
                 </div>
                 <div class="row g-1 text-center">
                     <div class="col">
-                        180
+                        0
                     </div>
                     <div class="col">
-                        180
+                        0
                     </div>
                     <div class="col">
-                        180
+                        0
                     </div>
                     <div class="col">
-                        200
+                        0
                     </div>
                 </div>
             </div>
