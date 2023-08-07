@@ -37,7 +37,10 @@ export default class Game
         this.currentSet = 1;
         this.currentLeg = 1;
         this.currentTurn = 1;
+        this.currentThrow = 1;
         this.currentPlayer = null;
+
+        this.winCounter = 1;
 
         this.dartboardSize = null;
 
@@ -50,8 +53,10 @@ export default class Game
     {
         this._saveTurn();
         this.currentTurn = reset ? 0 : this.currentTurn + 1;
-        this.currentPlayer = this.users.getFirst();
         this._dispatchEvent('dartClearBoard', []);
+        this.nextPlayer();
+
+        console.log('Next Turn');
     }
 
     nextLeg(reset = false)
@@ -68,23 +73,69 @@ export default class Game
 
     nextPlayer()
     {
-        this.currentPlayer = this.users.next();
+        this.currentPlayer = this.users.nextNonWinner();
+
+        if(this.users.getNonWinner().length <= 1)
+            console.log
+
         this._dispatchEvent('dartClearBoard', []);
+        this.currentThrow = 0;
+        // console.log('Next player: '+ this.currentPlayer.fullName);
+    }
+
+    currentPlayerWon()
+    {
+        console.warn('Player won!');
+        this.currentPlayer.setWin(this.winCounter);
+        this._savePlayerWon();
+        this.winCounter++;
+        if(this.winCounter >= this.users.count()) {
+            console.log('Game done. every one got a place');
+            this._saveTurn();
+            this._nextPlayer();
+            this._savePlayerWon();
+            this._done();   // bailout
+        } else {
+            if(this.detectNextTurn(false)) {
+                this._nextTurn();
+            } else {
+                this._nextPlayer();
+            }
+        }
+    }
+
+    currentPlayerResetTurn()
+    {
+        // API call to soft delete throws
+        // console.warn('The last Turn of the player to removed');
+        this.currentPlayer.removeThrowsByTurn(this.currentSet, this.currentLeg, this.currentTurn);
+
+        if(this.detectNextTurn(false)) {
+            this._nextTurn();
+        } else {
+            this._nextPlayer();
+        }
     }
 
     addThrow(points, fieldName, ringName, x, y)
     {
         this.currentPlayer.addThrow(this.currentSet, this.currentLeg, this.currentTurn, points, fieldName, ringName, x, y, this.dartboardSize/2);
+        this.currentThrow++;
     }
 
     detectNextPlayer()
     {
-        return this.currentPlayer.getNextThrowNumber(this.currentSet, this.currentLeg, this.currentTurn) > this.settings.maxThrowsPerTurn;
+        // return this.currentPlayer.getNextThrowNumber(this.currentSet, this.currentLeg, this.currentTurn) > this.settings.maxThrowsPerTurn;
+        return this.currentThrow+1 > this.settings.maxThrowsPerTurn;
     }
 
-    detectNextTurn()
+    detectNextTurn(detectNextPlayer = true)
     {
-        return (this.currentPlayer.pos+1 > this.users.count()-1) && this.detectNextPlayer();
+        if(detectNextPlayer) {
+            return ((this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
+        } else {
+            return (this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count());
+        }
     }
 
     detectNextLeg()
@@ -99,6 +150,8 @@ export default class Game
 
     async _saveTurn()
     {
+        console.log('Saving Turn.');
+
         // send to api and or local session storage
         let data = [];
 
@@ -147,7 +200,7 @@ export default class Game
 
         this.users = new PlayerList(details.users);
         this.users.lock();
-        console.log(this.users);
+        // console.log(this.users);
 
         this.createdBy = details.created_by.firstname +' '+ details.created_by.lastname;
         this.type = GameType.fromString(details.type);
@@ -188,6 +241,62 @@ export default class Game
         });
     }
 
+
+    _done()
+    {
+        this._changeStatus('DONE');
+        // location.reload();
+    }
+
+    _savePlayerWon()
+    {
+        var result = $.ajax({
+            url: this.settings.apiBasePath+'/dart/updatePlace/'+this.id+'/'+this.currentPlayer.id,
+            type: 'PUT',
+            async: false,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            data: {
+                place: this.winCounter,
+            },
+            success: function (data)
+            {
+                return data.data;
+            },
+            error: function (xhr, exception) {
+                console.error(xhr);
+                return null;
+            }
+        });
+        // console.log(result);
+    }
+
+    _changeStatus(status = null)
+    {
+        if(status)
+            var result = $.ajax({
+                url: this.settings.apiBasePath+'/dart/'+this.id,
+                type: 'PUT',
+                async: false,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+                data: {
+                    status: status,
+                },
+                success: function (data)
+                {
+                    return data.data;
+                },
+                error: function (xhr, exception) {
+                    console.error(xhr);
+                    return null;
+                }
+            });
+        // console.log(result);
+    }
+
     _fetchDetails()
     {
         // let result = await axios({
@@ -196,8 +305,8 @@ export default class Game
         // }).data;
 
         let result = $.ajax({
-            url: '/api/v1/dart/'+this.id,
-            type: "GET",
+            url: this.settings.apiBasePath+'/dart/'+this.id,
+            type: 'GET',
             async: false,
             success: function (data)
             {

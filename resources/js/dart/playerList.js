@@ -67,15 +67,22 @@ export default class PlayerList
         return this._getPlayer();
     }
 
-    next()
+    next(skip = 0)
     {
-        this._incrementPointer();
+        this._incrementPointerRollover(skip+1);
         return this._getPlayer();
     }
 
-    previous()
+    nextNonWinner()
     {
-        this._decrementPointer();
+        for(let i = this.pointer-1; i <= this.count()-1; i++)
+            if(!this.next().hasWon())
+                return this._getPlayer();
+    }
+
+    previous(skip = 0)
+    {
+        this._decrementPointerRollover(skip+1);
         return this._getPlayer();
     }
 
@@ -89,6 +96,16 @@ export default class PlayerList
         this.players?.sort((a, b) => (a.position > b.position ? 1 : -1))
     }
 
+    getWinner()
+    {
+        return this.players.filter( player => player.hasWon() == true );
+    }
+
+    getNonWinner()
+    {
+        return this.players.filter( player => player.hasWon() == false );
+    }
+
     lock()
     {
         this.isLocked = true;
@@ -99,14 +116,28 @@ export default class PlayerList
         this.isLocked = false;
     }
 
-    _incrementPointer()
+    _incrementPointer(incrementBy = 1)
     {
-        return ++this.pointer > 0 ? this.count()-1 : this.pointer;
+        this.pointer = this.pointer+incrementBy > this.count()-1 ? this.count()-1 : this.pointer+incrementBy
+        return this.pointer;
     }
 
-    _decrementPointer()
+    _incrementPointerRollover(incrementBy = 1)
     {
-        return --this.pointer < 0 ? 0 : this.pointer;
+        this.pointer = this.pointer+incrementBy > this.count()-1 ? 0 : this.pointer+incrementBy;
+        return this.pointer;
+    }
+
+    _decrementPointer(decrementBy = 1)
+    {
+        this.pointer = this.pointer-decrementBy < 0 ? 0 : this.pointer-decrementBy;
+        return this.pointer;
+    }
+
+    _decrementPointerRollover(decrementBy = 1)
+    {
+        this.pointer = this.pointer-decrementBy < 0 ? this.count()-1 : this.pointer-decrementBy;
+        return this.pointer;
     }
 
     _getPlayer()

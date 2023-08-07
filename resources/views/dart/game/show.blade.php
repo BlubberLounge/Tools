@@ -42,6 +42,7 @@
             <div class="btn-group col-6 col-md-5">
                 <button type="button" class="btn btn-danger"> Abort </button>
                 <button type="button" class="btn btn-warning disabled"> Pause </button>
+                <button type="button" id="keepOn" class="btn btn-danger"> noSleep </button>
             </div>
     </section>
 </div>

@@ -6,8 +6,8 @@
         <div @class(["card d-inline-block w-100", "text-bg-secondary" => $loop->first]) data-user-id="{{ $user->id }}">
             <div class="card-body">
                 <div class="row align-items-center">
-                    <div class="col-auto" style="font-size: 2rem">
-                        301
+                    <div class="col-auto total" style="font-size: 2rem">
+                        {{ $points }}
                     </div>
                     <div class="col " style="font-size: .85em">
                         <div class="row">
@@ -17,7 +17,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                AVG: 0
+                                AVG: <span class="avg">0</span>
                             </div>
                         </div>
                     </div>
@@ -33,16 +33,12 @@
                     </div>
                 </div>
                 <div class="row g-1 text-center">
-                    <div class="col">
-                        0
-                    </div>
-                    <div class="col">
-                        0
-                    </div>
-                    <div class="col">
-                        0
-                    </div>
-                    <div class="col">
+                    @for ($i = 1; $i <= 3; $i++ )
+                        <div class="col fw-bold throw-{{ $i }}">
+                            <i class="fa-solid fa-xmark text-danger"></i>
+                        </div>
+                    @endfor
+                    <div class="col fw-bold turn-total">
                         0
                     </div>
                 </div>

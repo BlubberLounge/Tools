@@ -22,6 +22,13 @@ class DartGame extends Model
         HasUuids;
 
     /**
+     * The data type of the ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -69,7 +76,7 @@ class DartGame extends Model
      */
     public function scopeUnkown(Builder $query): void
     {
-        $query->where('status', DartGameStatus::UNKOWN);
+        $query->where($this->getTable().'.status', DartGameStatus::UNKOWN);
     }
 
     /**
@@ -77,7 +84,7 @@ class DartGame extends Model
      */
     public function scopeCreated(Builder $query): void
     {
-        $query->where('status', DartGameStatus::CREATED);
+        $query->where($this->getTable().'.status', DartGameStatus::CREATED);
     }
 
     /**
@@ -85,7 +92,7 @@ class DartGame extends Model
      */
     public function scopeStarted(Builder $query): void
     {
-        $query->where('status', DartGameStatus::STARTED);
+        $query->where($this->getTable().'.status', DartGameStatus::STARTED);
     }
 
     /**
@@ -93,7 +100,7 @@ class DartGame extends Model
      */
     public function scopeRunning(Builder $query): void
     {
-        $query->where('status', DartGameStatus::RUNNING);
+        $query->where($this->getTable().'.status', DartGameStatus::RUNNING);
     }
 
     /**
@@ -101,7 +108,7 @@ class DartGame extends Model
      */
     public function scopeDone(Builder $query): void
     {
-        $query->where('status', DartGameStatus::DONE);
+        $query->where($this->getTable().'.status', DartGameStatus::DONE);
     }
 
     /**
@@ -109,7 +116,7 @@ class DartGame extends Model
      */
     public function scopeAborted(Builder $query): void
     {
-        $query->where('status', DartGameStatus::ABORTED);
+        $query->where($this->getTable().'.status', DartGameStatus::ABORTED);
     }
 
     /**
@@ -117,7 +124,7 @@ class DartGame extends Model
      */
     public function scopeError(Builder $query): void
     {
-        $query->where('status', DartGameStatus::ERROR);
+        $query->where($this->getTable().'.status', DartGameStatus::ERROR);
     }
 
     /**
@@ -125,8 +132,8 @@ class DartGame extends Model
      */
     public function scopeOpen(Builder $query): void
     {
-        $query->where('status', DartGameStatus::UNKOWN)
-            ->orWhere('status', DartGameStatus::CREATED);
+        $query->where($this->getTable().'.status', DartGameStatus::UNKOWN)
+            ->orWhere($this->getTable().'.status', DartGameStatus::CREATED);
     }
 
     /**
@@ -144,7 +151,9 @@ class DartGame extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)
+            ->withPivot('status', 'place')
+            ->withTimestamps();
     }
 
     /**
@@ -153,5 +162,13 @@ class DartGame extends Model
     public function dartThrows(): HasMany
     {
         return $this->hasMany(DartThrow::class);
+    }
+
+    /**
+     *
+     */
+    public function getTopThree()
+    {
+
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Enums\DartGameStatus;
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\DartGame;
+use App\Models\User;
 
 class DartGameController extends Controller
 {
@@ -38,9 +40,14 @@ class DartGameController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DartGame $game)
+    public function update(Request $request, string $id)
     {
-        //
+        $game = DartGame::find($id);
+        $game->status = DartGameStatus::fromString($request->status) ?? $game->status;
+        $game->save();
+
+        $data = null;
+        return $this->sendResponse($data, 'ok');
     }
 
     /**
@@ -49,5 +56,19 @@ class DartGameController extends Controller
     public function destroy(DartGame $game)
     {
         //
+    }
+
+    /**
+     *
+     */
+    public function updatePlace(Request $request, String $id, User $user)
+    {
+        $game = DartGame::find($id);
+        $game->users()->updateExistingPivot($user->id, [
+            'place' => $request->place
+        ]);
+
+        $data = null;
+        return $this->sendResponse($data, 'ok');
     }
 }

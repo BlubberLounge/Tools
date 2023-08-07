@@ -12,6 +12,7 @@ export default class Player
         this.name = name;
         this.fullName = fullName;
         this.pos = pos;
+        this.winningPosition = null;
 
         this.throws = [];
     }
@@ -31,6 +32,16 @@ export default class Player
         // console.log(this.getThrow(set, leg, turn, throwNum));
         // console.log('ThrowsByTurn:');
         // console.log(this.getThrowsByTurn(set, leg, turn));
+    }
+
+    getTotalPoints()
+    {
+        let totalPoints = 0;
+        this.throws.forEach(wurf => {
+            totalPoints += wurf.value;
+        });
+
+        return totalPoints;
     }
 
     getNextThrowNumber(set, leg, turn)
@@ -71,10 +82,36 @@ export default class Player
         return this.throws.filter(wurf => wurf.set == set);
     }
 
+    getTotalThrowCount()
+    {
+        return this.throws.length;
+    }
+
+    getAverage()
+    {
+        let sum = this.throws.reduce((total, t) => total + t.value, 0);
+        // console.log(sum);
+        return sum / this.getTotalThrowCount();
+    }
+
     setThrowsByTurnSaved(set, leg, turn)
     {
         this.getThrowsByTurn(set, leg, turn).map( t => t.saved());
         // this.getThrow(set, leg, turn, 1).saved();
     }
 
+    removeThrowsByTurn(set, leg, turn)
+    {
+        this.throws = this.throws = this.throws.filter(wurf => wurf.set == set && wurf.leg == leg && wurf.turn != turn);
+    }
+
+    setWin(position)
+    {
+        this.winningPosition = position;
+    }
+
+    hasWon()
+    {
+        return this.winningPosition != null;
+    }
 }

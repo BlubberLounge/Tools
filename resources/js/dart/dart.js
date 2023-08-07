@@ -58,7 +58,7 @@ export default class Dart
             console.error('GameType is unkown.');
 
         this.game.dartboardSize = this.dartboard.board.width;
-        this.game.run();
+        // this.game.run();
 
         this.addListeners();
 
@@ -72,6 +72,7 @@ export default class Dart
             const hit = h.detail;
             this._placeHitMarker(hit);
             this.game.addThrow(hit.points, hit.fieldName, hit.ringName, hit.x, hit.y);
+            this.game.run();
         });
 
         document.addEventListener('dartClearBoard', h =>

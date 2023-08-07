@@ -15,5 +15,7 @@ export default class GameSettings
         this.maxThrowsPerTurn = 3;
 
         this.maxPlayers = 4;
+
+        this.apiBasePath = '/api/v1';
     }
 }

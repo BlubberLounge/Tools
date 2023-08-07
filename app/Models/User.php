@@ -101,7 +101,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function DartGames(): BelongsToMany
     {
-        return $this->belongsToMany(DartGame::class)->withTimestamps();
+        return $this->belongsToMany(DartGame::class)
+            ->withTimestamps();
     }
 
     /**
@@ -134,5 +135,25 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function getGameTitle(): string
     {
         return $this->full_name.'\'s Game #'. Str::padLeft($this->createdGames->count(), 3, 0);
+    }
+
+    /**
+     *
+     */
+    public function getThrowCount($gameId): int
+    {
+        return $this->DartThrows()->where('dart_game_id', $gameId)->count();;
+    }
+
+    /**
+     *
+     */
+    public function getThrowAverage($gameId): float
+    {
+        $sum = $this->getThrowCount($gameId);
+        $throws = $this->DartThrows()->where('dart_game_id', $gameId)->get();
+        foreach($throws as $throw) $sum += $throw->value;
+
+        return round($sum / count($throws), 1);
     }
 }

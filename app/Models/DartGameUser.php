@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class DartGameUser extends Model
+class DartGameUser extends Pivot implements Auditable
 {
-    use HasFactory;
+    use HasFactory,
+        \OwenIt\Auditing\Auditable;
 
     /**
      * The table associated with the model.
@@ -25,5 +27,15 @@ class DartGameUser extends Model
     protected $fillable = [
         'dart_game_id',
         'user_id',
+        'status',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'status' => DartGameUserStatus::class,
     ];
 }

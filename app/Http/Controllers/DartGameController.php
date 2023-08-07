@@ -47,13 +47,13 @@ class DartGameController extends Controller
     public function store(StoreDartGameRequest $request)
     {
         // $data = $request->validated();
-        //dd($request);
+        // dd($request);
 
         $game = new DartGame();
         $game->created_by = Auth::user()->id;
         $game->type = DartGameType::X01;
         $game->status = DartGameStatus::CREATED;
-        $game->private = $request->private ?? 0;
+        $game->private = $request->private ? 1 : 0;
         $game->title = $request->title ?? Auth::user()->getGameTitle();
         $game->comment = $request->comment ?? null;
         $game->points = $request->points ?? null;
@@ -80,9 +80,17 @@ class DartGameController extends Controller
     {
         $data['id'] = $dartGame->id;
         $data['type'] = $dartGame->type;
+        $data['status'] = $dartGame->status;
+        $data['points'] = $dartGame->points;
         $data['users'] = $dartGame->Users;
 
-        return view('dart.game.show', $data);
+        $view = null;
+        if($dartGame->status == DartGameStatus::CREATED || $dartGame->status == DartGameStatus::RUNNING) {
+            $view = view('dart.game.show', $data);
+        } else  {
+            $view = view('dart.game.showResult', $data);
+        }
+        return $view;
     }
 
     /**

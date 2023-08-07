@@ -24,6 +24,13 @@ return new class extends Migration
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+                $table->enum('status', ['pending', 'accepted', 'denied'])
+                    ->comment('pending / accepted / denied')
+                    ->default('pending');
+                $table->tinyInteger('place')
+                    ->comment('IF a user has won the number place is here.')
+                    ->nullable()
+                    ->default(null);
 
                 $table->timestamps();
 

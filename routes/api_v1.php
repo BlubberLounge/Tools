@@ -36,8 +36,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 
 
     Route::apiResource('dart', DartGameController::class)
-        ->only(['show'])
+        ->only(['show', 'update'])
         ->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping;
+    // route: /dart/*
+    // name: dart.*
+    Route::prefix('dart')->group(function () {
+        Route::name('dart.')->group(function ()
+        {
+            Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace'])->name('updatePlace');
+        });
+    });
 
     Route::apiResource('throw', DartThrowController::class)
         ->only(['store'])
