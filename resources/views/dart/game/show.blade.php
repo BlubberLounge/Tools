@@ -5,7 +5,6 @@
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dart.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/dartboard.css') }}" />
 @endpush
 

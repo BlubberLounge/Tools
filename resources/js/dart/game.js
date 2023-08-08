@@ -80,7 +80,7 @@ export default class Game
 
         this._dispatchEvent('dartClearBoard', []);
         this.currentThrow = 0;
-        // console.log('Next player: '+ this.currentPlayer.fullName);
+        console.log('Next player: '+ this.currentPlayer.fullName);
     }
 
     currentPlayerWon()

@@ -4,10 +4,6 @@
     <script src="{{ mix('js/dartSetup.js') }}"></script>
 @endpush
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dart.css') }}" />
-@endpush
-
 @section('content')
 <div class="container px-4">
     <form method="POST" action="{{ route('dart.store') }}">

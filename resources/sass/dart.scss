@@ -1,0 +1,77 @@
+.podium-container {
+    height: 200px;
+}
+
+.podium {
+    color: black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.podium-user {
+    font-size: .8rem;
+}
+
+.podium-gold {
+    height: 200px;
+    background-color: #C9B037;
+    font-size: 2rem;
+
+    .podium-place {
+        font-weight: 900;
+    }
+
+    .podium-user {
+        font-weight: bolder;
+    }
+
+    .fa-trophy {
+        animation: bounce; /* referring directly to the animation's @keyframe declaration */
+        animation-duration: 1s; /* don't forget to set a duration! */
+        animation-delay: 1500ms;
+        animation-iteration-count: 3;
+    }
+}
+
+.podium-silver {
+    height: calc(200px * .65);
+    background-color: #B4B4B4;
+    font-size: 1.8rem;
+
+    .podium-place {
+        font-weight: bolder;
+    }
+
+    .podium-user {
+
+    }
+}
+
+.podium-silver-outline {
+    background-color: transparent !important;
+    border: 3px #B4B4B4 dashed;
+    border-bottom: 0;
+}
+
+.podium-bronze {
+    height: calc(200px * .4);
+    background-color: #AD8A56;
+    font-size: 1.2rem;
+
+    .podium-place {
+        font-weight: bolder;
+    }
+    .podium-user {
+
+    }
+}
+
+.podium-bronze-outline {
+    background-color: transparent !important;
+    border: 3px #AD8A56 dashed;
+    border-bottom: 0;
+}

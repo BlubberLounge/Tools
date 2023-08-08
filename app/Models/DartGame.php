@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
@@ -153,6 +154,7 @@ class DartGame extends Model
     {
         return $this->belongsToMany(User::class)
             ->withPivot('status', 'place')
+            ->orderBy('place', 'ASC')
             ->withTimestamps();
     }
 
@@ -167,8 +169,113 @@ class DartGame extends Model
     /**
      *
      */
-    public function getTopThree()
+    public function getHighestThrowOfTurn()
     {
+        $throws = $this->dartThrows()
+            ->with('user')
+            ->get();
+        $max = $throws->max('value');
 
+        return $throws->firstWhere('value', $max);
+    }
+
+    /**
+     *
+     */
+    public function getLowestThrowOfTurn()
+    {
+        $throws = $this->dartThrows()
+            ->with('user')
+            ->get();
+        $min = $throws->min('value');
+
+        return $throws->firstWhere('value', $min);
+    }
+
+    /**
+     *
+     */
+    public function getThrowTurnSums()
+    {
+        return $this->dartThrows()
+            ->select('user_id', 'turn', DB::raw('SUM(value) as turn_total'))
+            ->groupBy('user_id', 'turn')
+            ->with('user');
+    }
+
+    /**
+     *
+     */
+    public function getUserHighestTurn()
+    {
+        $throws = $this->getThrowTurnSums()->get();
+        $max = $throws->max('turn_total');
+
+        return $throws->firstWhere('turn_total', $max);
+    }
+
+    /**
+     *
+     */
+    public function getUserLowestTurn()
+    {
+        $throws = $this->getThrowTurnSums()->get();
+        $min = $throws->min('turn_total');
+
+        return $throws->firstWhere('turn_total', $min);
+    }
+
+    /**
+     *
+     */
+    public function getLongestStreak()
+    {
+        $DBresult = DB::table($this->getTable())
+            ->selectRaw('user_id, field, ring, CAST(streak AS INT) as streak')
+            ->from(function($q) {
+                return $q   // Ugly but very fast Sub-Query to find the highest Streak
+                    ->selectRaw(DB::raw('
+                    t.id, t.dart_game_id, t.user_id, t.deleted_at, t.ring, t.field,
+                    @streak := IF(field = @last_field AND ring = @last_ring, @streak+1, 1) AS streak, @last_field := field AS last_field, @last_ring := t.ring AS last_ring
+                    FROM devt_dart_throws t
+                    JOIN (SELECT @streak := 0, @last_field := "0" COLLATE utf8mb4_unicode_ci) j
+                    WHERE dart_game_id = "'.$this->id.'" AND deleted_at IS NULL
+                    ORDER BY user_id ASC'
+                ));
+            })
+            ->groupBy('user_id', 'ring', 'field', 'streak')
+            // ->join('users', 'users.id', '=', 'user_id')
+            ->get();
+
+        $max = $DBresult->max('streak');
+        $result = $DBresult->firstWhere('streak', $max);
+
+        $arr = [];
+        $arr['streakCount'] = $result->streak;
+        $arr['field'] = $result->ring . $result->field;
+        $arr['user'] = User::find($result->user_id);
+
+        return collect($arr);
+    }
+
+    /**
+     *
+     */
+    public function getMostMisthrows()
+    {
+        $DBresult = $this->dartThrows()
+            ->selectRaw('user_id, COUNT(*) as count')
+            ->where('ring', 'O')
+            ->groupBy('user_id')
+            ->get();
+
+        $max = $DBresult->max('count');
+        $result = $DBresult->firstWhere('count', $max);
+
+        $arr = [];
+        $arr['misthrowCount'] = $result ? $result->count : '/';
+        $arr['user'] = $result ? User::find($result->user_id) : null;
+
+        return collect($arr);
     }
 }

@@ -1,8 +1,12 @@
-window._ = require('lodash');
+// window._ = require('lodash');
 
 try {
-    require('bootstrap');
-} catch (e) {}
+    window.bootstrap = require('bootstrap');
+} catch (e) {
+    //
+}
+
+import 'animate.css';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

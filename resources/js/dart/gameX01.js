@@ -127,7 +127,7 @@ export default class GameX01 extends Game
         let aText = document.createElement('p');
         aText.innerHTML = 'used Throws: '+ this.currentPlayer.getTotalThrowCount();
         let bText = document.createElement('p');
-        bText.innerHTML = 'Average: '+ this.currentPlayer.getAverage();
+        bText.innerHTML = 'Average: '+ this.currentPlayer.getAverage().toFixed(2);
         mLeftCol.appendChild(aText);
         mRightCol.appendChild(bText);
         middleRow.appendChild(mRightCol);

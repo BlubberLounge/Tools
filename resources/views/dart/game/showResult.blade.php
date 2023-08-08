@@ -1,30 +1,32 @@
 @extends('layouts.dart')
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dart.css') }}" />
+@push('scripts')
+    {{-- <script src="{{ asset('js/confetti.min.js') }}"></script> // cool, ultra lightweight, but only supports click event --}}
+    <script src="{{ mix('js/dartResult.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 @endpush
 
 @section('content')
-<div class="container px-2">
-    <h2> Game Winner </h2>
-    <div class="row px-4 align-items-end podium-container">
-        <div class="col p-0">
-            <div class="podium podium-bronze">
+<div class="container px-4">
+    <div class="row px-2 mt-3 align-items-end podium-container">
+        <div class="col-4 p-0">
+            <div @class(["podium podium-bronze", "podium-bronze-outline" => count($users) <= 2])>
                 <span class="podium-place"> #3 </span>
-                <span class="podium-user"> Kristina Cole </span>
+                <span class="podium-user"> {{ $thirdPlaceUser->full_name ?? $thirdPlaceUser }} </span>
             </div>
         </div>
-        <div class="col p-0">
+        {{-- <div @class(["col-4 p-0", "offset-4" => count($users) <= 2])> --}}
+        <div class="col-4 p-0">
             <div class="podium podium-gold">
-                <i class="fa-solid fa-trophy mb-3" style="font-size: 1.1em"></i>
+                <i id="confetti" class="fa-solid fa-trophy mb-3" style="font-size: 1.1em"></i>
                 {{-- <span class="podium-place"> #1 </span> --}}
-                <span class="podium-user"> Blubber Lounge </span>
+                <span class="podium-user"> {{ $firstPlaceUser->full_name }} </span>
             </div>
         </div>
-        <div class="col p-0">
-            <div class="podium podium-silver">
+        <div class="col-4 p-0">
+            <div @class(["podium podium-silver", "podium-silver-outline" => count($users) <= 1])>
                 <span class="podium-place"> #2 </span>
-                <span class="podium-user"> Erick Prohaska </span>
+                <span class="podium-user"> {{ $secondPlaceUser->full_name ?? $secondPlaceUser }} </span>
             </div>
         </div>
     </div>
@@ -55,7 +57,77 @@
         </table>
     </div>
 
-    <hr class="py-4" />
+    <hr class="my-4 mb-5" />
+
+    <h2> Quick Statistics </h2>
+    <div class="row">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"> # </th>
+                    <th scope="col"> Name </th>
+                    <th scope="col" class="text-center"> Data </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"> highest throw </th>
+                    <td> {{ $stats['highestThrow']->user->full_name }} </td>
+                    <td> {{ $stats['highestThrow']->value }} points ({{ $stats['highestThrow']->ring->value . $stats['highestThrow']->field }}) </td>
+                </tr>
+                <tr>
+                    <th scope="row"> lowest throw </th>
+                    <td> {{ $stats['lowestThrow']->user->full_name }} </td>
+                    <td> {{ $stats['lowestThrow']->value }} points </td>
+                </tr>
+                <tr>
+                    <th scope="row"> best turn </th>
+                    <td> {{ $stats['bestTurn']->user->full_name }} </td>
+                    <td> {{ $stats['bestTurn']->turn_total }} points </td> {{-- 180 (3x T20) --}}
+                </tr>
+                <tr>
+                    <th scope="row"> worst turn </th>
+                    <td> {{ $stats['worstTurn']->user->full_name }} </td>
+                    <td> {{ $stats['worstTurn']->turn_total }} points </td> {{-- 0 (3x 0) --}}
+                </tr>
+                <tr>
+                    <th scope="row"> highest accuracy </th>
+                    <td> {{ $stats['streak'] }} </td>
+                    <td> NaN mm </td>
+                </tr>
+                <tr>
+                    <th scope="row"> longest streak </th>
+                    <td> {{ $stats['longestStreak']['user']->full_name }} </td>
+                    <td> {{ $stats['longestStreak']['streakCount'] }}x ({{ $stats['longestStreak']['field'] }}) </td> {{-- 33x (T20) --}}
+                </tr>
+                {{-- <tr>
+                    <th scope="row"> highest streak </th>
+                    <td> {{ $stats['streak'] }} </td>
+                    <td> 69x (DB) </td>
+                </tr> --}}
+                @if($stats['mostMisthrows'])
+                    <tr>
+                        <th scope="row"> most misthrows </th>
+                        <td> {{ $stats['mostMisthrows']['user']->full_name }} </td>
+                        <td> {{ $stats['mostMisthrows']['misthrowCount'] }}x miss </td>
+                    </tr>
+                @endif
+                <tr>
+                    <th scope="row" colspan="3" class="text-center"> {{ Str::repeat('=', 15 )}} All Time {{ Str::repeat('=', 15 )}} </th>
+                </tr>
+                <tr>
+                    <th scope="row"> win streak </th>
+                    <td> {{ $stats['streak'] }} </td>
+                    <td> 3 games </td>
+                </tr>
+                <tr>
+                    <th scope="row"> lose streak </th>
+                    <td> {{ $stats['streak'] }} </td>
+                    <td> 8 games </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     {{-- <h2> Highest Streak </h2>
     <div class="row px-4 align-items-end podium-container">

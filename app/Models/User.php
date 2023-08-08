@@ -152,8 +152,10 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     {
         $sum = $this->getThrowCount($gameId);
         $throws = $this->DartThrows()->where('dart_game_id', $gameId)->get();
-        foreach($throws as $throw) $sum += $throw->value;
+        if(count($throws) <= 0)
+            return -1;
 
+        foreach($throws as $throw) $sum += $throw->value;
         return round($sum / count($throws), 1);
     }
 }

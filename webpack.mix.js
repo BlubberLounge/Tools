@@ -19,10 +19,11 @@ mix
     .js('resources/js/auth.js', 'public/js')
     .js('resources/js/dart.js', 'public/js')
     .js('resources/js/dartSetup.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
+    .js('resources/js/dartResult.js', 'public/js')
     .css('resources/css/custom.css', 'public/css')
-    .css('resources/css/dart.css', 'public/css')
     .css('resources/css/dartboard.css', 'public/css')
+    .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/dart.scss', 'public/css')
     .version()
     .sourceMaps();
 

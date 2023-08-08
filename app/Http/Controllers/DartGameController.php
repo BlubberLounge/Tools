@@ -25,7 +25,7 @@ class DartGameController extends Controller
     {
         $data['users'] = User::all();
 
-        $data['games'] = Auth::user()->DartGames()->open()->get();
+        $data['games'] = Auth::user()->DartGames()->open()->get()->merge(Auth::user()->DartGames()->done()->get());
 
         return view('dart.game.index', $data);
     }
@@ -88,6 +88,27 @@ class DartGameController extends Controller
         if($dartGame->status == DartGameStatus::CREATED || $dartGame->status == DartGameStatus::RUNNING) {
             $view = view('dart.game.show', $data);
         } else  {
+            $data['game'] = $dartGame;
+            $data['firstPlaceUser'] = $data['users'][0];
+            $data['secondPlaceUser'] = $data['users'][1] ?? 'no player';
+            $data['thirdPlaceUser'] = $data['users'][2] ?? 'no player';
+
+            $mostMisthrows = $dartGame->getMostMisthrows();
+
+            $data['stats'] = [
+                'highestThrow' => $dartGame->getHighestThrowOfTurn(),
+                'lowestThrow' => $dartGame->getLowestThrowOfTurn(),
+                'bestTurn' => $dartGame->getUserHighestTurn(),
+                'worstTurn' => $dartGame->getUserLowestTurn(),
+                'highestAccuracy' => User::getRootUser()->full_name,
+                'longestStreak' => $dartGame->getLongestStreak(),
+                // 'highestStreak' => User::getRootUser()->full_name,
+                'mostMisthrows' => $mostMisthrows['user'] ? $mostMisthrows : null,
+                'winStreak' => User::getRootUser()->full_name,
+                'loseStreak' => User::getRootUser()->full_name,
+                'streak' => User::getRootUser()->full_name,
+            ];
+
             $view = view('dart.game.showResult', $data);
         }
         return $view;
