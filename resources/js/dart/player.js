@@ -26,8 +26,8 @@ export default class Player
             newThrow
         );
 
-        // console.log('New Throw added:');
-        // console.log(newThrow);
+        console.log('New Throw added:');
+        console.log(newThrow);
         // console.log('Searched Throw:');
         // console.log(this.getThrow(set, leg, turn, throwNum));
         // console.log('ThrowsByTurn:');
@@ -38,7 +38,8 @@ export default class Player
     {
         let totalPoints = 0;
         this.throws.forEach(wurf => {
-            totalPoints += wurf.value;
+            if(wurf.isValid())
+                totalPoints += wurf.value;
         });
 
         return totalPoints;
@@ -59,6 +60,11 @@ export default class Player
     getLastThrow()
     {
         return this.throws[this.throws.length - 1];
+    }
+
+    getLastValidThrow()
+    {
+        return this.throws.findLast(wurf => wurf.valid == true);
     }
 
     getThrow(set, leg, turn, throwNum)
@@ -102,7 +108,13 @@ export default class Player
 
     removeThrowsByTurn(set, leg, turn)
     {
-        this.throws = this.throws = this.throws.filter(wurf => wurf.set == set && wurf.leg == leg && wurf.turn != turn);
+        let t = this.getThrowsByTurn(set, leg, turn);
+        t.forEach(w => {
+            w.valid = false;
+        });
+
+        this.throws = this.throws.filter(wurf => wurf.set == set && wurf.leg == leg && wurf.turn != turn);  // remove bad Throws
+        this.throws = this.throws.concat(t); // re-add them with valid = false
     }
 
     setWin(position)

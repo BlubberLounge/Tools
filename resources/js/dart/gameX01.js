@@ -89,7 +89,7 @@ export default class GameX01 extends Game
         let isNextUser = this.detectNextPlayer();
         if(isNextUser) {
             let avgDisplay = playerCard.querySelector('.avg');
-            avgDisplay.innerHTML = this.currentPlayer.getAverage().toFixed(1);
+            avgDisplay.innerHTML = (this.currentPlayer.getAverage()).toFixed(2);
         }
     }
 

@@ -71,7 +71,7 @@ export default class Dart
         {
             const hit = h.detail;
             this._placeHitMarker(hit);
-            this.game.addThrow(hit.points, hit.fieldName, hit.ringName, hit.x, hit.y);
+            this.game.addThrow(hit.points, hit.field, hit.ring, hit.x, hit.y);
             this.game.run();
         });
 

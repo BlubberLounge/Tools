@@ -18,7 +18,7 @@ A collection of more or less useful shisha tools/management software written wit
 
 - [ ] Shisha Management System
 - [x] User/Player Management
-- [ ] Dart (the game) tracking system
+- [x] Dart (the game) tracking system
 - [ ] Coal Calculator
 - [ ] Tabacco Calculator
 

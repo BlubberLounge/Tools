@@ -36,10 +36,15 @@ class DartThrowController extends Controller
             $newThrow->turn = $throw['turn'];
             $newThrow->throw = $throw['throw'];
             $newThrow->value = $throw['value'];
+            $newThrow->field = (string)$throw['field'];
+            $newThrow->ring = $throw['ring'];
             $newThrow->x = $throw['x'];
             $newThrow->y = $throw['y'];
-            $newThrow->data_input_type = $throw['data_input_type'];
+            $newThrow->origin_type = $throw['origin_type'];
             $newThrow->save();
+
+            if(!$throw['valid'])
+                $newThrow->delete();
         }
 
         $data['set'] = $request->input('*.set')[0];

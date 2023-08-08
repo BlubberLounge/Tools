@@ -9,6 +9,7 @@ use App\Interfaces\EnumTypeOrStatus;
  */
 enum DartRingType: string implements EnumTypeOrStatus
 {
+    case O = 'O';   // Out
     case S = 'S';   // Single
     case D = 'D';   // Double
     case T = 'T';   // Tripple
@@ -26,6 +27,7 @@ enum DartRingType: string implements EnumTypeOrStatus
     {
         return match($this)
         {
+            DartRingType::O => 'no color',
             DartRingType::S => 'no color',
             DartRingType::D => 'no color',
             DartRingType::T => 'no color',

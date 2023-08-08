@@ -3,14 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OwenIt\Auditing\Contracts\Auditable;
 
 use App\Enums\DartRingType;
 
-class DartThrow extends Model
+class DartThrow extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory,
+        SoftDeletes,
+        \OwenIt\Auditing\Auditable;
 
         /**
      * The attributes that are mass assignable.
@@ -27,6 +31,7 @@ class DartThrow extends Model
         'ring',
         'x',
         'y',
+        'origin_type',
     ];
 
     /**

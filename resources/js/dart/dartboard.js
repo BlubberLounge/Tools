@@ -23,7 +23,7 @@ export default class Dartboard
         };
 
         this.rings = {
-            BORDER: { name: 'border', abbr: 'M', multiplier: 0 },
+            BORDER: { name: 'border', abbr: 'O', multiplier: 0 },
             DOUBLE: { name: 'double', abbr: 'D', multiplier: 2 },
             OUTER_SINGLE: { name: 'outerSingle', abbr: 'S', multiplier: 1 },
             TRIPLE: { name: 'triple', abbr: 'T', multiplier: 3 },
@@ -129,10 +129,12 @@ export default class Dartboard
         const y = event.clientY - rect.top;  // y position within the element.
 
         const points = bedData.frame * bedData.ring.multiplier;
+        const field = bedData.frame;
         const fieldName = bedData.ring.abbr + bedData.frame;
+        const ring = bedData.ring.abbr;
         const ringName = bedData.ring.name;
 
-        const hit = new Hit(x, y, points, fieldName, ringName);
+        const hit = new Hit(x, y, points, field, fieldName, ring, ringName);
 
         // console.log(hit);
 

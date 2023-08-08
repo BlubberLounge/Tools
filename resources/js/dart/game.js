@@ -76,7 +76,7 @@ export default class Game
         this.currentPlayer = this.users.nextNonWinner();
 
         if(this.users.getNonWinner().length <= 1)
-            console.log
+            console.log();
 
         this._dispatchEvent('dartClearBoard', []);
         this.currentThrow = 0;
@@ -92,9 +92,12 @@ export default class Game
         if(this.winCounter >= this.users.count()) {
             console.log('Game done. every one got a place');
             this._saveTurn();
-            this._nextPlayer();
-            this._savePlayerWon();
-            this._done();   // bailout
+            if(this.users.getNonWinner().length >= 1) {
+                this._nextPlayer();
+                this._savePlayerWon();
+            }
+
+            this._done();   // bailout / exit
         } else {
             if(this.detectNextTurn(false)) {
                 this._nextTurn();
@@ -165,11 +168,12 @@ export default class Game
                     turn: wurf.turn,
                     throw: wurf.throwNum,
                     value: wurf.value,
-                    // field: wurf.field,
-                    // ring: wurf.ring,
+                    field: wurf.field,
+                    ring: wurf.ring,
                     x: wurf.x_normalized,
                     y: wurf.y_normalized,
-                    data_input_type: 'DARTBOARD',
+                    origin_type: 'DARTBOARD',
+                    valid: wurf.valid,
                 }
 
                 data.push(ThrowData);
@@ -245,7 +249,7 @@ export default class Game
     _done()
     {
         this._changeStatus('DONE');
-        // location.reload();
+        location.reload();
     }
 
     _savePlayerWon()

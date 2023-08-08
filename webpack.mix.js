@@ -25,3 +25,7 @@ mix
     .css('resources/css/dartboard.css', 'public/css')
     .version()
     .sourceMaps();
+
+// if (mix.inProduction()) {
+//     mix.version();
+// }

@@ -28,7 +28,8 @@ class DartThrowFactory extends Factory
                 'set' => 1,
                 'leg' => 1,
                 'turn' => 1,
-                'throw' => 1
+                'throw' => 1,
+                'origin_type' => 'DARTBOARD'
             ],
             $this->getValueFieldRingDefinition(),
         );
@@ -44,7 +45,10 @@ class DartThrowFactory extends Factory
         $theta = 0;
         $r = 0;
 
-        if($ringName == 'S') {
+        if($ringName == 'O') {
+            $multiplier = 0;
+            $r = fake()->randomFloat(4, 100-13, 100);
+        } else if($ringName == 'S') {
             $multiplier = 1;
             $r = fake()->boolean() ? fake()->randomFloat(4, 6+7, 6+7+32) : fake()->randomFloat(4, 6+7+32+8, 6+7+32+8+29);
         } else if($ringName == 'D') {
@@ -56,7 +60,7 @@ class DartThrowFactory extends Factory
         }
 
         $fields = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9 ,12, 5];
-        $fields[] = 25;
+        // $fields[] = 25;
         $field = fake()->randomElement($fields);
         $fieldSize = (360 / 20);
         $fieldHalf = $fieldSize / 2;
