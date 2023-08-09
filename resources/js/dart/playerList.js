@@ -75,9 +75,12 @@ export default class PlayerList
 
     nextNonWinner()
     {
-        // this.next();
-        for(let i = this.pointer; i <= this.count()-1; i++) {
+        for(let i = this.pointer; i <= 10; i++) {
+            // console.log('\n');
             // console.log(this.pointer);
+            // console.log(this._getPlayer());
+            // console.log('\n');
+
             if(!this.next().hasWon()) {
                 // console.log('\n');
                 // console.log(this.pointer);

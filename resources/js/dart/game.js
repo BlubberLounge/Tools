@@ -22,11 +22,6 @@ export default class Game
         this.title = null;
         this.comment = null;
 
-        this.points = undefined;
-        this.start = undefined;
-        this.end = undefined;
-        this.fields = undefined;
-
         this.singleOut = true;
         this.doubleOut = true;
         this.trippleOut = true;
@@ -37,7 +32,7 @@ export default class Game
         this.currentSet = 1;
         this.currentLeg = 1;
         this.currentTurn = 1;
-        this.currentThrow = 1;
+        this.currentThrow = 0;
         this.currentPlayer = null;
 
         this.winCounter = 1;
@@ -73,6 +68,8 @@ export default class Game
 
     nextPlayer()
     {
+        console.log('last player: '+ this.currentPlayer.fullName);
+        console.log('last pointer: '+ this.users.pointer);
         this.currentPlayer = this.users.nextNonWinner();
 
         if(this.users.getNonWinner().length <= 1)
@@ -80,6 +77,7 @@ export default class Game
 
         this._dispatchEvent('dartClearBoard', []);
         this.currentThrow = 0;
+        console.log('current pointer: '+ this.users.pointer);
         console.log('Next player: '+ this.currentPlayer.fullName);
     }
 
@@ -139,6 +137,15 @@ export default class Game
         } else {
             return (this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count());
         }
+
+        console.log(this.lastPlayerPos);
+        console.log(this.currentPlayer.pos);
+        console.log('ABC: '+ (this.currentPlayer.pos < this.lastPlayerPos));
+        if(detectNextPlayer) {
+            return ((this.currentPlayer.pos < this.lastPlayerPos) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
+        } else {
+            return (this.currentPlayer.pos < this.lastPlayerPos) || (this.winCounter >= this.users.count());
+        }
     }
 
     detectNextLeg()
@@ -181,12 +188,8 @@ export default class Game
         });
 
         let result = await axios.post('/api/v1/throw', data).then( response => {
-            let data = response.data.data;
-            this._dispatchEvent('dartTurnSaved', {
-                set: data.currentSet,
-                leg: data.currentLeg,
-                turn: data.currentTurn,
-            });
+            this._dispatchEvent('dartTurnSaved', response.data.data);
+
         }).catch(function (error) {
             if (error.response) {
                 console.log(error.response.data);
@@ -204,7 +207,7 @@ export default class Game
 
         this.users = new PlayerList(details.users);
         this.users.lock();
-        // console.log(this.users);
+        console.log(this.users);
 
         this.createdBy = details.created_by.firstname +' '+ details.created_by.lastname;
         this.type = GameType.fromString(details.type);
@@ -233,15 +236,12 @@ export default class Game
         this.doubleIn = details.doubleIn;
         this.trippleIn = details.trippleIn;
 
-        this.nextPlayer();
+        this.currentPlayer = this.users.getFirst();
 
         document.addEventListener('dartTurnSaved', h =>
         {
             let data = h.detail;
-            // console.log(data);
-
-            this.users.getFirst().setThrowsByTurnSaved(data.set, data.leg, data.turn);
-            // console.log(this.users.getFirst().getThrowsByTurn(data.set, data.leg, data.turn));
+            this.users.players.forEach( player => player.setThrowsByTurnSaved(data.set, data.leg, data.turn));
         });
     }
 
