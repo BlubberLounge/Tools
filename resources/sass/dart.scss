@@ -1,3 +1,35 @@
+.playercard {
+    position: relative;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 2px solid rgba(255, 255, 255, .1);
+    border-radius: .375rem;
+    background-color: #2b2b2b;
+
+    .playercard-body {
+
+    }
+
+    .playercard-total-points {
+        font-size: 2rem;
+        border-right: 1px solid rgba(255, 255, 255, .15);
+        padding: .2rem .475rem;
+    }
+
+    .playercard-throw-count {
+        border-top: 1px solid rgba(255, 255, 255, .15);
+        border-right: 1px solid rgba(255, 255, 255, .15);
+        padding: .275rem 0 0 0;
+    }
+
+    .playercard-throw-points {
+        border-right: 1px solid rgba(255, 255, 255, .15);
+        // padding: .375rem;
+    }
+}
+
+
+
 .podium-container {
     height: 200px;
 }
@@ -74,4 +106,51 @@
     background-color: transparent !important;
     border: 3px #AD8A56 dashed;
     border-bottom: 0;
+}
+
+.throw-1 {
+    animation: zoomIn;
+    animation-duration: 4s;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 90vw;
+    height: 50vh;
+    background-image: url(/img/blubber2.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.03;
+    z-index: -1;
+}
+
+
+#scroll-container {
+    position: fixed;
+    overflow: hidden;
+    background-color: #C9B037;
+    color: #2b2b2b;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#scroll-text {
+    transform: translateX(100%);
+    animation: scrollAnimation 15s linear infinite;
+}
+
+@keyframes scrollAnimation {
+    from {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
 }

@@ -1,4 +1,4 @@
-<div class="row mb-2">
+<div class="row mb-{{ $bottomSpacing }}">
     <label for="{{ $attribute }}" class="col-auto text-md-start col-form-label">{{ __($label) }}</label>
     <input
         id="{{ $attribute }}"

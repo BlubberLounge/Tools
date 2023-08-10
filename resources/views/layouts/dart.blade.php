@@ -68,7 +68,7 @@
             </div>
         @endif
 
-        <main class="pt-3">
+        <main> {{-- class="pt-3" --}}
             @yield('content')
         </main>
 

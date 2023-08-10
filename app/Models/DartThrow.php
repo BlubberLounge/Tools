@@ -31,7 +31,6 @@ class DartThrow extends Model implements Auditable
         'ring',
         'x',
         'y',
-        'origin_type',
     ];
 
     /**

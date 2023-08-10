@@ -16,7 +16,7 @@ $(function()
 
     var count = 300;
     var defaults = {
-      origin: { y: .3 }
+      origin: { y: .35 }
     };
 
     function fire(particleRatio, opts) {

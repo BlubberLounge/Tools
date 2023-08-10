@@ -11724,3 +11724,16 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.btn-floating {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  bottom: 25px;
+  right: 25px;
+  text-align: center;
+}

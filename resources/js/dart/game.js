@@ -175,11 +175,10 @@ export default class Game
                     turn: wurf.turn,
                     throw: wurf.throwNum,
                     value: wurf.value,
-                    field: wurf.field,
-                    ring: wurf.ring,
+                    field: wurf.field == 'B' || wurf.ring == 'DB' ? 25 : wurf.field,
+                    ring: wurf.ring == 'B' ? 'S' : (wurf.ring == 'DB' ? 'D' : wurf.ring),
                     x: wurf.x_normalized,
                     y: wurf.y_normalized,
-                    origin_type: 'DARTBOARD',
                     valid: wurf.valid,
                 }
 
@@ -340,6 +339,26 @@ export default class Game
         });
 
         return result.responseJSON.data;
+    }
+
+    _animateCounter(obj, start, end, duration)
+    {
+        let diff = Math.abs(start - end);
+        duration = (500 + 60 * 2) - (diff * 2);
+
+        let startTimestamp = null;
+        const step = (timestamp) =>
+        {
+          if (!startTimestamp) startTimestamp = timestamp;
+
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          obj.innerHTML = Math.floor(progress * (end - start) + start);
+
+          if (progress < 1)
+            window.requestAnimationFrame(step);
+        };
+
+        window.requestAnimationFrame(step);
     }
 
     _dispatchEvent(eventName, content)

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreDartGameRequest;
 use App\Http\Requests\UpdateDartGameRequest;
 
-use App\Classes\Dartboard;
+use App\Classes\DartboardTest;
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameType;
 use App\Models\DartGame;
@@ -413,7 +413,7 @@ class DartGameController extends Controller
      */
     public function showDartboard()
     {
-        $dartboard = new Dartboard();
+        $dartboard = new DartboardTest();
         $avg = $dartboard->calculateBoardAverages();
 
         $data = array();

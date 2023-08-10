@@ -7,8 +7,13 @@
 @endpush
 
 @section('content')
-<div class="container px-4">
-    <div class="row px-2 mt-3 align-items-end podium-container">
+{{-- <div class="row m-0">
+    <div id="scroll-container">
+        <div id="scroll-text"> {{ Str::repeat('  WINNER: '.$firstPlaceUser->full_name, 5 ) }} </div>
+    </div>
+</div> --}}
+<div class="container px-4 mt-5">
+    <div class="row px-2 mt-5 align-items-end podium-container">
         <div class="col-4 p-0">
             <div @class(["podium podium-bronze", "podium-bronze-outline" => count($users) <= 2])>
                 <span class="podium-place"> #3 </span>
@@ -93,7 +98,7 @@
                 <tr>
                     <th scope="row"> highest accuracy </th>
                     <td> {{ $stats['streak'] }} </td>
-                    <td> NaN mm </td>
+                    <td> / </td>
                 </tr>
                 <tr>
                     <th scope="row"> longest streak </th>
@@ -151,5 +156,10 @@
             </div>
         </div>
     </div> --}}
+
+    <!-- Floating Button -->
+    <a class="btn btn-primary border-primary-subtle btn-floating" href="{{ route('dart.index') }}" role="button">
+        <i class="fa-solid fa-house-chimney"></i>
+    </a>
 </div>
 @endsection

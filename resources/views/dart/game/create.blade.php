@@ -31,11 +31,29 @@
         </section>
 
         <section id="dart-game-settings" class="mb-4">
+            <h5> General </h5>
+            <input type="hidden" name="points" value="{{ $dartGameType }}">
+            <x-form.input-text attribute="title" label="Game title" bottomSpacing="3" />
+            <x-form.input-checkbox attribute="private" label="Private" bottomSpacing="3" />
+
+            <div class="row">
+                <div class="col d-flex items-center">
+                    Input
+                </div>
+                <div class="col-auto">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="inputType" id="inputType1" value="NUMPAD" autocomplete="off" disabled>
+                        <label class="btn btn-outline-primary" for="inputType1"> NumPad </label>
+
+                        <input type="radio" class="btn-check" name="inputType" id="inputType2" value="DARTBOARD" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="inputType2">
+                            Dartboard
+                            <span class="badge rounded-pill text-bg-primary position-absolute translate-middle" style="font-size: .7em;left: 50%;top: 110%;">(recommended)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
             @if(Str::endsWith($dartGameType, '01') && Str::length($dartGameType) == 3)
-                <h5> General </h5>
-                <input type="hidden" name="points" value="{{ $dartGameType }}">
-                <x-form.input-text attribute="title" label="Game title" />
-                <x-form.input-checkbox attribute="private" label="Private" />
                 {{--
                 <h5> Checkin </h5>
                 <x-form.input-checkbox attribute="singleIn" label="Single In" helptext="Erster Dart darf ein Single-Feld sein" />

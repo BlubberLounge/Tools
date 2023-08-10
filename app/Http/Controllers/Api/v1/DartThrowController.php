@@ -40,7 +40,6 @@ class DartThrowController extends Controller
             $newThrow->ring = $throw['ring'];
             $newThrow->x = $throw['x'];
             $newThrow->y = $throw['y'];
-            $newThrow->origin_type = $throw['origin_type'];
             $newThrow->save();
 
             if(!$throw['valid'])

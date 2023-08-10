@@ -56,6 +56,7 @@ class DartGameFactory extends Factory
             'singleIn' => fake()->boolean(90),
             'doubleIn' => fake()->boolean(90),
             'trippleIn' => fake()->boolean(90),
+            'input_type' => Utillity::getRandomWeightedElement(['DARTBOARD' => 90, 'NUMPAD' => 10]),
         ];
     }
 

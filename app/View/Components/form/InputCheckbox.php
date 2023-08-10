@@ -16,6 +16,7 @@ class InputCheckbox extends Component
         public string $label = '',
         public string $helptext = '',
         public bool $isChecked = false,
+        public int $bottomSpacing = 2,
     ) {}
 
     /**

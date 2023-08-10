@@ -30,6 +30,9 @@ return new class extends Migration
                 $table->string('title');
                 $table->text('comment')
                     ->nullable();
+                $table->enum('input_type', ['NUMPAD', 'DARTBOARD', 'API'])
+                    ->comment('NumPad = number field in the frontend. With this input method no positions can be saved; Dartboard = Graphical Dartboard to click a exact postion; Api = external data input')
+                    ->default('DARTBOARD');
 
                 $table->integer('points')
                     ->nullable()

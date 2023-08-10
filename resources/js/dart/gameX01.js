@@ -52,7 +52,7 @@ export default class GameX01 extends Game
         // console.log(this._remainingPlayerPoints());
     }
 
-    _show()
+    async _show()
     {
         let playerCard = document.querySelector(`[data-user-id='${this.currentPlayer.id}']`);
         let throwDisplays = [];
@@ -68,7 +68,8 @@ export default class GameX01 extends Game
         throwDisplay.innerHTML = lastThrow.value;
 
         let totalDisplay = playerCard.querySelector('.total');
-        totalDisplay.innerHTML = this._remainingPlayerPoints();
+        // totalDisplay.innerHTML = this._remainingPlayerPoints();
+        super._animateCounter(totalDisplay, parseInt(totalDisplay.innerHTML), this._remainingPlayerPoints(), 400);
 
         if(lastThrow.throwNum == this.settings.maxThrowsPerTurn) {
             let total = 0;
@@ -99,7 +100,7 @@ export default class GameX01 extends Game
         playerCard.classList.remove('text-bg-secondary');
         playerCard.classList.add('text-bg-success');
 
-        let cardBody = playerCard.querySelector('.card-body');
+        let cardBody = playerCard.querySelector('.playercard-body');
         cardBody.innerHTML = '';
 
         let row = () => {
@@ -117,7 +118,7 @@ export default class GameX01 extends Game
         let topRow = row();
         let topCol = col(true);
         let h4 = document.createElement('h4');
-        h4.innerHTML = `${this.currentPlayer.fullName} has won.`;
+        h4.innerHTML = `${this.currentPlayer.fullName}`;
         topCol.appendChild(h4);
         topRow.appendChild(topCol);
 

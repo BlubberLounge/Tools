@@ -29,7 +29,6 @@ class DartThrowFactory extends Factory
                 'leg' => 1,
                 'turn' => 1,
                 'throw' => 1,
-                'origin_type' => 'DARTBOARD'
             ],
             $this->getValueFieldRingDefinition(),
         );

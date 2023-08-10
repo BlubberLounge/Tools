@@ -11,6 +11,8 @@ export default class Dartboard
     {
         this.identifier = document.getElementById('gameId').getAttribute('value');
 
+        this.locked = false;
+
         this.options = {
             size: 360,
             borderPercent: 13,
@@ -229,5 +231,20 @@ export default class Dartboard
     _animate()
     {
         return sessionStorage.getItem(this.identifier) ? false : true;
+    }
+
+    isLocked()
+    {
+        return this.locked;
+    }
+
+    lock()
+    {
+        this.locked = true;
+    }
+
+    unlock()
+    {
+        this.locked = false;
     }
 }
