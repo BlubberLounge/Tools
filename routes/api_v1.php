@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         Route::name('dart.')->group(function ()
         {
             Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace'])->name('updatePlace');
+            Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows'])->name('showThrows');
         });
     });
 

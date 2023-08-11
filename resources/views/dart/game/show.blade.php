@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-<div class="container px-2">
+<div class="container px-2 mt-3">
     <input type="hidden" id="gameId" name="id" value="{{ $id }}">
     <input type="hidden" id="gameType" name="type" value="{{ $type }}">
 

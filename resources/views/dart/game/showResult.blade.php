@@ -65,7 +65,7 @@
     <hr class="my-4 mb-5" />
 
     <h2> Quick Statistics </h2>
-    <div class="row">
+    <div class="row mb-4">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -156,6 +156,21 @@
             </div>
         </div>
     </div> --}}
+
+    <div class="row">
+        <div class="col">
+            <div class="heatmap1 border p-2" style="width: 100%; height: 200px;"></div>
+        </div>
+        <div class="col">
+            <div class="heatmap2 border p-2" style="width: 100%; height: 200px;"></div>
+        </div>
+        <div class="col">
+            <div class="heatmap3 border p-2" style="width: 100%; height: 200px;"></div>
+        </div>
+        <div class="col">
+            <div class="heatmap4 border p-2" style="width: 100%; height: 200px;"></div>
+        </div>
+    </div>
 
     <!-- Floating Button -->
     <a class="btn btn-primary border-primary-subtle btn-floating" href="{{ route('dart.index') }}" role="button">

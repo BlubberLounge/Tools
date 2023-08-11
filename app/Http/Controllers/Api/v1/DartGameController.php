@@ -71,4 +71,14 @@ class DartGameController extends Controller
         $data = null;
         return $this->sendResponse($data, 'ok');
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showThrows(string $id)
+    {
+        $data['game'] = DartGame::with(['dartThrows'])->find($id);
+
+        return $this->sendResponse($data, 'ok');
+    }
 }

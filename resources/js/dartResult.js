@@ -4,6 +4,10 @@
  *
  */
 
+import Plotly from 'plotly.js-dist';
+import h337 from 'heatmap.js';
+
+
 $(function()
 {
     // cool, ultra lightweight, but only supports click event
@@ -47,4 +51,61 @@ $(function()
       spread: 120,
       startVelocity: 45,
     });
+
+    let result = $.ajax({
+        url: '/api/v1/dart/showThrows/99dd52b1-e52c-4a33-b7df-911f086de799',
+        type: 'GET',
+        async: false,
+        success: function (data)
+        {
+            return data.data;
+        },
+        error: function (xhr, exception) {
+            console.error(msg);
+            return null;
+        }
+    });
+    let d = result.responseJSON.data;
+
+    var groupBy = function(xs, key)
+    {
+        return xs.reduce(function(rv, x) {
+          (rv[x[key]] = rv[x[key]] || []).push(x);
+          return rv;
+        }, {});
+    };
+
+    // console.log(groupBy(d.game.dart_throws, 'user_id'));
+    var width = document.querySelector('.heatmap1').offsetWidth;
+    var height = document.querySelector('.heatmap1').offsetHeight;
+
+    Object.values(groupBy(d.game.dart_throws, 'user_id')).forEach( (e, k) =>
+    {
+        var points = [];
+
+        e.forEach( w => {
+            points.push({
+                x: Math.round( (width/2) - (w.x * 100) * -1 ),
+                y: Math.round( (height/2) - (w.y * 100) ),
+                value: .5
+            });
+        });
+
+        console.log(points);
+
+        let i = k + 1;
+        let heatmapInstance = h337.create({
+            container: document.querySelector('.heatmap'+i),
+            radius: 20,
+            maxOpacity : 1,
+            minOpacity: 0,
+        });
+        let data = {
+            max: 1,
+            data: points
+        };
+        heatmapInstance.setData(data);
+
+    });
 });
+

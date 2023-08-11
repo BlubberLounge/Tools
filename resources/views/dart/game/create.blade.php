@@ -5,7 +5,7 @@
 @endpush
 
 @section('content')
-<div class="container px-4">
+<div class="container px-4 mt-3">
     <form method="POST" action="{{ route('dart.store') }}">
         @csrf
 
@@ -36,7 +36,7 @@
             <x-form.input-text attribute="title" label="Game title" bottomSpacing="3" />
             <x-form.input-checkbox attribute="private" label="Private" bottomSpacing="3" />
 
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col d-flex items-center">
                     Input
                 </div>
@@ -60,7 +60,7 @@
                 <x-form.input-checkbox attribute="doubleIn" label="Double In" helptext="Erster Dart darf ein Double-Feld sein" />
                 <x-form.input-checkbox attribute="trippleIn" label="Tripple In" helptext="Erster Dart darf ein Tripple-Feld sein" />
                 --}}
-                <h5 class="mt-4"> Checkout </h5>
+                <h5> Checkout </h5>
                 <x-form.input-checkbox attribute="singleOut" label="Single Out" helptext="Letzter Dart darf ein Single-Feld sein" isChecked="true" />
                 <x-form.input-checkbox attribute="doubleOut" label="Double Out" helptext="Letzter Dart darf ein Double-Feld sein" isChecked="true" />
                 <x-form.input-checkbox attribute="trippleOut" label="Tripple Out" helptext="Letzter Dart darf ein Tripple-Feld sein" isChecked="true" />
