@@ -49,7 +49,7 @@
             <tbody>
                 @forelse ($users as $user)
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{ $user->place }}</th>
                         <td>{{ $user->full_name }}</td>
                         <td class="text-center">{{ $user->getThrowAverage($id) }}</td>
                         <td class="text-center">{{ $user->getThrowCount($id) }}</td>
@@ -157,20 +157,18 @@
             </div>
         </div>
     </div> --}}
-
-    <div class="row">
-        <div class="col">
-            <div class="heatmap1 border p-2" style="width: 100%; height: 200px;"></div>
-        </div>
-        <div class="col">
-            <div class="heatmap2 border p-2" style="width: 100%; height: 200px;"></div>
-        </div>
-        <div class="col">
-            <div class="heatmap3 border p-2" style="width: 100%; height: 200px;"></div>
-        </div>
-        <div class="col">
-            <div class="heatmap4 border p-2" style="width: 100%; height: 200px;"></div>
-        </div>
+    <div class="row row-cols-1 row-cols-md-4">
+        @foreach ($users as $i => $user)
+            <div class="col pb-3">
+                <div class="heatmap{{ $i+1 }} border p-2" style="width: 100%; height: 200px;">
+                    <div id="skeleton-heatmap{{ $i+1 }}" class=" d-flex justify-center align-items-center" style="width: 100%; height: 200px;">
+                        <div class="spinner-border">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
 
     <!-- Floating Button -->
