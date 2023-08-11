@@ -7,7 +7,7 @@
         name="{{ $attribute }}"
         value="{{ old($attribute) ? old($attribute) : '' }}"
         autocomplete="off"
-        @if($autofocus) $autofocus @endif
+        @if(isset($autofocus)) $autofocus @endif
     >
     @error('{{ $attribute }}')
         <span class="invalid-feedback" role="alert">

@@ -16,7 +16,6 @@ class InputCheckbox extends Component
         public string $label = '',
         public string $helptext = '',
         public bool $isChecked = false,
-        public int $bottomSpacing = 2,
     ) {}
 
     /**
@@ -26,6 +25,6 @@ class InputCheckbox extends Component
     {
         $this->label = $this->label ?? $this->attribute;
 
-        return view('components.form.input-checkbox');
+        return view('components.form.input-checkbox', ['helptext' => '']);
     }
 }

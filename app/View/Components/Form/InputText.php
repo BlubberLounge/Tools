@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\form;
+namespace App\View\Components\Form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,7 +15,6 @@ class InputText extends Component
         public string $attribute,
         public string $label = '',
         public bool $autofocus = false,
-        public int $bottomSpacing = 2,
     ) {}
 
     /**
