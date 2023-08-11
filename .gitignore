@@ -1,7 +1,7 @@
 
 # Custom paths
 /temp
-.htaccess
+*.htaccess
 
 # Created by https://www.toptal.com/developers/gitignore/api/laravel,windows,visualstudiocode,dotenv,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=laravel,windows,visualstudiocode,dotenv,node
