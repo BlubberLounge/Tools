@@ -13,6 +13,7 @@
     </div>
 </div> --}}
 <div class="container px-4 mt-5">
+    <input type="hidden" id="gameId" name="id" value="{{ $id }}">
     <div class="row px-2 mt-5 align-items-end podium-container">
         <div class="col-4 p-0">
             <div @class(["podium podium-bronze", "podium-bronze-outline" => count($users) <= 2])>

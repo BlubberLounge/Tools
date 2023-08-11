@@ -53,7 +53,7 @@ $(function()
     });
 
     let result = $.ajax({
-        url: '/api/v1/dart/showThrows/99dd52b1-e52c-4a33-b7df-911f086de799',
+        url: '/api/v1/dart/showThrows/'+document.getElementById('gameId').getAttribute('value'),
         type: 'GET',
         async: false,
         success: function (data)
