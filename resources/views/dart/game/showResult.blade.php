@@ -157,7 +157,7 @@
             </div>
         </div>
     </div> --}}
-    <div class="row row-cols-1 row-cols-md-4">
+    <div class="row row-cols-1 row-cols-xl-4">
         @foreach ($users as $i => $user)
             <div class="col pb-3">
                 <div class="heatmap{{ $i+1 }} border p-2" style="width: 100%; height: 200px;">
