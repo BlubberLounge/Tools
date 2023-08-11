@@ -15,6 +15,7 @@ class InputText extends Component
         public string $attribute,
         public string $label = '',
         public bool $autofocus = false,
+        public int $bottomSpacing = 2,
     ) {}
 
     /**
