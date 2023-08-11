@@ -231,7 +231,7 @@ class DartGame extends Model
     public function getLongestStreak()
     {
         $DBresult = DB::table($this->getTable())
-            ->selectRaw('user_id, field, ring, CAST(streak AS INT) as streak')
+            ->selectRaw('user_id, field, ring, CAST(streak AS UNSIGNED) as streak')
             ->from(function($q) {
                 return $q   // Ugly but very fast Sub-Query to find the highest Streak
                     ->selectRaw(DB::raw('
