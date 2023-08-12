@@ -9,7 +9,7 @@
                     <div class="col-auto playercard-total-points total">
                         {{ $points }}
                     </div>
-                    <div class="col " style="font-size: .85em">
+                    <div class="col pe-0" style="font-size: .85em">
                         <div class="row">
                             <div class="col">
                                 {{ Str::limit($user->fullname, 11) }}
@@ -18,6 +18,9 @@
                         <div class="row">
                             <div class="col">
                                 AVG: <span class="avg">0</span>
+                            </div>
+                            <div class="col">
+                                <img src="{{ $user->img }}" width="25px" style="border-radius:50%">
                             </div>
                         </div>
                     </div>

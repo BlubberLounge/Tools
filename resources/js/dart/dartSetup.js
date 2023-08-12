@@ -17,6 +17,8 @@ export default class DartSetup
 
         DartSetup.instance = this;
 
+        DartSetup.count = 1;
+
         const form = document.getElementById('dartGameCreateForm');
         form.addEventListener("submit", e =>
         {
@@ -32,7 +34,7 @@ export default class DartSetup
         document.querySelector('.btn-remove-player').addEventListener('click', h =>
         {
             this._animateCSS(h.target.closest('div.row'), 'fadeOut', .5);
-
+            DartSetup.count--;
             window.scrollTo(0, document.documentElement.scrollTop - 20);
         });
 
@@ -45,7 +47,9 @@ export default class DartSetup
     async fetchUser(name)
     {
         let result = (await axios.get('/api/v1/user/search/'+name)).data.data;
-        console.log(result);
+
+        // console.log(result);
+
         this.populateSelectionList(result.users);
     }
 
@@ -67,7 +71,7 @@ export default class DartSetup
         {
             // not the most efficient think to do but it works for now
             if(!selectedUser.includes(user.id)) {
-                const row = this._createSelectionRow(user.id, user.name);
+                const row = this._createSelectionRow(user.id, user.img, user.name);
                 list.appendChild(row);
                 totalHeight += row.offsetHeight;
             }
@@ -77,7 +81,7 @@ export default class DartSetup
         window.scrollTo(0, totalHeight + currentY); // better UX for mobile screens
     }
 
-    _createSelectionRow(userId, userName)
+    _createSelectionRow(userId, userImg, userName)
     {
         let row = document.createElement('li');
         row.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -85,13 +89,19 @@ export default class DartSetup
 
         let rowData = document.createElement('div');
         rowData.classList.add('me-auto');
-        rowData.innerHTML = userName;
+        rowData.innerHTML = `<img src="${userImg}" width="32px" style="border-radius:50%"> ${userName}`;
 
         let addButton = document.createElement('button');
         addButton.setAttribute('type', 'button');
         addButton.classList.add('btn', 'btn-add-player');
         addButton.addEventListener('click', h =>
         {
+            if(DartSetup.count >= 4) {
+                // cheap solution must be changed later
+                alert('Maximum players reached!');
+                return;
+            }
+
             this._createSelectedRow(h.target.closest('li'));
             this._animateCSS(h.target.closest('li'), 'fadeOut', .5);
         });
@@ -110,24 +120,35 @@ export default class DartSetup
     {
         let list = document.querySelector('#selectedUserList');
 
-        let userName = selectionRow.firstChild.innerHTML;
         let userId = selectionRow.getAttribute('data-user-id');
+        let userImg = selectionRow.firstChild.querySelector('img').getAttribute('src');
+        let userName = selectionRow.firstChild.textContent;
 
         // Row
-        let row = document.createElement("div");
+        let row = document.createElement('div');
         row.classList.add('row');
         row.style.opacity = 0;
         row.style.transition = "opacity .5s ease";
         row.appendChild(this._createHiddenIDInput(userId));
 
+        // User image column
+        let colImg = document.createElement('div');
+        colImg.classList.add('col-auto', 'pe-1');
+        let userImage = document.createElement('img');
+        userImage.setAttribute('src', userImg);
+        userImage.setAttribute('width', '32px');
+        userImage.setAttribute('style', 'border-radius: 50%');
+        colImg.appendChild(userImage);
+        row.appendChild(colImg);
+
         // Username column
-        let colName = document.createElement("div");
+        let colName = document.createElement('div');
         colName.classList.add('col', 'fs-5');
         colName.innerHTML = userName;
         row.appendChild(colName);
 
         // Action column
-        const colActions = document.createElement("div");
+        const colActions = document.createElement('div');
         colActions.classList.add('col-auto', 'actions');
 
         // Action buttons
@@ -137,15 +158,16 @@ export default class DartSetup
         const upButton = this._createUpButton();
         colActions.appendChild(upButton);
 
-        if(list.children.length > 1) {
+        if(!list.children[list.children.length-1].querySelector('.btn-down-player')) {
             const downButton = this._createDownButton();
             const actions = list.children[list.children.length-1].querySelector('.actions');
             actions.insertBefore(downButton, actions.children[actions.children.length-1]);
         }
 
-
         row.appendChild(colActions);
         list.appendChild(row);
+
+        DartSetup.count++;
 
         window.scrollTo(0, row.offsetHeight + document.documentElement.scrollTop);
         setTimeout(function() { row.style.opacity = 1; }, 200);
@@ -176,9 +198,17 @@ export default class DartSetup
         btn.classList.add('btn', 'btn-remove-player');
         btn.addEventListener('click', h =>
         {
-            this._animateCSS(h.target.closest('div.row'), 'fadeOut', .5);
+            const list = document.getElementById('selectedUserList');
+            const row = h.target.closest('div.row')
+            const index = this._listIndexOf(list, row);
 
+            this._animateCSS(row, 'fadeOut', .5);
             window.scrollTo(0, document.documentElement.scrollTop - rowHeight);
+            console.log(index);
+            if(index >= list.children.length-1) {
+                list.children[list.children.length-2].querySelector('.btn-down-player').remove();
+            }
+            DartSetup.count--;
         });
 
         let icon = document.createElement('i');
