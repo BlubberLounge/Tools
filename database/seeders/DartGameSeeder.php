@@ -33,8 +33,8 @@ class DartGameSeeder extends Seeder
             $users = User::inRandomOrder()->whereNot('id', $rootUser->id)->limit($playerPerGame)->get();
             $users->push($rootUser);
 
-            foreach($users as $user) {
-                $user->DartGames()->attach($game);
+            foreach($users as $k => $user) {
+                $user->DartGames()->attach($game, ['position' => $k+1]);
 
                 DartThrow::factory()->count($turnsPerGame * $throwsPerUser)
                     ->for($user)

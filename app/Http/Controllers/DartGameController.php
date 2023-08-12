@@ -67,8 +67,12 @@ class DartGameController extends Controller
         $game->trippleIn = $request->trippleIn ?? 1;
         $game->save();
 
+        // create simple Hashmap
+        foreach($request->input('users.*') as $user)
+            $userPositons[$user] = $request->userPositions[$user];
+
         $users = User::findMany($request->input('users.*'));
-        $users->each(fn($user) => $user->DartGames()->attach($game));
+        $users->each(fn($user) => $user->DartGames()->attach($game, ['position' => $userPositons[$user->id]]));
 
         return redirect()->route('dart.show', ['dartGame' => $game->id]);
     }
@@ -82,12 +86,13 @@ class DartGameController extends Controller
         $data['type'] = $dartGame->type;
         $data['status'] = $dartGame->status;
         $data['points'] = $dartGame->points;
-        $data['users'] = $dartGame->Users;
 
         $view = null;
         if($dartGame->status == DartGameStatus::CREATED || $dartGame->status == DartGameStatus::RUNNING) {
+            $data['users'] = $dartGame->usersByPosition;
             $view = view('dart.game.show', $data);
         } else  {
+            $data['users'] = $dartGame->usersByPlace;
             $data['game'] = $dartGame;
             $data['firstPlaceUser'] = $data['users'][0];
             $data['secondPlaceUser'] = $data['users'][1] ?? 'no player';

@@ -68,8 +68,6 @@ export default class Game
 
     nextPlayer()
     {
-        console.log('last player: '+ this.currentPlayer.fullName);
-        console.log('last pointer: '+ this.users.pointer);
         this.currentPlayer = this.users.nextNonWinner();
 
         if(this.users.getNonWinner().length <= 1)
@@ -77,8 +75,6 @@ export default class Game
 
         this._dispatchEvent('dartClearBoard', []);
         this.currentThrow = 0;
-        console.log('current pointer: '+ this.users.pointer);
-        console.log('Next player: '+ this.currentPlayer.fullName);
     }
 
     currentPlayerWon()
@@ -136,15 +132,6 @@ export default class Game
             return ((this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
         } else {
             return (this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count());
-        }
-
-        console.log(this.lastPlayerPos);
-        console.log(this.currentPlayer.pos);
-        console.log('ABC: '+ (this.currentPlayer.pos < this.lastPlayerPos));
-        if(detectNextPlayer) {
-            return ((this.currentPlayer.pos < this.lastPlayerPos) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
-        } else {
-            return (this.currentPlayer.pos < this.lastPlayerPos) || (this.winCounter >= this.users.count());
         }
     }
 
@@ -205,6 +192,7 @@ export default class Game
         let details = this._fetchDetails().game;
 
         this.users = new PlayerList(details.users);
+        this.users.sortByPosition();
         this.users.lock();
         console.log(this.users);
 

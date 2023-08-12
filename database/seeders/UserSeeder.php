@@ -28,6 +28,7 @@ class UserSeeder extends Seeder
                 'lastname' => 'Lounge',
                 'email' => 'admin+Tools@blubber-lounge.de',
                 'dob' => date('Y-m-d H:i:s', strtotime('02.11.1999')),
+                'img' => '/storage/avatar/avatar-dummy.jpg',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123'), // Hash::make('blt-r00t')
             ]);

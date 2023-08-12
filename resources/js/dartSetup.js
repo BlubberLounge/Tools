@@ -23,7 +23,7 @@ $(function()
         let input = $(e.target).val();
 
         if(input)
-            dartSetup.searchUser($(e.target).val());
+            dartSetup.fetchUser($(e.target).val());
 
     }, 400));
 });

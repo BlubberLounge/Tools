@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
@@ -65,6 +66,21 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     protected $auditInclude = [
         //
     ];
+
+    /**
+     * Profile picture Accessor
+     */
+    protected function img(): Attribute
+    {
+        return Attribute::make(
+            get: function (string|null $value) {
+                if(is_null($value))
+                    return null;
+                    // return Avatar::create(Auth::user()->name)->setDimension(50)->setFontSize(28)->toBase64();
+                return $value;
+            }
+        );
+    }
 
     /**
      *

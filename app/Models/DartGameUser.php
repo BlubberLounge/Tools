@@ -28,6 +28,8 @@ class DartGameUser extends Pivot implements Auditable
         'dart_game_id',
         'user_id',
         'status',
+        'position',
+        'place',
     ];
 
     /**

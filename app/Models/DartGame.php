@@ -153,8 +153,33 @@ class DartGame extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('status', 'place')
+            ->withPivot('status', 'position', 'place')
+            // ->orderBy('place', 'ASC')
+            ->orderBy('position', 'ASC')
+            ->withTimestamps();
+    }
+
+    /**
+     * The users that participate in the DartGame.
+     *
+     */
+    public function usersByPlace(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('status', 'position', 'place')
             ->orderBy('place', 'ASC')
+            ->withTimestamps();
+    }
+
+        /**
+     * The users that participate in the DartGame.
+     *
+     */
+    public function usersByPosition(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('status', 'position', 'place')
+            ->orderBy('position', 'ASC')
             ->withTimestamps();
     }
 

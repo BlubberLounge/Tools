@@ -27,6 +27,8 @@ return new class extends Migration
                 $table->enum('status', ['pending', 'accepted', 'denied'])
                     ->comment('pending / accepted / denied')
                     ->default('pending');
+                $table->tinyInteger('position')
+                    ->comment('user position');
                 $table->tinyInteger('place')
                     ->comment('IF a user has won the number place is here.')
                     ->nullable()
@@ -36,6 +38,8 @@ return new class extends Migration
 
                 // composite unique key
                 $table->unique(['dart_game_id', 'user_id']);
+                $table->unique(['dart_game_id', 'position']);
+                $table->unique(['dart_game_id', 'place']);
             });
     }
 

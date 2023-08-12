@@ -50,8 +50,8 @@
 <body>
     <div id="app">
 
-        @include('includes.sidebar')
-        {{-- @include('includes.nav') --}}
+        {{-- @include('includes.sidebar') --}}
+        @include('includes.nav')
 
         @if (session('status'))
             <x-alert type="primary" message="{{ session('status') }}" />

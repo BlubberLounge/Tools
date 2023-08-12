@@ -11724,27 +11724,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-#app {
-  display: flex;
-  width: 100%;
-}
-
-main {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: calc(100% - 250px);
-}
-
-#sidebar {
-  max-width: 300px;
-  min-height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-}
-
 .btn.active[data-bs-theme-value] {
   background-color: var(--bs-secondary);
 }

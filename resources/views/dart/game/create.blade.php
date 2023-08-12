@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container px-4 mt-3">
-    <form method="POST" action="{{ route('dart.store') }}">
+    <form method="POST" id="dartGameCreateForm" action="{{ route('dart.store') }}">
         @csrf
 
         <section id="dart-game-header" class="mb-4">
@@ -77,21 +77,25 @@
         <section id="dart-game-player">
             <h6> Selected Player </h6>
             <div class="mb-5" id="selectedUserList">
-                <div class="row">
+                <div class="row d-flex align-items-center">
                     <input type="hidden" name="users[{{ Auth::user()->id  }}]" value="{{ Auth::user()->id  }}">
-                    <div class="col fs-5">
-                        Ich ({{ Auth::user()->full_name }})
+                    <div class="col-auto pe-1">
+                        @if(Auth::user()->img)
+                            <img src="{{ Auth::user()->img }}" width="32px" style="border-radius:50%">
+                        @else
+                            {!! Avatar::create(Auth::user()->name)->setDimension(32)->setFontSize(16)->toSvg() !!} {{-- https://github.com/laravolt/avatar --}}
+                        @endif
                     </div>
-                    <div class="col-auto">
+                    <div class="col fs-5">
+                        Ich ({{-- Auth::user()->full_name --}})
+                    </div>
+                    <div class="col-auto actions">
                         <button type="button" class="btn btn-remove-player">
                             <i class="fa-solid fa-square-xmark fa-xl"></i>
                         </button>
-                        {{-- <button type="button" class="btn btn-up-player">
-                            <i class="fa-solid fa-circle-up fa-xl"></i>
-                        </button>
                         <button type="button" class="btn btn-down-player">
                             <i class="fa-solid fa-circle-down fa-xl"></i>
-                        </button> --}}
+                        </button>
                     </div>
                 </div>
             </div>
