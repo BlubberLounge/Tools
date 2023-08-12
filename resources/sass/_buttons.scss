@@ -26,7 +26,6 @@
 //     // z-index: 9001;
 // }
 
-
 .btn-floating {
     position: fixed;
     display: flex;
@@ -39,4 +38,20 @@
     bottom: 25px;
     right: 25px;
 	text-align: center;
+}
+
+.btn-add-player {
+    --bs-btn-color: var(--bs-success);
+}
+
+.btn-remove-player {
+    --bs-btn-color: var(--bs-danger);
+}
+
+.btn-up-player {
+    --bs-btn-color: var(--bs-secondary);
+}
+
+.btn-down-player {
+    --bs-btn-color: var(--bs-secondary);
 }

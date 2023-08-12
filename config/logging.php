@@ -117,6 +117,19 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        // CUSTOM CHANNELS
+        'customMissing' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/customMissing.log')
+        ],
+
+        'mail' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/mail.log'),
+            // 'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
+        ],
     ],
 
 ];

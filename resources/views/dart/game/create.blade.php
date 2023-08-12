@@ -83,10 +83,15 @@
                         Ich ({{ Auth::user()->full_name }})
                     </div>
                     <div class="col-auto">
-                        {{-- <button class="btn btn-add-player" style="color:var(--bs-danger)">
+                        <button type="button" class="btn btn-remove-player">
                             <i class="fa-solid fa-square-xmark fa-xl"></i>
+                        </button>
+                        {{-- <button type="button" class="btn btn-up-player">
+                            <i class="fa-solid fa-circle-up fa-xl"></i>
+                        </button>
+                        <button type="button" class="btn btn-down-player">
+                            <i class="fa-solid fa-circle-down fa-xl"></i>
                         </button> --}}
-                        {{-- <i class="fa-solid fa-circle-down fa-xl"></i> --}}
                     </div>
                 </div>
             </div>

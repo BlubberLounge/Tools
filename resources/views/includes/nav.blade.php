@@ -75,6 +75,11 @@
                                     Settings
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('device.index') }}">
+                                    Device
+                                </a>
+                            </li>
                             @can('viewAny', App\Models\User::class)
                                 <li>
                                     <a class="dropdown-item" href="{{ route('auditLog') }}">

@@ -35,7 +35,7 @@
 
     <div class="row mb-5 g-1 g-md-3 justify-center">
         <div class="col-auto">
-            <a href="{{ route('dart.create', ['type' => 'aroundTheClock']) }}" class="btn btn-primary" role="button">
+            <a href="{{ route('dart.create', ['type' => 'aroundTheClock']) }}" class="btn btn-primary disabled" role="button">
                 <div class="p-2 p-md-4 d-flex flex-column text-center">
                     <i class="fa-solid fa-repeat mb-3" style="font-size: 2rem;"></i>
                     Around the Clock
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-auto">
-            <a href="{{ route('dart.create', ['type' => 'cricket']) }}" class="btn btn-primary" role="button">
+            <a href="{{ route('dart.create', ['type' => 'cricket']) }}" class="btn btn-primary disabled" role="button">
                 <div class="p-2 p-md-4 d-flex flex-column text-center">
                     <i class="fa-solid fa-bullseye mb-3" style="font-size: 2rem;"></i>
                     Cricket

@@ -9,6 +9,7 @@ use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DartGameController;
+use App\Http\Controllers\DeviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
 
     Route::resource('/hookah', HookahController::class);
     Route::resource('/user', UserController::class);
+    Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
 
     /**
      * LOCAL only Routes
@@ -80,10 +82,10 @@ Route::middleware(['auth', 'verified'])->group(function ()
     if (App::environment(['local', 'development']))
     {
         // Mail Design Testing
-        // Route::get('/mail', function(){
-        //     $mail = new App\Mail\TestMail();
-        //     return $mail->render();
-        // });
+        Route::get('/mail', function(){
+            $mail = new App\Mail\TestMail();
+            return $mail->render();
+        });
     }
 
     // ADMIN routes

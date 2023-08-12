@@ -104,7 +104,7 @@ export default class PlayerList
 
     sortByPosition()
     {
-        this.players?.sort((a, b) => (a.position > b.position ? 1 : -1))
+        this.players?.sort((a, b) => (a.pos > b.pos ? 1 : -1))
     }
 
     getWinner()
@@ -117,6 +117,30 @@ export default class PlayerList
         return this.players.filter( player => player.hasWon() == false );
     }
 
+    moveUp(user)
+    {
+        this.sortByPosition();
+        let playerIndex = this._findIndexOfPlayer(user);
+
+        console.log(this.players);
+        this.players.splice(playerIndex-1, 0, arr.splice(playerIndex, 1)[0]);
+        this.pointer = playerIndex-1;
+        console.log(this.players);
+
+        return this._getPlayer();
+    }
+
+    array_move(arr, old_index, new_index) {
+        if (new_index >= arr.length) {
+            var k = new_index - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        return arr; // for testing
+    };
+
     lock()
     {
         this.isLocked = true;
@@ -125,6 +149,11 @@ export default class PlayerList
     unlock()
     {
         this.isLocked = false;
+    }
+
+    _findIndexOfPlayer(user)
+    {
+        return this.players.findIndex( u => u.id === user.id );
     }
 
     _incrementPointer(incrementBy = 1)

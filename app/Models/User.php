@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Classes\DeviceTracker;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
@@ -73,6 +74,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
         return $this->firstname . ' ' . $this->lastname;
     }
 
+    /**
+     *
+     */
     public function scopeLike($query, $field, $value)
     {
         return $query->where($field, 'LIKE', "%$value%");
@@ -92,6 +96,24 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public static function getRootUser(): User
     {
         return User::where('name', 'root')->first();
+    }
+
+    /**
+     * Get all of the Devices
+     */
+    public function devices(): hasMany
+    {
+        return $this->hasMany(Device::class)
+            ->orderBy('verified_at', 'desc')
+            ->orderBy('last_active', 'desc');
+    }
+
+    /**
+     *
+     */
+    public function currentDevice()
+    {
+        return DeviceTracker::detect(false);
     }
 
     /**
