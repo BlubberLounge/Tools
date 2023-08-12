@@ -26,6 +26,10 @@
 //     // z-index: 9001;
 // }
 
+.btn.active[data-bs-theme-value] {
+    background-color: var(--bs-secondary);
+}
+
 .btn-floating {
     position: fixed;
     display: flex;
