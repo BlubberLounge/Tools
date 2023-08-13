@@ -204,7 +204,7 @@ export default class DartSetup
 
             this._animateCSS(row, 'fadeOut', .5);
             window.scrollTo(0, document.documentElement.scrollTop - rowHeight);
-            console.log(index);
+
             if(index >= list.children.length-1) {
                 list.children[list.children.length-2].querySelector('.btn-down-player').remove();
             }

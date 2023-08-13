@@ -14,9 +14,8 @@
 
     const getPreferredTheme = () =>
     {
-      if (storedTheme) {
+      if (storedTheme)
         return storedTheme
-      }
 
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     }
@@ -24,7 +23,7 @@
     const setTheme = function (theme)
     {
 
-      if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         // Dark Mode
         document.documentElement.setAttribute('data-bs-theme', 'dark')
       } else {
@@ -35,15 +34,15 @@
 
     var setTheme00 = function (theme)
     {
-      var a
-      if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      var a = document.querySelector('.nav-brand');
+      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         // Dark Mode
         document.documentElement.setAttribute('data-bs-theme', 'dark')
-        a = document.getElementById('navBrand').src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg'
+        a.src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg'
       } else {
         // Light Mode
         document.documentElement.setAttribute('data-bs-theme', theme)
-        a  = document.getElementById('navBrand').src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try.svg'
+        a.src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try.svg'
       }
     }
 

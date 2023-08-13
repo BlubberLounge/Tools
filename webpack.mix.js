@@ -23,6 +23,7 @@ mix
     .css('resources/css/custom.css', 'public/css')
     .css('resources/css/dartboard.css', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/auth.scss', 'public/css')
     .sass('resources/sass/dart.scss', 'public/css')
     .version()
     .sourceMaps();

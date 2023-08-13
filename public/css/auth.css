@@ -1,0 +1,18 @@
+body {
+  height: 100vh;
+  background-color: var(--bs-tertiary-bg);
+  display: flex;
+}
+
+#app {
+  background-image: url("/storage/lowpoly3.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.card-brand-logo {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 2rem 0;
+}

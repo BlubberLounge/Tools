@@ -16,6 +16,7 @@
         "chillerlan/php-qrcode": "^4.3",
         "darkaonline/l5-swagger": "^8.5",
         "darkghosthunter/laraconfig": "^1.0",
+        "diglactic/laravel-breadcrumbs": "^8.1",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "hisorange/browser-detect": "^4.5",
