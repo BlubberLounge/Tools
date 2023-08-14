@@ -9,16 +9,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
+use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use HasFactory,
         Notifiable,
+        HasConfig,
+        HasApiTokens,
         HasRoleAndPermission,
         \OwenIt\Auditing\Auditable;
 

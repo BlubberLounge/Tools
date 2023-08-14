@@ -1,0 +1,37 @@
+{
+    "english": "Englisch",
+    "german": "Deutsch",
+    "spanish": "Spanisch",
+    "french": "Französisch",
+    "italian": "Italienisch",
+
+
+    "home": "Home",
+    "dart game": "Dart Spielen",
+    "dart dashboard": "Dart Dashboard",
+    "other dart tools": "Dart Werkzeuge",
+    "dart information": "Dart Information",
+    "dart checkout calculator": "Checkout Rechner",
+    "hookahs": "Hookahs",
+    "tobaccos": "Tobaccos",
+    "calculators": "Rechner",
+    "coal calculator": "Kohle Rechner",
+    "tobacco calculator": "Tabak Rechner",
+    "battery simulation": "Batterie Simulation",
+
+    "settings": "Einstellungen",
+    "devices": "Geräte",
+    "language": "Sprache",
+    "feedback": "Feedback",
+    "tools FAQ": "Tools FAQ",
+
+    "audit log": "Audit-Log",
+    "user management": "User Management",
+    "user feedback": "User Feedback",
+    "api documentation": "Api Dokumentation",
+    "system information": "System informationen",
+
+    "logout": "Abmelden"
+
+
+}

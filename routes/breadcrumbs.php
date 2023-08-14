@@ -7,13 +7,13 @@ use App\Models\User;
 // Home
 Breadcrumbs::for('home', function (BreadcrumbTrail $trail)
 {
-    $trail->push('Home', route('home'));
+    $trail->push('Home', route('home'), ['faIcon' => 'fa-solid fa-house']);
 });
 
-Breadcrumbs::for('dart.index', function (BreadcrumbTrail $trail)
+Breadcrumbs::for('dart.game.index', function (BreadcrumbTrail $trail)
 {
     $trail->parent('home');
-    $trail->push('Dart', route('dart.index'));
+    $trail->push('dart game', route('dart.game.index'));
 });
 
 Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail)
@@ -39,4 +39,10 @@ Breadcrumbs::for('feedback.create', function (BreadcrumbTrail $trail)
 {
     $trail->parent('home');
     $trail->push('Feedback', route('feedback.create'));
+});
+
+Breadcrumbs::for('faq.index', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push('Feedback', route('faq.index'));
 });

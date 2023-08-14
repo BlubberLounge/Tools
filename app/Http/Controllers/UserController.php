@@ -139,16 +139,6 @@ class UserController extends Controller
         return view('user.edit-image', $data);
     }
 
-        /**
-     *  Show the language selection view
-     */
-    public function languageEdit(): View
-    {
-        $data['availableLanguages'] = config('app.available_locales');
-
-        return view('user.settings.language.index', $data);
-    }
-
     /**
      *  Update Language setting
      */
@@ -160,7 +150,7 @@ class UserController extends Controller
         session()->put('locale', $locale);
         Auth::user()->settings->set('language', $locale);
 
-        return redirect()->route('user.show')
+        return redirect()->route('home')
             ->with('success','Language has been updated successfully');
     }
 }

@@ -11723,7 +11723,9 @@ textarea.form-control-lg {
 #app {
   display: flex;
   width: 100%;
-  --bs-breadcrumb-font-size: .75rem;
+  --bs-breadcrumb-font-size: .8rem;
+  --bs-nav-link-font-size: .85rem;
+  --bs-nav-link-padding-y: .45rem;
 }
 
 #sidebar {
@@ -11766,7 +11768,7 @@ textarea.form-control-lg {
   --bs-nav-link-padding-y: 0.2rem;
 }
 .nav-sm .nav-link i {
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
 .nav-item {
@@ -11782,7 +11784,7 @@ textarea.form-control-lg {
   background-color: var(--bs-primary);
 }
 .nav-link i {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 .nav-link .nav-text {
   margin-left: 1rem;

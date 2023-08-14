@@ -2,7 +2,10 @@
     display: flex;
     width: 100%;
 
-    --bs-breadcrumb-font-size: .75rem;
+    --bs-breadcrumb-font-size: .8rem;
+
+    --bs-nav-link-font-size: .85rem;
+    --bs-nav-link-padding-y: .45rem;
 }
 
 #sidebar {
@@ -57,7 +60,7 @@
     .nav-link {
 
         i {
-            font-size: .9em;
+            font-size: .9rem;
         }
     }
 }
@@ -76,7 +79,7 @@
     }
 
     i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .nav-text {

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -24,12 +25,14 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'nullable|string',
             'firstname' => 'nullable|string',
             'lastname' => 'nullable|string',
             'email' => 'nullable|email:rfc',
             'password' => 'nullable|min:5|string',
             'role' => 'exists:roles,id',
+
+            'locale' => Rule::in(config('app.available_locales')),
         ];
     }
 }

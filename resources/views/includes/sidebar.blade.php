@@ -15,57 +15,77 @@
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-house"></i>
-                <span class="nav-text"> Home <span>
+                <span class="nav-text"> {{ __('home') }} <span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('dart.index') }}" class="nav-link {{ request()->routeIs('dart.index') ? 'active' : '' }}">
+            <a href="{{ route('dart.game.index') }}" class="nav-link {{ request()->routeIs('dart.game.index') ? 'active' : '' }}">
                 <i class="fa-solid fa-bullseye"></i>
-                <span class="nav-text"> Dart Game <span>
+                <span class="nav-text"> {{ __('dart game') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('dart.index') }}" class="nav-link">
                 <i class="fa-solid fa-chart-pie"></i>
-                <span class="nav-text"> Dart Dashboard <span>
+                <span class="nav-text"> {{ __('dart dashboard') }} <span>
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('dart.show-info') }}" class="nav-link {{ request()->routeIs('dart.show-info') ? 'active' : '' }}">
+                <i class="fa-solid fa-circle-info"></i>
+                <span class="nav-text"> {{ __('dart information') }} <span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('dart.show-checkout') }}" class="nav-link {{ request()->routeIs('dart.show-checkout') ? 'active' : '' }}">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
             <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
                 <i class="fa-solid fa-wrench"></i>
-                <span class="nav-text"> Other Dart Tools <span>
+                <span class="nav-text"> {{ __('other dart tools') }} <span>
             </a>
             <ul class="collapse submenu" id="submenuDart">
-                <li class="submenu-item"><a href="{{ route('dart.showDartboard') }}" class="submenu-item"> Dartboard </a></li>
-                <li class="submenu-item"><a href="{{ route('dart.showCheckout') }}" class="submenu-item"> Dart Checkout calculator </a></li>
+                <li class="submenu-item">
+                    <a href="{{ route('dart.showDartboard') }}" class="submenu-item">
+                        {{ __('dartboard') }}
+                    </a>
+                </li>
+                <li class="submenu-item">
+                    <a href="{{ route('dart.showCheckout') }}" class="submenu-item">
+                        {{ __('dart checkout calculator') }}
+                    </a>
+                </li>
             </ul>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link disabled" href="#">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span class="nav-text"> Hookahs <span>
+                <i class="fa-solid fa-bong"></i>
+                <span class="nav-text"> {{ __('Hookahs') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link disabled">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span class="nav-text"> Tobaccos <span>
+                <i class="fa-solid fa-box-open"></i>
+                <span class="nav-text"> {{ __('Tobaccos') }} <span>
             </a>
         </li>
         <li class="nav-item dropdown">
             <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
                 <i class="fa-solid fa-calculator"></i>
-                <span class="nav-text"> Calculators <span>
+                <span class="nav-text"> {{ __('calculators') }} <span>
             </a>
             <ul class="collapse submenu" id="submenuCalculators">
                 <li class="submenu-item">
                     <a href="#" class="submenu-link">
-                        Coal Calculator
+                        {{ __('coal calculator') }}
                     </a>
                 </li>
                 <li class="submenu-item">
                     <a href="#" class="submenu-link">
-                        Tobacco Calculator
+                        {{ __('tobacco calculator') }}
                     </a>
                 </li>
             </ul>
@@ -73,7 +93,7 @@
         <li class="nav-item">
             <a href="{{ route('battery') }}" class="nav-link {{ request()->routeIs('battery') ? 'active' : '' }}">
                 <i class="fa-solid fa-battery-three-quarters fa-rotate-270"></i>
-                <span class="nav-text"> Battery Simulation <span>
+                <span class="nav-text"> {{ __('battery simulation') }} <span>
             </a>
         </li>
     </ul>
@@ -90,61 +110,55 @@
         <li class="nav-item mt-2">
             <a class="nav-link" href="#">
                 <i class="fa-solid fa-gears"></i>
-                <span class="nav-text"> Settings <span>
+                <span class="nav-text"> {{ __('settings') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('device.index') }}" class="nav-link">
                 <i class="fa-solid fa-desktop"></i>
-                <span class="nav-text"> Device <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" >
-                <i class="fa-solid fa-globe"></i>
-                <span class="nav-text"> Language <span>
+                <span class="nav-text"> {{ __('devices') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('feedback.create') }}" class="nav-link {{ request()->routeIs('feedback.create') ? 'active' : '' }}" >
                 <i class="fa-solid fa-circle-question"></i>
-                <span class="nav-text"> Feedback <span>
+                <span class="nav-text"> {{ __('feedback') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('faq.index') }}" class="nav-link {{ request()->routeIs('faq.*') ? 'active' : '' }}" >
                 <i class="fa-solid fa-comment-dots"></i>
-                <span class="nav-text"> Tools FAQ <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('audit-log.index') }}" class="nav-link {{ request()->routeIs('audit-log.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-list-ul"></i>
-                <span class="nav-text"> Audit Log <span>
+                <span class="nav-text"> {{ __('tools FAQ') }} <span>
             </a>
         </li>
         <li class="nav-item mt-2">
+            <a href="{{ route('audit-log.index') }}" class="nav-link {{ request()->routeIs('audit-log.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-list-ul"></i>
+                <span class="nav-text"> {{ __('audit log') }} <span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" >
                 <i class="fa-solid fa-users"></i>
-                <span class="nav-text"> User Management <span>
+                <span class="nav-text"> {{ __('user management') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('feedback.index') }}" class="nav-link {{ request()->routeIs('feedback.index') ? 'active' : '' }}" >
                 <i class="fa-solid fa-circle-question"></i>
-                <span class="nav-text"> User Feedback <span>
+                <span class="nav-text"> {{ __('user feedback') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('l5-swagger.default.api') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" >
                 <i class="fa-solid fa-users"></i>
-                <span class="nav-text"> Api documentation <span>
+                <span class="nav-text"> {{ __('api documentation') }} <span>
             </a>
         </li>
         <li class="nav-item mt-3">
             <a href="{{ route('logout') }}" class="nav-link text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                <span class="nav-text"> {{ __('Logout') }} <span>
+                <span class="nav-text"> {{ __('logout') }} <span>
             </a>
         </li>
 
@@ -158,45 +172,33 @@
     <div class="btn-group btn-group-sm" id="bd-theme">
         <button type="button" class="btn btn-dark d-flex align-items-center" data-bs-theme-value="light">
             <i class="bi me-2 fa-solid fa-sun opacity-50 theme-icon" data-bs-theme-icon="fa-sun"></i>
-            Light
+            {{ __('Light') }}
             <i class="bi ms-auto d-none fa-solid fa-check"></i>
         </button>
         <button type="button" class="btn btn-dark d-flex align-items-center" data-bs-theme-value="dark">
             <i class="bi me-2 fa-solid fa-moon opacity-50 theme-icon" data-bs-theme-icon="fa-moon"></i>
-            Dark
+            {{ __('Dark') }}
             <i class="bi ms-auto d-none fa-solid fa-check"></i>
         </button>
         <button type="button" class="btn btn-dark d-flex align-items-center active" data-bs-theme-value="auto">
             <i class="bi me-2 fa-solid fa-circle-half-stroke opacity-50 theme-icon" data-bs-theme-icon="fa-circle-half-stroke"></i>
-            Auto
+            {{ __('Auto') }}
             <i class="bi ms-auto d-none fa-solid fa-check"></i>
         </button>
     </div>
-    <div class="btn-group btn-group-sm" id="bd-theme">
-        <button type="button" class="btn btn-dark d-flex align-items-center" data-bs-theme-value="light">
-            <i class="bi me-2 fa-solid fa-sun opacity-50 theme-icon" data-bs-theme-icon="fa-sun"></i>
-            Light
-            <i class="bi ms-auto d-none fa-solid fa-check"></i>
-        </button>
-        <button type="button" class="btn btn-dark d-flex align-items-center" data-bs-theme-value="dark">
-            <i class="bi me-2 fa-solid fa-moon opacity-50 theme-icon" data-bs-theme-icon="fa-moon"></i>
-            Dark
-            <i class="bi ms-auto d-none fa-solid fa-check"></i>
-        </button>
-        <button type="button" class="btn btn-dark d-flex align-items-center active" data-bs-theme-value="auto">
-            <i class="bi me-2 fa-solid fa-circle-half-stroke opacity-50 theme-icon" data-bs-theme-icon="fa-circle-half-stroke"></i>
-            Auto
-            <i class="bi ms-auto d-none fa-solid fa-check"></i>
-        </button>
-    </div>
-    <ul class="list-group">
-        {{-- @foreach ($availableLanguages as $k => $locale)
-            <li class="list-group-item">
-                <input class="form-check-input me-1" type="radio" name="locale" value="{{ $locale }}" id="locale_{{ $locale }}" @checked($locale == App::currentLocale())>
-                <label class="form-check-label" for="locale_{{ $locale }}">
-                    {{ __($k) }} <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale}}"></span>
-                </label>
-            </li>
-        @endforeach --}}
-    </ul>
+
+    @if(config('app.available_locales'))
+        <form id="form-locale-selector" action="{{ route('user.language-update') }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="btn-group btn-group-sm w-100" id="language-selector">
+                @foreach (config('app.available_locales') as $k => $locale)
+                    <input id="locale_{{ $locale }}" class="btn-check" type="radio" name="locale" value="{{ $locale }}" @checked($locale == App::currentLocale())>
+                    <label class="btn btn-dark" for="locale_{{ $locale }}">
+                        <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale}}"></span>
+                    </label>
+                @endforeach
+            </div>
+        </form>
+    @endif
 </nav>

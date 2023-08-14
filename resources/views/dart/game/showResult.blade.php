@@ -172,7 +172,7 @@
     </div>
 
     <!-- Floating Button -->
-    <a class="btn btn-primary border-primary-subtle btn-floating" href="{{ route('dart.index') }}" role="button">
+    <a class="btn btn-primary border-primary-subtle btn-floating" href="{{ route('dart.game.index') }}" role="button">
         <i class="fa-solid fa-house-chimney"></i>
     </a>
 </div>

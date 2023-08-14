@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container px-4 mt-3">
-    <form method="POST" id="dartGameCreateForm" action="{{ route('dart.store') }}">
+    <form method="POST" id="dartGameCreateForm" action="{{ route('dart.game.store') }}">
         @csrf
 
         <section id="dart-game-header" class="mb-4">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-auto">
                     <div class="row mb-2">
-                        <a href="{{ route('dart.index') }}" class="btn btn-outline-danger">
+                        <a href="{{ route('dart.game.index') }}" class="btn btn-outline-danger">
                             Abbrechen
                         </a>
                     </div>

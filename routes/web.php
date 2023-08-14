@@ -8,6 +8,7 @@ use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DartController;
 use App\Http\Controllers\DartGameController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\FAQController;
@@ -65,17 +66,17 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::resource('/hookah', HookahController::class);
 
 
-    Route::resource('/dart', DartGameController::class)->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping
     // route: /dart/*
     // name: dart.*
     Route::prefix('dart')->group(function () {
         Route::name('dart.')->group(function ()
         {
-            Route::get('/checkouts/dartboard', [DartGameController::class, 'showDartboard'])->name('showDartboard');
-            Route::get('/checkouts/{score?}', [DartGameController::class, 'showCheckout'])->name('showCheckout');
+            Route::resource('/game', DartGameController::class)->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
+            Route::get('/info', [DartController::class, 'showDartboard'])->name('show-info');
+            Route::get('/checkouts/{score?}', [DartController::class, 'showCheckout'])->name('show-checkout');
         });
     });
-
+    Route::resource('/dart', DartController::class);
 
     Route::resource('/user', UserController::class);
     // route: /user/*
@@ -83,6 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::prefix('user')->group(function () {
         Route::name('user.')->group(function ()
         {
+            Route::put('/language/update', [UserController::class, 'languageUpdate'])->name('language-update');
             Route::get('/{user}/editImage', [UserController::class, 'editImage'])->name('edit-image');
         });
     });

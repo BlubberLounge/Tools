@@ -66,7 +66,7 @@
 
         <main class="py-3">
             <div class="w-100 d-flex justify-center">
-                <div id="topBar" class="px-2 px-md-4 py-md-1 bg-body-tertiary rounded" style="--bs-breadcrumb-divider: '>';">
+                <div id="topBar" class="px-3 px-md-4 py-md-1 bg-body-tertiary rounded" style="--bs-breadcrumb-divider: '>';">
                     <div class="me-auto">
                         {{ Breadcrumbs::render() }}
                     </div>
