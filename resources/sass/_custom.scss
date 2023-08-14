@@ -1,0 +1,13 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+// (prefix)EventManager-*
+// em-*
+$custom-colors: (
+    "blubberlounge": #ffb600,
+    "sadasd": #ff00ff,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);

@@ -10,6 +10,8 @@ use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DartGameController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
+    Route::resource('/hookah', HookahController::class);
+
 
     Route::resource('/dart', DartGameController::class)->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping
     // route: /dart/*
@@ -72,9 +76,22 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
 
-    Route::resource('/hookah', HookahController::class);
+
     Route::resource('/user', UserController::class);
+    // route: /user/*
+    // name: user.*
+    Route::prefix('user')->group(function () {
+        Route::name('user.')->group(function ()
+        {
+            Route::get('/{user}/editImage', [UserController::class, 'editImage'])->name('edit-image');
+        });
+    });
+
     Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
+    Route::resource('faq', FAQController::class)
+        ->except('destroy');
+    Route::resource('feedback', FeedbackController::class)
+        ->except('destroy');
 
     /**
      * LOCAL only Routes
@@ -91,6 +108,6 @@ Route::middleware(['auth', 'verified'])->group(function ()
     // ADMIN routes
     Route::group(['middleware' => ['level:5']], function ()
     {
-        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('auditLog');
+        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     });
 });

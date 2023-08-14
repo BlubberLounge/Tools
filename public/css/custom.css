@@ -45,11 +45,6 @@ a {
     text-decoration: none;
 }
 
-.actions i {
-    color: #000;
-    /* font-size: 1.2em; */
-}
-
 .background-test {
     background-image: url('/img/23964.jpg');
     background-repeat: no-repeat;

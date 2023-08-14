@@ -23,6 +23,7 @@ class Device extends Model implements Auditable
     protected $fillable = [
         'user_id',
         'device_type',
+        'device_family',
         'browser',
         'browser_version',
         'platform',

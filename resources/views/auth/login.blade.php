@@ -10,9 +10,28 @@
         <div class="col-11 col-md-7 col-xl-5">
             <div class="card">
                 <div class="card-brand-logo">
-                    <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge logo" width="150px">
+                    <div class="d-flex justify-center py-3">
+                        <a class="d-flex align-items-center" href="{{ url('/') }}">
+                            <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
+                        </a>
+                        <div class="vertical-divider"></div>
+                        <a class="nav-brand-sub d-flex align-items-center" href="{{ url('/') }}">
+                            <i class="fa-solid fa-screwdriver-wrench" style="font-size: 2rem"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+                {{-- <div class="card-brand-logo">
+                    <div class="d-flex flex-column justify-center py-3">
+                        <a class="nav-brand-sub d-flex flex-column align-items-center mb-4" href="{{ url('/') }}">
+                            <i class="fa-solid fa-screwdriver-wrench" style="font-size: 2rem"></i>
+                            <span> Tools </span>
+                        </a>
+                        <a class="d-flex align-items-center" href="{{ url('/') }}">
+                            <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
+                        </a>
+                    </div>
+                </div> --}}
+                <div class="card-body p-0 px-4 pb-4">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

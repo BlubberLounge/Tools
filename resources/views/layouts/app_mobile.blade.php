@@ -53,7 +53,7 @@
         @include('includes.sidebar')
         {{-- @include('includes.nav') --}}
 
-        @if (session('status'))
+        {{-- @if (session('status'))
             <x-alert type="primary" message="{{ session('status') }}" />
         @elseif (session('error'))
             <x-alert type="danger" message="{{ session('error') }}" />
@@ -61,23 +61,12 @@
             <x-alert type="success" message="{{ session('success') }}" />
         @elseif (session('info'))
             <x-alert type="info" message="{{ session('info') }}" />
-        @endif
-
-        {{-- Validation error debugging --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @endif --}}
 
 
         <main class="py-3">
-            <div class="w-100 d-flex justify-center pb-3">
-                <div id="topBar" class="bg-body-tertiary rounded" style="--bs-breadcrumb-divider: '>';">
+            <div class="w-100 d-flex justify-center">
+                <div id="topBar" class="px-2 px-md-4 py-md-1 bg-body-tertiary rounded" style="--bs-breadcrumb-divider: '>';">
                     <div class="me-auto">
                         {{ Breadcrumbs::render() }}
                     </div>
@@ -89,7 +78,21 @@
                 </div>
             </div>
 
-            @yield('content')
+            {{-- Validation error debugging --}}
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible mx-5 mt-3 fade show" role="alert">
+                    <ul class="m-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            <div id="content" class="p-3">
+                @yield('content')
+            </div>
         </main>
 
     </div>

@@ -1,18 +1,17 @@
+<div class="row justify-center mb-3">
+    <div class="col-auto">
+        <a href="{{ route('user.edit-image', ['user' => $user->id]) }}">
+            <img src="{{ $user->img }}" width="150" class="rounded-circle">
+        </a>
+    </div>
+</div>
+
 <div class="row justify-content-center">
-    <form action="{{ $action === 'create' ? route('user.store') : route('user.update', $user->id) }}" method="POST" id="userform">
+    <form action="{{ $action === 'create' ? route('user.store') : route('user.update', $user->id) }}" method="POST"  enctype="multipart/form-data" id="userform">
         @csrf
         @if($action !== 'create')
             @method('PUT')
         @endif
-        <div class="mb-3">
-            <label for="name" class="form-check-label">{{ __('Username') }}</label>
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') || $action === 'create' ? old('name') : $user->name }}" required autocomplete="off" autofocus>
-            @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
 
         <div class="mb-3">
             <label for="firstname" class="form-check-label">{{ __('Firstname') }}</label>

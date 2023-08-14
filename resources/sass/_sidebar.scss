@@ -1,6 +1,8 @@
 #app {
     display: flex;
     width: 100%;
+
+    --bs-breadcrumb-font-size: .75rem;
 }
 
 #sidebar {
@@ -8,12 +10,12 @@
     flex-direction: column;
     flex-shrink: 0;
     // position: fixed;
-    min-width: 260px;
-    max-width: 260px;
+    min-width: 230px;
+    max-width: 230px;
     min-height: 100vh;
     z-index: 999;
     transition: all .3s;
-    margin-left: -260px;
+    margin-left: -230px;
 }
 
 #sidebar.active {
@@ -34,6 +36,34 @@
     font-size: 1.7rem;
     color: #fff;
     // transform: rotate(45deg);
+
+    // span {
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 50%;
+    //     transform: translateX(-50%);
+    //     background-color: red;
+    // }
+    span {
+        font-family: 'Montserrat';
+        font-weight: 900;
+        line-height: .8;
+    }
+}
+
+.nav-sm  {
+    --bs-nav-link-padding-y: 0.2rem;
+
+    .nav-link {
+
+        i {
+            font-size: .9em;
+        }
+    }
+}
+
+.nav-item {
+    margin-bottom: .255rem;
 }
 
 .nav-link {
@@ -67,12 +97,13 @@
 
 .submenu-item {
     display: block;
+    padding: .255rem 0;
 }
 
 #topBar {
     display: flex;
     align-items: center;
-    padding: .275rem 2rem;
+    // padding: .275rem 2rem;
     width: 90%;
 }
 
@@ -87,7 +118,7 @@ main {
 
 @media (max-width: 1000px) {
     #sidebar.active {
-        margin-left: -260px;
+        margin-left: -230px;
     }
     #sidebar {
         margin-left: 0px;

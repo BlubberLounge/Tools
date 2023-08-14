@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpFoundation\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
+use App\Helpers\FileHelper;
+use ImageOptimizer;
 
 use App\Models\User;
 
@@ -15,7 +19,6 @@ class UserController extends Controller
     /**
      * Create the controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -25,9 +28,8 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $data['users'] = User::orderBy('id','asc')->paginate(15);
         return view('user.index', $data);
@@ -36,18 +38,17 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
+        $data[] = null;
+
         return view('user.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
     {
@@ -67,21 +68,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('user.show', $user);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $data['user'] = $user;
         return view('user.edit', $data);
@@ -89,10 +85,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUserRequest  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -103,6 +95,25 @@ class UserController extends Controller
         $u->email = $request->email;
         $u->password = $request->password ? Hash::make($request->password) : $user->password;
 
+        $storagePathOriginal = storage_path('/app/private/uploads/user/original');
+        $storagePathCropped = '/public/uploads/user';
+
+        // Original image may be used later for further cropping
+        if($request->has('originalImage')) {
+            $originalImage = $request->file('originalImage');
+            $originalImageFilename = time().'_'.$u->id.'.' . $originalImage->extension();
+            $originalImagepath = $originalImage->move($storagePathOriginal, $originalImageFilename);
+        }
+
+        // Cropped image
+        if($request->has('croppedImage')) {
+            $croppedImagePath = FileHelper::fromBase64($request->croppedImage)->storePublicly($storagePathCropped);
+            $croppedImagePath = Str::replace('public', 'storage', $croppedImagePath);
+        }
+
+        // optimize the image for web
+        ImageOptimizer::optimize($croppedImagePath, $croppedImagePath.'-----');
+
         $u->save();
 
         return redirect()->route('user.index')
@@ -111,14 +122,45 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
         $user->delete();
         return redirect()->back()
             ->with('success','User has been deleted successfully');
+    }
+
+    /**
+     * Show the form for editing the image.
+     */
+    public function editImage(User $user): View
+    {
+        $data['user'] = $user;
+        return view('user.edit-image', $data);
+    }
+
+        /**
+     *  Show the language selection view
+     */
+    public function languageEdit(): View
+    {
+        $data['availableLanguages'] = config('app.available_locales');
+
+        return view('user.settings.language.index', $data);
+    }
+
+    /**
+     *  Update Language setting
+     */
+    public function languageUpdate(UpdateUserRequest $request)
+    {
+        $locale = $request->locale;
+
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        Auth::user()->settings->set('language', $locale);
+
+        return redirect()->route('user.show')
+            ->with('success','Language has been updated successfully');
     }
 }

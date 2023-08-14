@@ -1,14 +1,17 @@
 {
     "/js/app.js": "/js/app.js?id=cd803ad794dec1bfb2ab28fc20a98c20",
-    "/js/dark-mode.js": "/js/dark-mode.js?id=6014b9db718aa9b29daf976cf700a5ec",
+    "/js/dark-mode.js": "/js/dark-mode.js?id=ecbe25112dedea19d7aff0822ea43863",
     "/js/simApp.js": "/js/simApp.js?id=69b886ae165def8663c127c02998cd2b",
     "/js/auth.js": "/js/auth.js?id=0ee3a30faf8fa856204b45c345f99fac",
     "/js/dart.js": "/js/dart.js?id=815d3f30e1e052fb3d26a84187819721",
     "/js/dartSetup.js": "/js/dartSetup.js?id=e393c326157b762d3bcecb36df50729f",
     "/js/dartResult.js": "/js/dartResult.js?id=38364c487ca69d15e9cd6701a1f84417",
-    "/css/app.css": "/css/app.css?id=4bd75c0dc1c87d90d5eb9f378c9413d5",
+    "/js/user-profilepicture.js": "/js/user-profilepicture.js?id=84ff3dec6b595a23b4c59559aab0c9a1",
+    "/js/feedback-create.js": "/js/feedback-create.js?id=8f9cfe3d97ed51e0fae41687abfa4a76",
+    "/js/feedback-index.js": "/js/feedback-index.js?id=26a645ca08c2ea2275df3914734a5f4d",
+    "/css/app.css": "/css/app.css?id=d200b096c644c236f042b4817a841ab3",
     "/css/dartboard.css": "/css/dartboard.css?id=b4c44eb2a112810b75be4730fc75ee71",
-    "/css/custom.css": "/css/custom.css?id=b0785ac6051c5f8f37cf71e420f5e366",
+    "/css/custom.css": "/css/custom.css?id=62604fceb187f78e5a90b705f0ba997e",
     "/css/dart.css": "/css/dart.css?id=59f19f149b854395f64a39ac529747e9",
     "/css/auth.css": "/css/auth.css?id=7dc5ef9b833be8dd283d187f8ad730a2"
 }

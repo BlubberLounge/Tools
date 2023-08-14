@@ -19,3 +19,27 @@
 .device-browser-icon {
     font-size: 2rem;
 }
+
+.feedback-type-general button {
+    color: var(--bl-clr-white);
+    background-color: var(--bl-clr-gray-50);
+}
+
+.feedback-type-bug button {
+    /* color: ; */
+    background-color: var(--bl-clr-bd-red);
+}
+
+.feedback-type-information button {
+    color: var(--bl-clr-gray-90);
+    background-color: var(--bl-clr-blue);
+}
+
+.feedback-type-enhancement button {
+    color: var(--bl-clr-txt-yellow);
+    background-color: var(--bl-clr-yellow);
+}
+
+.accordion-button::after {
+    margin-left: .5rem;
+}

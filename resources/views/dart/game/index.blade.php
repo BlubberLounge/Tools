@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-<div class="container">
+<div class="container px-5">
 
     <div class="row mb-5 pt-2">
         <h3 class="col-8">
@@ -59,24 +59,6 @@
                     Practise
                 </div>
             </a>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col">
-            <ul class="list-group">
-                @foreach ($games as $game)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @mobile
-                            {{ Str::limit($game->title, 40) }}
-                        @endmobile
-                        @desktop
-                            {{ $game->title }}
-                        @enddesktop
-                        <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span>
-                    </li>
-                @endforeach
-              </ul>
         </div>
     </div>
 </div>

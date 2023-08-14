@@ -1,13 +1,4 @@
-@if(Request::path() !== 'user')
-    <div class="row">
-        <a href="{{ url()->previous() }}">
-            <i class="fa-solid fa-caret-left"></i>
-            {{ __('Back') }}
-        </a> 
-    </div>
-@endif
-
-<div class="row pb-4 pt-2">
+<div class="row pt-2">
     <h3 class="col-8">
         User Management
         <small class="text-muted">{{ substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@") + 1) }}</small>

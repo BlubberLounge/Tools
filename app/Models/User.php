@@ -133,6 +133,15 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     }
 
     /**
+     * Get all of the user Feedback
+     */
+    public function feedback(): HasMany
+    {
+        return $this->hasMany(Feedback::class)
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
      * The DartGames that belong to the user.
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
