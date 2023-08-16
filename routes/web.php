@@ -72,13 +72,12 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::name('dart.')->group(function ()
         {
             Route::resource('/game', DartGameController::class)->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
-            Route::get('/info', [DartController::class, 'showDartboard'])->name('show-info');
-            Route::get('/checkouts/{score?}', [DartController::class, 'showCheckout'])->name('show-checkout');
+            Route::get('/info', [DartController::class, 'showInfo'])->name('show-info');
+            Route::get('/checkouts/{score?}', [DartController::class, 'showCheckoutCalculator'])->name('show-checkout-calculator');
         });
     });
     Route::resource('/dart', DartController::class);
 
-    Route::resource('/user', UserController::class);
     // route: /user/*
     // name: user.*
     Route::prefix('user')->group(function () {
@@ -88,6 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
             Route::get('/{user}/editImage', [UserController::class, 'editImage'])->name('edit-image');
         });
     });
+    Route::resource('/user', UserController::class);
 
     Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
     Route::resource('faq', FAQController::class)

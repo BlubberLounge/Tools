@@ -3,55 +3,31 @@
     width: 100%;
 
     --bs-breadcrumb-font-size: .8rem;
-
-    --bs-nav-link-font-size: .85rem;
-    --bs-nav-link-padding-y: .45rem;
 }
 
 #sidebar {
+    position: fixed;
     display: flex;
+    margin-left: -230px;
     flex-direction: column;
     flex-shrink: 0;
-    // position: fixed;
-    min-width: 230px;
-    max-width: 230px;
+    // width: 230px;
     min-height: 100vh;
     z-index: 999;
     transition: all .3s;
-    margin-left: -230px;
+
+    ol, ul {
+        padding-left: 1rem;
+    }
 }
 
 #sidebar.active {
     margin-left: 0;
 }
 
-.vertical-divider {
-    height: 100%;
-    margin: 0 1rem;
-    padding: 0;
-    border-left: var(--bs-border-width) solid; /*var(--bs-primary) #ffb600*/
-    opacity: 0.5;
-}
-
-.nav-brand-sub {
-    position: relative;
-    align-items: center;
-    font-size: 1.7rem;
-    color: #fff;
-    // transform: rotate(45deg);
-
-    // span {
-    //     position: absolute;
-    //     bottom: 0;
-    //     left: 50%;
-    //     transform: translateX(-50%);
-    //     background-color: red;
-    // }
-    span {
-        font-family: 'Montserrat';
-        font-weight: 900;
-        line-height: .8;
-    }
+#sidebar:not(.active) ~ main {
+    width: 100vw;
+    left: 0;
 }
 
 .nav-sm  {
@@ -72,6 +48,10 @@
 .nav-link {
     display: flex;
     align-items: center;
+    position: relative;
+
+    --bs-nav-link-font-size: .85rem;
+    --bs-nav-link-padding-x: .25rem;
 
     &:hover {
         color: var(--bs-white);
@@ -79,7 +59,10 @@
     }
 
     i {
+        display: flex;
+        justify-content: center;
         font-size: 1.1rem;
+        min-width: 20px;
     }
 
     .nav-text {
@@ -89,7 +72,8 @@
 
 .has-submenu::after {
     font: var(--fa-font-solid);
-    content: "\f0d7";
+    // content: "\f0d7";
+    content: "\f078";
     font-size: .75em;
     padding: 0 0 0 .475em;
 }
@@ -103,6 +87,11 @@
     padding: .255rem 0;
 }
 
+.submenu-link {
+    --bs-nav-link-font-size: .75rem;
+    --bs-nav-link-padding-y: .255rem;
+}
+
 #topBar {
     display: flex;
     align-items: center;
@@ -111,19 +100,28 @@
 }
 
 main {
-    width: 100%;
+    position: relative;
+    width: calc(100% - 230px);
+    left: 230px;
     transition: all .3s;
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // width: calc(100% - 250px);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 992px) {
+    #sidebar {
+        margin-left: 0px;
+    }
+
     #sidebar.active {
         margin-left: -230px;
     }
-    #sidebar {
-        margin-left: 0px;
+
+    #sidebar.active ~ main {
+        width: 100vw;
+        left: 0;
+    }
+
+    #sidebar:not(.active) ~ main {
+        width: calc(100% - 230px);
+        left: 230px;
     }
 }

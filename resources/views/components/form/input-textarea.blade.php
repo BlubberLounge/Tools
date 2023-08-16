@@ -1,5 +1,5 @@
 <div class="mb-3">
-    <label for="{{ $attribute }}" class="form-label"> {{ $label }} </label>
+    <label for="{{ $attribute }}" class="form-label"> {{ __($label) }} </label>
     <textarea
         id="{{ $attribute }}"
         class="form-control @error('{{ $attribute }}') is-invalid @enderror"

@@ -150,7 +150,7 @@ class UserController extends Controller
         session()->put('locale', $locale);
         Auth::user()->settings->set('language', $locale);
 
-        return redirect()->route('home')
+        return redirect()->back()
             ->with('success','Language has been updated successfully');
     }
 }

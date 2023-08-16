@@ -4,7 +4,7 @@
             {{ __($label) }}
         </label>
         @if($helptext)
-            <span style="font-size: .8em;color: gray"> {{ $helptext }} </span>
+            <span style="font-size: .8em;color: gray"> {{ __($helptext) }} </span>
         @endif
     </div>
     <div class="col-auto form-switch">

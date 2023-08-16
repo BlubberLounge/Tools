@@ -14,7 +14,7 @@
 
     <div class="row d-flex justify-content-between">
         <div class="col-6 d-flex justify-content-end align-items-center">
-            <form action="{{ route('dart.showCheckout') }}" method="GET" id="checkoutForm">
+            <form action="{{ route('dart.show-checkout-calculator') }}" method="GET" id="checkoutForm">
                 @csrf
                 <div class="row g-3 align-items-center pb-4">
                     <div class="col-auto">

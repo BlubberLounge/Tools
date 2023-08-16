@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Classes\DartboardTest;
 
 class DartController extends Controller
@@ -12,7 +14,10 @@ class DartController extends Controller
      */
     public function index()
     {
-        //
+        $data['user'] = Auth::user();
+        $data['games'] = Auth::user()->DartGames()->open()->get()->merge(Auth::user()->DartGames()->done()->get());
+
+        return view('dart.index', $data);
     }
 
     /**
@@ -58,9 +63,92 @@ class DartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    // public function destroy(string $id)
+    // {
+    //     //
+    // }
+
+    /**
+     *
+     *
+     */
+    public function showInfo()
     {
-        //
+        $dartboard = new DartboardTest();
+        $avg = $dartboard->calculateBoardAverages();
+
+        $data = array();
+        $data["dartboard"] = $dartboard->board;
+        $data["dartboardAverages"] = $avg;
+        $data["dartboardHeat"] = $dartboard->getHeat($dartboard->board, true);
+        $data["dartboardAveragesHeat"] = $dartboard->getHeat($avg, true, 18, 1.5);
+
+        return view('dart.info', $data);
+    }
+
+
+    /**
+     * Show all possible checkouts with a given score
+     *
+     */
+    public function showCheckoutCalculator(Request $request, int $score = null)
+    {
+        $default = $request->input('score');
+        $score = $score ? $score : $request->input('score', rand(0, 170));
+        $singleOut = $request->input('singleOut', false);
+        $doubleOut = $request->input('doubleOut', !$default);
+        $trippleOut = $request->input('trippleOut', false);
+
+        $limitResults = $request->input('limitResults', !$default);
+        $highlightBestOption = $request->input('highlightBestOption', !$default);
+        $showWeights = $request->input('showWeights', false);
+
+        $maxResults = $limitResults ? 150 : null;
+        $bestOption = null;
+
+        $time_pre = microtime(true);
+        $checkouts = $this->calculateCheckouts($score, true, $maxResults, $singleOut, $doubleOut, $trippleOut);
+        $time_post = microtime(true);
+
+        $checkoutNumOfPossibilities = sizeof($checkouts);
+
+        $this->sortCheckouts($checkouts);
+        $bestOption = $this->evaluateCheckouts($checkouts);
+
+
+
+
+        $checkoutsChunked = array();
+
+        if($checkoutNumOfPossibilities >= 10) {
+            if($checkoutNumOfPossibilities % 2 == 0 ) {
+                $checkoutsChunked = array_chunk($checkouts, $checkoutNumOfPossibilities/2, true);
+            } else {
+                $checkoutsChunked = array_chunk($checkouts, ($checkoutNumOfPossibilities-1)/2, true);
+                $checkoutsChunked[1][$checkoutNumOfPossibilities-1] = $checkouts[$checkoutNumOfPossibilities-1];
+            }
+        } else {
+            $checkoutsChunked[0] = $checkouts;
+            $checkoutsChunked[1] = array();
+        }
+
+        // dd(collect($checkouts)->sortBy([3, 'asc']));
+
+        $data["checkouts"] = $checkouts;
+        $data["checkoutNumOfPossibilities"] = $checkoutNumOfPossibilities;
+        $data["checkoutBestOption"] = $bestOption;
+        $data["checkouts_0"] = $checkoutsChunked[0];
+        $data["checkouts_1"] = $checkoutsChunked[1];
+        $data["score"] = $score;
+        $data["execTime"] = round($time_post - $time_pre, 2);
+        $data["limitResults"] = $limitResults;
+        $data["highlightBestOption"] = $highlightBestOption;
+        $data["showWeights"] = $showWeights;
+        $data["singleOut"] = $singleOut;
+        $data["doubleOut"] = $doubleOut;
+        $data["trippleOut"] = $trippleOut;
+
+        return view('dart.checkoutCalculator', $data);
     }
 
     /**
@@ -331,88 +419,5 @@ class DartController extends Controller
 
 
         return true;
-    }
-
-    /**
-     *
-     */
-    public function showDartboard()
-    {
-        $dartboard = new DartboardTest();
-        $avg = $dartboard->calculateBoardAverages();
-
-        $data = array();
-        $data["dartboard"] = $dartboard->board;
-        $data["dartboardAverages"] = $avg;
-        $data["dartboardHeat"] = $dartboard->getHeat($dartboard->board, true);
-        $data["dartboardAveragesHeat"] = $dartboard->getHeat($avg, true, 18, 1.5);
-
-        return view('dart.dartboard', $data);
-    }
-
-    /**
-     * Show all possible checkouts with a given score
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function showCheckout(Request $request, int $score = null)
-    {
-        $default = $request->input('score');
-        $score = $score ? $score : $request->input('score', rand(0, 170));
-        $singleOut = $request->input('singleOut', false);
-        $doubleOut = $request->input('doubleOut', !$default);
-        $trippleOut = $request->input('trippleOut', false);
-
-        $limitResults = $request->input('limitResults', !$default);
-        $highlightBestOption = $request->input('highlightBestOption', !$default);
-        $showWeights = $request->input('showWeights', false);
-
-        $maxResults = $limitResults ? 150 : null;
-        $bestOption = null;
-
-        $time_pre = microtime(true);
-        $checkouts = $this->calculateCheckouts($score, true, $maxResults, $singleOut, $doubleOut, $trippleOut);
-        $time_post = microtime(true);
-
-        $checkoutNumOfPossibilities = sizeof($checkouts);
-
-        $this->sortCheckouts($checkouts);
-        $bestOption = $this->evaluateCheckouts($checkouts);
-
-
-
-
-        $checkoutsChunked = array();
-
-        if($checkoutNumOfPossibilities >= 10) {
-            if($checkoutNumOfPossibilities % 2 == 0 ) {
-                $checkoutsChunked = array_chunk($checkouts, $checkoutNumOfPossibilities/2, true);
-            } else {
-                $checkoutsChunked = array_chunk($checkouts, ($checkoutNumOfPossibilities-1)/2, true);
-                $checkoutsChunked[1][$checkoutNumOfPossibilities-1] = $checkouts[$checkoutNumOfPossibilities-1];
-            }
-        } else {
-            $checkoutsChunked[0] = $checkouts;
-            $checkoutsChunked[1] = array();
-        }
-
-        // dd(collect($checkouts)->sortBy([3, 'asc']));
-
-        $data["checkouts"] = $checkouts;
-        $data["checkoutNumOfPossibilities"] = $checkoutNumOfPossibilities;
-        $data["checkoutBestOption"] = $bestOption;
-        $data["checkouts_0"] = $checkoutsChunked[0];
-        $data["checkouts_1"] = $checkoutsChunked[1];
-        $data["score"] = $score;
-        $data["execTime"] = round($time_post - $time_pre, 2);
-        $data["limitResults"] = $limitResults;
-        $data["highlightBestOption"] = $highlightBestOption;
-        $data["showWeights"] = $showWeights;
-        $data["singleOut"] = $singleOut;
-        $data["doubleOut"] = $doubleOut;
-        $data["trippleOut"] = $trippleOut;
-
-        return view('dart.checkoutCalculator', $data);
     }
 }

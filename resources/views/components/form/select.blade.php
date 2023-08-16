@@ -1,12 +1,12 @@
 <div class="mb-3">
-    <label for="{{ $attribute }}" class="form-label"> {{ $label }} </label>
+    <label for="{{ $attribute }}" class="form-label"> {{ __($label) }} </label>
     <select
         id="{{ $attribute }}"
         class="form-select @error('{{ $attribute }}') is-invalid @enderror"
         name="{{ $attribute }}"
     >
         @foreach ($options as $key => $option)
-            <option value="{{ $key }}" {{ old($attribute) ? 'selected' : ''}}>{{ $option }}</option>
+            <option value="{{ $key }}" {{ old($attribute) ? 'selected' : ''}}>{{ __($option) }}</option>
         @endforeach
     </select>
     @error('{{ $attribute }}')

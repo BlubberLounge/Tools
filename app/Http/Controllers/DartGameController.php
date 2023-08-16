@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDartGameRequest;
 use App\Http\Requests\UpdateDartGameRequest;
+use Illuminate\Support\Facades\Auth;
 
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameType;
@@ -13,7 +14,6 @@ use App\Models\DartX01Game;
 use App\Models\DartAroundTheClockGame;
 use App\Models\DartThrow;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class DartGameController extends Controller
 {
@@ -23,9 +23,6 @@ class DartGameController extends Controller
     public function index()
     {
         $data['users'] = User::all();
-
-        $data['games'] = Auth::user()->DartGames()->open()->get()->merge(Auth::user()->DartGames()->done()->get());
-
         return view('dart.game.index', $data);
     }
 

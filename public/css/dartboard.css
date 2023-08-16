@@ -1,60 +1,61 @@
 .c-Dartboard {
-    stroke: rgb(133, 133, 133);
-    stroke-width: 2px;
-    /* stroke: silver;
-    stroke-width: 2px; */
-    position: relative;
+  stroke: rgb(133, 133, 133);
+  stroke-width: 2px;
+  /* stroke: silver;
+  stroke-width: 2px; */
+  position: relative;
 }
 
 .c-Dartboard-borders {
-    fill: black;
+  fill: black;
 }
+
 .c-Dartboard-borderLabel {
-    font-family: 'Roboto';
-    font-weight: bold;
-    fill: white;
-    stroke-width: 0;
+  font-family: "Roboto";
+  font-weight: bold;
+  fill: white;
+  stroke-width: 0;
 }
 
 .c-Dartboard-bed.isDark {
-    fill: black;
+  fill: black;
 }
 
 .c-Dartboard-bed.isLight {
-    fill: ivory;
+  fill: ivory;
 }
 
 .c-Dartboard-double .c-Dartboard-bed.isDark,
 .c-Dartboard-triple .c-Dartboard-bed.isDark,
 .c-Dartboard-innerBull .c-Dartboard-bed.isDark,
 .c-Dartboard-outerBull .c-Dartboard-bed.isDark {
-    fill: #E3292E;
+  fill: #E3292E;
 }
 
 .c-Dartboard-double .c-Dartboard-bed.isLight,
 .c-Dartboard-triple .c-Dartboard-bed.isLight,
 .c-Dartboard-innerBull .c-Dartboard-bed.isLight,
 .c-Dartboard-outerBull .c-Dartboard-bed.isLight {
-    fill: #32a63b;
+  fill: #32a63b;
 }
 
 .c-Dartboard-bed:hover, .c-Dartboard-border:hover {
-    fill-opacity: 0.6;
-    cursor: pointer;
+  fill-opacity: 0.6;
+  cursor: pointer;
 }
 
 .hitMarker {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #000;
-    border: 2px solid #fff ;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #000;
+  border: 2px solid #fff;
 }
 
 .fade-in {
-	animation: fadeIn 1s forwards;
-    opacity: 0;
+  animation: fadeIn 1s forwards;
+  opacity: 0;
 }
 
 @keyframes fadeIn {
@@ -62,4 +63,3 @@
     opacity: 1;
   }
 }
-

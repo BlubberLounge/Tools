@@ -1,5 +1,5 @@
 <nav id="sidebar" class="p-3 bg-body-tertiary active">
-    <div class="d-flex justify-center py-3">
+    <div class="d-flex justify-center py-2">
         <a class="d-flex align-items-center" href="{{ url('/') }}">
             <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
         </a>
@@ -11,9 +11,9 @@
 
     <hr class="mb-2" />
 
-    <ul class="nav nav-pills flex-column mb-5">{{-- mb-auto --}}
+    <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home.*') ? 'active' : '' }}">
+            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
                 <i class="fa-solid fa-house"></i>
                 <span class="nav-text"> {{ __('home') }} <span>
             </a>
@@ -25,41 +25,25 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('dart.index') }}" class="nav-link">
+            <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
                 <i class="fa-solid fa-chart-pie"></i>
                 <span class="nav-text"> {{ __('dart dashboard') }} <span>
             </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('dart.show-info') }}" class="nav-link {{ request()->routeIs('dart.show-info') ? 'active' : '' }}">
-                <i class="fa-solid fa-circle-info"></i>
-                <span class="nav-text"> {{ __('dart information') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('dart.show-checkout') }}" class="nav-link {{ request()->routeIs('dart.show-checkout') ? 'active' : '' }}">
-                <i class="fa-solid fa-chart-pie"></i>
-                <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
-            </a>
-        </li>
-        {{-- <li class="nav-item">
-            <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
-                <i class="fa-solid fa-wrench"></i>
-                <span class="nav-text"> {{ __('other dart tools') }} <span>
-            </a>
-            <ul class="collapse submenu" id="submenuDart">
+            <ul class="{{ request()->routeIs('dart.show-info') || request()->routeIs('dart.show-checkout-calculator') ? '' : 'collapse'  }} submenu" id="submenuDart">
                 <li class="submenu-item">
-                    <a href="{{ route('dart.showDartboard') }}" class="submenu-item">
-                        {{ __('dartboard') }}
+                    <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ request()->routeIs('dart.show-info') ? 'active' : '' }}">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span class="nav-text"> {{ __('dart information') }} <span>
                     </a>
                 </li>
                 <li class="submenu-item">
-                    <a href="{{ route('dart.showCheckout') }}" class="submenu-item">
-                        {{ __('dart checkout calculator') }}
+                    <a href="{{ route('dart.show-checkout-calculator') }}" class="nav-link submenu-link {{ request()->routeIs('dart.show-checkout-calculator') ? 'active' : '' }}">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
                     </a>
                 </li>
             </ul>
-        </li> --}}
+        </li>
         <li class="nav-item">
             <a class="nav-link disabled" href="#">
                 <i class="fa-solid fa-bong"></i>
@@ -79,12 +63,12 @@
             </a>
             <ul class="collapse submenu" id="submenuCalculators">
                 <li class="submenu-item">
-                    <a href="#" class="submenu-link">
+                    <a href="#" class="nav-link submenu-link">
                         {{ __('coal calculator') }}
                     </a>
                 </li>
                 <li class="submenu-item">
-                    <a href="#" class="submenu-link">
+                    <a href="#" class="nav-link submenu-link">
                         {{ __('tobacco calculator') }}
                     </a>
                 </li>
@@ -98,9 +82,9 @@
         </li>
     </ul>
 
-    <hr class="mt-5" />
+    <hr />
 
-    <ul class="nav nav-pills nav-sm flex-column mb-5">
+    <ul class="nav nav-pills nav-sm flex-column">
         <li class="nav-item">
             <a href="#" style="display: flex;align-items: center;padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);">
                 <img src="{{ Auth::user()->img }}" width="48" class="rounded-circle me-2">
@@ -132,6 +116,38 @@
             </a>
         </li>
         <li class="nav-item mt-2">
+            <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuAdministration">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span class="nav-text"> {{ __('administration') }} <span>
+            </a>
+            <ul class="collapse submenu" id="submenuAdministration">
+                <li class="submenu-item">
+                    <a href="{{ route('audit-log.index') }}" class="nav-link submenu-link">
+                        <i class="fa-solid fa-list-ul"></i>
+                        <span class="nav-text"> {{ __('audit log') }} <span>
+                    </a>
+                </li>
+                <li class="submenu-item">
+                    <a href="{{ route('user.index') }}" class="nav-link submenu-link">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text"> {{ __('user management') }} <span>
+                    </a>
+                </li>
+                <li class="submenu-item">
+                    <a href="{{ route('feedback.index') }}" class="nav-link submenu-link">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span class="nav-text"> {{ __('user feedback') }} <span>
+                    </a>
+                </li>
+                <li class="submenu-item">
+                    <a href="{{ route('l5-swagger.default.api') }}" class="nav-link submenu-link">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="nav-text"> {{ __('api documentation') }} <span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {{-- <li class="nav-item mt-2">
             <a href="{{ route('audit-log.index') }}" class="nav-link {{ request()->routeIs('audit-log.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-list-ul"></i>
                 <span class="nav-text"> {{ __('audit log') }} <span>
@@ -154,7 +170,7 @@
                 <i class="fa-solid fa-users"></i>
                 <span class="nav-text"> {{ __('api documentation') }} <span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item mt-3">
             <a href="{{ route('logout') }}" class="nav-link text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket"></i>

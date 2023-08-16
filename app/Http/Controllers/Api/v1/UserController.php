@@ -25,6 +25,27 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/user/{userID}",
+     *      operationId="getUser",
+     *      tags={"Users"},
+     *      summary="Get user by ID",
+     *      description="Get user by ID",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    /**
      * Display the specified resource.
      */
     public function show(User $user)
@@ -50,6 +71,27 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * @OA\Get(
+     *      path="/user/search/{userName}",
+     *      operationId="searchUser",
+     *      tags={"Users"},
+     *      summary="Get a list of users by username",
+     *      description="Get a list of users by username",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
     /**
      * search a resouce
      */

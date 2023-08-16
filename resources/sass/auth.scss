@@ -2,10 +2,10 @@ body {
     height: 100vh;
     background-color: var(--bs-tertiary-bg);
     display: flex;
-
 }
 
 #app {
+    width: 100%;
     background-image: url('/storage/lowpoly3.png');
     background-repeat: no-repeat;
     background-position: center;

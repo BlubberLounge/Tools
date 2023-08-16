@@ -9,7 +9,6 @@
     "home": "Home",
     "dart game": "Dart Spielen",
     "dart dashboard": "Dart Dashboard",
-    "other dart tools": "Dart Werkzeuge",
     "dart information": "Dart Information",
     "dart checkout calculator": "Checkout Rechner",
     "hookahs": "Hookahs",
@@ -25,13 +24,42 @@
     "feedback": "Feedback",
     "tools FAQ": "Tools FAQ",
 
+    "administration": "Administration",
     "audit log": "Audit-Log",
     "user management": "User Management",
     "user feedback": "User Feedback",
     "api documentation": "Api Dokumentation",
     "system information": "System informationen",
 
-    "logout": "Abmelden"
+    "logout": "Abmelden",
 
+
+    "darts or dart-throwing is a competitive sport in which two or more players bare-handedly throw small sharp-pointed missiles known as darts at a round target known as a dartboard.": "Darts, auch Dart (süddeutsch Spicken/Spicker/Spickern), ist ein Geschicklichkeitsspiel, eine Wurfsportart und ein Präzisionssport, bei dem mit Pfeilen (den Darts, süddeutsch Spickern) auf eine runde Scheibe (die Dartscheibe) geworfen wird.",
+    "around the clock": "Around the Clock",
+    "cricket": "Cricket",
+    "practise": "Training",
+
+    "dart settings": "Dart Setup",
+    "cancel": "Abbrechen",
+    "start": "Start",
+    "general": "Allgemein",
+    "game title": "Game name",
+    "private": "Privat",
+    "input": "Eingabemodus",
+    "numpad": "NumPad",
+    "dartboard": "Dartboard",
+    "recommended": "empfehlung",
+    "checkout": "Checkout",
+    "single out": "Single Out",
+    "double out": "Double Out",
+    "tripple out": "Tripple Out",
+    "last dart may be a single field": "Letzter Dart darf ein Single-Feld sein",
+    "last dart may be a double field": "Letzter Dart darf ein Double-Feld sein",
+    "last dart may be a tripple field": "Letzter Dart darf ein Tripple-Feld sein",
+    "selected player": "Ausgewählt",
+    "me": "Ich",
+    "player selection": "Spielerauswahl",
+    "search": "Suche",
+    "username": "Username"
 
 }

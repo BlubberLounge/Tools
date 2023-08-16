@@ -5,14 +5,14 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'BlubberLounge Tools API',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/documentation',
+                'api' => 'api/doc',
             ],
             'paths' => [
                 /*

@@ -11,7 +11,6 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Custom Sass
-@import 'sidebar';
 @import 'layout';
 @import 'buttons';
 
@@ -42,4 +41,32 @@
 
 .accordion-button::after {
     margin-left: .5rem;
+}
+
+.vertical-divider {
+    margin: 0 1rem;
+    padding: 0;
+    border-left: var(--bs-border-width) solid; /*var(--bs-primary) #ffb600*/
+    opacity: 0.5;
+}
+
+.nav-brand-sub {
+    position: relative;
+    align-items: center;
+    font-size: 1.7rem;
+    color: #fff;
+    // transform: rotate(45deg);
+
+    // span {
+    //     position: absolute;
+    //     bottom: 0;
+    //     left: 50%;
+    //     transform: translateX(-50%);
+    //     background-color: red;
+    // }
+    span {
+        font-family: 'Montserrat';
+        font-weight: 900;
+        line-height: .8;
+    }
 }

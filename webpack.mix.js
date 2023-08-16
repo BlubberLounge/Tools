@@ -24,10 +24,11 @@ mix
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')
     .css('resources/css/custom.css', 'public/css')
-    .css('resources/css/dartboard.css', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/auth.scss', 'public/css')
+    .sass('resources/sass/sidebar.scss', 'public/css')
     .sass('resources/sass/dart.scss', 'public/css')
+    .sass('resources/sass/dartboard.scss', 'public/css')
     .version()
     .sourceMaps();
 

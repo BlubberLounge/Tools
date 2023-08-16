@@ -11720,107 +11720,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-#app {
-  display: flex;
-  width: 100%;
-  --bs-breadcrumb-font-size: .8rem;
-  --bs-nav-link-font-size: .85rem;
-  --bs-nav-link-padding-y: .45rem;
-}
-
-#sidebar {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  min-width: 230px;
-  max-width: 230px;
-  min-height: 100vh;
-  z-index: 999;
-  transition: all 0.3s;
-  margin-left: -230px;
-}
-
-#sidebar.active {
-  margin-left: 0;
-}
-
-.vertical-divider {
-  height: 100%;
-  margin: 0 1rem;
-  padding: 0;
-  border-left: var(--bs-border-width) solid; /*var(--bs-primary) #ffb600*/
-  opacity: 0.5;
-}
-
-.nav-brand-sub {
-  position: relative;
-  align-items: center;
-  font-size: 1.7rem;
-  color: #fff;
-}
-.nav-brand-sub span {
-  font-family: "Montserrat";
-  font-weight: 900;
-  line-height: 0.8;
-}
-
-.nav-sm {
-  --bs-nav-link-padding-y: 0.2rem;
-}
-.nav-sm .nav-link i {
-  font-size: 0.9rem;
-}
-
-.nav-item {
-  margin-bottom: 0.255rem;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-}
-.nav-link:hover {
-  color: var(--bs-white);
-  background-color: var(--bs-primary);
-}
-.nav-link i {
-  font-size: 1.1rem;
-}
-.nav-link .nav-text {
-  margin-left: 1rem;
-}
-
-.has-submenu::after {
-  font: var(--fa-font-solid);
-  content: "\f0d7";
-  font-size: 0.75em;
-  padding: 0 0 0 0.475em;
-}
-
-.submenu-item {
-  display: block;
-  padding: 0.255rem 0;
-}
-
-#topBar {
-  display: flex;
-  align-items: center;
-  width: 90%;
-}
-
-main {
-  width: 100%;
-  transition: all 0.3s;
-}
-
-@media (max-width: 1000px) {
-  #sidebar.active {
-    margin-left: -230px;
-  }
-  #sidebar {
-    margin-left: 0px;
-  }
-}
 .btn.active[data-bs-theme-value] {
   background-color: var(--bs-secondary);
 }
@@ -11881,4 +11780,23 @@ main {
 
 .accordion-button::after {
   margin-left: 0.5rem;
+}
+
+.vertical-divider {
+  margin: 0 1rem;
+  padding: 0;
+  border-left: var(--bs-border-width) solid; /*var(--bs-primary) #ffb600*/
+  opacity: 0.5;
+}
+
+.nav-brand-sub {
+  position: relative;
+  align-items: center;
+  font-size: 1.7rem;
+  color: #fff;
+}
+.nav-brand-sub span {
+  font-family: "Montserrat";
+  font-weight: 900;
+  line-height: 0.8;
 }

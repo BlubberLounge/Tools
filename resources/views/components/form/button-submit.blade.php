@@ -1,1 +1,1 @@
-<button type="submit" class="btn btn-primary">{{ $label }}</button>
+<button type="submit" class="btn btn-primary">{{ __($label) }}</button>
