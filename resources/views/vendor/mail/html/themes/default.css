@@ -109,6 +109,18 @@ img {
     text-decoration: none;
 }
 
+/* .header-row {
+    background-color: #3869d4;
+} */
+
+.header-cell {
+    padding: 16px;
+    background-color: #3869d4;
+    border: 10px;
+    box-shadow: 0 2px 0 rgba(0, 0, 150, 0.1);
+
+}
+
 /* Logo */
 
 .logo {
@@ -137,12 +149,13 @@ img {
     -premailer-width: 570px;
     background-color: #ffffff;
     border-color: #e8e5ef;
-    border-radius: 2px;
+    border-radius: 8px;
     border-width: 1px;
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
     margin: 0 auto;
     padding: 0;
     width: 570px;
+    /* overflow: hidden; */
 }
 
 /* Subcopy */
@@ -164,7 +177,7 @@ img {
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
     margin: 0 auto;
-    padding: 0;
+    padding-top:128px !important;
     text-align: center;
     width: 570px;
 }

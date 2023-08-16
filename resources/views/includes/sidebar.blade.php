@@ -1,4 +1,4 @@
-<nav id="sidebar" class="p-3 bg-body-tertiary active">
+<nav id="sidebar" class="p-3 ps-2 bg-body-tertiary active">
     <div class="d-flex justify-center py-2">
         <a class="d-flex align-items-center" href="{{ url('/') }}">
             <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
@@ -13,31 +13,37 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+            <a href="{{ route('home') }}" class="nav-link {{ active('home') }}">
                 <i class="fa-solid fa-house"></i>
                 <span class="nav-text"> {{ __('home') }} <span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('dart.game.index') }}" class="nav-link {{ request()->routeIs('dart.game.index') ? 'active' : '' }}">
+            <a href="{{ route('dart.game.index') }}" class="nav-link {{ active('dart.game.index') }}">
                 <i class="fa-solid fa-bullseye"></i>
                 <span class="nav-text"> {{ __('dart game') }} <span>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
-                <i class="fa-solid fa-chart-pie"></i>
+                <i class="fa-solid fa-hashtag"></i>
                 <span class="nav-text"> {{ __('dart dashboard') }} <span>
             </a>
-            <ul class="{{ request()->routeIs('dart.show-info') || request()->routeIs('dart.show-checkout-calculator') ? '' : 'collapse'  }} submenu" id="submenuDart">
+            <ul id="submenuDart" class="{{ active(['dart.index', 'dart.show-info', 'dart.show-checkout-calculator']) ?: 'collapse' }} submenu">
                 <li class="submenu-item">
-                    <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ request()->routeIs('dart.show-info') ? 'active' : '' }}">
+                    <a href="{{ route('dart.index') }}" class="nav-link submenu-link {{ active('dart.index') }}">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <span class="nav-text"> {{ __('Dashboard') }} <span>
+                    </a>
+                </li>
+                <li class="submenu-item">
+                    <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ active('dart.show-info') }}">
                         <i class="fa-solid fa-circle-info"></i>
                         <span class="nav-text"> {{ __('dart information') }} <span>
                     </a>
                 </li>
                 <li class="submenu-item">
-                    <a href="{{ route('dart.show-checkout-calculator') }}" class="nav-link submenu-link {{ request()->routeIs('dart.show-checkout-calculator') ? 'active' : '' }}">
+                    <a href="{{ route('dart.show-checkout-calculator') }}" class="nav-link submenu-link {{ active('dart.show-checkout-calculator') }}">
                         <i class="fa-solid fa-chart-pie"></i>
                         <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
                     </a>
@@ -75,7 +81,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="{{ route('battery') }}" class="nav-link {{ request()->routeIs('battery') ? 'active' : '' }}">
+            <a href="{{ route('battery') }}" class="nav-link {{ active('battery') }}">
                 <i class="fa-solid fa-battery-three-quarters fa-rotate-270"></i>
                 <span class="nav-text"> {{ __('battery simulation') }} <span>
             </a>
@@ -98,7 +104,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('device.index') }}" class="nav-link">
+            <a href="{{ route('device.index') }}" class="nav-link {{ active('device.index') }}">
                 <i class="fa-solid fa-desktop"></i>
                 <span class="nav-text"> {{ __('devices') }} <span>
             </a>
@@ -110,7 +116,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('faq.index') }}" class="nav-link {{ request()->routeIs('faq.*') ? 'active' : '' }}" >
+            <a href="{{ route('faq.index') }}" class="nav-link {{ active('faq.*') }}" >
                 <i class="fa-solid fa-comment-dots"></i>
                 <span class="nav-text"> {{ __('tools FAQ') }} <span>
             </a>

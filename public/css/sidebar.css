@@ -43,7 +43,7 @@
   align-items: center;
   position: relative;
   --bs-nav-link-font-size: .85rem;
-  --bs-nav-link-padding-x: .25rem;
+  --bs-nav-link-padding-x: .55rem;
 }
 .nav-link:hover {
   color: var(--bs-white);

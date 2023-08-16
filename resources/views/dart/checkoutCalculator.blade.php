@@ -95,9 +95,9 @@
                             @if($checkoutBestOption >= 0 && $checkoutBestOption <= count($checkouts_0)-1)
                                 <tr class="table-success">
                                     <th scope="row"> BEST #{{ $checkoutBestOption }}</th>
-                                    <td scope="row">{{ $checkouts_0[$checkoutBestOption][0] }}</td>
-                                    <td scope="row">{{ $checkouts_0[$checkoutBestOption][1] }}</td>
-                                    <td scope="row">{{ $checkouts_0[$checkoutBestOption][2] }}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
                                     @if($showWeights)
                                         <td scope="row">{{ $checkouts_0[$checkoutBestOption][3] }}</td>
                                     @endif
@@ -105,9 +105,9 @@
                             @else
                                 <tr class="table-success">
                                     <th scope="row"> BEST #{{ $checkoutBestOption }}</th>
-                                    <td scope="row">{{ $checkouts_1[$checkoutBestOption][0] }}</td>
-                                    <td scope="row">{{ $checkouts_1[$checkoutBestOption][1] }}</td>
-                                    <td scope="row">{{ $checkouts_1[$checkoutBestOption][2] }}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
                                     @if($showWeights)
                                         <td scope="row">{{ $checkouts_1[$checkoutBestOption][3] }}</td>
                                     @endif
@@ -117,9 +117,9 @@
                         @foreach ($checkouts_0 as $key => $checkout )
                             <tr class="{{ $checkoutBestOption == $key && $highlightBestOption ? 'table-dark' : null }}">
                                 <th scope="row">{{ $key }}</th>
-                                <td scope="row">{{ $checkout[0] }}</td>
-                                <td scope="row">{{ $checkout[1] }}</td>
-                                <td scope="row">{{ $checkout[2] }}</td>
+                                <td scope="row">{!! $checkout[0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                <td scope="row">{!! $checkout[1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                <td scope="row">{!! $checkout[2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
                                 @if($showWeights)
                                     <td scope="row">{{ $checkout[3] }}</td>
                                 @endif

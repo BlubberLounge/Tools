@@ -1,27 +1,32 @@
-@component('mail::layout')
+<x-mail::layout>
 {{-- Header --}}
-@slot('header')
-@component('mail::header', ['url' => config('app.url')])
-{{ config('app.name') }}
-@endcomponent
-@endslot
+<x-slot:header>
+<x-mail::header :url="config('app.url')">
+    <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg">
+</x-mail::header>
+</x-slot:header>
 
 {{-- Body --}}
 {{ $slot }}
 
 {{-- Subcopy --}}
 @isset($subcopy)
-@slot('subcopy')
-@component('mail::subcopy')
+<x-slot:subcopy>
+<x-mail::subcopy>
 {{ $subcopy }}
-@endcomponent
-@endslot
+</x-mail::subcopy>
+</x-slot:subcopy>
 @endisset
 
 {{-- Footer --}}
-@slot('footer')
-@component('mail::footer')
+<x-slot:footer>
+<x-mail::footer>
+<x-slot:links>
+[{{ config('app.name') }}]({{config('app.url')}}) | [GitHub](https://github.com/BlubberLounge) | [BlubberLounge](https://blubber-lounge.de/)
+</x-slot:links>
+<x-slot:copyright>
 © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
-@endcomponent
-@endslot
-@endcomponent
+</x-slot:copyright>
+</x-mail::footer>
+</x-slot:footer>
+</x-mail::layout>
