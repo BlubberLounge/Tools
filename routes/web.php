@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BatteryController;
@@ -36,24 +37,16 @@ Route::get('/', function () {
 //     Auth::routes(['verify' => true, 'register' => false]);
 // }
 
-/*
- * email verification routes
- */
-// Route::get('/email', function () {
-//     return view('auth.verify');
-// })->middleware('auth')->name('verification.notice');
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
 
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('google')->user();
+    dd($user);
 
-//     return redirect('/home');
-// })->middleware(['auth'])->name('verification.verify');
-
-// Route::post('/email/verification-notification', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
-
-//     return back()->with('message', 'Verification link sent!');
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    // $user->token
+});
 
 
 /*
