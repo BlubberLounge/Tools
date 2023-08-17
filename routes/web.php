@@ -37,16 +37,16 @@ Route::get('/', function () {
 //     Auth::routes(['verify' => true, 'register' => false]);
 // }
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
-})->name('auth.google.redirect');
+// Route::get('/auth/redirect', function () {
+//     return Socialite::driver('google')->redirect();
+// })->name('auth.google.redirect');
 
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('google')->user();
-    dd($user);
+// Route::get('/auth/callback', function () {
+//     $user = Socialite::driver('google')->user();
+//     dd($user);
 
-    // $user->token
-})->name('auth.google.callback');
+//     // $user->token
+// })->name('auth.google.callback');
 
 
 /*
