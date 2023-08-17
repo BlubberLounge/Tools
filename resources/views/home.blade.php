@@ -28,7 +28,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    {{ Laravel\Socialite\Facades\Socialite::driver('google')->redirect(); }}
+    {{-- <div class="row">
         <div id="g_id_onload"
             data-client_id="{{ env('GOOGLE_CLIENT_ID') }}"
             data-context="signin"
@@ -45,6 +46,6 @@
             data-size="large"
             data-logo_alignment="left">
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection

@@ -39,14 +39,14 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('auth.google.redirect');
 
 Route::get('/auth/callback', function () {
     $user = Socialite::driver('google')->user();
     dd($user);
 
     // $user->token
-});
+})->name('auth.google.callback');
 
 
 /*
