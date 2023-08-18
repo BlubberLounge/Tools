@@ -1,7 +1,27 @@
 @extends('layouts.app')
 
+@push('scripts')
+    <script src="{{ mix('js/dartResult.js') }}"></script>
+    <script src="{{ mix('js/dartResultHeatmap.js') }}"></script>
+@endpush
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/dartboardResult.css') }}" />
+@endpush
+
 @section('content')
 <div class="container">
+    <div class="row row-cols-1 row-cols-xl-4">
+        <div class="col pb-5">
+            <div id="heatmap1" class="d-flex position-relative justify-center align-items-center p-2 heatmap heatmap1" style="width: 100%; height: 300px;">
+                <div id="skeleton-heatmap1" class="position-absolute top-50 start-50 translate-middle">
+                    <div class="spinner-border">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row pb-4 pt-2">
         <h3 class="col-8">
@@ -11,7 +31,7 @@
             Description: TODO Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, nesciunt earum. Voluptatibus tempore corrupti odio ut cumque Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, nesciunt earum. porro enim, iste optio molestiae dignissimos soluta sapiente nam similique officia fugiat sit.
         </small>
     </div>
-    
+
     <div class="row">
         <div class="col dartboard d-flex justify-content-center align-items-center">
             <ul class="dartboard_ring">
@@ -48,7 +68,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="row pb-4 pt-2">
         <h3 class="col-8">
             Heatmap: Average of nearest neighbour Wedge/Field values

@@ -7,14 +7,14 @@ import Hit from './hit';
  */
 export default class Dartboard
 {
-    constructor(containerSelector = null)
+    constructor(containerSelector = null, settings = {})
     {
         this.identifier = document.getElementById('gameId').getAttribute('value');
 
         this.locked = false;
 
         this.options = {
-            size: 360,
+            size: 'size' in settings ? settings.size : 0,
             borderPercent: 13,
             doublePercent: 8,
             outerSinglePercent: 28,

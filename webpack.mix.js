@@ -20,6 +20,7 @@ mix
     .js('resources/js/dart.js', 'public/js')
     .js('resources/js/dartSetup.js', 'public/js')
     .js('resources/js/dartResult.js', 'public/js')
+    .js('resources/js/dartResultHeatmap.js', 'public/js')
     .js('resources/js/user-profilepicture.js', 'public/js')
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')
@@ -29,6 +30,7 @@ mix
     .sass('resources/sass/sidebar.scss', 'public/css')
     .sass('resources/sass/dart.scss', 'public/css')
     .sass('resources/sass/dartboard.scss', 'public/css')
+    .sass('resources/sass/dartboardResult.scss', 'public/css')
     .version()
     .sourceMaps();
 

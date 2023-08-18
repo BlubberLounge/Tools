@@ -1,0 +1,34 @@
+.c-Dartboard {
+  stroke: rgb(133, 133, 133);
+  stroke-width: 1px;
+  /* stroke: silver;
+  stroke-width: 2px; */
+  position: relative;
+}
+
+.c-Dartboard-borders {
+  fill: black;
+}
+
+.c-Dartboard-borderLabel {
+  font-family: "Roboto";
+  font-weight: bold;
+  fill: rgb(133, 133, 133);
+  stroke-width: 0;
+}
+
+.hitMarker {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: red;
+  border: 1px solid #fff;
+  z-index: 999;
+}
+.hitMarker.centroid {
+  background-color: green;
+}
+.hitMarker.median {
+  background-color: purple;
+}

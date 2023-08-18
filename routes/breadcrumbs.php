@@ -27,10 +27,16 @@ Breadcrumbs::for('dart.index', function (BreadcrumbTrail $trail)
     $trail->push('dart dashboard', route('dart.index'));
 });
 
-Breadcrumbs::for('dart.info', function (BreadcrumbTrail $trail)
+Breadcrumbs::for('dart.show-info', function (BreadcrumbTrail $trail)
 {
     $trail->parent('home');
-    $trail->push('dart information', route('dart.info'));
+    $trail->push('dart information', route('dart.show-info'));
+});
+
+Breadcrumbs::for('dart.show-checkout-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push('dart checkout calculator', route('dart.show-checkout-calculator'));
 });
 
 

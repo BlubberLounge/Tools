@@ -36,7 +36,7 @@ export default class Dart
 
         // console.log('Dart initializing');
 
-        this.dartboard = new Dartboard(this.boardContainer);
+        this.dartboard = new Dartboard(this.boardContainer, {size: 360});
         this.dartboard.render();
         this.playerList.lock();
         this.playerList.sortByPosition();
