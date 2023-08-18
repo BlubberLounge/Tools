@@ -8,7 +8,7 @@
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboardInfo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/dartboardResult.css') }}" />
 @endpush
 
 @section('content')
