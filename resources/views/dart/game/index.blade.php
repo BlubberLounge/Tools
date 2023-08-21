@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-{{-- @push('scripts')
-    <script src="{{ mix('js/dart.js') }}"></script>
-@endpush --}}
-
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/dartboard.css') }}" />
 @endpush

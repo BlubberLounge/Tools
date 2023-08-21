@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import * as UTILS from '../utils';
-import Hit from './hit';
+import Hit from './game/classes/hit';
 
 /**
  *
