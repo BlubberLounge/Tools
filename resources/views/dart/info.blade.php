@@ -22,11 +22,6 @@
             </div>
         </div>
     </div>
-    <div class="row pb-5">
-        <div class="col justify-center">
-            <div id="myDiv"></div>
-        </div>
-    </div>
 
     <div class="row pb-4 pt-2">
         <h3 class="col-8">

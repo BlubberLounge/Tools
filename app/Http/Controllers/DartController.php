@@ -86,6 +86,15 @@ class DartController extends Controller
         return view('dart.info', $data);
     }
 
+    /**
+     *
+     */
+    public function showPlayground()
+    {
+        $data[] = null;
+        return view('dart.playground', $data);
+    }
+
 
     /**
      * Show all possible checkouts with a given score

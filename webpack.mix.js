@@ -22,6 +22,7 @@ mix
     .js('resources/js/dartResult.js', 'public/js')
     .js('resources/js/dartResultHeatmap.js', 'public/js')
     .js('resources/js/dartInfo.js', 'public/js')
+    .js('resources/js/dartPlayground.js', 'public/js')
     .js('resources/js/user-profilepicture.js', 'public/js')
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')

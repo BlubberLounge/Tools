@@ -67,6 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
             Route::resource('/game', DartGameController::class)->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
             Route::get('/info', [DartController::class, 'showInfo'])->name('show-info');
             Route::get('/checkouts/{score?}', [DartController::class, 'showCheckoutCalculator'])->name('show-checkout-calculator');
+            Route::get('/playground', [DartController::class, 'showPlayground'])->name('show-playground');
         });
     });
     Route::resource('/dart', DartController::class);

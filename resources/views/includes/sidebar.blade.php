@@ -1,4 +1,4 @@
-<nav id="sidebar" class="p-3 ps-2 bg-body-tertiary active">
+<nav id="sidebar" class="p-2 bg-body-tertiary active">
     <div class="d-flex justify-center py-2">
         <a class="d-flex align-items-center" href="{{ url('/') }}">
             <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
@@ -48,6 +48,12 @@
                         <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
                     </a>
                 </li>
+                <li class="submenu-item">
+                    <a href="{{ route('dart.show-playground') }}" class="nav-link submenu-link {{ active('dart.show-playground') }}">
+                        <i class="fa-solid fa-bug"></i>
+                        <span class="nav-text"> {{ __('dart playground') }} <small>(beta)</small> <span>
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="nav-item">
@@ -92,7 +98,7 @@
 
     <ul class="nav nav-pills nav-sm flex-column">
         <li class="nav-item">
-            <a href="#" style="display: flex;align-items: center;padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);">
+            <a href="#" style="display: flex;align-items: center;">
                 <img src="{{ Auth::user()->img }}" width="48" class="rounded-circle me-2">
                 <strong> {{ Auth::user()->full_name }} </strong>
             </a>

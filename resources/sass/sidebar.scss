@@ -11,13 +11,17 @@
     margin-left: -230px;
     flex-direction: column;
     flex-shrink: 0;
-    // width: 230px;
+    width: 230px;
     min-height: 100vh;
     z-index: 999;
     transition: all .3s;
 
     ol, ul {
-        padding-left: 1rem;
+        padding-left: .625rem;
+
+        ol, ul {
+            padding-left: 1.1em;
+        }
     }
 }
 
