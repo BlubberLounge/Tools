@@ -107,8 +107,6 @@ function renderHeatmaps(data)
         // console.table(centroid);
         placeMarker(dartboardContainer, centroid.x, centroid.y, 'centroid');
 
-        calculateAccfa-ul
-
         let skeletonHeatmap = document.getElementById(`skeleton-heatmap${k+1}`);
         if(skeletonHeatmap)
             skeletonHeatmap.remove();

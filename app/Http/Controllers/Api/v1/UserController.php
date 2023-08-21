@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
+use App\Models\DartGame;
+
 
 class UserController extends Controller
 {
@@ -98,6 +102,18 @@ class UserController extends Controller
     public function search(Request $request, string $name)
     {
         $data['users'] = User::like('name', $name)->get();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    public function showThrowsByGame(Request $request, string $id)
+    {
+        // $game = DartGame::find($id);
+        $data['throws'] = Auth::user()->DartThrows()->where('dart_game_id', $id)->get();
+        // dd(Auth::user()->DartThrows());
 
         return $this->sendResponse($data, 'ok');
     }

@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         Route::name('user.')->group(function ()
         {
             Route::get('/search/{user}', [UserController::class, 'search'])->name('search');
+            Route::get('/showThrowsByGame/{dartGame}', [UserController::class, 'showThrowsByGame'])->name('show-throwsByGame');
         });
     });
 
