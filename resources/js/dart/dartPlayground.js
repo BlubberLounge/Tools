@@ -25,24 +25,6 @@ function createMatrix(size, value = 1)
     return result;
 }
 
-function addPadding(array, size, fill)
-{
-    for(let i = 0; i <= size - array.length; i++) {
-        var edge = Array(array.length).fill(fill);
-        array = array.map(a => {
-            a.push(fill);
-            a.unshift(fill);
-            return a;
-        });
-        array.push(edge);
-        array.unshift(edge);
-    }
-    array[0].push(fill);  // pfusch
-    array[array.length-1].push(fill);
-
-    return array;
-};
-
 $(function()
 {
     fetchHeatmapData();
@@ -50,51 +32,60 @@ $(function()
     let dartboard = new Dartboard('#dartboardContainer');
     dartboard.render();
 
-    let sizeTest = 180;
-    let standardDeviation = 50; //sd
 
-    // let weights = addPadding(createMatrix(2), 7, 0);
-    // console.log(weights);
 
-    let weightSize = 180;
-    let weights = [];
-    for(let i = -weightSize; i < weightSize+1; i++) {
+    let size = 180;
+    let matrix1 = [];
+    for(let col = -size; col < size+1; col++) {
         let res = [];
-        for(let j = -weightSize; j < weightSize+1; j++) {
-            let num1 = xlfNormalPDF1a(i, 0, standardDeviation);
-            let num2 = xlfNormalPDF1a(j, 0, standardDeviation);
+        for(let row = -size; row < size+1; row++)
+            res.push(getScore(row, col));
+
+        matrix1.push(res);
+    }
+
+
+    let startSD = .5;
+    let endSD = 99.5;
+
+    for(let i = startSD; i <= endSD; i++) {
+        calculate(i, size, matrix1);
+    }
+
+});
+
+function calculate(standardDeviation, size, matrix)
+{
+    const start = performance.now();
+
+    let weights = [];
+    for(let i = -size; i < size+1; i++) {
+        let res = [];
+        for(let j = -size; j < size+1; j++) {
+            let num1 = probability_density_normal_dist(i, 0, standardDeviation);
+            let num2 = probability_density_normal_dist(j, 0, standardDeviation);
             res.push(
                     num1 * num2
             );
         }
         weights.push(res);
     }
-    // console.log(weights);
 
-    // let matrix1 = createMatrix(10);
-    // console.log(matrix1);
-
-    let matrix1 = [];
-    for(let col = -sizeTest; col < sizeTest+1; col++) {
-        let res = [];
-        for(let row = -sizeTest; row < sizeTest+1; row++)
-            res.push(getScore(row, col));
-
-        matrix1.push(res);
-    }
-
-    let resultMatrix = createMatrix(sizeTest, 0);
+    let resultMatrix = createMatrix(size, 0);
     let highest = 0;
-    for(let col=0; col <= matrix1.length-1; col++) {
-        for(let row=0; row <= matrix1.length-1; row++) {
+    let matrixLength = matrix.length-1;
+    let weightsLength = weights.length-1;
+    let weightsLengthHalf = weightsLength / 2;
+    for(let col=0; col <= matrixLength; col++) {
+        for(let row=0; row <= matrixLength; row++) {
             var sum = 0;
-            for(let i=0; i <= weights.length-1; i++) {
-                for(let j=0; j <= weights.length-1; j++) {
-                    let x = j + row - (weights.length-1)/2;
-                    let y = i + col - (weights.length-1)/2;
-                    if(x < 0 || y < 0 || x > matrix1.length-1 || y > matrix1.length-1)
+            for(let i=0; i <= weightsLength; i++) {
+                for(let j=0; j <= weightsLength; j++) {
+                    let x = j + row - weightsLengthHalf;
+                    let y = i + col - weightsLengthHalf;
+                    if(x < 0 || y < 0 || x > matrixLength || y > matrixLength)
                         continue;
-                    let points = weights[i][j] * matrix1[y][x];
+                    let points = weights[i][j] * matrix[y][x];
                     sum += points;
                 }
             }
@@ -105,11 +96,25 @@ $(function()
     }
 
     console.log('Result: ');
-    console.log(resultMatrix);
+    console.log(`Standard Deviation: ${standardDeviation}mm`)
     console.log(`Highest Sum: ${highest}`);
-    // // console.log(matrix1);
-    // renderPlot(resultMatrix);
-});
+
+    const end = performance.now();
+    console.log(`Execution time: ${((end - start) / 1000 / 60)} minutes`);
+
+    let data = {
+        sigma: standardDeviation,
+        expectedPoints: highest
+    };
+
+    axios.post('/api/v1/dart/expectationData', data).then( response => {
+        console.warn('Successfuly stored data.');
+    }).catch(function (error) {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
 
 
 function placeMarker(dartboardContainer, x, y, className)
@@ -214,7 +219,7 @@ function renderHeatmap(data)
 /**
  *
  */
-function xlfNormalPDF1a (x, mu, sigma)
+function probability_density_normal_dist (x, mu, sigma)
 {
     var num = Math.exp(-Math.pow((x - mu), 2) / (2 * Math.pow(sigma, 2)))
     var denom = sigma * Math.sqrt(2 * Math.PI)

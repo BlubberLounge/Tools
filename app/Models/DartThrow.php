@@ -16,10 +16,8 @@ class DartThrow extends Model implements Auditable
         SoftDeletes,
         \OwenIt\Auditing\Auditable;
 
-        /**
+    /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
         'set',
@@ -35,8 +33,6 @@ class DartThrow extends Model implements Auditable
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array<string, string>
      */
     protected $casts = [
         'ring' => DartRingType::class,

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
+use App\Http\Controllers\Api\v1\DartExpectationDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         {
             Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace'])->name('updatePlace');
             Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows'])->name('showThrows');
+
+            // local and development only
+            if(App::environment(['local', 'development']))
+                Route::apiResource('expectationData', DartExpectationDataController::class)
+                    ->only(['store'])
+                    ->parameter('expectationData', 'dartExpectationData'); // expectationData to dartExpectationData for currect auto-mapping;
         });
     });
 

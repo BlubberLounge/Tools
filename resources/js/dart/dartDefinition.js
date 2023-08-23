@@ -13,7 +13,7 @@ export default class DartDefinition
 
     static maxPlayers = 4;
 
-    static apiBasePath = 1;
+    static apiBasePath = '/api/v1';
 
 
 

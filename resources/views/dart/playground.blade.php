@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/dartPlayground.js') }}"></script>
+    <script defer src="{{ mix('js/dartPlayground.js') }}"></script>
 @endpush
 
 @push('styles')
