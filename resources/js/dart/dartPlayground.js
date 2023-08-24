@@ -32,8 +32,6 @@ $(function()
     let dartboard = new Dartboard('#dartboardContainer');
     dartboard.render();
 
-
-
     let size = 180;
     let matrix1 = [];
     for(let col = -size; col < size+1; col++) {
@@ -45,10 +43,10 @@ $(function()
     }
 
 
-    let startSD = .5;
-    let endSD = 99.5;
+    let startSD = 100;
+    let endSD = 200;
 
-    for(let i = startSD; i <= endSD; i++) {
+    for(let i = startSD; i <= endSD; i+=.5) {
         calculate(i, size, matrix1);
     }
 

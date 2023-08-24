@@ -1,8 +1,12 @@
 import * as d3 from 'd3';
+
 import * as UTILS from '../utils';
+import DartDefinition from './dartDefinition';
+
 import Hit from './game/classes/hit';
 
 /**
+ *
  *
  */
 export default class Dartboard
@@ -13,15 +17,26 @@ export default class Dartboard
 
         this.locked = false;
 
+        // this.options = {
+        //     size: 'size' in settings ? settings.size : 0,
+        //     borderPercent: 13,
+        //     doublePercent: 8,
+        //     outerSinglePercent: 28,
+        //     triplePercent: 7,
+        //     innerSinglePercent: 32,
+        //     outerBullPercent: 6,
+        //     innerBullPercent: 6,
+        // };
+
         this.options = {
             size: 'size' in settings ? settings.size : 0,
-            borderPercent: 13,
-            doublePercent: 8,
-            outerSinglePercent: 28,
-            triplePercent: 7,
-            innerSinglePercent: 32,
-            outerBullPercent: 6,
-            innerBullPercent: 6,
+            borderPercent: .12,
+            doublePercent: DartDefinition.ringRadiiRelative.double - .02,
+            outerSinglePercent: DartDefinition.ringRadiiRelative.outerSingle - .02,
+            triplePercent: DartDefinition.ringRadiiRelative.tripple - .02,
+            innerSinglePercent: DartDefinition.ringRadiiRelative.innerSingle - .05,
+            outerBullPercent: DartDefinition.ringRadiiRelative.bullseye - .01,
+            innerBullPercent: DartDefinition.ringRadiiRelative.doubleBullseye,
         };
 
         this.rings = {
@@ -71,14 +86,15 @@ export default class Dartboard
         this.board = board;
 
         this.sizes = {
-            border: board.radius * UTILS.asPercent(this.options.borderPercent),
-            double: board.radius * UTILS.asPercent(this.options.doublePercent),
-            outerSingle: board.radius * UTILS.asPercent(this.options.outerSinglePercent),
-            triple: board.radius * UTILS.asPercent(this.options.triplePercent),
-            innerSingle: board.radius * UTILS.asPercent(this.options.innerSinglePercent),
-            outerBull: board.radius * UTILS.asPercent(this.options.outerBullPercent),
-            innerBull: board.radius *UTILS.asPercent(this.options.innerBullPercent),
+            border: board.radius * this.options.borderPercent,
+            double: board.radius * this.options.doublePercent,
+            outerSingle: board.radius * this.options.outerSinglePercent,
+            triple: board.radius * this.options.triplePercent,
+            innerSingle: board.radius * this.options.innerSinglePercent,
+            outerBull: board.radius * this.options.outerBullPercent,
+            innerBull: board.radius * this.options.innerBullPercent,
         };
+        console.log(this.sizes);
     }
 
     render()
@@ -127,8 +143,8 @@ export default class Dartboard
         const bedData = bed.data;
         // // e = Mouse click event. = Mouse click event.
         const rect = document.getElementsByClassName('c-Dartboard')[0].getBoundingClientRect();
-        const x = event.clientX - rect.left; // x position within the element.
-        const y = event.clientY - rect.top;  // y position within the element.
+        const x = event.clientX - rect.left - this.options.borderPercent; // x position within the element.
+        const y = event.clientY - rect.top - this.options.borderPercent;  // y position within the element.
 
         const points = bedData.frame * bedData.ring.multiplier;
         const field = bedData.frame;

@@ -5,7 +5,11 @@
  */
 
 import h337 from 'heatmap.js';
+import Plotly from 'plotly.js-dist';
+
+import * as UTILS from '../utils';
 import Dartboard from './dartboard';
+import DartCalculator from './dartCalculator';
 
 $(function()
 {
@@ -13,8 +17,9 @@ $(function()
 
     let dartboard = new Dartboard('#dartboardContainer');
     dartboard.render();
-});
 
+
+});
 
 function placeMarker(dartboardContainer, x, y, className)
 {
