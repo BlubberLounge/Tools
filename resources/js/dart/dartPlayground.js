@@ -7,8 +7,9 @@
 import h337 from 'heatmap.js';
 import Plotly from 'plotly.js-dist';
 
-import Dartboard from './dartboard';
 import * as UTILS from '../utils';
+import Dartboard from './dartboard';
+import DartCalculator from './dartCalculator';
 
 
 function createMatrix(size, value = 1)
@@ -33,28 +34,115 @@ $(function()
     dartboard.render();
 
     let size = 180;
-    let matrix1 = [];
+    let matrix = [];
     for(let col = -size; col < size+1; col++) {
         let res = [];
         for(let row = -size; row < size+1; row++)
             res.push(getScore(row, col));
 
-        matrix1.push(res);
+        matrix.push(res);
     }
 
 
-    let startSD = 100;
-    let endSD = 200;
+    let startSD = 1;
+    let endSD = 100;
 
     for(let i = startSD; i <= endSD; i+=.5) {
-        calculate(i, size, matrix1);
+        calculate_optimized(i, size, matrix);
     }
-
 });
+function calculate_optimized(standardDeviation, size, matrix)
+{
+    const startA = performance.now();
+
+    let kernel = [];
+    for(let i = -size; i < size+1; i++)
+        kernel.push(probability_density_normal_dist(i, 0, standardDeviation));
+
+    const endA = performance.now();
+    console.log(`[probability_density_normal_dist] Execution time: ${((endA - startA) / 1000)} sec.`);
+    const startB = performance.now();
+
+    let resultMatrix = createMatrix(size, 0);
+    let matrixLength = matrix.length-1;
+    let kernelLength = kernel.length-1;
+    let kernelLengthHalf = kernelLength / 2;
+    let highestPoint = {
+        score: 0,
+        x: 0,
+        y: 0,
+    };
+
+    let interMatrix = createMatrix(size, 0);
+    for(let col=0; col <= matrixLength; col++)
+        for(let row=0; row <= matrixLength; row++) {
+            if(matrix[col][row] <= 0)
+                continue;
+            var sum = 0;
+            for(let i=0; i <= kernelLength; i++) {
+                let x = i + row - kernelLengthHalf;
+                if(x < 0 || x > kernelLength)
+                    continue;
+                sum += matrix[col][x] * kernel[i];
+            }
+            interMatrix[col][row] = sum;
+        }
+
+    for(let col=0; col <= matrixLength; col++)
+        for(let row=0; row <= matrixLength; row++) {
+            if(interMatrix[col][row] <= 0)
+                continue;
+            var sum = 0;
+            for(let i=0; i <= kernelLength; i++) {
+                let y = i + col - kernelLengthHalf;
+                if(y < 0 || y > kernelLength)
+                    continue;
+                sum += interMatrix[y][row] * kernel[i];
+            }
+            resultMatrix[col][row] = sum;
+            if(sum > highestPoint.score)
+                highestPoint = {
+                    score: sum,
+                    x: col,
+                    y: row,
+                };
+        }
+
+    // renderPlot(resultMatrix);
+
+
+    console.warn('Result: ');
+    console.log(`Standard Deviation: ${standardDeviation}mm`)
+    console.log(`Highest: `);
+    // console.table(highestPoint);
+    let expectedPoint = {
+        score: highestPoint.score,
+        x: (highestPoint.x - kernelLengthHalf) / matrixLength,
+        y: (highestPoint.y - kernelLengthHalf) / matrixLength,
+    }
+    console.table(expectedPoint);
+
+    const endB = performance.now();
+    console.log(`[calculation] Execution time: ${((endB - startB) / 1000)} sec.`);
+    console.log(`[Total] Execution time: ${(((endA - startA) + (endB - startB)) / 1000)} sec. -> ${(((endA - startA) + (endB - startB)) / 1000 / 60)} min.`);
+
+    let data = {
+        sigma: standardDeviation,
+        expectedPoint: expectedPoint
+    };
+
+    axios.post('/api/v1/dart/expectationData', data).then( response => {
+        console.warn('Successfuly stored data.');
+    }).catch(function (error) {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}
 
 function calculate(standardDeviation, size, matrix)
 {
-    const start = performance.now();
+    const startA = performance.now();
 
     let weights = [];
     for(let i = -size; i < size+1; i++) {
@@ -68,41 +156,65 @@ function calculate(standardDeviation, size, matrix)
         }
         weights.push(res);
     }
+    const endA = performance.now();
+    console.log(`[probability_density_normal_dist] Execution time: ${((endA - startA) / 1000)} sec.`);
+    const startB = performance.now();
 
     let resultMatrix = createMatrix(size, 0);
-    let highest = 0;
+    let highestPoint = {
+        score: 0,
+        x: 0,
+        y: 0,
+    };
     let matrixLength = matrix.length-1;
     let weightsLength = weights.length-1;
     let weightsLengthHalf = weightsLength / 2;
+
     for(let col=0; col <= matrixLength; col++) {
+        // console.log('.');
         for(let row=0; row <= matrixLength; row++) {
+            if(matrix[col][row] <= 0)
+                continue;
             var sum = 0;
             for(let i=0; i <= weightsLength; i++) {
                 for(let j=0; j <= weightsLength; j++) {
                     let x = j + row - weightsLengthHalf;
                     let y = i + col - weightsLengthHalf;
-                    if(x < 0 || y < 0 || x > matrixLength || y > matrixLength)
+                    if(x < 0 || y < 0 || x > matrixLength || y > matrixLength || matrix[y][x] <= 0)
                         continue;
+
                     let points = weights[i][j] * matrix[y][x];
                     sum += points;
                 }
             }
             resultMatrix[col][row] = sum;
-            if(sum > highest)
-                highest = sum;
+            if(sum > highestPoint.score)
+                highestPoint = {
+                    score: sum,
+                    x: col,
+                    y: row,
+                };
         }
     }
 
-    console.log('Result: ');
+    console.warn('Result: ');
     console.log(`Standard Deviation: ${standardDeviation}mm`)
-    console.log(`Highest Sum: ${highest}`);
+    console.log(`Highest: `);
+    // console.table(highestPoint);
+    let expectedPoint = {
+        score: highestPoint.score,
+        x: (highestPoint.x - weightsLengthHalf) / matrix.length,
+        y: (highestPoint.y - weightsLengthHalf) / matrix.length,
+    }
+    console.table(expectedPoint);
 
-    const end = performance.now();
-    console.log(`Execution time: ${((end - start) / 1000 / 60)} minutes`);
+    const endB = performance.now();
+    console.log(`[calculation] Execution time: ${((endB - startB) / 1000)} sec.`);
+    console.log(`[Total] Execution time: ${(((endA - startA) + (endB - startB)) / 1000)} sec. -> ${(((endA - startA) + (endB - startB)) / 1000 / 60)} min.`);
 
     let data = {
         sigma: standardDeviation,
-        expectedPoints: highest
+        expectedPoint: expectedPoint
     };
 
     axios.post('/api/v1/dart/expectationData', data).then( response => {
@@ -426,40 +538,3 @@ function getScore(x, y)
 
     return points[ring];
 }
-
-/**
- *
- */
-// function getScore(x, y)
-// {
-//     let fields = [1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20];
-//     let rings = [0, 6.4, 16, 99, 107, 162, 170, Infinity];
-
-//     let theta = 0;
-//     let r = Math.sqrt(x*x + y*y);
-//     if (r != 0)
-//         theta = Math.atan2(y,x);
-
-//     // transform to zero is on the boundary of 20 and 1
-//     // and the angle increases as we go clockwise
-//     let phi = Math.PI / 2 - theta - Math.PI / 20;
-
-//     let arr = [];
-//     for(let i = 0; i < 20; i++)
-//         arr.push((Math.PI/10) * i);
-
-//     let field = fields[arr.findIndex( f => f >= UTILS.mod(phi, (2 * Math.PI)))];
-//     let ring = rings.findIndex( ring => ring >= r );
-
-//     let points = [
-//         50,
-//         25,
-//         field,
-//         field * 3,
-//         field,
-//         field * 2,
-//         0
-//     ];
-
-//     return points[ring-1];
-// }

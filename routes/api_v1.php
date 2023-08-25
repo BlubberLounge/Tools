@@ -37,9 +37,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     });
 
 
-    Route::apiResource('dart', DartGameController::class)
-        ->only(['show', 'update'])
-        ->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping;
     // route: /dart/*
     // name: dart.*
     Route::prefix('dart')->group(function () {
@@ -51,10 +48,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
             // local and development only
             if(App::environment(['local', 'development']))
                 Route::apiResource('expectationData', DartExpectationDataController::class)
-                    ->only(['store'])
+                    ->only(['index', 'store'])
                     ->parameter('expectationData', 'dartExpectationData'); // expectationData to dartExpectationData for currect auto-mapping;
         });
     });
+    Route::apiResource('dart', DartGameController::class)
+        ->only(['show', 'update'])
+        ->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping;
+
 
     Route::apiResource('throw', DartThrowController::class)
         ->only(['store'])

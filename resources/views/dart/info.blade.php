@@ -10,7 +10,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row pb-5">
+    @mobile
+        <div class="row justify-center align-items-center mb-5">
+            <div class="col-auto fa-rotate-270">
+                <i class="fa-solid fa-mobile-screen fa-3x animate__animated animate__rotateIn animate__slow animate__infinite"></i>
+            </div>
+            <div class="col-auto">
+                rotate for bigger graphs
+            </div>
+        </div>
+    @endmobile
+
+    <section class="text-center p-0 p-md-5 pt-md-3">
+        <i class="fa-solid fa-circle-info mb-3 fa-4x"></i>
+        <h1> Information </h1>
+        <p> Here you can see non-user specific information about <b>dart</b>. </p>
+    </section>
+
+    <div class="row mb-5">
         <div class="col">
             <input type="hidden" id="gameId" name="id" value="99ec098a-cd74-4223-ab1f-3bca516ce8fa">
             <div id="dartboardContainer" class="d-flex position-relative justify-center align-items-center p-2" style="width: 100%; height: 400px;">
@@ -23,13 +40,15 @@
         </div>
     </div>
 
-    <div class="row pb-5">
-        <div class="col justify-center">
-            <div id="myDiv"></div>
-        </div>
+    <div class="row justify-center align-items-center mb-5">
+        <div id="dartboardDataGraph" class="p-0" style="aspect-ratio: 1 / 1; max-width: 800px;"></div>
     </div>
 
-    <div class="row pb-4 pt-2">
+    <div class="row justify-center align-items-center mb-5">
+        <div id="expectationDataGraph"></div>
+    </div>
+
+    <div class="row mb-4 pt-2">
         <h3 class="col-8">
             Dartboard: Wedge/Field values
         </h3>
@@ -52,7 +71,7 @@
         </div>
     </div>
 
-    <div class="row pb-4 pt-2">
+    <div class="row mb-4 mt-2">
         <h3 class="col-8">
             Heatmap: Wedge/Field values
         </h3>

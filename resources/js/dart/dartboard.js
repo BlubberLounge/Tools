@@ -94,7 +94,6 @@ export default class Dartboard
             outerBull: board.radius * this.options.outerBullPercent,
             innerBull: board.radius * this.options.innerBullPercent,
         };
-        console.log(this.sizes);
     }
 
     render()

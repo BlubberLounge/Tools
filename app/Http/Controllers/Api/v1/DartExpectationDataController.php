@@ -13,7 +13,9 @@ class DartExpectationDataController extends Controller
      */
     public function index()
     {
-        //
+        $data['data'] = DartExpectationData::all();
+
+        return $this->sendResponse($data, 'ok');
     }
 
     /**
@@ -23,7 +25,9 @@ class DartExpectationDataController extends Controller
     {
         $expectationData = new DartExpectationData();
         $expectationData->sigma = $request->sigma;
-        $expectationData->score = $request->expectedPoints;
+        $expectationData->score = $request->expectedPoint['score'];
+        $expectationData->x = $request->expectedPoint['x'];
+        $expectationData->y = $request->expectedPoint['y'];
 
         $expectationData->save();
 

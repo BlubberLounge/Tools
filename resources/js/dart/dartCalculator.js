@@ -35,7 +35,7 @@ export default class DartCalculator
         const radsToDegs = rad => rad * 180 / Math.PI;
         let theta = 0;
         theta = radsToDegs(Math.atan2(y, x));
-        console.log(r);
+
         return this.getScorePolar(r, theta);
     }
 
@@ -47,16 +47,16 @@ export default class DartCalculator
         if(radius <= DartDefinition.ringRadiiAbsolute.bullseye.end)
             return 25;
 
-        let ringIndex = this.getRingIndex(radius);
+        let ringIndex = this._getRingIndex(radius);
 
-        theta = theta - DartDefinition.fieldSizeDeg / 2;
-        theta = UTILS.mod(theta + 360, 360);
+        theta = 90 - theta - DartDefinition.fieldSizeDeg / 2;
+        theta = UTILS.mod(theta, 360);
         let field = this.getField(theta);
 
         return DartDefinition.fieldMultiplier[ringIndex] * field;
     }
 
-    static getRingIndex(radius)
+    static _getRingIndex(radius)
     {
         return DartDefinition.getRingRadiiAbsoluteArray().findIndex( ring => ring.end >= radius );
     }
@@ -91,5 +91,81 @@ export default class DartCalculator
     static normalize(value)
     {
         return value / DartDefinition.dartboardRadius;
+    }
+
+    static calculateStandardDeviation(reference, throws)
+    {
+        let throwsDistanceMean = this._calculateThrowDistances(reference, throws);
+        let {variance, standardDeviation} = this._calculateStandardDeviation(throwsDistanceMean);
+
+        return { variance, standardDeviation };
+    }
+
+    static _calculateStandardDeviation(data)
+    {
+        let mean = data.reduce( (total, current) => total + current, 0 ) / data.length;
+
+        data = data.map( k => (k - mean) ** 2) ;
+        let sum = data.reduce( (total, current) => total + current, 0 );
+
+        const variance = sum / data.length;
+        const standardDeviation = Math.sqrt(sum / data.length);
+
+        return { variance, standardDeviation };
+      }
+
+    static _calculateThrowDistances(origin, throws)
+    {
+        let distances = [];
+        throws.forEach( t =>
+        {
+            let distX = Math.abs(origin.x - t.x);
+            let distY = Math.abs(origin.y - t.y);
+            let distXSq = distX * distX;
+            let distYSq = distY * distY;
+
+            distances.push(Math.sqrt( distXSq + distYSq ));
+        });
+
+        return distances;
+    }
+
+    static generateRandomThrows(count, standardDeviationm, mu = 0)
+    {
+        let hits = [];
+
+        for(let i = 0; i <= count; i++) {
+            let x = this.getNormallyDistributedRandomNumber(mu, standardDeviationm);
+            let y = this.getNormallyDistributedRandomNumber(mu, standardDeviationm);
+            let points = this.getScoreCartesian(x, y);
+            hits.push({
+                x: x,
+                y: y,
+                points: points,
+            });
+        }
+
+        return hits;
+    }
+
+    static getNormallyDistributedRandomNumber(mu, sigma)
+    {
+        const { z0, _ } = this._boxMullerTransform();
+
+        return sigma * z0 + mu;
+    }
+
+    static _boxMullerTransform()
+    {
+        // Convert [0,1) to (0,1), exclude 0
+        const u1 = 1 - Math.random();
+        const u2 = 1 - Math.random();
+        const theta = 2.0 * Math.PI * u2;
+        const mag = Math.sqrt(-2.0 * Math.log(u1));
+
+        const z0 = mag * Math.cos(theta);
+        const z1 = mag * Math.sin(theta);
+
+        return { z0, z1 };
     }
 }
