@@ -28,6 +28,7 @@ class DartExpectationDataController extends Controller
         $expectationData->score = $request->expectedPoint['score'];
         $expectationData->x = $request->expectedPoint['x'];
         $expectationData->y = $request->expectedPoint['y'];
+        $expectationData->version = $request->version;
 
         $expectationData->save();
 
