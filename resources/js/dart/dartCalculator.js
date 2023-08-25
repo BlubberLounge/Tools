@@ -93,22 +93,27 @@ export default class DartCalculator
         return value / DartDefinition.dartboardRadius;
     }
 
-    static calculateStandardDeviation(reference, throws)
+    static calculateStandardDeviation(throws)
     {
-        let throwsDistanceMean = this._calculateThrowDistances(reference, throws);
-        let {variance, standardDeviation} = this._calculateStandardDeviation(throwsDistanceMean);
+        var {_, standardDeviation} = this._calculateStandardDeviation(throws.map( t => t.x ));
+        const standardDeviationX = standardDeviation;
 
-        return { variance, standardDeviation };
+        var {__, standardDeviation} = this._calculateStandardDeviation(throws.map( t => t.y ));
+        const standardDeviationY = standardDeviation;
+
+        return { standardDeviationX, standardDeviationY };
     }
 
-    static generateRandomThrows(count, standardDeviationm, mu = 0)
+    static generateRandomThrows(count, standardDeviation, mu = 0, cb)
     {
         let hits = [];
 
         for(let i = 0; i <= count; i++) {
-            let x = this.getNormallyDistributedRandomNumber(mu, standardDeviationm);
-            let y = this.getNormallyDistributedRandomNumber(mu, standardDeviationm);
-            let points = this.getScoreCartesian(x, y);
+            let x = this.getNormallyDistributedRandomNumber(mu, standardDeviation);
+            let y = this.getNormallyDistributedRandomNumber(mu, standardDeviation);
+            let xx = cb(x);
+            let yy = cb(y);
+            let points = this.getScoreCartesian(xx, yy);
             hits.push({
                 x: x,
                 y: y,

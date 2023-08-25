@@ -120,19 +120,20 @@ function renderPlotDartboard(expData)
         matrix.push(res);
     }
 
-    let randomThrows = DartCalculator.generateRandomThrows(100, 20, size);
-    const origin = {
-        x: size+1,
-        y: size+1,
-    };
-
     let count = -1;
-    console.table(DartCalculator.calculateStandardDeviation(origin, randomThrows));
+    let randomThrows = DartCalculator.generateRandomThrows(100, 20, size, x => x - size);
+    console.table(DartCalculator.calculateStandardDeviation(randomThrows));
     randomThrows.forEach( t => {
-        let score = DartCalculator.getScoreCartesian(t.x - size, t.y - size);
-        if(score == 25 || score == 50)
+        if(t.points == 25 || t.points == 50)
             count++;
     });
+    // console.log(JSON.stringify(randomThrows.map( t => {
+    //     return {
+    //         x: t.x - size,
+    //         y: t.y - size,
+    //         points: t.points,
+    //     };
+    // })));
     console.table(`Treffer: ${count} / 100`);
     console.table(`Treffer: ${count / 2} / 50`);
 
@@ -143,8 +144,6 @@ function renderPlotDartboard(expData)
             type: 'heatmap',
             name: 'scores',
         },{
-            // x: [170, 180, 190, 200, 210, 210, 200, 190, 180, 170,],
-            // y: [170, 180, 190, 200, 210, 170, 180, 190, 200, 210],
             x: randomThrows.map( t => t.x ),
             y: randomThrows.map( t => t.y ),
             mode: 'markers',
