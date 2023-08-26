@@ -138,4 +138,12 @@ class DartGameController extends Controller
     {
         //
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showLive(DartGame $dartGame)
+    {
+        //
+    }
 }

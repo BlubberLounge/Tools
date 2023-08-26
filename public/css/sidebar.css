@@ -31,7 +31,7 @@
   left: 0;
 }
 
-.nav-sm {
+.nav-sm .nav-link {
   --bs-nav-link-padding-y: 0.2rem;
 }
 .nav-sm .nav-link i {
@@ -39,15 +39,16 @@
 }
 
 .nav-item {
-  margin-bottom: 0.255rem;
+  margin-bottom: 0.175rem;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   position: relative;
-  --bs-nav-link-font-size: .85rem;
+  --bs-nav-link-font-size: .8rem;
   --bs-nav-link-padding-x: .55rem;
+  --bs-nav-link-padding-y: .45rem;
 }
 .nav-link:hover {
   color: var(--bs-white);
@@ -72,7 +73,7 @@
 
 .submenu-item {
   display: block;
-  padding: 0.255rem 0;
+  padding: 0.15rem 0;
 }
 
 .submenu-link {

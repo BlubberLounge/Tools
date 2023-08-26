@@ -30,10 +30,10 @@ $(function()
     }
 
 
-    let startSD = 10;
-    let endSD = 50;
+    let startSD = 150;
+    let endSD = 1000;
 
-    for(let i = startSD; i <= endSD; i+=.5) {
+    for(let i = startSD; i <= endSD; i+=50) {
         DartCalculator.calculateBestTarget(i, size, matrix);
     }
 });
@@ -88,8 +88,8 @@ async function fetchHeatmapData()
  */
 function renderHeatmap(data)
 {
-    var width = document.querySelector('#dartboardContainer').offsetWidth;
-    var height = document.querySelector('#dartboardContainer').offsetHeight;
+    const width = document.querySelector('#dartboardContainer').offsetWidth;
+    const height = document.querySelector('#dartboardContainer').offsetHeight;
 
     // if(width != height)
     //     console.warn('Something is wrong!');
@@ -97,11 +97,11 @@ function renderHeatmap(data)
     // console.log(width);
     // console.log(height);
 
-    let widthHalf = width / 2;
-    let heightHalf = height / 2;
-    let multiplier = Math.min(widthHalf, heightHalf);
+    const widthHalf = width / 2;
+    const heightHalf = height / 2;
+    const multiplier = Math.min(widthHalf, heightHalf);
 
-    let dartboardContainer = document.querySelector('#dartboardContainer');
+    const dartboardContainer = document.querySelector('#dartboardContainer');
     var points = [];
 
     data.throws.forEach( w => {
@@ -113,15 +113,15 @@ function renderHeatmap(data)
     });
     // console.table(points);
 
-    let median = DartCalculator.calculateGeometricMedian(points, 4);
+    const median = DartCalculator.calculateGeometricMedian(points, 4);
     // console.table(median);
     placeMarker(dartboardContainer, median.x, median.y, 'median');
 
-    let centroid = DartCalculator.calculateGeometricCentroid(points);
+    const centroid = DartCalculator.calculateGeometricCentroid(points);
     // console.table(centroid);
     placeMarker(dartboardContainer, centroid.x, centroid.y, 'centroid');
 
-    let skeletonHeatmap = document.getElementById('skeleton-dartboard');
+    const skeletonHeatmap = document.getElementById('skeleton-dartboard');
     if(skeletonHeatmap)
         skeletonHeatmap.remove();
 
@@ -130,7 +130,7 @@ function renderHeatmap(data)
         radius: 20,
     });
 
-    let data1 = {
+    const data1 = {
         max: 1,
         data: points
     };
@@ -177,13 +177,13 @@ function renderPlot(mtx)
  */
 function getScore(x, y)
 {
-    let fields = [1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20];
-    let rings = [0, 6.4, 16, 99, 107, 162, 170, Infinity];
+    const fields = [1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20];
+    const rings = [0, 6.4, 16, 99, 107, 162, 170, Infinity];
 
     const radsToDegs = rad => rad * 180 / Math.PI;
 
     let theta = 0;
-    let r = Math.sqrt(x*x + y*y);
+    const r = Math.sqrt(x*x + y*y);
     if (r != 0) {
         theta = Math.atan2(y,x);
         theta = radsToDegs(theta);
@@ -191,9 +191,9 @@ function getScore(x, y)
         return 50;
     }
 
-    let ring = rings.findIndex( ring => ring >= r )-1;
+    const ring = rings.findIndex( ring => ring >= r )-1;
 
-    let fieldSize = (360 / fields.length);
+    const fieldSize = (360 / fields.length);
     let arr = [];
     for(let i = 0; i < fields.length; i++)
         arr.push(fieldSize * i);
@@ -202,7 +202,7 @@ function getScore(x, y)
     phi = UTILS.mod(phi + 360, 360);
 
     let ind = arr.findIndex( f => f >= phi ) > 0 ? arr.findIndex( f => f >= phi ) : fields[fields.length-1] ;
-    let field = fields[ind-1];
+    const field = fields[ind-1];
 
     let points = [
         50,

@@ -19,6 +19,7 @@ mix
 
 
     // Dart
+    .js('resources/js/dart/dartIndex.js', 'public/js')
     .js('resources/js/dart/dartInfo.js', 'public/js')
     .js('resources/js/dart/dartPlayground.js', 'public/js')
 

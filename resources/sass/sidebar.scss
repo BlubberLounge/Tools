@@ -15,6 +15,7 @@
     min-height: 100vh;
     z-index: 999;
     transition: all .3s;
+    // overflow-y: scroll;
 
     ol, ul {
         padding-left: .625rem;
@@ -35,9 +36,10 @@
 }
 
 .nav-sm  {
-    --bs-nav-link-padding-y: 0.2rem;
 
     .nav-link {
+
+        --bs-nav-link-padding-y: 0.2rem;
 
         i {
             font-size: .9rem;
@@ -46,7 +48,7 @@
 }
 
 .nav-item {
-    margin-bottom: .255rem;
+    margin-bottom: .175rem;
 }
 
 .nav-link {
@@ -54,8 +56,9 @@
     align-items: center;
     position: relative;
 
-    --bs-nav-link-font-size: .85rem;
+    --bs-nav-link-font-size: .8rem;
     --bs-nav-link-padding-x: .55rem;
+    --bs-nav-link-padding-y: .45rem;
 
     &:hover {
         color: var(--bs-white);
@@ -88,7 +91,7 @@
 
 .submenu-item {
     display: block;
-    padding: .255rem 0;
+    padding: .15rem 0;
 }
 
 .submenu-link {

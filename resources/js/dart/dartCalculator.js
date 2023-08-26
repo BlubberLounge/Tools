@@ -345,7 +345,7 @@ export default class DartCalculator
         // minimum_distance becomes sum of
         // all distances from MidPoint to
         // all given points
-        let minimum_distance = distSum(current_point, arr, n);
+        let minimum_distance = this._distSum(current_point, arr, n);
 
         let k = 0;
         while (k < n) {

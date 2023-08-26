@@ -25,6 +25,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('dart.game.live') }}" class="nav-link {{ active('dart.game.live') }}">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <span class="nav-text"> {{ __('dart live') }} <span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
                 <i class="fa-solid fa-hashtag"></i>
                 <span class="nav-text"> {{ __('dart dashboard') }} <span>
@@ -33,7 +39,7 @@
                 <li class="submenu-item">
                     <a href="{{ route('dart.index') }}" class="nav-link submenu-link {{ active('dart.index') }}">
                         <i class="fa-solid fa-chart-simple"></i>
-                        <span class="nav-text"> {{ __('Dashboard') }} <span>
+                        <span class="nav-text"> {{ __('dashboard') }} <span>
                     </a>
                 </li>
                 <li class="submenu-item">

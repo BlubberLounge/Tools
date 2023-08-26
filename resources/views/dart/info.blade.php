@@ -27,25 +27,16 @@
         <p> Here you can see non-user specific information about <b>dart</b>. </p>
     </section>
 
-    <div class="row mb-5">
-        <div class="col">
-            <input type="hidden" id="gameId" name="id" value="99ec098a-cd74-4223-ab1f-3bca516ce8fa">
-            <div id="dartboardContainer" class="d-flex position-relative justify-center align-items-center p-2" style="width: 100%; height: 400px;">
-                <div id="skeleton-dartboard" class="position-absolute top-50 start-50 translate-middle">
-                    <div class="spinner-border">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row justify-center align-items-center mb-5">
         <div id="dartboardDataGraph" class="p-0" style="aspect-ratio: 1 / 1; max-width: 800px;"></div>
     </div>
 
     <div class="row justify-center align-items-center mb-5">
         <div id="expectationDataGraph"></div>
+    </div>
+
+    <div class="row justify-center align-items-center mb-5">
+        <div id="graph01"></div>
     </div>
 
     <div class="row mb-4 pt-2">
