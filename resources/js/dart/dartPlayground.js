@@ -19,26 +19,216 @@ $(function()
     let dartboard = new Dartboard('#dartboardContainer');
     dartboard.render();
 
-    let size = 180;
-    let matrix = [];
-    for(let col = -size; col < size+1; col++) {
-        let res = [];
-        for(let row = -size; row < size+1; row++)
-            res.push(getScore(row, col));
+    const size = 180;
+    const startSD = 10;
+    const endSD = 11;
 
-        matrix.push(res);
-    }
-
-
-    // let startSD = 150;
-    // let endSD = 1000;
-
-    // for(let i = startSD; i <= endSD; i+=50) {
-    //     DartCalculator.calculateBestTarget(i, size, matrix);
-    // }
+    for(let i = startSD; i <= endSD; i+=.5)
+        Playground.calculate(i, size);
 
 });
 
+class Playground
+{
+    static dartboardMatrix = this.generateDartboardMatrix(180);
+    static strategyBestTargetCalculator = null;
+
+    static calculate(standardDeviation, size)
+    {
+        this.strategyBestTargetCalculator = new CalculateBestTargetV1();
+
+        const start = performance.now();
+
+        let data = this.strategyBestTargetCalculator.calculate(standardDeviation, size, this.dartboardMatrix);
+
+        const end = performance.now();
+        console.log(`[Playground] Execution time: ${((end - start) / 1000)} sec.`);
+
+
+        console.warn('Result: ');
+        console.log(`Standard Deviation: ${standardDeviation}mm`)
+        console.log(`Highest: `);
+        console.table({
+            sigma: data.sigma,
+            point: data.expectedPoint
+        });
+
+        // this.saveData(data);
+    }
+
+    static generateDartboardMatrix(size)
+    {
+        let matrix = [];
+        for(let col = -size; col < size+1; col++) {
+            let res = [];
+            for(let row = -size; row < size+1; row++)
+                res.push(getScore(row, col));
+
+            matrix.push(res);
+        }
+
+        return matrix;
+    }
+
+    static saveData(data)
+    {
+        axios.post('/api/v1/dart/expectationData', data).then( response => {
+
+            console.warn('Successfuly stored data.');
+
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+    }
+};
+
+class CalculateBestTargetV1
+{
+    constructor()
+    {
+
+    }
+
+    probability_density_normal_dist(x, mu, sigma)
+    {
+        var num = Math.exp(-Math.pow((x - mu), 2) / (2 * Math.pow(sigma, 2)))
+        var denom = sigma * Math.sqrt(2 * Math.PI)
+        return num / denom
+    }
+
+    calculate(standardDeviation, size, dartboardMatrix)
+    {
+        let kernel = [];
+        for(let i = -size; i < size+1; i++) {
+            let res = [];
+            for(let j = -size; j < size+1; j++) {
+                let num1 = this.probability_density_normal_dist(i, 0, standardDeviation);
+                let num2 = this.probability_density_normal_dist(j, 0, standardDeviation);
+                res.push(
+                        num1 * num2
+                );
+            }
+            kernel.push(res);
+        }
+
+        let resultMatrix = [...Array(size*2+1)].map(e => Array(size*2+1).fill(0));
+        let highestPoint = {
+            score: 0,
+            x: 0,
+            y: 0,
+        };
+        const matrixLength = dartboardMatrix.length-1;
+        const kernelLength = kernel.length-1;
+        const kernelLengthHalf = kernelLength / 2;
+
+        for(let col=0; col <= matrixLength; col++)
+            // console.log('.');
+            for(let row=0; row <= matrixLength; row++) {
+                if(dartboardMatrix[col][row] <= 0)
+                    continue;
+                var sum = 0;
+                for(let i=0; i <= kernelLength; i++) {
+                    for(let j=0; j <= kernelLength; j++) {
+                        let x = j + row - kernelLengthHalf;
+                        let y = i + col -kernelLengthHalf;
+                        if(x < 0 || y < 0 || x > matrixLength || y > matrixLength || dartboardMatrix[y][x] <= 0)
+                            continue;
+
+                        sum += kernel[i][j] * dartboardMatrix[y][x];
+                    }
+                }
+                resultMatrix[col][row] = sum;
+                if(sum > highestPoint.score)
+                    highestPoint = {
+                        score: sum,
+                        x: col,
+                        y: row,
+                    };
+            }
+
+       return {
+            sigma: standardDeviation,
+            expectedPoint: {
+                score: highestPoint.score,
+                x: (highestPoint.x - kernelLengthHalf) / dartboardMatrix.length,
+                y: (highestPoint.y - kernelLengthHalf) / dartboardMatrix.length,
+            },
+            version: 200,
+        };
+    }
+}
+
+class CalculateBestTargetSymmetricKernel
+{
+    constructor()
+    {
+
+    }
+
+    calculate(standardDeviation, size, matrix)
+    {
+        let kernel = [];
+        for(let i = -size; i < size+1; i++)
+            kernel.push(this.probability_density_normal_dist(i, 0, standardDeviation));
+
+        let resultMatrix = createMatrix(size, 0);
+        let matrixLength = matrix.length-1;
+        let kernelLength = kernel.length-1;
+        let kernelLengthHalf = kernelLength / 2;
+        let highestPoint = {
+            score: 0,
+            x: 0,
+            y: 0,
+        };
+
+        let interMatrix = createMatrix(size, 0);
+        for(let col=0; col <= matrixLength; col++)
+            for(let row=0; row <= matrixLength; row++) {
+                if(matrix[col][row] <= 0)
+                    continue;
+                var sum = 0;
+                for(let i=0; i <= kernelLength; i++) {
+                    let x = i + row - kernelLengthHalf;
+                    if(x < 0 || x > kernelLength)
+                        continue;
+                    sum += matrix[col][x] * kernel[i];
+                }
+                interMatrix[col][row] = sum;
+            }
+
+        for(let col=0; col <= matrixLength; col++)
+            for(let row=0; row <= matrixLength; row++) {
+                if(interMatrix[col][row] <= 0)
+                    continue;
+                var sum = 0;
+                for(let i=0; i <= kernelLength; i++) {
+                    let y = i + col - kernelLengthHalf;
+                    if(y < 0 || y > kernelLength)
+                        continue;
+                    sum += interMatrix[y][row] * kernel[i];
+                }
+                resultMatrix[col][row] = sum;
+                if(sum > highestPoint.score)
+                    highestPoint = {
+                        score: sum,
+                        x: col,
+                        y: row,
+                    };
+            }
+
+        return {
+            sigma: standardDeviation,
+            expectedPoint: {
+                score: highestPoint.score,
+                x: (highestPoint.x - weightsLengthHalf) / matrix.length,
+                y: (highestPoint.y - weightsLengthHalf) / matrix.length,
+            },
+            version: 200,
+        };
+    }
+}
 
 function placeMarker(dartboardContainer, x, y, className)
 {
