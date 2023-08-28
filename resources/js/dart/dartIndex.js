@@ -14,45 +14,16 @@ import DartDefinition from './dartDefinition';
 
 $(function()
 {
-    fetchHeatmapData();
-
-    let dartboard = new Dartboard('#dartboardContainer');
+    const dartboard = new Dartboard('#dartboardContainer');
     dartboard.render();
 
-    var polarArr = DartDefinition.fieldOrder20;
-    polarArr.push(20);
+    const radarChart = document.getElementById('graph01');
+    initRadarChart(radarChart);
 
-    const data = [{
-        r: polarArr,
-        theta: polarArr.map( (f, i) => ((DartDefinition.fieldSizeDeg * i) > 360 ? 0 : DartDefinition.fieldSizeDeg * i)),
-        fill: 'toself',
-        type: 'scatterpolar',
-    }];
-
-    const layout = {
-        polar: {
-          radialaxis: {
-            visible: true,
-            range: [0, 22],
-            angle: 90,
-            tickangle: 90
-          },
-          angularaxis: {
-            direction: "clockwise",
-            dtick: 360 / 20
-          }
-        },
-        showlegend: false,
-        paper_bgcolor: 'rgba(0, 0, 0, 0)',
-        plot_bgcolor: 'rgba(0, 0, 0, 0)',
-    };
-
-    const config = {
-        displayModeBar: false, // this is the line that hides the bar.
-    };
-
-    Plotly.newPlot("graph01", data, layout, config);
-
+    document.getElementById('gameSelection').addEventListener('change', function()
+    {
+        fetchData(this.value);
+    });
 });
 
 
@@ -74,8 +45,8 @@ function placeMarker(dartboardContainer, x, y, className)
     // console.log('hit placed');
     // console.log(`X: ${x} Y: ${y}`);
 
-    // document.getElementsByClassName('c-Dartboard')[0].append(hitMarker);
-    dartboardContainer.append(hitMarker);
+    document.getElementsByClassName('c-Dartboard')[0].append(hitMarker);
+    // dartboardContainer.append(hitMarker);
 
     return hitMarker;
 }
@@ -84,13 +55,17 @@ function placeMarker(dartboardContainer, x, y, className)
  *
  *
  */
-async function fetchHeatmapData()
+async function fetchData(gameId)
 {
-    let gameId = document.getElementById('gameId').getAttribute('value');
-    // let gameId = '99ec098a-cd74-4223-ab1f-3bca516ce8fa';
+    // let gameId = document.getElementById('gameId').getAttribute('value');
+
     return axios.get('/api/v1/user/showThrowsByGame/'+gameId).then( response =>
     {
-        renderHeatmap(response.data.data);
+        const data = response.data.data.throws;
+        _clearHitMarker();
+        _clearHeatmap();
+        renderHeatmap(data);
+        updateRadarChart('graph01', data);
 
     }).catch(function (error) {
         if (error.response) {
@@ -102,12 +77,109 @@ async function fetchHeatmapData()
 
 /**
  *
+ */
+function initRadarChart(id)
+{
+    let plotData = [];
+    for(let i = 0; i <= 360/20; i++)
+        plotData.push(1);
+
+    const data = [{
+        r: plotData,
+        theta: plotData.keys(),
+        fill: 'toself',
+        type: 'scatterpolar',
+    }];
+
+    const layout = {
+        polar: {
+          radialaxis: {
+            visible: true,
+            range: [0, Math.max(...plotData)*1.15],
+            angle: 90,
+            tickangle: 90
+          },
+          angularaxis: {
+            direction: "clockwise",
+            dtick: 360 / 20
+          }
+        },
+        showlegend: false,
+        paper_bgcolor: 'rgba(0, 0, 0, 0)',
+        plot_bgcolor: 'rgba(0, 0, 0, 0)',
+    };
+
+    const config = {
+        displayModeBar: false, // this is the line that hides the bar.
+    };
+
+    Plotly.newPlot(id, data, layout, config);
+}
+
+/**
+ *
+ */
+function updateRadarChart(id, throwData = null)
+{
+    let plotData = [];
+    for(let i = 0; i <= 360/20; i++)
+        plotData.push(0);
+
+    throwData.forEach( d => {
+        var {distance, _, degrees} =  UTILS.cartesian2Polar(d.x * -1, d.y);
+        let angle = UTILS.mod(90 - degrees, 360);
+
+        for(const [i, c] of plotData.entries())
+            if(i >= (angle/20)) {
+                plotData[i-1]++;
+                break;
+            }
+    });
+
+    plotData = plotData.map( d => (d / plotData.length) * 100);
+    const data = [{
+        r: plotData,
+        theta: plotData.keys(),
+        fill: 'toself',
+        type: 'scatterpolar',
+    }];
+
+    const layout = {
+        polar: {
+          radialaxis: {
+            visible: true,
+            range: [0, Math.max(...plotData)*1.15],
+            angle: 90,
+            tickangle: 90
+          },
+          angularaxis: {
+            direction: "clockwise",
+            dtick: 360 / 20
+          }
+        },
+        showlegend: false,
+        paper_bgcolor: 'rgba(0, 0, 0, 0)',
+        plot_bgcolor: 'rgba(0, 0, 0, 0)',
+    };
+
+    const config = {
+        displayModeBar: false, // this is the line that hides the bar.
+    };
+
+    Plotly.newPlot(id, data, layout, config);
+    // Plotly.update(id, data);
+}
+
+/**
+ *
  *
  */
 function renderHeatmap(data)
 {
-    var width = document.querySelector('#dartboardContainer').offsetWidth;
-    var height = document.querySelector('#dartboardContainer').offsetHeight;
+    // var width = document.querySelector('#dartboardContainer').offsetWidth;
+    // var height = document.querySelector('#dartboardContainer').offsetHeight;
+    var width = document.getElementsByClassName('c-Dartboard')[0].offsetWidth;
+    var height = document.getElementsByClassName('c-Dartboard')[0].offsetHeight;
 
     // if(width != height)
     //     console.warn('Something is wrong!');
@@ -122,7 +194,7 @@ function renderHeatmap(data)
     let dartboardContainer = document.querySelector('#dartboardContainer');
     var points = [];
 
-    data.throws.forEach( w => {
+    data.forEach( w => {
         points.push({
             x: Math.round( widthHalf - (w.x * multiplier) * -1 ),
             y: Math.round( heightHalf - (w.y * multiplier) ),
@@ -144,7 +216,7 @@ function renderHeatmap(data)
         skeletonHeatmap.remove();
 
     let heatmapInstance = h337.create({
-        container: dartboardContainer,
+        container: document.getElementsByClassName('c-Dartboard')[0],
         radius: 20,
     });
 
@@ -154,4 +226,20 @@ function renderHeatmap(data)
     };
 
     heatmapInstance.setData(data1);
+}
+
+function _clearHitMarker()
+{
+    let hitMarkers = document.querySelectorAll('.hitMarker');
+    // console.log(hitMarkers);
+
+    hitMarkers.forEach( marker => marker.remove() );
+}
+
+function _clearHeatmap()
+{
+    let hitMarkers = document.querySelectorAll('.heatmap-canvas');
+    // console.log(hitMarkers);
+
+    hitMarkers.forEach( marker => marker.remove() );
 }

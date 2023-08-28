@@ -10,9 +10,27 @@
 
 @section('content')
 <div class="container">
+    <div class="row mb-5 justify-center">
+        <div class="col-8">
+            <select id="gameSelection" class="form-select">
+                <option selected>Open this select menu</option>
+                @foreach ($games as $game)
+                    <option value="{{ $game->id }}">
+                        @mobile
+                            {{ Str::limit($game->title, 25) }}
+                        @endmobile
+                        @desktop
+                            {{ $game->title }}
+                        @enddesktop
+                        {{-- <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span> --}}
+                    </option>
+                @endforeach
+
+            </select>
+        </div>
+    </div>
     <div class="row mb-5">
         <div class="col" style="height: 400px">
-            <input type="hidden" id="gameId" name="id" value="99ec098a-cd74-4223-ab1f-3bca516ce8fa">
             <div id="dartboardContainer" class="d-flex position-relative justify-center align-items-center p-2 h-100 w-100">
                 <div id="skeleton-dartboard" class="position-absolute top-50 start-50 translate-middle">
                     <div class="spinner-border">
@@ -23,24 +41,6 @@
         </div>
         <div class="col d-flex justify-center align-items-center h-100">
             <div id="graph01"></div>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col">
-            <ul class="list-group">
-                @foreach ($games as $game)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        @mobile
-                            {{ Str::limit($game->title, 40) }}
-                        @endmobile
-                        @desktop
-                            {{ $game->title }}
-                        @enddesktop
-                        <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span>
-                    </li>
-                @endforeach
-              </ul>
         </div>
     </div>
 </div>

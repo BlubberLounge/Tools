@@ -13,7 +13,7 @@ export default class Dartboard
 {
     constructor(containerSelector = null, settings = {})
     {
-        this.identifier = document.getElementById('gameId').getAttribute('value');
+        this.identifier = containerSelector;
 
         this.locked = false;
 

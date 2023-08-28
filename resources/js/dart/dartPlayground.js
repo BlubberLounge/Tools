@@ -30,12 +30,13 @@ $(function()
     }
 
 
-    let startSD = 150;
-    let endSD = 1000;
+    // let startSD = 150;
+    // let endSD = 1000;
 
-    for(let i = startSD; i <= endSD; i+=50) {
-        DartCalculator.calculateBestTarget(i, size, matrix);
-    }
+    // for(let i = startSD; i <= endSD; i+=50) {
+    //     DartCalculator.calculateBestTarget(i, size, matrix);
+    // }
+
 });
 
 
