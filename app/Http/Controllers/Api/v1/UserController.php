@@ -113,7 +113,6 @@ class UserController extends Controller
     {
         // $game = DartGame::find($id);
         $data['throws'] = Auth::user()->DartThrows()->where('dart_game_id', $id)->get();
-        // dd(Auth::user()->DartThrows());
 
         return $this->sendResponse($data, 'ok');
     }

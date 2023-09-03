@@ -15,7 +15,9 @@ class DartController extends Controller
     public function index()
     {
         $data['user'] = Auth::user();
-        $data['games'] = Auth::user()->DartGames()->open()->get()->merge(Auth::user()->DartGames()->done()->get());
+        $data['games'] = Auth::user()->DartGames()->open()->get()->merge(
+            Auth::user()->DartGames()->done()->get()
+        )->sortByDesc('id');
 
         return view('dart.index', $data);
     }

@@ -35,17 +35,16 @@ class Playground
 
     static calculate(standardDeviation, size)
     {
-        this.strategyBestTargetCalculator = new CalculateBestTargetV1();
+        // this.strategyBestTargetCalculator = new CalculateBestTargetV1();
+        this.strategyBestTargetCalculator = new CalculateBestTargetSymmetricKernel();
 
         const start = performance.now();
 
         let data = this.strategyBestTargetCalculator.calculate(standardDeviation, size, this.dartboardMatrix);
 
         const end = performance.now();
-        console.log(`[Playground] Execution time: ${((end - start) / 1000)} sec.`);
-
-
         console.warn('Result: ');
+        console.log(`[Playground] Execution time: ${((end - start) / 1000)} sec.`);
         console.log(`Standard Deviation: ${standardDeviation}mm`)
         console.log(`Highest: `);
         console.table({
@@ -167,13 +166,20 @@ class CalculateBestTargetSymmetricKernel
 
     }
 
+    probability_density_normal_dist(x, mu, sigma)
+    {
+        var num = Math.exp(-Math.pow((x - mu), 2) / (2 * Math.pow(sigma, 2)))
+        var denom = sigma * Math.sqrt(2 * Math.PI)
+        return num / denom
+    }
+
     calculate(standardDeviation, size, matrix)
     {
         let kernel = [];
         for(let i = -size; i < size+1; i++)
             kernel.push(this.probability_density_normal_dist(i, 0, standardDeviation));
 
-        let resultMatrix = createMatrix(size, 0);
+        let resultMatrix = [...Array(size*2+1)].map(e => Array(size*2+1).fill(0));
         let matrixLength = matrix.length-1;
         let kernelLength = kernel.length-1;
         let kernelLengthHalf = kernelLength / 2;
@@ -183,7 +189,7 @@ class CalculateBestTargetSymmetricKernel
             y: 0,
         };
 
-        let interMatrix = createMatrix(size, 0);
+        let interMatrix = [...Array(size*2+1)].map(e => Array(size*2+1).fill(0));
         for(let col=0; col <= matrixLength; col++)
             for(let row=0; row <= matrixLength; row++) {
                 if(matrix[col][row] <= 0)
@@ -222,8 +228,8 @@ class CalculateBestTargetSymmetricKernel
             sigma: standardDeviation,
             expectedPoint: {
                 score: highestPoint.score,
-                x: (highestPoint.x - weightsLengthHalf) / matrix.length,
-                y: (highestPoint.y - weightsLengthHalf) / matrix.length,
+                x: (highestPoint.x - kernelLengthHalf) / matrix.length,
+                y: (highestPoint.y - kernelLengthHalf) / matrix.length,
             },
             version: 200,
         };

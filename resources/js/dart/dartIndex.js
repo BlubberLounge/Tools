@@ -24,6 +24,8 @@ $(function()
     {
         fetchData(this.value);
     });
+
+    fetchData(document.getElementById("gameSelection").value);
 });
 
 
@@ -59,13 +61,31 @@ async function fetchData(gameId)
 {
     // let gameId = document.getElementById('gameId').getAttribute('value');
 
-    return axios.get('/api/v1/user/showThrowsByGame/'+gameId).then( response =>
+    // return axios.get('/api/v1/user/showThrowsByGame/'+gameId).then( response =>
+    // {
+    //     const data = response.data.data.throws;
+    //     _clearHitMarker();
+    //     _clearHeatmap();
+    //     renderHeatmap(data);
+    //     updateRadarChart('graph01', data);
+    //     renderPlot(data);
+
+    // }).catch(function (error) {
+    //     if (error.response) {
+    //         console.log(error.response.data);
+    //         console.error('Throws could not get fetched!');
+    //     }
+    // });
+
+    return axios.get('/api/v1/dart/showThrows/'+gameId).then( response =>
     {
-        const data = response.data.data.throws;
+        const data = response.data.data.game;
+        console.log(data);
         _clearHitMarker();
         _clearHeatmap();
-        renderHeatmap(data);
-        updateRadarChart('graph01', data);
+        // renderHeatmap(data);
+        // updateRadarChart('graph01', data);
+        renderPlot(data);
 
     }).catch(function (error) {
         if (error.response) {
@@ -226,6 +246,58 @@ function renderHeatmap(data)
     };
 
     heatmapInstance.setData(data1);
+}
+
+function renderPlot(values)
+{
+    Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
+    {
+        console.log(e);
+    });
+
+    values = values.filter( (value, i) => !(value.sigma % 1) );
+
+    const data = [{
+        x: [...Array(values.length).keys()],
+        y: values.map( value => value.value),
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {shape: 'spline'},
+    }];
+
+    const layout = {
+        title: 'Throws',
+        xaxis: {
+            title: 'Standard Deviation in mm',
+            fixedrange: true,
+            linecolor: 'rgba(255, 255, 255, .25)',
+            gridcolor: 'rgba(255, 255, 255, .25)',
+            zerolinecolor: 'rgba(255, 255, 255, .75)',
+            tickfont: {
+                color: 'rgba(255, 255, 255, .5)'
+            },
+            rangemode: 'tozero',
+        },
+        yaxis: {
+            title: 'Expected score',
+            fixedrange: true,
+            linecolor: 'rgba(255, 255, 255, .25)',
+            gridcolor: 'rgba(255, 255, 255, .25)',
+            zerolinecolor: 'rgba(255, 255, 255, .75)',
+            tickfont: {
+                color: 'rgba(255, 255, 255, .5)'
+            },
+            rangemode: 'tozero',
+        },
+        paper_bgcolor: 'rgba(0, 0, 0, 0)',
+        plot_bgcolor: 'rgba(0, 0, 0, 0)',
+    }; // It's a stub, put layout config here.
+
+    const config = {
+        displayModeBar: false, // this is the line that hides the bar.
+    };
+
+    Plotly.newPlot('expectationDataGraph', data, layout, config);
 }
 
 function _clearHitMarker()
