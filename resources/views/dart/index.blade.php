@@ -47,28 +47,5 @@
     <div class="row justify-center align-items-center mb-5">
         <div id="expectationDataGraph" style="max-width: 100%"></div>
     </div>
-
-    <div class="row justify-content-center px-4">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Set</th>
-                    <th scope="col">Leg</th>
-                    <th scope="col">Turn</th>
-                    <th scope="col">Throw</th>
-                    <th scope="col">Value</th>
-                    <th scope="col">Field</th>
-                    <th scope="col">Ring</th>
-                    <th scope="col" class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    No Data...
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 @endsection

@@ -77,7 +77,7 @@ class DartGameController extends Controller
      */
     public function showThrows(string $id)
     {
-        $data['game'] = DartGame::with(['dartThrows'])->find($id);
+        $data['game'] = DartGame::with(['dartThrows', 'users:id,name,firstname,lastname'])->find($id);
 
         return $this->sendResponse($data, 'ok');
     }

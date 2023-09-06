@@ -80,7 +80,7 @@ async function fetchData(gameId)
     return axios.get('/api/v1/dart/showThrows/'+gameId).then( response =>
     {
         const data = response.data.data.game;
-        console.log(data);
+
         _clearHitMarker();
         _clearHeatmap();
         // renderHeatmap(data);
@@ -248,27 +248,53 @@ function renderHeatmap(data)
     heatmapInstance.setData(data1);
 }
 
+function groupByProperty(xs, key)
+{
+    return xs.reduce((rv, x) => {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+}
+
 function renderPlot(values)
 {
+    console.log(values);
+    var data = [];
     Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
     {
-        console.log(e);
+        let user = values.users.find( a => a.id == e[0].user_id);
+        data.push({
+            x: [...Array(e.length).keys()],
+            y: e.map( e => e.value),
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: {shape: 'spline'},
+            // line: {shape: 'linear'},
+            name: `${user.firstname} ${user.lastname}`
+        });
+
+        let sum = e.reduce((total, t) => total + t.value, 0);
+        let avg = sum / e.length;
+
+        data.push({
+            x: [0, e.length-1],
+            y: [avg, avg],
+            type: 'scatter',
+            mode: 'lines',
+            line: {
+                width: 2,
+                dash: 'dash'
+            },
+            // line: {shape: 'linear'},
+            name: `AVG ${user.firstname} ${user.lastname}`
+        });
     });
 
-    values = values.filter( (value, i) => !(value.sigma % 1) );
-
-    const data = [{
-        x: [...Array(values.length).keys()],
-        y: values.map( value => value.value),
-        type: 'scatter',
-        mode: 'lines+markers',
-        line: {shape: 'spline'},
-    }];
 
     const layout = {
-        title: 'Throws',
+        title: 'Throws of all players',
         xaxis: {
-            title: 'Standard Deviation in mm',
+            title: 'Throw #',
             fixedrange: true,
             linecolor: 'rgba(255, 255, 255, .25)',
             gridcolor: 'rgba(255, 255, 255, .25)',
@@ -279,7 +305,7 @@ function renderPlot(values)
             rangemode: 'tozero',
         },
         yaxis: {
-            title: 'Expected score',
+            title: 'Punkte',
             fixedrange: true,
             linecolor: 'rgba(255, 255, 255, .25)',
             gridcolor: 'rgba(255, 255, 255, .25)',
@@ -291,7 +317,24 @@ function renderPlot(values)
         },
         paper_bgcolor: 'rgba(0, 0, 0, 0)',
         plot_bgcolor: 'rgba(0, 0, 0, 0)',
-    }; // It's a stub, put layout config here.
+        colorway : [
+            '#1f77b4', '#144D75',   // blue, blue darker
+            '#ff7f0e', '#BF5E0A',   // orange, orange darker
+            '#2ca02c', '#1A611A',   // green, green darker
+            '#d62728', '#961B1B',   // red, red darker
+        ]
+        // DEFAULT COLORWAY
+        // '#1f77b4',  // muted blue
+        // '#ff7f0e',  // safety orange
+        // '#2ca02c',  // cooked asparagus green
+        // '#d62728',  // brick red
+        // '#9467bd',  // muted purple
+        // '#8c564b',  // chestnut brown
+        // '#e377c2',  // raspberry yogurt pink
+        // '#7f7f7f',  // middle gray
+        // '#bcbd22',  // curry yellow-green
+        // '#17becf'   // blue-teal
+    };
 
     const config = {
         displayModeBar: false, // this is the line that hides the bar.
