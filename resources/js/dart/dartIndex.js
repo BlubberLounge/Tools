@@ -79,13 +79,14 @@ async function fetchData(gameId)
 
     return axios.get('/api/v1/dart/showThrows/'+gameId).then( response =>
     {
-        const data = response.data.data.game;
+        const dataGame = response.data.data.game;
+        const currentUser = response.data.data.user;
 
         _clearHitMarker();
         _clearHeatmap();
-        // renderHeatmap(data);
+        renderHeatmap(dataGame, currentUser);
         // updateRadarChart('graph01', data);
-        renderPlot(data);
+        renderPlot(dataGame, currentUser);
 
     }).catch(function (error) {
         if (error.response) {
@@ -139,7 +140,7 @@ function initRadarChart(id)
 /**
  *
  */
-function updateRadarChart(id, throwData = null)
+function updateRadarChart(id, throwData = null, user)
 {
     let plotData = [];
     for(let i = 0; i <= 360/20; i++)
@@ -194,8 +195,9 @@ function updateRadarChart(id, throwData = null)
  *
  *
  */
-function renderHeatmap(data)
+function renderHeatmap(data, user)
 {
+    var data = data.dart_throws.filter( d => d.user_id === user.id );
     // var width = document.querySelector('#dartboardContainer').offsetWidth;
     // var height = document.querySelector('#dartboardContainer').offsetHeight;
     var width = document.getElementsByClassName('c-Dartboard')[0].offsetWidth;
@@ -256,13 +258,16 @@ function groupByProperty(xs, key)
     }, {});
 }
 
-function renderPlot(values)
+function renderPlot(values, currentUser)
 {
     console.log(values);
     var data = [];
     Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
     {
         let user = values.users.find( a => a.id == e[0].user_id);
+        console.log(user.id);
+        console.log(currentUser.id);
+        let add = user.id == currentUser.id ? '(ich)' : '';
         data.push({
             x: [...Array(e.length).keys()],
             y: e.map( e => e.value),
@@ -270,7 +275,7 @@ function renderPlot(values)
             mode: 'lines+markers',
             line: {shape: 'spline'},
             // line: {shape: 'linear'},
-            name: `${user.firstname} ${user.lastname}`
+            name: `${user.firstname} ${user.lastname} ${add}`
         });
 
         let sum = e.reduce((total, t) => total + t.value, 0);

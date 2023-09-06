@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Enums\DartGameStatus;
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\DartGame;
 use App\Models\User;
@@ -78,6 +79,7 @@ class DartGameController extends Controller
     public function showThrows(string $id)
     {
         $data['game'] = DartGame::with(['dartThrows', 'users:id,name,firstname,lastname'])->find($id);
+        $data['user'] = Auth::user()->only('id');
 
         return $this->sendResponse($data, 'ok');
     }
