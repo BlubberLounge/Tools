@@ -8,13 +8,13 @@ import h337 from 'heatmap.js';
 import Plotly from 'plotly.js-dist';
 
 import * as UTILS from '../utils';
+import { baseConfig, baseLayout } from './dartPlotUtils';
 import Dartboard from './dartboard';
 import DartCalculator from './dartCalculator';
-import DartDefinition from './dartDefinition';
 
 $(function()
 {
-    const dartboard = new Dartboard('#dartboardContainer');
+    const dartboard = new Dartboard('#dartboardContainer', {size: 380});
     dartboard.render();
 
     const radarChart = document.getElementById('graph01');
@@ -59,39 +59,20 @@ function placeMarker(dartboardContainer, x, y, className)
  */
 async function fetchData(gameId)
 {
-    // let gameId = document.getElementById('gameId').getAttribute('value');
-
-    // return axios.get('/api/v1/user/showThrowsByGame/'+gameId).then( response =>
-    // {
-    //     const data = response.data.data.throws;
-    //     _clearHitMarker();
-    //     _clearHeatmap();
-    //     renderHeatmap(data);
-    //     updateRadarChart('graph01', data);
-    //     renderPlot(data);
-
-    // }).catch(function (error) {
-    //     if (error.response) {
-    //         console.log(error.response.data);
-    //         console.error('Throws could not get fetched!');
-    //     }
-    // });
-
     return axios.get('/api/v1/dart/showThrows/'+gameId).then( response =>
     {
         const dataGame = response.data.data.game;
         const currentUser = response.data.data.user;
 
-        _clearHitMarker();
-        _clearHeatmap();
+        _clearAll();
         renderHeatmap(dataGame, currentUser);
         // updateRadarChart('graph01', data);
-        renderPlot(dataGame, currentUser);
+        renderExpectedScoreChart(dataGame, currentUser);
 
     }).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
-            console.error('Throws could not get fetched!');
+            console.error('Data could not get fetched!');
         }
     });
 }
@@ -112,29 +93,10 @@ function initRadarChart(id)
         type: 'scatterpolar',
     }];
 
-    const layout = {
-        polar: {
-          radialaxis: {
-            visible: true,
-            range: [0, Math.max(...plotData)*1.15],
-            angle: 90,
-            tickangle: 90
-          },
-          angularaxis: {
-            direction: "clockwise",
-            dtick: 360 / 20
-          }
-        },
-        showlegend: false,
-        paper_bgcolor: 'rgba(0, 0, 0, 0)',
-        plot_bgcolor: 'rgba(0, 0, 0, 0)',
-    };
+    var layout = baseLayout;
+    layout.polar.radialaxis.range = [0, Math.max(...plotData)*1.15];
 
-    const config = {
-        displayModeBar: false, // this is the line that hides the bar.
-    };
-
-    Plotly.newPlot(id, data, layout, config);
+    Plotly.newPlot(id, data, layout, baseConfig);
 }
 
 /**
@@ -165,31 +127,62 @@ function updateRadarChart(id, throwData = null, user)
         type: 'scatterpolar',
     }];
 
-    const layout = {
-        polar: {
-          radialaxis: {
-            visible: true,
-            range: [0, Math.max(...plotData)*1.15],
-            angle: 90,
-            tickangle: 90
-          },
-          angularaxis: {
-            direction: "clockwise",
-            dtick: 360 / 20
-          }
-        },
-        showlegend: false,
-        paper_bgcolor: 'rgba(0, 0, 0, 0)',
-        plot_bgcolor: 'rgba(0, 0, 0, 0)',
-    };
+    var layout = baseLayout;
+    layout.polar.radialaxis.range = [0, Math.max(...plotData)*1.15];
 
-    const config = {
-        displayModeBar: false, // this is the line that hides the bar.
-    };
-
-    Plotly.newPlot(id, data, layout, config);
+    Plotly.newPlot(id, data, layout, baseConfig);
     // Plotly.update(id, data);
 }
+
+function groupByProperty(xs, key)
+{
+    return xs.reduce((rv, x) => {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+}
+
+function renderExpectedScoreChart(values, currentUser)
+{
+    var data = [];
+    Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
+    {
+        let user = values.users.find( a => a.id == e[0].user_id);
+        let add = user.id == currentUser.id ? '(ich)' : '';
+        data.push({
+            x: [...Array(e.length).keys()],
+            y: e.map( e => e.value),
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: {shape: 'spline'},
+            // line: {shape: 'linear'},
+            name: `${user.firstname} ${user.lastname} ${add}`
+        });
+
+        let sum = e.reduce((total, t) => total + t.value, 0);
+        let avg = sum / e.length;
+
+        data.push({
+            x: [0, e.length-1],
+            y: [avg, avg],
+            type: 'scatter',
+            mode: 'lines',
+            line: {
+                width: 2,
+                dash: 'dash'
+            },
+            // line: {shape: 'linear'},
+            name: `AVG ${user.firstname} ${user.lastname}`
+        });
+    });
+
+    var layout = baseLayout;
+    layout.title = 'Erwartete Punkte';
+    layout.xaxis.range = [0, 20];
+
+    Plotly.newPlot('expectationDataGraph', data, layout, baseConfig);
+}
+
 
 /**
  *
@@ -250,108 +243,15 @@ function renderHeatmap(data, user)
     heatmapInstance.setData(data1);
 }
 
-function groupByProperty(xs, key)
+function _clearAll()
 {
-    return xs.reduce((rv, x) => {
-        (rv[x[key]] = rv[x[key]] || []).push(x);
-        return rv;
-    }, {});
-}
-
-function renderPlot(values, currentUser)
-{
-    console.log(values);
-    var data = [];
-    Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
-    {
-        let user = values.users.find( a => a.id == e[0].user_id);
-        console.log(user.id);
-        console.log(currentUser.id);
-        let add = user.id == currentUser.id ? '(ich)' : '';
-        data.push({
-            x: [...Array(e.length).keys()],
-            y: e.map( e => e.value),
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: {shape: 'spline'},
-            // line: {shape: 'linear'},
-            name: `${user.firstname} ${user.lastname} ${add}`
-        });
-
-        let sum = e.reduce((total, t) => total + t.value, 0);
-        let avg = sum / e.length;
-
-        data.push({
-            x: [0, e.length-1],
-            y: [avg, avg],
-            type: 'scatter',
-            mode: 'lines',
-            line: {
-                width: 2,
-                dash: 'dash'
-            },
-            // line: {shape: 'linear'},
-            name: `AVG ${user.firstname} ${user.lastname}`
-        });
-    });
-
-
-    const layout = {
-        title: 'Throws of all players',
-        xaxis: {
-            title: 'Throw #',
-            fixedrange: true,
-            linecolor: 'rgba(255, 255, 255, .25)',
-            gridcolor: 'rgba(255, 255, 255, .25)',
-            zerolinecolor: 'rgba(255, 255, 255, .75)',
-            tickfont: {
-                color: 'rgba(255, 255, 255, .5)'
-            },
-            rangemode: 'tozero',
-        },
-        yaxis: {
-            title: 'Punkte',
-            fixedrange: true,
-            linecolor: 'rgba(255, 255, 255, .25)',
-            gridcolor: 'rgba(255, 255, 255, .25)',
-            zerolinecolor: 'rgba(255, 255, 255, .75)',
-            tickfont: {
-                color: 'rgba(255, 255, 255, .5)'
-            },
-            rangemode: 'tozero',
-        },
-        paper_bgcolor: 'rgba(0, 0, 0, 0)',
-        plot_bgcolor: 'rgba(0, 0, 0, 0)',
-        colorway : [
-            '#1f77b4', '#144D75',   // blue, blue darker
-            '#ff7f0e', '#BF5E0A',   // orange, orange darker
-            '#2ca02c', '#1A611A',   // green, green darker
-            '#d62728', '#961B1B',   // red, red darker
-        ]
-        // DEFAULT COLORWAY
-        // '#1f77b4',  // muted blue
-        // '#ff7f0e',  // safety orange
-        // '#2ca02c',  // cooked asparagus green
-        // '#d62728',  // brick red
-        // '#9467bd',  // muted purple
-        // '#8c564b',  // chestnut brown
-        // '#e377c2',  // raspberry yogurt pink
-        // '#7f7f7f',  // middle gray
-        // '#bcbd22',  // curry yellow-green
-        // '#17becf'   // blue-teal
-    };
-
-    const config = {
-        displayModeBar: false, // this is the line that hides the bar.
-    };
-
-    Plotly.newPlot('expectationDataGraph', data, layout, config);
+    _clearHeatmap();
+    _clearHitMarker();
 }
 
 function _clearHitMarker()
 {
     let hitMarkers = document.querySelectorAll('.hitMarker');
-    // console.log(hitMarkers);
 
     hitMarkers.forEach( marker => marker.remove() );
 }
@@ -359,7 +259,6 @@ function _clearHitMarker()
 function _clearHeatmap()
 {
     let hitMarkers = document.querySelectorAll('.heatmap-canvas');
-    // console.log(hitMarkers);
 
     hitMarkers.forEach( marker => marker.remove() );
 }

@@ -127,9 +127,9 @@ export default class Game
     detectNextTurn(detectNextPlayer = true)
     {
         if(detectNextPlayer) {
-            return ((this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
+            return ((this.currentPlayer.pos+1 > this.users.count()) || (this.winCounter >= this.users.count())) && this.detectNextPlayer();
         } else {
-            return (this.currentPlayer.pos+1 > this.users.count()-1) || (this.winCounter >= this.users.count());
+            return (this.currentPlayer.pos+1 > this.users.count()) || (this.winCounter >= this.users.count());
         }
     }
 
@@ -258,7 +258,6 @@ export default class Game
                 return null;
             }
         });
-        // console.log(result);
     }
 
     _changeStatus(status = null)
@@ -283,7 +282,6 @@ export default class Game
                     return null;
                 }
             });
-        // console.log(result);
     }
 
     _fetchDetails()

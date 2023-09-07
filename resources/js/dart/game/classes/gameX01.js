@@ -17,18 +17,11 @@ export default class GameX01 extends Game
             console.error('Something is wrong. Please check the gametype!');
 
         console.info('X01 Game variant.');
-        // console.log(this.users);
-
-        // this.throw = new Throw(1, 360, 180, 360/2);
-        // console.log(this.throw.getCartesianCoordinates(true));
-
-        // console.log(this.users.next());
     }
 
     run()
     {
         this._show();
-        // this._checkWin();
 
         if (this._remainingPlayerPoints() == 0) {
             this._currentPlayerWon();
@@ -49,7 +42,6 @@ export default class GameX01 extends Game
     addThrow(points, fieldName, ringName, x, y)
     {
         super.addThrow(points, fieldName, ringName, x, y);
-        // console.log(this._remainingPlayerPoints());
     }
 
     async _show()
@@ -68,7 +60,6 @@ export default class GameX01 extends Game
         throwDisplay.innerHTML = lastThrow.value;
 
         let totalDisplay = playerCard.querySelector('.total');
-        // totalDisplay.innerHTML = this._remainingPlayerPoints();
         super._animateCounter(totalDisplay, parseInt(totalDisplay.innerHTML), this._remainingPlayerPoints(), 400);
 
         if(lastThrow.throwNum == DartDefinition.maxThrowsPerTurn) {
