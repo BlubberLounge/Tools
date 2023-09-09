@@ -58,6 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
     Route::resource('/hookah', HookahController::class);
 
+    // Routes with no specific controller
+    Route::get('/moving-average', [HomeController::class, 'ShowMovingAverage'])->name('show-moving-average');
 
     // route: /dart/*
     // name: dart.*

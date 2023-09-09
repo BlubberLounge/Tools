@@ -98,6 +98,12 @@
                 <span class="nav-text"> {{ __('battery simulation') }} <span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('show-moving-average') }}" class="nav-link {{ active('show-moving-average') }}">
+                <i class="fa-solid fa-person-running"></i>
+                <span class="nav-text"> {{ __('moving average') }} <span>
+            </a>
+        </li>
     </ul>
 
     <hr />

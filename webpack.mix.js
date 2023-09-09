@@ -14,13 +14,13 @@ const mix = require('laravel-mix');
 mix
     .js('resources/js/app.js', 'public/js')                 // Main js file
     .js('resources/js/dark-mode.js', 'public/js')           // Manages theme toggling
-    .js('resources/js/simApp.js', 'public/js')
+    .js('resources/js/auth.js', 'public/js')
     // .js('resources/js/sw.js', 'public/js')
 
 
     // Dart
-    .js('resources/js/dart/dartIndex.js', 'public/js')
-    .js('resources/js/dart/dartInfo.js', 'public/js')
+    // .js('resources/js/dart/dartIndex.js', 'public/js')
+    // .js('resources/js/dart/dartInfo.js', 'public/js')
     // .js('resources/js/dart/dartPlayground.js', 'public/js') // needs to much memory when mixing
 
     // Dart Game
@@ -29,8 +29,10 @@ mix
     .js('resources/js/dart/game/dartResult.js', 'public/js')
     .js('resources/js/dart/game/dartResultHeatmap.js', 'public/js')
 
+    .js('resources/js/moving-average.js', 'public/js')
 
-    .js('resources/js/auth.js', 'public/js')
+    // .js('resources/js/simApp.js', 'public/js')
+
     .js('resources/js/user-profilepicture.js', 'public/js')
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')
