@@ -71,6 +71,13 @@ class DartGame extends Model
         'fields' => AsCollection::class,
     ];
 
+    /**
+     *
+     */
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
 
     /**
      *

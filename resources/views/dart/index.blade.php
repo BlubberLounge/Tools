@@ -11,7 +11,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-center align-items-center mb-5">
-        <div id="winRateGraph" style="max-width: 100%"></div>
+        <div id="activityGraph" class="col" style="height:300px;"></div>
+    </div>
+    <div class="row justify-center align-items-center mb-5">
+        <div id="winRateGraph" class="col-12 col-md" style="height:300px;"></div>
+        <div id="positionGraph" class="col-12 col-md" style="height:300px;"></div>
     </div>
 
     <div class="row mb-5 justify-center">
@@ -44,12 +48,12 @@
             </div>
         </div>
         <div class="col col-md-6 d-flex justify-center align-items-center h-100">
-            <div id="graph01" style="max-width: 100%"></div>
+            <div id="graph01"></div>
         </div>
     </div>
 
     <div class="row justify-center align-items-center mb-5">
-        <div id="expectationDataGraph" style="max-width: 100%"></div>
+        <div id="expectationDataGraph" class="col" style="height: 500px;"></div>
     </div>
 </div>
 @endsection

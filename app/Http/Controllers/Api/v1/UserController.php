@@ -116,4 +116,35 @@ class UserController extends Controller
 
         return $this->sendResponse($data, 'ok');
     }
+
+    /**
+     *
+     */
+    public function showPlaces(Request $request)
+    {
+        $data['places'] = Auth::user()->DartGames()->get(['place'])->countBy('place');
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    public function showPositions(Request $request)
+    {
+        $data['positions'] = Auth::user()->DartGames()->get(['position'])->countBy('position');
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    public function showDartActivity(Request $request)
+    {
+        $column = DartGame::getTableName().'.created_at';
+        $data['activity'] = Auth::user()->DartGames(false, false)->get([$column]);
+
+        return $this->sendResponse($data, 'ok');
+    }
 }

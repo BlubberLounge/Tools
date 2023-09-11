@@ -24,33 +24,32 @@ use App\Http\Controllers\Api\v1\DartExpectationDataController;
 Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {
 
-    Route::apiResource('user', UserController::class)
-        ->only(['show']);
+
     // route: /user/*
     // name: user.*
     Route::prefix('user')->group(function () {
-        Route::name('user.')->group(function ()
-        {
-            Route::get('/search/{user}', [UserController::class, 'search'])->name('search');
-            Route::get('/showThrowsByGame/{dartGame}', [UserController::class, 'showThrowsByGame'])->name('show-throwsByGame');
-        });
+        Route::get('/search/{user}', [UserController::class, 'search']);
+        Route::get('/showThrowsByGame/{dartGame}', [UserController::class, 'showThrowsByGame']);
+        Route::get('/showPlaces', [UserController::class, 'showPlaces']);
+        Route::get('/showPositions', [UserController::class, 'showPositions']);
+        Route::get('/showDartActivity', [UserController::class, 'showDartActivity']);
     });
+
+    Route::apiResource('user', UserController::class)
+        ->only(['show']);
 
 
     // route: /dart/*
     // name: dart.*
     Route::prefix('dart')->group(function () {
-        Route::name('dart.')->group(function ()
-        {
-            Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace'])->name('updatePlace');
-            Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows'])->name('showThrows');
+        Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace']);
+        Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows']);
 
-            // local and development only
-            if(App::environment(['local', 'development']))
-                Route::apiResource('expectationData', DartExpectationDataController::class)
-                    ->only(['index', 'store'])
-                    ->parameter('expectationData', 'dartExpectationData'); // expectationData to dartExpectationData for currect auto-mapping;
-        });
+        // local and development only
+        if(App::environment(['local', 'development']))
+            Route::apiResource('expectationData', DartExpectationDataController::class)
+                ->only(['index', 'store'])
+                ->parameter('expectationData', 'dartExpectationData'); // expectationData to dartExpectationData for currect auto-mapping;
     });
     Route::apiResource('dart', DartGameController::class)
         ->only(['show', 'update'])

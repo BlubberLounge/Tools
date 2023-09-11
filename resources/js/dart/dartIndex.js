@@ -5,20 +5,17 @@
  */
 
 import h337 from 'heatmap.js';
-import Plotly from 'plotly.js-dist';
+import * as echarts from 'echarts';
 
 import * as UTILS from '../utils';
-import { baseConfig, baseLayout } from './dartPlotUtils';
 import Dartboard from './dartboard';
 import DartCalculator from './dartCalculator';
+import { count } from 'd3';
 
 $(function()
 {
     const dartboard = new Dartboard('#dartboardContainer', {size: 380});
     dartboard.render();
-
-    const radarChart = document.getElementById('graph01');
-    initRadarChart(radarChart);
 
     document.getElementById('gameSelection').addEventListener('change', function()
     {
@@ -53,23 +50,11 @@ function placeMarker(dartboardContainer, x, y, className)
     return hitMarker;
 }
 
-/**
- *
- *
- */
-async function fetchData(gameId)
+async function requestJson(url, cb)
 {
-    return axios.get('/api/v1/dart/showThrows/'+gameId).then( response =>
-    {
-        const dataGame = response.data.data.game;
-        const currentUser = response.data.data.user;
-
-        _clearAll();
-        renderHeatmap(dataGame, currentUser);
-        // updateRadarChart('graph01', data);
-        renderExpectedScoreChart(dataGame, currentUser);
-
-    }).catch(function (error) {
+    axios.get(url)
+    .then( cb )
+    .catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
             console.error('Data could not get fetched!');
@@ -79,60 +64,279 @@ async function fetchData(gameId)
 
 /**
  *
+ *
  */
-function initRadarChart(id)
+async function fetchData(gameId)
 {
-    let plotData = [];
-    for(let i = 0; i <= 360/20; i++)
-        plotData.push(1);
+    /**
+     * Get Player dart activity data
+     */
+    requestJson(`/api/v1/user/showDartActivity`, response => {
+        const activity = response.data.data.activity.map( e => new Date(e.created_at));
 
-    const data = [{
-        r: plotData,
-        theta: plotData.keys(),
-        fill: 'toself',
-        type: 'scatterpolar',
-    }];
+        renderActivityChart(activity);
+    });
 
-    var layout = baseLayout;
-    layout.polar.radialaxis.range = [0, Math.max(...plotData)*1.15];
+    /**
+     * Get Player throw data
+     */
+    requestJson(`/api/v1/dart/showThrows/${gameId}`, response => {
+        const dataGame = response.data.data.game;
+        const currentUser = response.data.data.user;
 
-    Plotly.newPlot(id, data, layout, baseConfig);
+        _clearAll();
+        renderHeatmap(dataGame, currentUser);
+        // updateRadarChart('graph01', data);
+        renderPlayerThrowsChart(dataGame, currentUser);
+    });
+
+    /**
+     * Get Player place data
+     */
+    requestJson(`/api/v1/user/showPlaces`, response => {
+        renderPlaceChart(response.data.data.places);
+    });
+
+    /**
+     * Get Player place data
+     */
+    requestJson(`/api/v1/user/showPositions`, response => {
+        renderPositionChart(response.data.data.positions);
+    });
+}
+
+function renderActivityChart(activity)
+{
+    function getVirtualData(year) {
+        const date = +echarts.time.parse(year + '-01-01');
+        const end = +echarts.time.parse(+year + 1 + '-01-01');
+        const dayTime = 3600 * 24 * 1000;
+        const data = [];
+        for (let time = date; time < end; time += dayTime) {
+          data.push([
+            echarts.time.format(time, '{yyyy}-{MM}-{dd}', false),
+            0
+          ]);
+        }
+        return data;
+    }
+
+    const ctx = document.getElementById('activityGraph');
+    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+
+    const currentYear = new Date().getFullYear();
+    let data = getVirtualData(currentYear);
+
+    for (const a of activity) {
+        let currDate = echarts.time.format(a, '{yyyy}-{MM}-{dd}', false);
+        let index = data.findIndex( c => c[0] == currDate );
+
+        if(index >= 0) {
+            data[index][1]++;
+        } else {
+            data.push([
+                currDate,
+                1,
+            ]);
+        }
+    }
+
+    console.log(data);
+
+    const option = {
+        tooltip: {},
+        visualMap: {
+            show: true,
+            min: 2,
+            max: Math.max(...data.map( e => e[1])),   // deep array max
+            calculable: true,
+            orient: 'horizontal',
+            left: 'center',
+            bottom: '15%',
+            // inRange: {
+            //     color: ['#ff0000', '#0000ff']
+            // }
+        },
+        calendar: {
+            range: currentYear,
+            dayLabel: {
+                color: '#fff'
+            },
+            monthLabel: {
+                color: '#fff'
+            }
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: data,
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            },
+            itemStyle: {
+                color: '#000'
+            }
+        }
+    };
+
+    myChart.setOption(option);
+}
+
+function renderPlaceChart(places)
+{
+    const ctx = document.getElementById('winRateGraph');
+    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    let data = [];
+
+    for (const place of Object.keys(places)) {
+        data.push({
+            value: places[place],
+            name: `Platz ${place}`,
+        });
+    }
+
+    let option = {
+        title: {
+            text: 'Win rate %',
+            left: 'center',
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        series: [
+          {
+            name: 'Plazierung',
+            type: 'pie',
+            radius: ['35%', '60%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 9,
+              borderColor: '#212529',
+              borderWidth: 8
+            },
+            label: {
+                show: true,
+                color: 'rgba(255, 255, 255, 0.3)',
+                formatter(param) {
+                  // correct the percentage
+                  return param.name + ' (' + param.percent + '%)';
+                }
+            },
+            labelLine: {
+                lineStyle: {
+                  color: 'rgba(255, 255, 255, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            data: data
+          }
+        ]
+      };
+      myChart.setOption(option);
+}
+
+function renderPositionChart(positions)
+{
+    const ctx = document.getElementById('positionGraph');
+    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    let data = [];
+
+    for (const position of Object.keys(positions)) {
+        data.push({
+            value: positions[position],
+            name: `Position ${position}`,
+        });
+    }
+
+    let option = {
+        title: {
+            text: 'Positions %',
+            left: 'center',
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        series: [
+          {
+            name: 'Positionierung',
+            type: 'pie',
+            radius: ['35%', '60%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 9,
+              borderColor: '#212529',
+              borderWidth: 8
+            },
+            label: {
+                show: true,
+                color: 'rgba(255, 255, 255, 0.3)',
+                formatter(param) {
+                  // correct the percentage
+                  return param.name + ' (' + param.percent + '%)';
+                }
+            },
+            labelLine: {
+                lineStyle: {
+                  color: 'rgba(255, 255, 255, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            data: data
+          }
+        ]
+      };
+      myChart.setOption(option);
 }
 
 /**
  *
  */
-function updateRadarChart(id, throwData = null, user)
-{
-    let plotData = [];
-    for(let i = 0; i <= 360/20; i++)
-        plotData.push(0);
+// function updateRadarChart(id, throwData = null, user)
+// {
+//     let plotData = [];
+//     for(let i = 0; i <= 360/20; i++)
+//         plotData.push(0);
 
-    throwData.forEach( d => {
-        var {distance, _, degrees} =  UTILS.cartesian2Polar(d.x * -1, d.y);
-        let angle = UTILS.mod(90 - degrees, 360);
+//     throwData.forEach( d => {
+//         var {distance, _, degrees} =  UTILS.cartesian2Polar(d.x * -1, d.y);
+//         let angle = UTILS.mod(90 - degrees, 360);
 
-        for(const [i, c] of plotData.entries())
-            if(i >= (angle/20)) {
-                plotData[i-1]++;
-                break;
-            }
-    });
+//         for(const [i, c] of plotData.entries())
+//             if(i >= (angle/20)) {
+//                 plotData[i-1]++;
+//                 break;
+//             }
+//     });
 
-    plotData = plotData.map( d => (d / plotData.length) * 100);
-    const data = [{
-        r: plotData,
-        theta: plotData.keys(),
-        fill: 'toself',
-        type: 'scatterpolar',
-    }];
+//     plotData = plotData.map( d => (d / plotData.length) * 100);
+//     const data = [{
+//         r: plotData,
+//         theta: plotData.keys(),
+//         fill: 'toself',
+//         type: 'scatterpolar',
+//     }];
 
-    var layout = baseLayout;
-    layout.polar.radialaxis.range = [0, Math.max(...plotData)*1.15];
+//     var layout = baseLayout;
+//     layout.polar.radialaxis.range = [0, Math.max(...plotData)*1.15];
 
-    Plotly.newPlot(id, data, layout, baseConfig);
-    // Plotly.update(id, data);
-}
+//     Plotly.newPlot(id, data, layout, baseConfig);
+//     // Plotly.update(id, data);
+// }
 
 function groupByProperty(xs, key)
 {
@@ -142,45 +346,116 @@ function groupByProperty(xs, key)
     }, {});
 }
 
-function renderExpectedScoreChart(values, currentUser)
+function renderPlayerThrowsChart(values, currentUser)
 {
-    var data = [];
+    const clrA = [
+        '#1f77b4',  // blue, blue darker
+        '#ff7f0e',  // orange, orange darker
+        '#2ca02c',  // green, green darker
+        '#d62728',  // red, red darker
+    ];
+
+    const clrB = [
+        '#144D75',  // blue, blue darker
+        '#BF5E0A',  // orange, orange darker
+        '#1A611A',  // green, green darker
+        '#961B1B',  // red, red darker
+    ];
+
+    const ctx = document.getElementById('expectationDataGraph');
+    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+
+    let series = [];
     Object.values(groupByProperty(values.dart_throws, 'user_id')).forEach( (e, k) =>
     {
         let user = values.users.find( a => a.id == e[0].user_id);
         let add = user.id == currentUser.id ? '(ich)' : '';
-        data.push({
-            x: [...Array(e.length).keys()],
-            y: e.map( e => e.value),
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: {shape: 'spline'},
-            // line: {shape: 'linear'},
-            name: `${user.firstname} ${user.lastname} ${add}`
+
+        series.push({
+            name: `${user.firstname} ${user.lastname} ${add}`,
+            type: 'line',
+            smooth: true,
+            sampling: 'lttb',
+            emphasis: {
+                focus: 'series'
+            },
+            itemStyle: {
+                color: clrA[k]
+            },
+            // stack: 'Total',
+            data: e.map( e => e.value)
         });
 
         let sum = e.reduce((total, t) => total + t.value, 0);
-        let avg = sum / e.length;
+        let avg = (sum / e.length).toFixed(2);
 
-        data.push({
-            x: [0, e.length-1],
-            y: [avg, avg],
-            type: 'scatter',
-            mode: 'lines',
-            line: {
+        series.push({
+            name: `AVG ${user.firstname} ${user.lastname}`,
+            type: 'line',
+            showSymbol: false,
+            lineStyle: {
                 width: 2,
-                dash: 'dash'
+                type: 'dashed'
             },
-            // line: {shape: 'linear'},
-            name: `AVG ${user.firstname} ${user.lastname}`
+            itemStyle: {
+                color: clrB[k]
+            },
+            data: [...Array(e.length).fill(avg)]
         });
     });
 
-    var layout = baseLayout;
-    layout.title = 'Erwartete Punkte';
-    layout.xaxis.range = [0, 20];
 
-    Plotly.newPlot('expectationDataGraph', data, layout, baseConfig);
+    let option = {
+        title: {
+            text: 'Spieler Würfe',
+            left: 'center',
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        tooltip: {
+          trigger: 'axis',
+          position: function (pt) {
+            return [pt[0], '10%'];
+          }
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+        },
+        yAxis: {
+          type: 'value',
+          boundaryGap: [0, '100%']
+        },
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 0,
+                end: 50
+            },
+            {
+              start: 0,
+                end: 50
+            }
+        ],
+        series: series
+      };
+    myChart.setOption(option);
 }
 
 

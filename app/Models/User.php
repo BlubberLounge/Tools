@@ -150,10 +150,17 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function DartGames(): BelongsToMany
+    public function DartGames(bool $withTimestamps = true, bool $withPivot = true): BelongsToMany
     {
-        return $this->belongsToMany(DartGame::class)
-            ->withTimestamps();
+        $relation = $this->belongsToMany(DartGame::class);
+
+        if($withTimestamps)
+            $relation->withTimestamps();
+
+        if($withPivot)
+            $relation->withPivot(['status', 'position', 'place']);
+
+        return $relation;
     }
 
     /**
@@ -161,7 +168,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function DartThrows(): HasMany
     {
-        return $this->hasMany(DartThrow::class);
+        return $this->hasMany(DartThrow::class)
+            ->withTimestamps();
     }
 
     /**

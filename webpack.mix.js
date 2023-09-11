@@ -19,15 +19,15 @@ mix
 
 
     // Dart
-    // .js('resources/js/dart/dartIndex.js', 'public/js')
+    .js('resources/js/dart/dartIndex.js', 'public/js')
     // .js('resources/js/dart/dartInfo.js', 'public/js')
     // .js('resources/js/dart/dartPlayground.js', 'public/js') // needs to much memory when mixing
 
     // Dart Game
-    .js('resources/js/dart/game/show.js', 'public/js')
-    .js('resources/js/dart/game/dartSetup.js', 'public/js')
-    .js('resources/js/dart/game/dartResult.js', 'public/js')
-    .js('resources/js/dart/game/dartResultHeatmap.js', 'public/js')
+    // .js('resources/js/dart/game/show.js', 'public/js')
+    // .js('resources/js/dart/game/dartSetup.js', 'public/js')
+    // .js('resources/js/dart/game/dartResult.js', 'public/js')
+    // .js('resources/js/dart/game/dartResultHeatmap.js', 'public/js')
 
     .js('resources/js/moving-average.js', 'public/js')
 
