@@ -28,6 +28,8 @@ class Localization
                 $locale = Auth::user()->settings->get('language')->value;
                 Session::put('locale', $locale);
             }
+        } else {
+            $locale = 'de_DE';
         }
 
         App::setLocale($locale);

@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DartController;
@@ -30,12 +32,13 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/register/request', [InvitationController::class, 'request'])->name('register.request');
+Route::put('/register/request/store', [InvitationController::class, 'store'])->name('register.request.store');
+Route::get('/register/{registrationID}', [RegisterController::class, 'showRegistrationForm'])->name('register.register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
 // https://github.com/laravel/ui/blob/4.x/src/AuthRouteMethods.php
-// if (App::environment('local')) {
-    Auth::routes(['verify' => true]);
-// } else {
-//     Auth::routes(['verify' => true, 'register' => false]);
-// }
+Auth::routes(['verify' => true, 'register' => false]);
 
 // Route::get('/auth/redirect', function () {
 //     return Socialite::driver('google')->redirect();

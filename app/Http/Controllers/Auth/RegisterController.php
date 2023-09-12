@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use App\Traits\RegistersInvitedUsers;
+
 
 class RegisterController extends Controller
 {
@@ -22,7 +24,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersInvitedUsers;
 
     /**
      * Where to redirect users after registration.
@@ -49,12 +51,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $beforeDate = now()->subYears(18)->format('Y-m-d');
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:50', 'unique:users'],
+            'name' => ['required', 'string', 'min:5', 'max:50', 'unique:users'],
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:5', 'confirmed'],
+            'dob' => ['required', 'date', 'before:'.$beforeDate],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -71,11 +75,12 @@ class RegisterController extends Controller
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
-            'telefon_mobil' => $data['telefon_mobil'],
+            'dob' => $data['dob'],
+            'img' => '/storage/avatar/avatar-dummy.jpg',
             'password' => Hash::make($data['password']),
         ]);
 
-        $user->attachRole( config('roles.models.role')::where('name',  'User')->first());
+        $user->attachRole( config('roles.models.role')::where('name',  'User')->first() );
 
         return $user;
     }

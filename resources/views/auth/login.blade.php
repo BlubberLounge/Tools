@@ -113,5 +113,9 @@
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center w-100 position-absolute start-0" style="bottom: 1rem;">
+        <span class="registerText"> Don't have an Account? </span>
+        <a href="{{ route('register.request') }}" class="display-inline ms-2"> Request Access </a>
+    </div>
 </div>
 @endsection

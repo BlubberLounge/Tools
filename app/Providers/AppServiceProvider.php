@@ -35,10 +35,8 @@ class AppServiceProvider extends ServiceProvider
         // use in blade like @datetime(now())
 
         // never sent a message to a real email when developing this application
-        if ($this->app->environment('local')) {
-            // Mail::alwaysTo('info@blubber-lounge.de');
-            Mail::alwaysTo('maximilian.mewes@gmx.de');
-        }
+        if ($this->app->environment('local'))
+            Mail::alwaysTo(env('MAIL_TO_DEVELOPMENT', 'info@blubber-lounge.de'));
 
         if($this->app->environment('production')) {
             URL::forceScheme('https');

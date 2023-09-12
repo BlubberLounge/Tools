@@ -44,7 +44,8 @@
 {{ $salutation }}
 @else
 @lang('Regards'),<br>
-{{ config('app.name') }}
+{{-- {{ config('app.name') }} --}}
+The BlubberLounge Team
 @endif
 
 {{-- Subcopy --}}
