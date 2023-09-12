@@ -69,6 +69,16 @@ async function requestJson(url, cb)
 async function fetchData(gameId)
 {
     /**
+     * Get Player skills data
+     */
+    // requestJson(`/api/v1/user/showDartSkills`, response => {
+    //     const activity = response.data.data.activity.map( e => new Date(e.created_at));
+
+    //     renderActivityChart(activity);
+    // });
+    renderSkillsChart();
+
+    /**
      * Get Player dart activity data
      */
     requestJson(`/api/v1/user/showDartActivity`, response => {
@@ -105,6 +115,55 @@ async function fetchData(gameId)
     });
 }
 
+function renderSkillsChart()
+{
+    const ctx = document.getElementById('skillsGraph');
+    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+
+    let option = {
+        title: {
+            text: 'Spieler Skill',
+            left: 'center',
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        radar: {
+            // shape: 'circle',
+            indicator: [
+                { name: 'Wins', max: 100 },
+                { name: 'SD', max: 1000 },
+                { name: 'Avg Checkout (1D)', max: 100 },
+                { name: 'Avg First 9', max: 180*3 },
+                { name: 'Avg First 3', max: 180 },
+                { name: 'Avg Miss', max: 100 },
+                { name: 'Avg', max: 180 },
+            ],
+            axisName: {
+                formatter(value, indicator) {
+                    return `${value}\n${indicator.max}`;
+                }
+            },
+        },
+        series: [
+            {
+                name: 'Budget vs spending',
+                type: 'radar',
+                data: [{
+                    value: [35, 400, 70, 300, 35, 66, 50],
+                    name: 'Allocated Budget',
+                    areaStyle: {
+                        color: 'rgba(92, 123, 217, .6)'
+                    }
+                }]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+}
+
 function renderActivityChart(activity)
 {
     function getVirtualData(year) {
@@ -125,7 +184,7 @@ function renderActivityChart(activity)
     var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
 
     const currentYear = new Date().getFullYear();
-    let data = getVirtualData(currentYear);
+    let data = [];
 
     for (const a of activity) {
         let currDate = echarts.time.format(a, '{yyyy}-{MM}-{dd}', false);
@@ -141,8 +200,6 @@ function renderActivityChart(activity)
         }
     }
 
-    console.log(data);
-
     const option = {
         tooltip: {},
         visualMap: {
@@ -152,10 +209,13 @@ function renderActivityChart(activity)
             calculable: true,
             orient: 'horizontal',
             left: 'center',
-            bottom: '15%',
-            // inRange: {
-            //     color: ['#ff0000', '#0000ff']
-            // }
+            bottom: '10%',
+            inRange: {
+                color: ['#7ed3f4', '#3b4f8c']
+            },
+            textStyle: {
+                color: '#fff'
+            },
         },
         calendar: {
             range: currentYear,
@@ -164,6 +224,12 @@ function renderActivityChart(activity)
             },
             monthLabel: {
                 color: '#fff'
+            },
+            itemStyle: {
+                color: '#212529',
+                borderWidth: 1,
+                borderColor: 'rgba(0, 0, 0, .15)',
+                borderRadius: 10
             }
         },
         series: {
@@ -177,7 +243,8 @@ function renderActivityChart(activity)
                 }
             },
             itemStyle: {
-                color: '#000'
+                color: '#000',
+                borderColor: 'rgba(255, 255, 255, .1)'
             }
         }
     };
@@ -200,8 +267,8 @@ function renderPlaceChart(places)
 
     let option = {
         title: {
-            text: 'Win rate %',
-            left: 'center',
+            text: 'Plazierung %',
+            left: 10,
             top: 10,
             textStyle: {
                 color: '#ccc'
@@ -218,7 +285,7 @@ function renderPlaceChart(places)
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 9,
-              borderColor: '#212529',
+              borderColor: 'rgba(43, 48, 53, 1)',
               borderWidth: 8
             },
             label: {
@@ -260,7 +327,7 @@ function renderPositionChart(positions)
     let option = {
         title: {
             text: 'Positions %',
-            left: 'center',
+            left: 10,
             top: 10,
             textStyle: {
                 color: '#ccc'
@@ -277,7 +344,7 @@ function renderPositionChart(positions)
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 9,
-              borderColor: '#212529',
+              borderColor: 'rgba(43, 48, 53, 1)',
               borderWidth: 8
             },
             label: {

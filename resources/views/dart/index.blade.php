@@ -10,12 +10,18 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-center align-items-center mb-5">
-        <div id="activityGraph" class="col" style="height:300px;"></div>
+    <div class="row justify-content-around align-items-center mb-4">
+        <div class="col-12 col-md rounded mb-4 mb-md-0 me-md-4" style="height: 600px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+            <div id="skillsGraph" style="height: 100%"></div>
+        </div>
+        <div class="col-12 col-md">
+            <div id="winRateGraph" class="row rounded mb-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+            <div id="positionGraph" class="row rounded" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        </div>
     </div>
-    <div class="row justify-center align-items-center mb-5">
-        <div id="winRateGraph" class="col-12 col-md" style="height:300px;"></div>
-        <div id="positionGraph" class="col-12 col-md" style="height:300px;"></div>
+
+    <div class="row justify-center align-items-center mb-4">
+        <div id="activityGraph" class="col rounded" style="height:300px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
     </div>
 
     <div class="row mb-5 justify-center">
