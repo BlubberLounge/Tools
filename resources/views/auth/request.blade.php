@@ -23,7 +23,7 @@
 
                         <div class="row text-secondary">
                             <p>
-                                Um den Zugang zu dieser Applikation zu beantragen trage deine E-mail in das Textfeld ein. Um den Antrag zu verschicken auf <span class="text-secondary-emphasis">{{ __('Send Access Request') }}</span> drücken. <br>
+                                Um den Zugang zu dieser Applikation zu beantragen trage deinen Vornamen, Nachnamen und E-mail in die Felder ein. Um den Antrag zu verschicken auf <span class="text-secondary-emphasis">{{ __('Send Access Request') }}</span> drücken. <br>
                                 Die durchschnittliche Bearbeitungszeit beträgt: <span class="text-secondary-emphasis">{{ now()->diffForHumans(now()->addWeeks(4), true) }}</span>.
                             </p>
                         </div>

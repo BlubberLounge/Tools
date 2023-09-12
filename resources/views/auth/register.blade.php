@@ -71,7 +71,7 @@
                             <label for="dob" class="col-md-4 col-form-label text-md-end">{{ __('Date of Birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="dob" type="date" class="datepicker form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="email">
+                                <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="email">
 
                                 @error('dob')
                                     <span class="invalid-feedback" role="alert">

@@ -30,11 +30,14 @@ use App\Http\Controllers\FeedbackController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::get('/register/request', [InvitationController::class, 'request'])->name('register.request');
 Route::put('/register/request/store', [InvitationController::class, 'store'])->name('register.request.store');
-Route::get('/register/{registrationID}', [RegisterController::class, 'showRegistrationForm'])->name('register.register');
+Route::get('/register/{invitationToken}', [RegisterController::class, 'showRegistrationForm'])
+    ->whereUuid('invitationToken')
+    ->middleware('invitation.verifyToken')
+    ->name('register.register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 // https://github.com/laravel/ui/blob/4.x/src/AuthRouteMethods.php

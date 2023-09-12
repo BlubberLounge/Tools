@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invitation;
 use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
+use Illuminate\Support\Str;
 
-use App\Models\User;
+use App\Enums\InvitationStatus;
+use App\Models\Invitation;
+
 
 class InvitationController extends Controller
 {
@@ -42,8 +44,17 @@ class InvitationController extends Controller
      */
     public function store(StoreInvitationRequest $request)
     {
-        $user = new User();
-        dd($request);
+        $invite = new Invitation();
+        $invite->token = Str::orderedUuid();
+        $invite->status = InvitationStatus::NEW;
+        $invite->firstname = $request->firstname ?? '';
+        $invite->lastname = $request->lastname ?? '';
+        $invite->email = $request->email ?? '';
+        $invite->expires_at = now()->addDays(7);
+
+        $invite->save();
+
+        return redirect()->route('index');
     }
 
     /**
@@ -80,7 +91,6 @@ class InvitationController extends Controller
 
     public function request()
     {
-        $this->middleware('guest');
         return view('auth.request');
     }
 }

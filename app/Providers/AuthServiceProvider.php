@@ -34,9 +34,10 @@ class AuthServiceProvider extends ServiceProvider
 
         // VerifyEmail::toMailUsing(function ($notifiable, $url) {
         //     return (new MailMessage)
-        //         ->subject('Verify Email Address')
-        //         ->line('Click the button below to verify your email address.')
-        //         ->action('Verify Email Address', $url);
+        //         ->subject('BlubberLounge '. env('APP_NAME').' - Verify your Email Address')
+        //         ->line(__('Please click the button below to verify your email address.'))
+        //         ->action('Verify Email Address', $url)
+        //         ->line(__('If you did not create an account, no further action is required.'));
         // });
     }
 }
