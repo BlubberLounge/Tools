@@ -168,8 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
      */
     public function DartThrows(): HasMany
     {
-        return $this->hasMany(DartThrow::class)
-            ->withTimestamps();
+        return $this->hasMany(DartThrow::class);
     }
 
     /**

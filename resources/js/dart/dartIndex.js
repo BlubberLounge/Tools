@@ -12,6 +12,11 @@ import Dartboard from './dartboard';
 import DartCalculator from './dartCalculator';
 import { count } from 'd3';
 
+const chartOptions = {
+    renderer: 'canvas',
+    locale: 'DE',
+};
+
 $(function()
 {
     const dartboard = new Dartboard('#dartboardContainer', {size: 380});
@@ -118,7 +123,7 @@ async function fetchData(gameId)
 function renderSkillsChart()
 {
     const ctx = document.getElementById('skillsGraph');
-    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    var myChart = echarts.init(ctx, null, chartOptions);
 
     let option = {
         title: {
@@ -138,7 +143,7 @@ function renderSkillsChart()
                 { name: 'Avg First 9', max: 180*3 },
                 { name: 'Avg First 3', max: 180 },
                 { name: 'Avg Miss', max: 100 },
-                { name: 'Avg', max: 180 },
+                { name: 'Avg (3D)', max: 180 },
             ],
             axisName: {
                 formatter(value, indicator) {
@@ -181,7 +186,7 @@ function renderActivityChart(activity)
     }
 
     const ctx = document.getElementById('activityGraph');
-    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    var myChart = echarts.init(ctx, null, chartOptions);
 
     const currentYear = new Date().getFullYear();
     let data = [];
@@ -201,7 +206,21 @@ function renderActivityChart(activity)
     }
 
     const option = {
-        tooltip: {},
+        title: {
+            text: 'Aktivitäten',
+            left: 'center',
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            position: 'top',
+            formatter: function (p) {
+                const format = echarts.time.format(p.data[0], '{ee} {dd}-{MM}-{yyyy}', false);
+                return format + ` => Spiele ${p.data[1]}`;
+            }
+        },
         visualMap: {
             show: true,
             min: 2,
@@ -209,9 +228,10 @@ function renderActivityChart(activity)
             calculable: true,
             orient: 'horizontal',
             left: 'center',
-            bottom: '10%',
+            bottom: '5%',
             inRange: {
-                color: ['#7ed3f4', '#3b4f8c']
+                color: ['#7ed3f4', '#3b4f8c'],
+                opacity: [0.3, 1]
             },
             textStyle: {
                 color: '#fff'
@@ -219,6 +239,8 @@ function renderActivityChart(activity)
         },
         calendar: {
             range: currentYear,
+            top: 70,
+            left: 'center',
             dayLabel: {
                 color: '#fff'
             },
@@ -230,6 +252,13 @@ function renderActivityChart(activity)
                 borderWidth: 1,
                 borderColor: 'rgba(0, 0, 0, .15)',
                 borderRadius: 10
+            },
+            // cellSize: [15, 15]
+            // cellSize: [20, 20]
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
             }
         },
         series: {
@@ -239,13 +268,13 @@ function renderActivityChart(activity)
             emphasis: {
                 itemStyle: {
                     shadowBlur: 10,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    shadowColor: 'rgba(0, 0, 0, 0.25)'
                 }
             },
             itemStyle: {
                 color: '#000',
-                borderColor: 'rgba(255, 255, 255, .1)'
-            }
+                borderColor: 'rgba(0, 0, 0, 0.5)'
+            },
         }
     };
 
@@ -255,7 +284,7 @@ function renderActivityChart(activity)
 function renderPlaceChart(places)
 {
     const ctx = document.getElementById('winRateGraph');
-    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    var myChart = echarts.init(ctx, null, chartOptions);
     let data = [];
 
     for (const place of Object.keys(places)) {
@@ -314,7 +343,7 @@ function renderPlaceChart(places)
 function renderPositionChart(positions)
 {
     const ctx = document.getElementById('positionGraph');
-    var myChart = echarts.init(ctx, null, {renderer: 'canvas',});
+    var myChart = echarts.init(ctx, null, chartOptions);
     let data = [];
 
     for (const position of Object.keys(positions)) {
@@ -494,11 +523,6 @@ function renderPlayerThrowsChart(values, currentUser)
           trigger: 'axis',
           position: function (pt) {
             return [pt[0], '10%'];
-          }
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {}
           }
         },
         xAxis: {
