@@ -13,6 +13,7 @@ enum InvitationStatus: string implements EnumTypeOrStatus
     case UNKOWN = 'unkown';
     case APPROVED = 'approved';
     case DENIED = 'denied';
+    case EXPIRED = 'expired';
 
     public static function fromString(string $string): InvitationStatus
     {
@@ -27,10 +28,11 @@ enum InvitationStatus: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            InvitationStatus::NEW => '',
-            InvitationStatus::UNKOWN => '',
-            InvitationStatus::APPROVED => '',
-            InvitationStatus::DENIED => '',
+            InvitationStatus::NEW => 'var(--bl-clr-yellow)',
+            InvitationStatus::UNKOWN => 'var(--bl-clr-blue)',
+            InvitationStatus::APPROVED => 'var(--bl-clr-green)',
+            InvitationStatus::DENIED => 'var(--bl-clr-red)',
+            InvitationStatus::EXPIRED => 'var(--bl-clr-red)',
         };
     }
 }

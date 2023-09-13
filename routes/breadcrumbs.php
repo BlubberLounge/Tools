@@ -82,12 +82,38 @@ Breadcrumbs::for('user.edit-image', function (BreadcrumbTrail $trail, User $user
 
 /**
  *
+ * Invitation
+ *
+ */
+Breadcrumbs::for('administration', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push('administration', '');
+});
+
+
+
+/**
+ *
+ * Invitation
+ *
+ */
+Breadcrumbs::for('invitation.index', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('administration');
+    $trail->push('Zugangsanfragen', route('invitation.index'));
+});
+
+
+
+/**
+ *
  * Feedback
  *
  */
 Breadcrumbs::for('feedback.create', function (BreadcrumbTrail $trail)
 {
-    $trail->parent('home');
+    $trail->parent('administration');
     $trail->push('Feedback', route('feedback.create'));
 });
 
@@ -100,6 +126,6 @@ Breadcrumbs::for('feedback.create', function (BreadcrumbTrail $trail)
  */
 Breadcrumbs::for('faq.index', function (BreadcrumbTrail $trail)
 {
-    $trail->parent('home');
+    $trail->parent('administration');
     $trail->push('Feedback', route('faq.index'));
 });

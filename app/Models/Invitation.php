@@ -37,4 +37,20 @@ class Invitation extends Model
         'status' => InvitationStatus::class,
         'expires_at' => 'datetime',
     ];
+
+    /**
+     *
+     */
+    public function isExpired(): bool
+    {
+        if(!$this->expires_at)
+            return false;
+
+        $isExpired = $this->expires_at->isPast();
+
+        if($isExpired)
+            $this->status = InvitationStatus::EXPIRED;
+
+        return $isExpired;
+    }
 }

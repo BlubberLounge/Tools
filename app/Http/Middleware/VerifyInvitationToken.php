@@ -28,7 +28,7 @@ class VerifyInvitationToken
         if($invitationFirst->status != InvitationStatus::APPROVED)
             abort(403, 'Invitation not approved or request to access denied.');
 
-        if($invitationFirst->expires_at->isPast())
+        if($invitationFirst->isExpired())
             abort(403, 'Invitation is expired');
 
         return $next($request);

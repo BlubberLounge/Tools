@@ -33,6 +33,7 @@ mix
 
     // .js('resources/js/simApp.js', 'public/js')
 
+    .js('resources/js/invitation.js', 'public/js')
     .js('resources/js/user-profilepicture.js', 'public/js')
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')

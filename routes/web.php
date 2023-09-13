@@ -16,6 +16,7 @@ use App\Http\Controllers\DartGameController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
+use App\Models\Invitation;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,11 @@ Auth::routes(['verify' => true, 'register' => false]);
 /*
  * protected routes
  */
+Route::middleware(['auth'])->group(function ()
+{
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
+
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -92,6 +98,18 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
     Route::resource('/user', UserController::class);
+
+    // route: /invitation/*
+    // name: invitation.*
+    Route::prefix('invitation')->group(function () {
+        Route::name('invitation.')->group(function ()
+        {
+            Route::post('/approve/{invitation}', [InvitationController::class, 'approve'])->name('approve');
+            Route::post('/denie/{invitation}', [InvitationController::class, 'denie'])->name('denie');
+        });
+    });
+    Route::resource('/invitation', InvitationController::class)
+        ->except(['destroy', 'request']);
 
     Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
     Route::resource('faq', FAQController::class)

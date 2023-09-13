@@ -29,6 +29,7 @@
 
     "administration": "Administration",
     "audit log": "Audit-Log",
+    "access requests": "Zugangsanfragen",
     "user management": "User Management",
     "user feedback": "User Feedback",
     "api documentation": "Api Dokumentation",
@@ -68,6 +69,10 @@
     "register": "Registrieren",
     "firstname": "Vorname",
     "lastname": "Nachname",
-    "email": "Email"
+    "email": "Email",
+
+    "send": "Geschickt",
+    "expires at": "Läuft ab",
+    "actions": "Aktionen"
 
 }

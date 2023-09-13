@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 use App\Enums\InvitationStatus;
@@ -28,7 +29,8 @@ class InvitationController extends Controller
      */
     public function index()
     {
-        //
+        $data['invitations'] = Invitation::orderBy('status', 'ASC')->orderBy('expires_at', 'DESC')->orderBy('created_at', 'DESC')->paginate(20);
+        return view('invitation.index', $data);
     }
 
     /**
@@ -77,7 +79,15 @@ class InvitationController extends Controller
      */
     public function update(UpdateInvitationRequest $request, Invitation $invitation)
     {
-        //
+
+        $invitation->status = $request->status ?? $invitation->status;
+
+        if($invitation->status === InvitationStatus::APPROVED)
+            $invitation->expires_at == now()->addDays(7);
+
+        $invitation->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -91,5 +101,19 @@ class InvitationController extends Controller
     public function request()
     {
         return view('auth.request');
+    }
+
+    public function approve(UpdateInvitationRequest $request, Invitation $invitation)
+    {
+        $invitation->status = InvitationStatus::APPROVED;
+        Mail::send(new \App\Mail\InvitationMail());
+
+        return $this->update($request, $invitation);
+    }
+
+    public function denie(UpdateInvitationRequest $request, Invitation $invitation)
+    {
+        $invitation->status = InvitationStatus::DENIED;
+        return $this->update($request, $invitation);
     }
 }

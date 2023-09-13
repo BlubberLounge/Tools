@@ -77,8 +77,8 @@
 }
 
 .submenu-link {
-  --bs-nav-link-font-size: .75rem;
-  --bs-nav-link-padding-y: .255rem;
+  --bs-nav-link-font-size: .6rem;
+  --bs-nav-link-padding-y: .2rem;
 }
 
 #topBar {

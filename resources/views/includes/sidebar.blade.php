@@ -152,6 +152,12 @@
                     </a>
                 </li>
                 <li class="submenu-item">
+                    <a href="{{ route('invitation.index') }}" class="nav-link submenu-link">
+                        <i class="fa-regular fa-envelope"></i>
+                        <span class="nav-text"> {{ __('access requests') }} <span>
+                    </a>
+                </li>
+                <li class="submenu-item">
                     <a href="{{ route('user.index') }}" class="nav-link submenu-link">
                         <i class="fa-solid fa-users"></i>
                         <span class="nav-text"> {{ __('user management') }} <span>
@@ -171,30 +177,6 @@
                 </li>
             </ul>
         </li>
-        {{-- <li class="nav-item mt-2">
-            <a href="{{ route('audit-log.index') }}" class="nav-link {{ request()->routeIs('audit-log.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-list-ul"></i>
-                <span class="nav-text"> {{ __('audit log') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" >
-                <i class="fa-solid fa-users"></i>
-                <span class="nav-text"> {{ __('user management') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('feedback.index') }}" class="nav-link {{ request()->routeIs('feedback.index') ? 'active' : '' }}" >
-                <i class="fa-solid fa-circle-question"></i>
-                <span class="nav-text"> {{ __('user feedback') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('l5-swagger.default.api') }}" class="nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}" >
-                <i class="fa-solid fa-users"></i>
-                <span class="nav-text"> {{ __('api documentation') }} <span>
-            </a>
-        </li> --}}
         <li class="nav-item mt-3">
             <a href="{{ route('logout') }}" class="nav-link text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket"></i>
