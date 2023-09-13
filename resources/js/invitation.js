@@ -10,32 +10,27 @@ $(function()
     approveBtns?.addEventListener('click', e =>
     {
         console.log('approved');
-        const id = e.target.parentElement.getAttribute('data-invitation-id');
-        axios.post(`/invitation/approve/${id}`).then( response =>
-        {
-            console.log(response);
+        var id = e.target.parentElement.getAttribute('data-invitation-id');
 
-        }).catch(function (error) {
-            if (error.response) {
-                console.log(error.response.data);
-            }
-        });
+        if(id)
+            axios.post(`/invitation/approve/${id}`).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
     });
 
     const denieBtns = document.querySelector('.btn-denie');
     denieBtns?.addEventListener('click', e =>
     {
         console.log('denied');
-        const id = e.target.parentElement.getAttribute('data-invitation-id');
+        var id = e.target.parentElement.getAttribute('data-invitation-id');
 
-        axios.post(`/invitation/denie/${id}`).then( response =>
-        {
-            console.log(response);
-
-        }).catch(function (error) {
-            if (error.response) {
-                console.log(error.response.data);
-            }
-        });
+        if(id)
+            axios.post(`/invitation/denie/${id}`).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                }
+            });
     });
 });

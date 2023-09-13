@@ -7,7 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
+
+use App\Models\Invitation;
+
 
 class InvitationMail extends Mailable
 {
@@ -16,10 +20,9 @@ class InvitationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public Invitation $invitation
+    ) {}
 
     /**
      * Get the message envelope.
@@ -27,6 +30,9 @@ class InvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            replyTo: [
+                new Address('contact@blubber-lounge.de', 'BlubberLounge Support'),
+            ],
             subject: 'Invitation Mail',
         );
     }
@@ -37,7 +43,7 @@ class InvitationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.invitation',
+            markdown: 'mail.invitation',
         );
     }
 

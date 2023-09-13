@@ -83,7 +83,7 @@ class InvitationController extends Controller
         $invitation->status = $request->status ?? $invitation->status;
 
         if($invitation->status === InvitationStatus::APPROVED)
-            $invitation->expires_at == now()->addDays(7);
+            $invitation->expires_at = now()->addDays(7);
 
         $invitation->save();
 
@@ -106,7 +106,7 @@ class InvitationController extends Controller
     public function approve(UpdateInvitationRequest $request, Invitation $invitation)
     {
         $invitation->status = InvitationStatus::APPROVED;
-        Mail::send(new \App\Mail\InvitationMail());
+        Mail::to($invitation->email)->send(new \App\Mail\InvitationMail($invitation));
 
         return $this->update($request, $invitation);
     }
