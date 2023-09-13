@@ -50,7 +50,6 @@ class InvitationController extends Controller
         $invite->firstname = $request->firstname ?? '';
         $invite->lastname = $request->lastname ?? '';
         $invite->email = $request->email ?? '';
-        $invite->expires_at = now()->addDays(7);
 
         $invite->save();
 

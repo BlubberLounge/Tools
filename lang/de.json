@@ -63,6 +63,11 @@
     "me": "Ich",
     "player selection": "Spielerauswahl",
     "search": "Suche",
-    "username": "Username"
+    "username": "Username",
+
+    "register": "Registrieren",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "email": "Email"
 
 }

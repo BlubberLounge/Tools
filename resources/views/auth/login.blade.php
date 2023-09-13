@@ -42,7 +42,7 @@
                             <div class="position-relative">
                                 <input type="text"
                                     id="name"
-                                    class="form-control @error('name') is-invalid @enderror"
+                                    class="form-control @error('name') is-invalid @enderror hasIcon"
                                     name="name"
                                     value="{{ old('name') }}"
                                     placeholder="Type your Username or Email"
@@ -66,7 +66,7 @@
                             <div class="position-relative">
                                 <input id="password"
                                     type="password"
-                                    class="form-control @error('password') is-invalid @enderror"
+                                    class="form-control @error('password') is-invalid @enderror hasIcon"
                                     name="password"
                                     placeholder="Type your Password"
                                     required

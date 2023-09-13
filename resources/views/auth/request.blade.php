@@ -23,7 +23,7 @@
 
                         <div class="row text-secondary">
                             <p>
-                                Um den Zugang zu dieser Applikation zu beantragen trage deinen Vornamen, Nachnamen und E-mail in die Felder ein. Um den Antrag zu verschicken auf <span class="text-secondary-emphasis">{{ __('Send Access Request') }}</span> drücken. <br>
+                                Um den Zugang zu dieser Applikation zu beantragen trage deinen {{ __('firstname') }}, {{ __('lastname') }} und {{ __('email') }} in die Felder ein. Um den Antrag zu verschicken auf <span class="text-secondary-emphasis">{{ __('Send Access Request') }}</span> drücken. <br>
                                 Die durchschnittliche Bearbeitungszeit beträgt: <span class="text-secondary-emphasis">{{ now()->diffForHumans(now()->addWeeks(4), true) }}</span>.
                             </p>
                         </div>
@@ -38,7 +38,7 @@
                                     class="form-control @error('firstname') is-invalid @enderror"
                                     name="firstname"
                                     value="{{ old('firstname') }}"
-                                    placeholder="Firstname"
+                                    placeholder="{{ __('firstname') }}"
                                     required
                                 >
 
@@ -60,7 +60,7 @@
                                     class="form-control @error('lastname') is-invalid @enderror"
                                     name="lastname"
                                     value="{{ old('lastname') }}"
-                                    placeholder="Lastname"
+                                    placeholder="{{ __('lastname') }}"
                                     required
                                 >
 
@@ -82,7 +82,7 @@
                                     class="form-control @error('email') is-invalid @enderror"
                                     name="email"
                                     value="{{ old('email') }}"
-                                    placeholder="Type your Email"
+                                    placeholder="{{ __('email') }}"
                                     required
                                     autofocus
                                 >

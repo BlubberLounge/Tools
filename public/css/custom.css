@@ -95,8 +95,7 @@ a {
     font-size: .70em ;
 }
 
-input[type="text"]#name,
-input[type="password"] {
+input.hasIcon {
     padding-left: 35px !important;
 }
 

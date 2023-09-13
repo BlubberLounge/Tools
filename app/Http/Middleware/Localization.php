@@ -29,7 +29,7 @@ class Localization
                 Session::put('locale', $locale);
             }
         } else {
-            $locale = 'de_DE';
+            $locale = 'de';
         }
 
         App::setLocale($locale);
