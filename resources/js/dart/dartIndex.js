@@ -84,12 +84,33 @@ async function fetchData(gameId)
     renderSkillsChart();
 
     /**
+     * Get Player place data
+     */
+    requestJson(`/api/v1/user/showPlaces`, response => {
+        renderPlaceChart(response.data.data.places);
+    });
+
+    /**
+     * Get Player place data
+     */
+    requestJson(`/api/v1/user/showPositions`, response => {
+        renderPositionChart(response.data.data.positions);
+    });
+
+    /**
      * Get Player dart activity data
      */
     requestJson(`/api/v1/user/showDartActivity`, response => {
         const activity = response.data.data.activity.map( e => new Date(e.created_at));
 
         renderActivityChart(activity);
+    });
+
+    /**
+     *
+     */
+    requestJson(`/api/v1/user/showGameTypes`, response => {
+        renderGameTypesChart(response.data.data.gameTypes);
     });
 
     /**
@@ -104,20 +125,66 @@ async function fetchData(gameId)
         // updateRadarChart('graph01', data);
         renderPlayerThrowsChart(dataGame, currentUser);
     });
+}
 
-    /**
-     * Get Player place data
-     */
-    requestJson(`/api/v1/user/showPlaces`, response => {
-        renderPlaceChart(response.data.data.places);
-    });
+function renderGameTypesChart(gameTypes)
+{
+    console.log(gameTypes);
+    const ctx = document.getElementById('gameTypesGraph');
+    var myChart = echarts.init(ctx, null, chartOptions);
+    let data = [];
 
-    /**
-     * Get Player place data
-     */
-    requestJson(`/api/v1/user/showPositions`, response => {
-        renderPositionChart(response.data.data.positions);
-    });
+    for (const gameType of Object.keys(gameTypes)) {
+        data.push({
+            value: gameTypes[gameType],
+            name: `${gameType}`,
+        });
+    }
+
+    let option = {
+        title: {
+            text: 'Spieltypen %',
+            left: 10,
+            top: 10,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        series: [
+          {
+            name: 'Spieltypen',
+            type: 'pie',
+            radius: ['35%', '60%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 9,
+              borderColor: 'rgba(43, 48, 53, 1)',
+              borderWidth: 8
+            },
+            label: {
+                show: true,
+                color: 'rgba(255, 255, 255, 0.3)',
+                formatter(param) {
+                  // correct the percentage
+                  return param.name + ' (' + param.percent + '%)';
+                }
+            },
+            labelLine: {
+                lineStyle: {
+                  color: 'rgba(255, 255, 255, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            data: data
+          }
+        ]
+      };
+    myChart.setOption(option);
 }
 
 function renderSkillsChart()
@@ -296,7 +363,7 @@ function renderPlaceChart(places)
 
     let option = {
         title: {
-            text: 'Plazierung %',
+            text: `Plazierung %`,
             left: 10,
             top: 10,
             textStyle: {

@@ -24,6 +24,12 @@
         <div id="activityGraph" class="col rounded" style="height:300px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
     </div>
 
+    <div class="row justify-content-around align-items-center mb-4">
+        <div id="gameTypesGraph" class="col rounded me-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        <div id="gameTypesGraph" class="col rounded me-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        <div id="gameTypesGraph" class="col rounded" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+    </div>
+
     <div class="row mb-5 justify-center">
         <div class="col-10 col-md-7">
             <select id="gameSelection" class="form-select">

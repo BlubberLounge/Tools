@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         Route::get('/showPlaces', [UserController::class, 'showPlaces']);
         Route::get('/showPositions', [UserController::class, 'showPositions']);
         Route::get('/showDartActivity', [UserController::class, 'showDartActivity']);
+        Route::get('/showGameTypes', [UserController::class, 'showGameTypes']);
     });
 
     Route::apiResource('user', UserController::class)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Enums\DartGameType;
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -144,6 +145,29 @@ class UserController extends Controller
     {
         $column = DartGame::getTableName().'.created_at';
         $data['activity'] = Auth::user()->DartGames(false, false)->get([$column]);
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    public function showGameTypes(Request $request)
+    {
+        $games = Auth::user()->DartGames()->get(['type', 'points']);
+        $gameTypes = [];
+
+        foreach($games as $game) {
+            $gameType = $game->type === DartGameType::X01 ? $game->points : $game->type;
+
+            if(array_key_exists($gameType, $gameTypes)) {
+                $gameTypes[$gameType]++;
+            } else {
+                $gameTypes[$gameType] = 1;
+            }
+        }
+
+        $data['gameTypes'] = $gameTypes;
 
         return $this->sendResponse($data, 'ok');
     }

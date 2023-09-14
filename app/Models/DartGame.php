@@ -13,14 +13,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
+use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
 
-class DartGame extends Model
+
+class DartGame extends Model // implements Auditable doesn't work because of uuids af primary
 {
     use HasFactory,
         SoftDeletes,
         HasUuids;
+        // \OwenIt\Auditing\Auditable doesn't work because of uuids af primary
 
     /**
      * The data type of the ID.
@@ -70,6 +73,16 @@ class DartGame extends Model
         'status' => DartGameStatus::class,
         'fields' => AsCollection::class,
     ];
+
+    /**
+     * Attributes to include in the Audit.
+     *
+     * @var array
+     */
+    protected $auditInclude = [
+        //
+    ];
+
 
     /**
      *
