@@ -83,12 +83,21 @@ class DartGameController extends Controller
         $data['status'] = $dartGame->status;
         $data['points'] = $dartGame->points;
 
-        $view = null;
-        if($dartGame->status == DartGameStatus::CREATED || $dartGame->status == DartGameStatus::RUNNING) {
-            $data['users'] = $dartGame->usersByPosition;
+        if($dartGame->isCreated() && $dartGame->allPlayersAccepted()) {
+            $dartGame->status = DartGameStatus::RUNNING->value;
+            $dartGame->save();
+        }
+
+        if($dartGame->isCreated()) {
+            $data['users'] = $dartGame->usersBy('position')->get();
+            $view = view('dart.game.waiting', $data);
+
+        } else if($dartGame->isRunning()) {
+            $data['users'] = $dartGame->usersBy('position')->get();
             $view = view('dart.game.show', $data);
-        } else  {
-            $data['users'] = $dartGame->usersByPlace;
+
+        } else {
+            $data['users'] = $dartGame->usersBy('place')->get();
             $data['game'] = $dartGame;
             $data['firstPlaceUser'] = $data['users'][0];
             $data['secondPlaceUser'] = $data['users'][1] ?? 'no player';
@@ -112,6 +121,7 @@ class DartGameController extends Controller
 
             $view = view('dart.game.showResult', $data);
         }
+
         return $view;
     }
 

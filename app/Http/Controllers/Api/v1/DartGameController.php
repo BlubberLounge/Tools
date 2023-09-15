@@ -83,4 +83,25 @@ class DartGameController extends Controller
 
         return $this->sendResponse($data, 'ok');
     }
+
+    /**
+     *
+     */
+    public function getPlayerStatus(Request $request, String $id)
+    {
+        $data['user'] = array_map(fn($user) => ['user_id' => $user['id'], 'status' => $user['pivot']['status']], DartGame::find($id)->users->toArray());
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    public function destroyPlayer(Request $request, DartGame $dartGame, User $user)
+    {
+        // soft delete
+        $dartGame->users()->updateExistingPivot($user->id, ['deleted_at' => now()]);
+
+        // hard delete
+        // $dartGame->users()->wherePivot('user_id', $user->id)->detach();
+
+        return $this->sendResponse(null, 'ok');
+    }
 }

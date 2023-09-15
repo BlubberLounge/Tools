@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,7 +19,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
 
-class User extends Authenticatable implements MustVerifyEmail, Auditable
+class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLocalePreference
 {
     use HasFactory,
         Notifiable,
@@ -132,6 +133,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function isOnline()
     {
         return now()->diffInMinutes($this->last_seen) <= 1;
+    }
+
+    /**
+     *
+     */
+    public function preferredLocale()
+    {
+        return $this->locale;
     }
 
     /**

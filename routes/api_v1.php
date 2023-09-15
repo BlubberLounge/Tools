@@ -45,6 +45,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::prefix('dart')->group(function () {
         Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace']);
         Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows']);
+        Route::get('/getPlayerStatus/{dartGame}', [DartGameController::class, 'getPlayerStatus']);
+        Route::delete('/destroyPlayer/{dartGame}/user/{user}', [DartGameController::class, 'destroyPlayer']);
 
         // local and development only
         if(App::environment(['local', 'development']))

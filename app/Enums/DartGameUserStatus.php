@@ -10,8 +10,8 @@ use App\Interfaces\EnumTypeOrStatus;
 enum DartGameUserStatus: string implements EnumTypeOrStatus
 {
     case PENDING = 'pending';
-    case ACCEPTED = 'created';
-    case DENIED = 'accepted';
+    case ACCEPTED = 'accepted';
+    case DENIED = 'denied';
 
     public static function fromString(string $string): DartGameUserStatus
     {

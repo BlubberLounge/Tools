@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
+use App\Enums\DartGameUserStatus;
 
 
 class DartGame extends Model // implements Auditable doesn't work because of uuids af primary
@@ -174,8 +175,8 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     {
         return $this->belongsToMany(User::class)
             ->withPivot('status', 'position', 'place')
-            // ->orderBy('place', 'ASC')
             ->orderBy('position', 'ASC')
+            ->wherePivot('deleted_at', null)
             ->withTimestamps();
     }
 
@@ -183,25 +184,15 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
      * The users that participate in the DartGame.
      *
      */
-    public function usersByPlace(): BelongsToMany
+    public function usersBy($column, $order = 'asc'): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->withPivot('status', 'position', 'place')
-            ->orderBy('place', 'ASC')
+            ->orderBy($column, $order)
+            ->wherePivot('deleted_at', null)
             ->withTimestamps();
     }
 
-        /**
-     * The users that participate in the DartGame.
-     *
-     */
-    public function usersByPosition(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class)
-            ->withPivot('status', 'position', 'place')
-            ->orderBy('position', 'ASC')
-            ->withTimestamps();
-    }
 
     /**
      * Get all of the throws for the project.
@@ -209,6 +200,66 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function dartThrows(): HasMany
     {
         return $this->hasMany(DartThrow::class);
+    }
+
+    /**
+     *
+     */
+    public function isUnkown(): bool
+    {
+        return $this->status === DartGameStatus::UNKOWN;
+    }
+
+    /**
+     *
+     */
+    public function isCreated(): bool
+    {
+        return $this->status === DartGameStatus::CREATED;
+    }
+
+    /**
+     *
+     */
+    public function isStarted(): bool
+    {
+        return $this->status === DartGameStatus::STARTED;
+    }
+
+    /**
+     *
+     */
+    public function isRunning(): bool
+    {
+        return $this->status === DartGameStatus::RUNNING;
+    }
+
+    /**
+     *
+     */
+    public function isDone(): bool
+    {
+        return $this->status === DartGameStatus::DONE;
+    }
+
+    /**
+     *
+     */
+    public function isAborted(): bool
+    {
+        return $this->status === DartGameStatus::ABORTED;
+    }
+
+    /**
+     *
+     */
+    public function allPlayersAccepted(): bool
+    {
+        foreach($this->users as $user)
+            if($user->pivot->status === DartGameUserStatus::PENDING->value || $user->pivot->status === DartGameUserStatus::DENIED->value)
+                return false;
+
+        return true;
     }
 
     /**

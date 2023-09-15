@@ -26,6 +26,7 @@ mix
     // Dart Game
     .js('resources/js/dart/game/show.js', 'public/js')
     .js('resources/js/dart/game/dartSetup.js', 'public/js')
+    .js('resources/js/dart/game/dartWaiting.js', 'public/js')
     .js('resources/js/dart/game/dartResult.js', 'public/js')
     .js('resources/js/dart/game/dartResultHeatmap.js', 'public/js')
 

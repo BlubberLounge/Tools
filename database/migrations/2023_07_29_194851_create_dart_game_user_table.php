@@ -35,6 +35,7 @@ return new class extends Migration
                     ->default(null);
 
                 $table->timestamps();
+                $table->softDeletes();
 
                 // composite unique key
                 $table->unique(['dart_game_id', 'user_id']);
