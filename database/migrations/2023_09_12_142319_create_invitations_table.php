@@ -16,7 +16,8 @@ return new class extends Migration
             {
                 $table->id();
 
-                $table->uuid('token');
+                $table->uuid('token')
+                    ->nullable();
                 $table->enum('status', ['new', 'unkown', 'approved', 'denied'])
                     ->default('new');
                 $table->string('firstname')

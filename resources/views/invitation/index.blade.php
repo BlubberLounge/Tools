@@ -22,18 +22,18 @@
             <tbody>
                 @foreach ($invitations as $invitation)
                     <tr>
-                        <th scope="row">{{ $loop->index }}</th>
+                        <th scope="row">{{ $invitation->id }}</th>
                         <td class="d-none d-xl-table-cell">{{ $invitation->firstname }}</td>
                         <td class="d-none d-xl-table-cell">{{ $invitation->lastname }}</td>
                         <td>{{ $invitation->email }}</td>
                         <td class="d-none d-xl-table-cell">{{ $invitation->created_at->format('d.m.Y') }}</td>
                         <td class="d-none d-xl-table-cell">{{ $invitation->expires_at ? $invitation->expires_at->format('d.m.Y') : '/' }}</td>
-                        <td class="text-center" data-invitation-id="{{ $invitation->id }}">
+                        <td class="text-center">
                             @if ($invitation->status === App\Enums\InvitationStatus::NEW || $invitation->status === App\Enums\InvitationStatus::UNKOWN)
-                                <button type="button" class="btn btn-primary btn-approve">
+                                <button type="button" class="btn btn-primary btn-approve" data-invitation-id="{{ $invitation->id }}">
                                     <i class="fa-solid fa-check"></i>
                                 </button>
-                                <button type="button" class="btn btn-primary btn-denie">
+                                <button type="button" class="btn btn-primary btn-denie" data-invitation-id="{{ $invitation->id }}">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             @elseif ($invitation->isExpired() || $invitation->status === App\Enums\InvitationStatus::APPROVED || $invitation->status === App\Enums\InvitationStatus::DENIED )

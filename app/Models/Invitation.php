@@ -63,4 +63,12 @@ class Invitation extends Model implements Auditable
 
         return $isExpired;
     }
+
+    /**
+     *
+     */
+    public function isApproved(): bool
+    {
+        return $this->status === InvitationStatus::APPROVED;
+    }
 }

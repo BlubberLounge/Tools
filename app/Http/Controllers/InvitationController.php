@@ -48,7 +48,6 @@ class InvitationController extends Controller
     public function store(StoreInvitationRequest $request)
     {
         $invite = new Invitation();
-        $invite->token = Str::orderedUuid();
         $invite->status = InvitationStatus::NEW;
         $invite->firstname = $request->firstname ?? '';
         $invite->lastname = $request->lastname ?? '';
@@ -82,13 +81,16 @@ class InvitationController extends Controller
      */
     public function update(UpdateInvitationRequest $request, Invitation $invitation)
     {
-
         $invitation->status = $request->status ?? $invitation->status;
 
-        if($invitation->status === InvitationStatus::APPROVED)
+        if($invitation->status === InvitationStatus::APPROVED) {
+            $invitation->token = Str::orderedUuid();
             $invitation->expires_at = now()->addDays(7);
+        }
 
         $invitation->save();
+
+        $this->notifyStatusChanged($invitation);
 
         return redirect()->back();
     }
@@ -109,14 +111,12 @@ class InvitationController extends Controller
     public function approve(UpdateInvitationRequest $request, Invitation $invitation)
     {
         $invitation->status = InvitationStatus::APPROVED;
-        $this->notifyStatusChanged($invitation);
         return $this->update($request, $invitation);
     }
 
     public function denie(UpdateInvitationRequest $request, Invitation $invitation)
     {
         $invitation->status = InvitationStatus::DENIED;
-        $this->notifyStatusChanged($invitation);
         return $this->update($request, $invitation);
     }
 

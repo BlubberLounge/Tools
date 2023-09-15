@@ -33,7 +33,7 @@ class InvitationMail extends Mailable
             replyTo: [
                 new Address('contact@blubber-lounge.de', 'BlubberLounge Support'),
             ],
-            subject: 'Status änderung deiner Zugangsanfrage',
+            subject: 'Statusänderung ihrer Zugangsanfrage',
         );
     }
 
