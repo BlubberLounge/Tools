@@ -17,21 +17,16 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
-     * Create the controller instance.
-     *
-     */
-    public function __construct()
-    {
-        $this->authorizeResource(User::class, 'user');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      */
     public function index(): View
     {
-        $data['users'] = User::orderBy('id','asc')->paginate(15);
+        $users = User::orderBy('id', 'asc');
+
+        $data['onlineUsers'] = $users->get()->where(fn ($u) => $u->isOnline());
+        $data['users'] = $users->paginate(15);
+
         return view('user.index', $data);
     }
 

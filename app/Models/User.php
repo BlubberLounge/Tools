@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -89,7 +90,22 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     /**
      *
      */
-    public function getFullNameAttribute()
+    public function getLastSeenAttribute(): Carbon
+    {
+        $lastActiveDevice = $this->devices
+            ->sortByDesc('last_active')
+            ->first();
+
+        if(!$lastActiveDevice)
+            return Carbon::createFromTimestamp(0); // 1970-01-01
+
+        return $lastActiveDevice->last_active;
+    }
+
+    /**
+     *
+     */
+    public function getFullNameAttribute(): String
     {
         return $this->firstname . ' ' . $this->lastname;
     }
@@ -108,6 +124,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable
     public function isLocked(): bool
     {
         return $this->locked;
+    }
+
+    /**
+     *
+     */
+    public function isOnline()
+    {
+        return now()->diffInMinutes($this->last_seen) <= 1;
     }
 
     /**
