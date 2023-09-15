@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 use App\Enums\InvitationStatus;
 use App\Models\Invitation;
+use App\Mail\AccessRequestedMail;
 
 
 class InvitationController extends Controller
@@ -54,6 +55,8 @@ class InvitationController extends Controller
         $invite->email = $request->email ?? '';
 
         $invite->save();
+
+        Mail::to($invite->email)->send(new AccessRequestedMail($invite));
 
         return redirect()->route('index');
     }
@@ -106,14 +109,19 @@ class InvitationController extends Controller
     public function approve(UpdateInvitationRequest $request, Invitation $invitation)
     {
         $invitation->status = InvitationStatus::APPROVED;
-        Mail::to($invitation->email)->send(new \App\Mail\InvitationMail($invitation));
-
+        $this->notifyStatusChanged($invitation);
         return $this->update($request, $invitation);
     }
 
     public function denie(UpdateInvitationRequest $request, Invitation $invitation)
     {
         $invitation->status = InvitationStatus::DENIED;
+        $this->notifyStatusChanged($invitation);
         return $this->update($request, $invitation);
+    }
+
+    protected function notifyStatusChanged(Invitation $invitation)
+    {
+        Mail::to($invitation->email)->send(new \App\Mail\InvitationMail($invitation));
     }
 }

@@ -6,31 +6,34 @@
 
 $(function()
 {
-    const approveBtns = document.querySelector('.btn-approve');
-    approveBtns?.addEventListener('click', e =>
+    const approveBtns = document.querySelectorAll('.btn-approve');
+    addEventListenerList(approveBtns, 'click', e =>
     {
         console.log('approved');
-        var id = e.target.parentElement.getAttribute('data-invitation-id');
-
-        if(id)
-            axios.post(`/invitation/approve/${id}`).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
+        const id = e.target.parentElement.getAttribute('data-invitation-id');
+        updateStatus('approve', id);
     });
 
-    const denieBtns = document.querySelector('.btn-denie');
-    denieBtns?.addEventListener('click', e =>
+    const denieBtns = document.querySelectorAll('.btn-denie');
+    addEventListenerList(denieBtns, 'click', e =>
     {
         console.log('denied');
-        var id = e.target.parentElement.getAttribute('data-invitation-id');
-
-        if(id)
-            axios.post(`/invitation/denie/${id}`).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                }
-            });
+        const id = e.target.parentElement.getAttribute('data-invitation-id');
+        updateStatus('denie', id);
     });
 });
+
+function addEventListenerList(list, event, cb)
+{
+    for (var i = 0;i < list.length; i++)
+        list[i].addEventListener(event, cb);
+}
+
+async function updateStatus(status, id)
+{
+    axios.post(`/invitation/${status}/${id}`).catch(function (error) {
+        if (error.response) {
+            console.log(error.response.data);
+        }
+    });
+}

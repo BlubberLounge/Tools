@@ -43,6 +43,14 @@ class Invitation extends Model implements Auditable
     /**
      *
      */
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     *
+     */
     public function isExpired(): bool
     {
         if(!$this->expires_at)

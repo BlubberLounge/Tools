@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Invitation;
 
 
-class InvitationMail extends Mailable
+class AccessRequestedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,7 +33,7 @@ class InvitationMail extends Mailable
             replyTo: [
                 new Address('contact@blubber-lounge.de', 'BlubberLounge Support'),
             ],
-            subject: 'Status änderung deiner Zugangsanfrage',
+            subject: 'Zugangsanfrage',
         );
     }
 
@@ -43,7 +43,7 @@ class InvitationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.invitation',
+            markdown: 'mail.access-requested-mail',
         );
     }
 

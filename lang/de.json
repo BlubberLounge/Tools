@@ -73,6 +73,11 @@
 
     "send": "Geschickt",
     "expires at": "Läuft ab",
-    "actions": "Aktionen"
+    "actions": "Aktionen",
+
+    "approved": "Angenommen",
+    "denied": "Abgelehnt",
+
+    "If you did not request access, no further action is required.": "Wenn Sie keinen Zugang beantragt haben, sind keine weiteren Maßnahmen erforderlich."
 
 }
