@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use jeremykenedy\LaravelRoles\Models\Role;
 
 class ConnectRelationshipsSeeder extends Seeder
 {
@@ -21,9 +23,9 @@ class ConnectRelationshipsSeeder extends Seeder
         /**
          * Attach Permissions to Roles.
          */
-        $roleRoot = config('roles.models.role')::where('name', 'Root')->first();
-        $roleDeveloper = config('roles.models.role')::where('name', 'Developer')->first();
-        $roleAdmin = config('roles.models.role')::where('name', 'Admin')->first();
+        $roleRoot = config('roles.models.role')::where('slug', 'root')->first();
+        $roleDeveloper = config('roles.models.role')::where('slug', 'developer')->first();
+        $roleAdmin = config('roles.models.role')::where('slug', 'admin')->first();
 
         // foreach ($permissions as $permission) {
         //     $roleRoot->attachPermission($permission);
@@ -35,19 +37,37 @@ class ConnectRelationshipsSeeder extends Seeder
         //     );
         // }
 
+        $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'user')->first(), [
+            'update.user.language',
+            'viewany.device',
+            'view.moving.average',
+            'view.calculator',
+            'create.feedback',
+            'viewany.f.a.q',
+        ]
+    );
 
-        $roleDartPlayer = config('roles.models.role')::where('name', 'Dart Player')->first();
-        $permissionsDartPlayer = [
-            'viewany.dart'
-        ];
+        $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'dart.player')->first(), [
+                'viewany.dart',
+                'view.dart.info',
+                'view.dart.checkouts',
+                'view.dart.game',
+            ]
+        );
 
-        foreach ($permissionsDartPlayer as $permissionSlug) {
-            $permission = config('roles.models.permission')::where('slug', $permissionSlug)->first();
-            $roleDartPlayer->attachPermission($permission);
 
+    }
+
+    /**
+     *
+     */
+    private function attachRoleToPermissions(Role $role, array $permissions): void
+    {
+        $permissions = config('roles.models.permission')::whereIn('slug', $permissions)->get();
+        foreach ($permissions as $permission) {
+            $role->attachPermission($permission);
             $this->command->getOutput()->writeln(
-                '<info>Seeding:</info> ConnectRelationshipsSeeder - Role:Dart Player  attached to Permission:'
-                . $permission->slug
+                '<info>Seeding:</info> ConnectRelationshipsSeeder - Role:'. $role->name .' attached to Permission:'. $permission->slug
             );
         }
     }

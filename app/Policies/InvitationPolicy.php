@@ -4,21 +4,16 @@ namespace App\Policies;
 
 use App\Models\Invitation;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+
 
 class InvitationPolicy
 {
     /**
      * Perform pre-authorization checks.
-     *
-     * @param  \App\Models\User  $user
-     * @param  string  $ability
-     * @return void|bool
      */
-    public function before(User $user, $ability)
+    public function before(User $user, $ability): bool|null
     {
-
-        return true;
+        return $user?->level() >= 5 ?: null;
     }
 
     /**
@@ -26,7 +21,7 @@ class InvitationPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermission('viewAny.invitation');
     }
 
     /**
@@ -34,7 +29,7 @@ class InvitationPolicy
      */
     public function view(User $user, Invitation $invitation): bool
     {
-        //
+        return $user->hasPermission('view.invitation');
     }
 
     /**
@@ -42,7 +37,8 @@ class InvitationPolicy
      */
     public function create(User $user): bool
     {
-        //
+
+        return $user->hasPermission('create.invitation');
     }
 
     /**
@@ -50,7 +46,7 @@ class InvitationPolicy
      */
     public function update(User $user, Invitation $invitation): bool
     {
-        //
+        return $user->hasPermission('update.invitation');
     }
 
     /**
@@ -58,7 +54,7 @@ class InvitationPolicy
      */
     public function delete(User $user, Invitation $invitation): bool
     {
-        //
+        return $user->hasPermission('delete.invitation');
     }
 
     /**
@@ -66,7 +62,7 @@ class InvitationPolicy
      */
     public function restore(User $user, Invitation $invitation): bool
     {
-        //
+        return $user->hasPermission('restore.invitation');
     }
 
     /**
@@ -74,6 +70,22 @@ class InvitationPolicy
      */
     public function forceDelete(User $user, Invitation $invitation): bool
     {
-        //
+        return $user->hasPermission('forcedelete.invitation');
+    }
+
+    /**
+     *
+     */
+    public function approve(User $user, Invitation $invitation): bool
+    {
+        return $user->hasPermission('update.invitation');
+    }
+
+    /**
+     *
+     */
+    public function denie(User $user, Invitation $invitation): bool
+    {
+        return $user->hasPermission('update.invitation');
     }
 }

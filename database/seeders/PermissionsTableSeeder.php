@@ -183,11 +183,6 @@ class PermissionsTableSeeder extends Seeder
     {
         return [
             [
-                'name'          => 'Can View Home',
-                'slug'          => 'view.home',
-                'description'   => 'Can view home',
-            ],
-            [
                 'name'          => 'Can View Batteries',
                 'slug'          => 'view.battery',
                 'description'   => 'Can view batteries',

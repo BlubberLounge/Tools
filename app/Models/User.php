@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
      */
     public function isOnline()
     {
-        return now()->diffInMinutes($this->last_seen) <= 1;
+        return now()->diffInMinutes($this->last_seen) <= 5;
     }
 
     /**

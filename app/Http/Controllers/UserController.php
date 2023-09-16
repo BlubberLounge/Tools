@@ -20,6 +20,14 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      */
@@ -146,6 +154,8 @@ class UserController extends Controller
      */
     public function languageUpdate(UpdateUserRequest $request)
     {
+        $this->authorize('updateLanguage', User::class);
+
         $locale = $request->locale;
 
         app()->setLocale($locale);

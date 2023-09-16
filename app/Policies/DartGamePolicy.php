@@ -4,17 +4,15 @@ namespace App\Policies;
 
 use App\Models\DartGame;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class DartGamePolicy
 {
-
     /**
      * Perform pre-authorization checks.
      */
-    public function before(User $user, $ability): bool
+    public function before(User $user, $ability): bool|null
     {
-        return $user->level() >= 5;
+        return $user->level() >= 5 ?: null;
     }
 
     /**
@@ -22,7 +20,7 @@ class DartGamePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission('viewAny.dart.game');
+        return $user->hasPermission('viewany.dart.game');
     }
 
     /**
@@ -30,7 +28,11 @@ class DartGamePolicy
      */
     public function view(User $user, DartGame $dartGame): bool
     {
-        return false;
+        return $user->hasPermission('view.dart.game')
+            && (
+                $dartGame->createdBy()->is($user)
+                || $dartGame->users()->where('user_id', $user->id)->exists()
+            );
     }
 
     /**
@@ -38,7 +40,7 @@ class DartGamePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermission('create.dart.game');
     }
 
     /**
@@ -46,7 +48,7 @@ class DartGamePolicy
      */
     public function update(User $user, DartGame $dartGame): bool
     {
-        return false;
+        return $user->hasPermission('update.dart.game') || $dartGame->createdBy()->is($user);
     }
 
     /**
@@ -54,7 +56,7 @@ class DartGamePolicy
      */
     public function delete(User $user, DartGame $dartGame): bool
     {
-        return false;
+        return $user->hasPermission('delete.dart.game') || $dartGame->createdBy()->is($user);
     }
 
     /**
@@ -62,7 +64,7 @@ class DartGamePolicy
      */
     public function restore(User $user, DartGame $dartGame): bool
     {
-        return false;
+        return $user->hasPermission('restore.dart.game') || $dartGame->createdBy()->is($user);
     }
 
     /**
@@ -70,6 +72,6 @@ class DartGamePolicy
      */
     public function forceDelete(User $user, DartGame $dartGame): bool
     {
-        return false;
+        return $user->hasPermission('forcedelete.dart.game');
     }
 }

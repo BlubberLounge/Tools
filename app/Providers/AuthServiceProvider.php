@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,8 +13,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         DartGame::class => DartGamePolicy::class,
-        User::class => UserPolicy::class,
+        Feedback::class => FeedbackPolicy::class,
         Invitation::class => InvitationPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
         // VerifyEmail::toMailUsing(function ($notifiable, $url) {
         //     return (new MailMessage)
         //         ->subject('BlubberLounge '. env('APP_NAME').' - Verify your Email Address')

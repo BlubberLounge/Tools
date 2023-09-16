@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Feedback;
-use App\Http\Requests\StoreFeedbackRequest;
-use App\Http\Requests\UpdateFeedbackRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
+use App\Models\Feedback;
+use App\Http\Requests\StoreFeedbackRequest;
+use App\Http\Requests\UpdateFeedbackRequest;
 use App\Enums\FeedbackStatus;
 use App\Enums\FeedbackType;
 
@@ -39,6 +39,14 @@ class FeedbackController extends Controller
         'api' => 'REST API',
         'api.doc' => 'API Documentation',
     ];
+
+    /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Feedback::class, 'feedback');
+    }
 
     /**
      * Display a listing of the resource.

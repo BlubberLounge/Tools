@@ -4,16 +4,15 @@ namespace App\Policies;
 
 use App\Models\Feedback;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class FeedbackPolicy
 {
     /**
      * Perform pre-authorization checks.
      */
-    public function before(User $user, $ability): bool
+    public function before(User $user, $ability): bool|null
     {
-        return $user->hasRole('root');
+        return $user->level() >= 5 ?: null;
     }
 
     /**
@@ -21,7 +20,7 @@ class FeedbackPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermission('viewAny.feedback');
     }
 
     /**
@@ -29,7 +28,7 @@ class FeedbackPolicy
      */
     public function view(User $user, Feedback $feedback): bool
     {
-        //
+        return $user->hasPermission('view.feedback');
     }
 
     /**
@@ -37,7 +36,7 @@ class FeedbackPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermission('create.feedback');
     }
 
     /**
@@ -45,7 +44,7 @@ class FeedbackPolicy
      */
     public function update(User $user, Feedback $feedback): bool
     {
-        //
+        return $user->hasPermission('update.feedback');
     }
 
     /**
@@ -53,7 +52,7 @@ class FeedbackPolicy
      */
     public function delete(User $user, Feedback $feedback): bool
     {
-        //
+        return $user->hasPermission('delete.feedback');
     }
 
     /**
@@ -61,7 +60,7 @@ class FeedbackPolicy
      */
     public function restore(User $user, Feedback $feedback): bool
     {
-        //
+        return $user->hasPermission('restore.feedback');
     }
 
     /**
@@ -69,6 +68,6 @@ class FeedbackPolicy
      */
     public function forceDelete(User $user, Feedback $feedback): bool
     {
-        //
+        return $user->hasPermission('forcedelete.feedback');
     }
 }

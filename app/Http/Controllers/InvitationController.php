@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 use App\Enums\InvitationStatus;
@@ -21,8 +22,10 @@ class InvitationController extends Controller
      */
     public function __construct()
     {
-        // override base controller constructor
+        // override base controller auth middleware
         $this->middleware('auth', ['except' => ['store', 'request']]);
+
+        $this->authorizeResource(Invitation::class, 'invitation');
     }
 
     /**
@@ -105,17 +108,25 @@ class InvitationController extends Controller
 
     public function request()
     {
+        // Only guests can request access
+        if(Auth::check())
+            abort(403);
+
         return view('auth.request');
     }
 
     public function approve(UpdateInvitationRequest $request, Invitation $invitation)
     {
+        $this->authorize('approve', $invitation);
+
         $invitation->status = InvitationStatus::APPROVED;
         return $this->update($request, $invitation);
     }
 
     public function denie(UpdateInvitationRequest $request, Invitation $invitation)
     {
+        $this->authorize('denie', $invitation);
+
         $invitation->status = InvitationStatus::DENIED;
         return $this->update($request, $invitation);
     }

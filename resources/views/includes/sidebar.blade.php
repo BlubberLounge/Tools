@@ -49,7 +49,7 @@
                             </a>
                         </li>
                     @endpermission
-                    @permission('view.dart.infos')
+                    @permission('view.dart.info')
                         <li class="submenu-item">
                             <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ active('dart.show-info') }}">
                                 <i class="fa-solid fa-circle-info"></i>
@@ -92,7 +92,7 @@
                 </a>
             </li>
         @endpermission
-        @permission('view.caluclator')
+        @permission('view.calculator')
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-submenu disabled" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
                     <i class="fa-solid fa-calculator"></i>

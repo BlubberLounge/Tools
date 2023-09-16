@@ -129,7 +129,6 @@ async function fetchData(gameId)
 
 function renderGameTypesChart(gameTypes)
 {
-    console.log(gameTypes);
     const ctx = document.getElementById('gameTypesGraph');
     var myChart = echarts.init(ctx, null, chartOptions);
     let data = [];
