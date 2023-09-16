@@ -17,6 +17,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HookahController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\TobaccoController;
 use App\Http\Controllers\UserController;
 
 
@@ -58,6 +59,7 @@ class PermissionsTableSeeder extends Seeder
             FeedbackController::class,
             HookahController::class,
             InvitationController::class,
+            TobaccoController::class,
             UserController::class,
         ];
 
@@ -87,7 +89,7 @@ class PermissionsTableSeeder extends Seeder
                     'name'          => $item['name'],
                     'slug'          => $item['slug'],
                     'description'   => $item['description'],
-                    'model'         => 'Permission',
+                    // 'model'         => 'Permission',
                 ]);
         }
     }
@@ -229,6 +231,16 @@ class PermissionsTableSeeder extends Seeder
                 'name'          => 'Can Update User Invitations',
                 'slug'          => 'update.user.invitation',
                 'description'   => 'Can update user invitation',
+            ],
+            [
+                'name'          => 'Can View Devices',
+                'slug'          => 'viewany.device',
+                'description'   => 'Can View devices',
+            ],
+            [
+                'name'          => 'Can View Calculators',
+                'slug'          => 'view.calculator',
+                'description'   => 'Can view calculators',
             ],
         ];
     }

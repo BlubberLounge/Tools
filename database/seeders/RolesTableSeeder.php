@@ -38,13 +38,19 @@ class RolesTableSeeder extends Seeder
                 'level'       => 5,
             ],
             [
-                'name'        => 'GameMaster',
+                'name'        => 'Game Master',
                 'slug'        => 'game.master',
                 'description' => 'Has full controll over a (dart) game. In case of Darts users with this role are caller and writers combined.',
                 'level'       => 3,
             ],
             [
-                'name'        => 'Trusted',
+                'name'        => 'Dart Player',
+                'slug'        => 'dart.player',
+                'description' => 'Dart Game Player',
+                'level'       => 1,
+            ],
+            [
+                'name'        => 'Trusted User',
                 'slug'        => 'trusted',
                 'description' => 'Trusted User Role',
                 'level'       => 2,
@@ -69,14 +75,14 @@ class RolesTableSeeder extends Seeder
          */
         foreach ($RoleItems as $RoleItem) {
             $newRoleItem = config('roles.models.role')::where('slug', $RoleItem['slug'])->first();
-            if ($newRoleItem === null) {
+
+            if ($newRoleItem === null)
                 $newRoleItem = config('roles.models.role')::create([
                     'name'          => $RoleItem['name'],
                     'slug'          => $RoleItem['slug'],
                     'description'   => $RoleItem['description'],
                     'level'         => $RoleItem['level'],
                 ]);
-            }
         }
     }
 }

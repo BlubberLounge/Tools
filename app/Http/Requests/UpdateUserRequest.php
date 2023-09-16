@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'lastname' => 'nullable|string',
             'email' => 'nullable|email:rfc',
             'password' => 'nullable|min:5|string',
-            'role' => 'exists:roles,id',
+            'roles.*' => 'exists:roles,id',
 
             'locale' => Rule::in(config('app.available_locales')),
         ];

@@ -6,7 +6,7 @@
                 @if ($breadcrumb->url && !$loop->last)
                     <li class="breadcrumb-item">
                         <a href="{{ $breadcrumb->url }}">
-                            @if ($breadcrumb->faIcon)
+                            @if (isset($breadcrumb->faIcon))
                                 <i class="{{ $breadcrumb->faIcon }}"></i>
                             @else
                                 {{ __($breadcrumb->title) }}

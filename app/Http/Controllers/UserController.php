@@ -7,11 +7,14 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+
+
 use App\Helpers\FileHelper;
 use ImageOptimizer;
-
+use jeremykenedy\LaravelRoles\Models\Role;
 use App\Models\User;
 
 class UserController extends Controller
@@ -75,6 +78,8 @@ class UserController extends Controller
     public function edit(User $user): View
     {
         $data['user'] = $user;
+        $data['roles'] = Role::all();
+
         return view('user.edit', $data);
     }
 
@@ -88,7 +93,9 @@ class UserController extends Controller
         $u->firstname = $request->firstname;
         $u->lastname = $request->lastname;
         $u->email = $request->email;
-        $u->password = $request->password ? Hash::make($request->password) : $user->password;
+
+        $user->detachAllRoles();
+        $user->syncRoles($request->roles);
 
         $storagePathOriginal = storage_path('/app/private/uploads/user/original');
         $storagePathCropped = '/public/uploads/user';
@@ -104,10 +111,10 @@ class UserController extends Controller
         if($request->has('croppedImage')) {
             $croppedImagePath = FileHelper::fromBase64($request->croppedImage)->storePublicly($storagePathCropped);
             $croppedImagePath = Str::replace('public', 'storage', $croppedImagePath);
+            // optimize the image for web
+            ImageOptimizer::optimize($croppedImagePath, $croppedImagePath.'-----');
         }
 
-        // optimize the image for web
-        ImageOptimizer::optimize($croppedImagePath, $croppedImagePath.'-----');
 
         $u->save();
 

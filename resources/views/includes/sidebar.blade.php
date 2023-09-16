@@ -18,92 +18,116 @@
                 <span class="nav-text"> {{ __('home') }} <span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('dart.game.index') }}" class="nav-link {{ active('dart.game.index') }}">
-                <i class="fa-solid fa-bullseye"></i>
-                <span class="nav-text"> {{ __('dart game') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('dart.game.live') }}" class="nav-link {{ active('dart.game.live') }}">
-                <i class="fa-solid fa-satellite-dish"></i>
-                <span class="nav-text"> {{ __('dart live') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
-                <i class="fa-solid fa-hashtag"></i>
-                <span class="nav-text"> {{ __('dart dashboard') }} <span>
-            </a>
-            <ul id="submenuDart" class="{{ active(['dart.index', 'dart.show-info', 'dart.show-checkout-calculator']) ?: 'collapse' }} submenu">
-                <li class="submenu-item">
-                    <a href="{{ route('dart.index') }}" class="nav-link submenu-link {{ active('dart.index') }}">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <span class="nav-text"> {{ __('dashboard') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ active('dart.show-info') }}">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <span class="nav-text"> {{ __('dart information') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('dart.show-checkout-calculator') }}" class="nav-link submenu-link {{ active('dart.show-checkout-calculator') }}">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('dart.show-playground') }}" class="nav-link submenu-link {{ active('dart.show-playground') }}">
-                        <i class="fa-solid fa-bug"></i>
-                        <span class="nav-text"> {{ __('dart playground') }} <small>(beta)</small> <span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">
-                <i class="fa-solid fa-bong"></i>
-                <span class="nav-text"> {{ __('Hookahs') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link disabled">
-                <i class="fa-solid fa-box-open"></i>
-                <span class="nav-text"> {{ __('Tobaccos') }} <span>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
-                <i class="fa-solid fa-calculator"></i>
-                <span class="nav-text"> {{ __('calculators') }} <span>
-            </a>
-            <ul class="collapse submenu" id="submenuCalculators">
-                <li class="submenu-item">
-                    <a href="#" class="nav-link submenu-link">
-                        {{ __('coal calculator') }}
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="#" class="nav-link submenu-link">
-                        {{ __('tobacco calculator') }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('battery') }}" class="nav-link {{ active('battery') }}">
-                <i class="fa-solid fa-battery-three-quarters fa-rotate-270"></i>
-                <span class="nav-text"> {{ __('battery simulation') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('show-moving-average') }}" class="nav-link {{ active('show-moving-average') }}">
-                <i class="fa-solid fa-person-running"></i>
-                <span class="nav-text"> {{ __('moving average') }} <span>
-            </a>
-        </li>
+        @permission('viewany.dart.game')
+            <li class="nav-item">
+                <a href="{{ route('dart.game.index') }}" class="nav-link {{ active('dart.game.index') }}">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <span class="nav-text"> {{ __('dart game') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('view.dart.game.live')
+            <li class="nav-item">
+                <a href="{{ route('dart.game.live') }}" class="nav-link {{ active('dart.game.live') }}">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                    <span class="nav-text"> {{ __('dart live') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @if(Auth::user()->hasPermission(['viewany.dart', 'view.dart.infos', 'view.dart.checkouts', 'view.dart.playground']))
+            <li class="nav-item">
+                <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <span class="nav-text"> {{ __('dart dashboard') }} <span>
+                </a>
+                <ul id="submenuDart" class="{{ active(['dart.index', 'dart.show-info', 'dart.show-checkout-calculator']) ?: 'collapse' }} submenu">
+                    @permission('viewany.dart')
+                        <li class="submenu-item">
+                            <a href="{{ route('dart.index') }}" class="nav-link submenu-link {{ active('dart.index') }}">
+                                <i class="fa-solid fa-chart-simple"></i>
+                                <span class="nav-text"> {{ __('dashboard') }} <span>
+                            </a>
+                        </li>
+                    @endpermission
+                    @permission('view.dart.infos')
+                        <li class="submenu-item">
+                            <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ active('dart.show-info') }}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span class="nav-text"> {{ __('dart information') }} <span>
+                            </a>
+                        </li>
+                    @endpermission
+                    @permission('view.dart.checkouts')
+                        <li class="submenu-item">
+                            <a href="{{ route('dart.show-checkout-calculator') }}" class="nav-link submenu-link {{ active('dart.show-checkout-calculator') }}">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <span class="nav-text"> {{ __('dart checkout calculator') }} <span>
+                            </a>
+                        </li>
+                    @endpermission
+                    @permission('view.dart.playground')
+                        <li class="submenu-item">
+                            <a href="{{ route('dart.show-playground') }}" class="nav-link submenu-link {{ active('dart.show-playground') }}">
+                                <i class="fa-solid fa-bug"></i>
+                                <span class="nav-text"> {{ __('dart playground') }} <small>(beta)</small> <span>
+                            </a>
+                        </li>
+                    @endpermission
+                </ul>
+            </li>
+        @endif
+        @permission('viewany.hookah')
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">
+                    <i class="fa-solid fa-bong"></i>
+                    <span class="nav-text"> {{ __('Hookahs') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('viewany.tobacco')
+            <li class="nav-item">
+                <a href="#" class="nav-link disabled">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span class="nav-text"> {{ __('Tobaccos') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('view.caluclator')
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-submenu disabled" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span class="nav-text"> {{ __('calculators') }} <span>
+                </a>
+                <ul class="collapse submenu" id="submenuCalculators">
+                    <li class="submenu-item ">
+                        <a href="#" class="nav-link submenu-link disabled">
+                            {{ __('coal calculator') }}
+                        </a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="#" class="nav-link submenu-link disabled">
+                            {{ __('tobacco calculator') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endpermission
+        @permission('view.battery')
+            <li class="nav-item">
+                <a href="{{ route('battery') }}" class="nav-link {{ active('battery') }}">
+                    <i class="fa-solid fa-battery-three-quarters fa-rotate-270"></i>
+                    <span class="nav-text"> {{ __('battery simulation') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('view.moving.averages')
+            <li class="nav-item">
+                <a href="{{ route('show-moving-average') }}" class="nav-link {{ active('show-moving-average') }}">
+                    <i class="fa-solid fa-person-running"></i>
+                    <span class="nav-text"> {{ __('moving average') }} <span>
+                </a>
+            </li>
+        @endpermission
     </ul>
 
     <hr />
@@ -121,62 +145,70 @@
                 <span class="nav-text"> {{ __('settings') }} <span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('device.index') }}" class="nav-link {{ active('device.index') }}">
-                <i class="fa-solid fa-desktop"></i>
-                <span class="nav-text"> {{ __('devices') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('feedback.create') }}" class="nav-link {{ request()->routeIs('feedback.create') ? 'active' : '' }}" >
-                <i class="fa-solid fa-circle-question"></i>
-                <span class="nav-text"> {{ __('feedback') }} <span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('faq.index') }}" class="nav-link {{ active('faq.*') }}" >
-                <i class="fa-solid fa-comment-dots"></i>
-                <span class="nav-text"> {{ __('tools FAQ') }} <span>
-            </a>
-        </li>
-        <li class="nav-item mt-2">
-            <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuAdministration">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span class="nav-text"> {{ __('administration') }} <span>
-            </a>
-            <ul class="collapse submenu" id="submenuAdministration">
-                <li class="submenu-item">
-                    <a href="{{ route('audit-log.index') }}" class="nav-link submenu-link">
-                        <i class="fa-solid fa-list-ul"></i>
-                        <span class="nav-text"> {{ __('audit log') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('invitation.index') }}" class="nav-link submenu-link">
-                        <i class="fa-regular fa-envelope"></i>
-                        <span class="nav-text"> {{ __('access requests') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('user.index') }}" class="nav-link submenu-link">
-                        <i class="fa-solid fa-users"></i>
-                        <span class="nav-text"> {{ __('user management') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('feedback.index') }}" class="nav-link submenu-link">
-                        <i class="fa-solid fa-circle-question"></i>
-                        <span class="nav-text"> {{ __('user feedback') }} <span>
-                    </a>
-                </li>
-                <li class="submenu-item">
-                    <a href="{{ route('l5-swagger.default.api') }}" class="nav-link submenu-link">
-                        <i class="fa-solid fa-users"></i>
-                        <span class="nav-text"> {{ __('api documentation') }} <span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+        @permission('viewany.device')
+            <li class="nav-item">
+                <a href="{{ route('device.index') }}" class="nav-link {{ active('device.index') }}">
+                    <i class="fa-solid fa-desktop"></i>
+                    <span class="nav-text"> {{ __('devices') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('create.feedback')
+            <li class="nav-item">
+                <a href="{{ route('feedback.create') }}" class="nav-link {{ request()->routeIs('feedback.create') ? 'active' : '' }}" >
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span class="nav-text"> {{ __('feedback') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @permission('viewany.f.a.q')
+            <li class="nav-item">
+                <a href="{{ route('faq.index') }}" class="nav-link {{ active('faq.*') }}" >
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span class="nav-text"> {{ __('tools FAQ') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @level(5)
+            <li class="nav-item mt-2">
+                <a href="#" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuAdministration">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span class="nav-text"> {{ __('administration') }} <span>
+                </a>
+                <ul class="collapse submenu" id="submenuAdministration">
+                    <li class="submenu-item">
+                        <a href="{{ route('audit-log.index') }}" class="nav-link submenu-link">
+                            <i class="fa-solid fa-list-ul"></i>
+                            <span class="nav-text"> {{ __('audit log') }} <span>
+                        </a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('invitation.index') }}" class="nav-link submenu-link">
+                            <i class="fa-regular fa-envelope"></i>
+                            <span class="nav-text"> {{ __('access requests') }} <span>
+                        </a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('user.index') }}" class="nav-link submenu-link">
+                            <i class="fa-solid fa-users"></i>
+                            <span class="nav-text"> {{ __('user management') }} <span>
+                        </a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('feedback.index') }}" class="nav-link submenu-link">
+                            <i class="fa-solid fa-circle-question"></i>
+                            <span class="nav-text"> {{ __('user feedback') }} <span>
+                        </a>
+                    </li>
+                    <li class="submenu-item">
+                        <a href="{{ route('l5-swagger.default.api') }}" class="nav-link submenu-link">
+                            <i class="fa-solid fa-users"></i>
+                            <span class="nav-text"> {{ __('api documentation') }} <span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endlevel
         <li class="nav-item mt-3">
             <a href="{{ route('logout') }}" class="nav-link text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -208,19 +240,20 @@
             <i class="bi ms-auto d-none fa-solid fa-check"></i>
         </button>
     </div>
-
-    @if(config('app.available_locales'))
-        <form id="form-locale-selector" action="{{ route('user.language-update') }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="btn-group btn-group-sm w-100" id="language-selector">
-                @foreach (config('app.available_locales') as $k => $locale)
-                    <input id="locale_{{ $locale }}" class="btn-check" type="radio" name="locale" value="{{ $locale }}" @checked($locale == App::currentLocale())>
-                    <label class="btn btn-dark" for="locale_{{ $locale }}">
-                        <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale}}"></span>
-                    </label>
-                @endforeach
-            </div>
-        </form>
-    @endif
+    @permission('update.user.language')
+        @if(config('app.available_locales'))
+            <form id="form-locale-selector" action="{{ route('user.language-update') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="btn-group btn-group-sm w-100" id="language-selector">
+                    @foreach (config('app.available_locales') as $k => $locale)
+                        <input id="locale_{{ $locale }}" class="btn-check" type="radio" name="locale" value="{{ $locale }}" @checked($locale == App::currentLocale())>
+                        <label class="btn btn-dark" for="locale_{{ $locale }}">
+                            <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale}}"></span>
+                        </label>
+                    @endforeach
+                </div>
+            </form>
+        @endif
+    @endpermission
 </nav>

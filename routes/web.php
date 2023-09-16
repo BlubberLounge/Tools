@@ -71,15 +71,19 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::resource('/hookah', HookahController::class);
 
     // Routes with no specific controller
-    Route::get('/moving-average', [HomeController::class, 'ShowMovingAverage'])->name('show-moving-average');
+    Route::get('/moving-average', [HomeController::class, 'ShowMovingAverage'])
+        ->name('show-moving-average');
+        // ->middleware('permission:view.moving.average');
 
     // route: /dart/*
     // name: dart.*
     Route::prefix('dart')->group(function () {
         Route::name('dart.')->group(function ()
         {
-            Route::resource('/game', DartGameController::class)->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
-            Route::get('/game/live', [DartGameController::class, 'showLive'])->name('game.live');
+            Route::resource('/game', DartGameController::class)
+                ->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
+            Route::get('/game/live', [DartGameController::class, 'showLive'])
+                ->name('game.live');
 
             Route::get('/info', [DartController::class, 'showInfo'])->name('show-info');
             Route::get('/checkouts/{score?}', [DartController::class, 'showCheckoutCalculator'])->name('show-checkout-calculator');
