@@ -2,14 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Notifications\Messages\MailMessage;
 
-use App\Models\User;
-use App\Models\Invitation;
-use App\Policies\UserPolicy;
-use App\Policies\InvitationPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        DartGame::class => DartGamePolicy::class,
         User::class => UserPolicy::class,
         Invitation::class => InvitationPolicy::class,
     ];
@@ -31,7 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
         // VerifyEmail::toMailUsing(function ($notifiable, $url) {
         //     return (new MailMessage)
         //         ->subject('BlubberLounge '. env('APP_NAME').' - Verify your Email Address')

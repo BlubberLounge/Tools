@@ -21,6 +21,7 @@ class UserPolicy
      */
     public function before(User $user, $ability)
     {
+        dd('a');
         return $user->hasRole('root');
     }
 

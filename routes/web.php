@@ -59,15 +59,15 @@ Auth::routes(['verify' => true, 'register' => false]);
 /*
  * protected routes
  */
-Route::middleware(['auth'])->group(function ()
-{
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-});
+// Route::middleware(['auth'])->group(function ()
+// {
+//     Route::get('/home', [HomeController::class, 'index'])->name('home');
+// });
 
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/battery', [BatteryController::class, 'index'])->name('battery');
+    Route::view('/battery', 'battery.index')->name('battery');
     Route::resource('/hookah', HookahController::class);
 
     // Routes with no specific controller

@@ -19,12 +19,8 @@ use App\Http\Controllers\Api\v1\DartExpectationDataController;
 |
 */
 
-// Route::post('/login', [AuthController::class, 'login']);
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {
-
-
     // route: /user/*
     // name: user.*
     Route::prefix('user')->group(function () {

@@ -2,19 +2,18 @@
 
 namespace App\Policies;
 
-use App\Models\DartGame;
+use App\Models\Feedback;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class DartGamePolicy
+class FeedbackPolicy
 {
-
     /**
      * Perform pre-authorization checks.
      */
     public function before(User $user, $ability): bool
     {
-        return $user->level() >= 5;
+        return $user->hasRole('root');
     }
 
     /**
@@ -22,15 +21,15 @@ class DartGamePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission('viewAny.dart.game');
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, DartGame $dartGame): bool
+    public function view(User $user, Feedback $feedback): bool
     {
-        return false;
+        //
     }
 
     /**
@@ -38,38 +37,38 @@ class DartGamePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, DartGame $dartGame): bool
+    public function update(User $user, Feedback $feedback): bool
     {
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, DartGame $dartGame): bool
+    public function delete(User $user, Feedback $feedback): bool
     {
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, DartGame $dartGame): bool
+    public function restore(User $user, Feedback $feedback): bool
     {
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, DartGame $dartGame): bool
+    public function forceDelete(User $user, Feedback $feedback): bool
     {
-        return false;
+        //
     }
 }

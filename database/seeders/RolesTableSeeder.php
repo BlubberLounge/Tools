@@ -38,6 +38,12 @@ class RolesTableSeeder extends Seeder
                 'level'       => 5,
             ],
             [
+                'name'        => 'GameMaster',
+                'slug'        => 'game.master',
+                'description' => 'Has full controll over a (dart) game. In case of Darts users with this role are caller and writers combined.',
+                'level'       => 3,
+            ],
+            [
                 'name'        => 'Trusted',
                 'slug'        => 'trusted',
                 'description' => 'Trusted User Role',
