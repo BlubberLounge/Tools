@@ -25,7 +25,7 @@ class InvitationController extends Controller
         // override base controller auth middleware
         $this->middleware('auth', ['except' => ['store', 'request']]);
 
-        $this->authorizeResource(Invitation::class, 'invitation');
+        // $this->authorizeResource(Invitation::class, 'invitation');
     }
 
     /**
@@ -33,6 +33,8 @@ class InvitationController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Invitation::class);
+
         $data['invitations'] = Invitation::orderBy('status', 'ASC')->orderBy('expires_at', 'DESC')->orderBy('created_at', 'DESC')->paginate(20);
         return view('invitation.index', $data);
     }
@@ -50,6 +52,10 @@ class InvitationController extends Controller
      */
     public function store(StoreInvitationRequest $request)
     {
+        // Only guests can request access
+        if(Auth::check())
+            abort(403);
+
         $invite = new Invitation();
         $invite->status = InvitationStatus::NEW;
         $invite->firstname = $request->firstname ?? '';
@@ -84,6 +90,8 @@ class InvitationController extends Controller
      */
     public function update(UpdateInvitationRequest $request, Invitation $invitation)
     {
+        $this->authorize('update', Invitation::class);
+
         $invitation->status = $request->status ?? $invitation->status;
 
         if($invitation->status === InvitationStatus::APPROVED) {
