@@ -20,6 +20,8 @@ return new class extends Migration
                 $table->string('type');
                 $table->morphs('notifiable');
                 $table->text('data');
+                $table->tinyInteger('opens')
+                    ->default(0);
                 $table->timestamp('read_at')
                     ->nullable();
 

@@ -22,6 +22,7 @@ class LogSendingMessage
      */
     public function handle(MessageSending $event): void
     {
+        // dd($event);
         Log::channel('mail')->alert('Mail is going to be sent {event}', [
             'event' => $event,
         ]);

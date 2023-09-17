@@ -13,7 +13,6 @@
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
 {{ $line }}
-
 @endforeach
 
 {{-- Action Button --}}
@@ -35,8 +34,11 @@
 
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
+@if(Str::contains($line, '/t.gif'))
+{!! $line !!}
+@else
 {{ $line }}
-
+@endif
 @endforeach
 
 {{-- Salutation --}}

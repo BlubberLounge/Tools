@@ -152,10 +152,10 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     public function routeNotificationForMail(Notification $notification): array|string
     {
         // Return email address only...
-        return $this->email_address;
+        // return $this->email;
 
         // Return email address and name...
-        return [$this->email_address => $this->name];
+        return [$this->email => $this->full_name];
     }
 
     /**

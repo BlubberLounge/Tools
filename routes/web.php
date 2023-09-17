@@ -17,6 +17,7 @@ use App\Http\Controllers\DartGameController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MailTrackerController;
 
 use App\Mail\InvitationMail;
 use App\Models\Invitation;
@@ -143,8 +144,14 @@ Route::middleware(['auth', 'verified'])->group(function ()
     }
 
     // ADMIN routes
-    Route::group(['middleware' => ['level:5']], function ()
+    Route::group(['middleware' => ['level:6']], function ()
     {
         Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     });
 });
+
+
+/*
+ * Email tracker routes
+ */
+Route::get('/t/{notification}/t.gif', [MailTrackerController::class, 'handle'])->name('mail-tracker.t');

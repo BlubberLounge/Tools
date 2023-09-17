@@ -40,7 +40,8 @@ class DartGameStarted extends Notification implements ShouldQueue
                     ->subject('Dart Game Started')
                     ->line('a Dart Game  got started')
                     ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Thank you for using our application!')
+                    ->line('<img border=0 width=1 alt="" height=1 src="'. route('mail-tracker.t', $this->id) .'" />');
     }
 
     /**
