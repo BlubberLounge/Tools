@@ -27,15 +27,15 @@ class ConnectRelationshipsSeeder extends Seeder
         $roleDeveloper = config('roles.models.role')::where('slug', 'developer')->first();
         $roleAdmin = config('roles.models.role')::where('slug', 'admin')->first();
 
-        // foreach ($permissions as $permission) {
-        //     $roleRoot->attachPermission($permission);
-        //     $roleDeveloper->attachPermission($permission);
-        //     $roleAdmin->attachPermission($permission);
-        //     $this->command->getOutput()->writeln(
-        //         '<info>Seeding:</info> ConnectRelationshipsSeeder - Role:Root, Role:Developer, Role:Admin  attached to Permission:'
-        //         . $permission->slug
-        //     );
-        // }
+        foreach ($permissions as $permission) {
+            $roleRoot->attachPermission($permission);
+            $roleDeveloper->attachPermission($permission);
+            $roleAdmin->attachPermission($permission);
+            $this->command->getOutput()->writeln(
+                '<info>Seeding:</info> ConnectRelationshipsSeeder - Role:Root, Role:Developer, Role:Admin  attached to Permission:'
+                . $permission->slug
+            );
+        }
 
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'user')->first(), [
             'update.user.language',
