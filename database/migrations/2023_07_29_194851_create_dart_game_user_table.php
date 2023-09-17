@@ -28,7 +28,8 @@ return new class extends Migration
                     ->comment('pending / accepted / denied')
                     ->default('pending');
                 $table->tinyInteger('position')
-                    ->comment('user position');
+                    ->comment('user position')
+                    ->nullable();
                 $table->tinyInteger('place')
                     ->comment('IF a user has won the number place is here.')
                     ->nullable()

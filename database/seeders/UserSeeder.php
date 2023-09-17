@@ -18,8 +18,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = config('roles.models.permission')::all();
-
         // always create one root user, that root user has always to be verified
         if(User::where('email', 'admin+Tools@blubber-lounge.de')->first() === null) {
             $rootUser = User::create([
