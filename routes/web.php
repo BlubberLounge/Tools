@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvitationController;
@@ -16,7 +17,10 @@ use App\Http\Controllers\DartGameController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
+
+use App\Mail\InvitationMail;
 use App\Models\Invitation;
+use App\Enums\InvitationStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,10 +130,15 @@ Route::middleware(['auth', 'verified'])->group(function ()
      */
     if (App::environment(['local', 'development']))
     {
-        // Mail Design Testing
-        Route::get('/mail', function(){
-            $mail = new App\Mail\TestMail();
-            return $mail->render();
+        // Mailables Design Testing
+        Route::get('/mail/invitation', function(){
+            $invitation = new Invitation();
+            $invitation->status = InvitationStatus::APPROVED;
+            $invitation->token = Str::orderedUuid();
+            $invitation->expires_at = now();
+
+            return (new InvitationMail($invitation))
+                ->render();
         });
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -138,9 +139,23 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      *
      */
-    public function preferredLocale()
+    public function preferredLocale(): string|null
     {
         return $this->locale;
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return  array<string, string>|string
+     */
+    public function routeNotificationForMail(Notification $notification): array|string
+    {
+        // Return email address only...
+        return $this->email_address;
+
+        // Return email address and name...
+        return [$this->email_address => $this->name];
     }
 
     /**
