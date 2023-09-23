@@ -17,9 +17,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         // Auth::user()->notify(new DartGameStarted(Auth::user()));
-        return view('home.index');
+        $data['dartGames'] = Auth::user()->dartGameInvites();
+        return view('home.index', $data);
     }
 
     public function ShowMovingAverage()

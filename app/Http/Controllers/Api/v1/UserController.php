@@ -49,7 +49,7 @@ class UserController extends Controller
      *          response=403,
      *          description="Forbidden"
      *      )
-     *     )
+     * )
      */
     public function show(User $user)
     {

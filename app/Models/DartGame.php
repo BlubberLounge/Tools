@@ -17,6 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameUserStatus;
+use App\Notifications\DartGameStarted;
 
 
 class DartGame extends Model // implements Auditable doesn't work because of uuids af primary
@@ -373,5 +374,15 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
         $arr['user'] = $result ? User::find($result->user_id) : null;
 
         return collect($arr);
+    }
+
+    /**
+     *
+     */
+    public function notifyAllPlayersGameStarted()
+    {
+        foreach($this->users as $user) {
+            $user->notify(new DartGameStarted($user));
+        }
     }
 }

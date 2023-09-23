@@ -20,6 +20,7 @@ use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
 use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
+use App\Enums\DartGameUserStatus;
 use Illuminate\Support\Collection;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLocalePreference
@@ -211,6 +212,19 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
             $relation->withPivot(['status', 'position', 'place']);
 
         return $relation;
+    }
+
+    /**
+     * The DartGames that belong to the user.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function DartGameInvites(): BelongsToMany
+    {
+        return $this->belongsToMany(DartGame::class)
+            ->withTimestamps()
+            ->wherePivot('status', DartGameUserStatus::PENDING)
+            ->orderBy('created_at', 'DESC');
     }
 
     /**
