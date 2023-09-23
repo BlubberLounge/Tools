@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        Auth::user()->notify(new DartGameStarted(Auth::user()));
+        // Auth::user()->notify(new DartGameStarted(Auth::user()));
         return view('home.index');
     }
 

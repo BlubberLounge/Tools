@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Enums\DartGameType;
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
-use App\Models\DartGame;
-
 
 class UserController extends Controller
 {
@@ -29,11 +26,15 @@ class UserController extends Controller
         //
     }
 
+
+    /**
+     * Display the specified resource.
+     */
     /**
      * @OA\Get(
      *      path="/user/{userID}",
      *      operationId="getUser",
-     *      tags={"Users"},
+     *      tags={"User"},
      *      summary="Get user by ID",
      *      description="Get user by ID",
      *      @OA\Response(
@@ -49,9 +50,6 @@ class UserController extends Controller
      *          description="Forbidden"
      *      )
      *     )
-     */
-    /**
-     * Display the specified resource.
      */
     public function show(User $user)
     {
@@ -77,10 +75,13 @@ class UserController extends Controller
     }
 
     /**
+     * search a resouce
+     */
+    /**
      * @OA\Get(
      *      path="/user/search/{userName}",
      *      operationId="searchUser",
-     *      tags={"Users"},
+     *      tags={"User"},
      *      summary="Get a list of users by username",
      *      description="Get a list of users by username",
      *      @OA\Response(
@@ -97,9 +98,6 @@ class UserController extends Controller
      *      )
      *     )
      */
-    /**
-     * search a resouce
-     */
     public function search(Request $request, string $name)
     {
         $data['users'] = User::like('name', $name)->get();
@@ -110,64 +108,190 @@ class UserController extends Controller
     /**
      *
      */
+    /**
+     * @OA\Get(
+     *      path="/user/showDashboardData",
+     *      operationId="showDashboardData",
+     *      tags={"User"},
+     *      summary="Get a list of statistics used in the dart dashboard from currently logged in user",
+     *      description="Get a list of statistics used in the dart dashboard from currently logged in user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function showDashboardData(Request $request)
+    {
+        $data = [];
+        $data['places'] = Auth::user()->getDartPlaces();
+        $data['positions'] = Auth::user()->getDartPositions();
+        $data['activity'] = Auth::user()->getDartActivity();
+        $data['gameTypes'] = Auth::user()->getDartGameTypes();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    /**
+     * @OA\Get(
+     *      path="/user/showPlaces",
+     *      operationId="showPlaces",
+     *      tags={"User"},
+     *      summary="Get a list of places from currently logged in user",
+     *      description="Get a list of places from currently logged in user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function showPlaces(Request $request)
+    {
+        $data['places'] = Auth::user()->getDartPlaces();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    /**
+     * @OA\Get(
+     *      path="/user/showPositions",
+     *      operationId="showPositions",
+     *      tags={"User"},
+     *      summary="Get a list of positions from currently logged in user",
+     *      description="Get a list of positions from currently logged in user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function showPositions(Request $request)
+    {
+        $data['positions'] = Auth::user()->getDartPositions();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    /**
+     * @OA\Get(
+     *      path="/user/showDartActivity",
+     *      operationId="showDartActivity",
+     *      tags={"User"},
+     *      summary="Get a list of dates from currently logged in user",
+     *      description="Get a list of dates from currently logged in user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function showDartActivity(Request $request)
+    {
+        $data['activity'] = Auth::user()->getDartActivity();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    /**
+     * @OA\Get(
+     *      path="/user/showGameTypes",
+     *      operationId="showGameTypes",
+     *      tags={"User"},
+     *      summary="Get a list of game types from currently logged in user",
+     *      description="Get a list of game types from currently logged in user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function showGameTypes(Request $request)
+    {
+        $data['gameTypes'] = Auth::user()->getDartGameTypes();
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
+     *
+     */
+    /**
+     * @OA\Get(
+     *      path="/user/showThrowsByGame/{dartGame}",
+     *      operationId="showThrowsByGame",
+     *      tags={"User"},
+     *      summary="Get a list of throws from currently logged in user by game id",
+     *      description="Get a list of throws from currently logged in user by game id",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
     public function showThrowsByGame(Request $request, string $id)
     {
         // $game = DartGame::find($id);
         $data['throws'] = Auth::user()->DartThrows()->where('dart_game_id', $id)->get();
-
-        return $this->sendResponse($data, 'ok');
-    }
-
-    /**
-     *
-     */
-    public function showPlaces(Request $request)
-    {
-        $data['places'] = Auth::user()->DartGames()->get(['place'])->countBy('place');
-
-        return $this->sendResponse($data, 'ok');
-    }
-
-    /**
-     *
-     */
-    public function showPositions(Request $request)
-    {
-        $data['positions'] = Auth::user()->DartGames()->get(['position'])->countBy('position');
-
-        return $this->sendResponse($data, 'ok');
-    }
-
-    /**
-     *
-     */
-    public function showDartActivity(Request $request)
-    {
-        $column = DartGame::getTableName().'.created_at';
-        $data['activity'] = Auth::user()->DartGames(false, false)->get([$column]);
-
-        return $this->sendResponse($data, 'ok');
-    }
-
-    /**
-     *
-     */
-    public function showGameTypes(Request $request)
-    {
-        $games = Auth::user()->DartGames()->get(['type', 'points']);
-        $gameTypes = [];
-
-        foreach($games as $game) {
-            $gameType = $game->type === DartGameType::X01 ? $game->points : $game->type;
-
-            if(array_key_exists($gameType, $gameTypes)) {
-                $gameTypes[$gameType]++;
-            } else {
-                $gameTypes[$gameType] = 1;
-            }
-        }
-
-        $data['gameTypes'] = $gameTypes;
 
         return $this->sendResponse($data, 'ok');
     }

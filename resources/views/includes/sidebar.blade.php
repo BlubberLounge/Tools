@@ -34,21 +34,21 @@
                 </a>
             </li>
         @endpermission
-        @if(Auth::user()->hasPermission(['viewany.dart', 'view.dart.infos', 'view.dart.checkouts', 'view.dart.playground']))
+        @permission('viewany.dart')
+            <li class="nav-item">
+                <a href="{{ route('dart.index') }}" class="nav-link {{ active('dart.index') }}">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span class="nav-text"> {{ __('dart dashboard') }} <span>
+                </a>
+            </li>
+        @endpermission
+        @if(Auth::user()->hasPermission(['view.dart.infos', 'view.dart.checkouts', 'view.dart.playground']))
             <li class="nav-item">
                 <a href="{{ route('dart.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuDart">
                     <i class="fa-solid fa-hashtag"></i>
-                    <span class="nav-text"> {{ __('dart dashboard') }} <span>
+                    <span class="nav-text"> {{ __('dart extras') }} <span>
                 </a>
-                <ul id="submenuDart" class="{{ active(['dart.index', 'dart.show-info', 'dart.show-checkout-calculator']) ?: 'collapse' }} submenu">
-                    @permission('viewany.dart')
-                        <li class="submenu-item">
-                            <a href="{{ route('dart.index') }}" class="nav-link submenu-link {{ active('dart.index') }}">
-                                <i class="fa-solid fa-chart-simple"></i>
-                                <span class="nav-text"> {{ __('dashboard') }} <span>
-                            </a>
-                        </li>
-                    @endpermission
+                <ul id="submenuDart" class="{{ active(['dart.show-info', 'dart.show-checkout-calculator']) ?: 'collapse' }} submenu">
                     @permission('view.dart.info')
                         <li class="submenu-item">
                             <a href="{{ route('dart.show-info') }}" class="nav-link submenu-link {{ active('dart.show-info') }}">

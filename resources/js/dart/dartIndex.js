@@ -74,43 +74,22 @@ async function requestJson(url, cb)
 async function fetchData(gameId)
 {
     /**
-     * Get Player skills data
+     * Get Player dashboard data
      */
-    // requestJson(`/api/v1/user/showDartSkills`, response => {
-    //     const activity = response.data.data.activity.map( e => new Date(e.created_at));
+    requestJson(`/api/v1/user/showDashboardData`, response => {
+        const data = response.data.data;
 
-    //     renderActivityChart(activity);
-    // });
-    renderSkillsChart();
+        // const skills = data.skills;
+        const places = data.places;
+        const positions = data.positions;
+        const activity = data.activity.map( e => new Date(e.created_at));
+        const gameTypes = data.gameTypes;
 
-    /**
-     * Get Player place data
-     */
-    requestJson(`/api/v1/user/showPlaces`, response => {
-        renderPlaceChart(response.data.data.places);
-    });
-
-    /**
-     * Get Player place data
-     */
-    requestJson(`/api/v1/user/showPositions`, response => {
-        renderPositionChart(response.data.data.positions);
-    });
-
-    /**
-     * Get Player dart activity data
-     */
-    requestJson(`/api/v1/user/showDartActivity`, response => {
-        const activity = response.data.data.activity.map( e => new Date(e.created_at));
-
+        renderSkillsChart();
+        renderPlaceChart(places);
+        renderPositionChart(positions);
         renderActivityChart(activity);
-    });
-
-    /**
-     *
-     */
-    requestJson(`/api/v1/user/showGameTypes`, response => {
-        renderGameTypesChart(response.data.data.gameTypes);
+        renderGameTypesChart(gameTypes);
     });
 
     /**

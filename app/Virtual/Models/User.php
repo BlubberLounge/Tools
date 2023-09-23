@@ -107,30 +107,6 @@ class User
 
     /**
      * @OA\Property(
-     *      title="QRCode",
-     *      description="QRCode for contact adding",
-     *      example="http::// ... some link"
-     * )
-     *
-     * @var string
-     */
-    public $qrcode;
-
-    /**
-     * @OA\Property(
-     *     title="QRCode created at",
-     *     description="QRCode created at",
-     *     example="2020-01-27 17:50:45",
-     *     format="datetime",
-     *     type="string"
-     * )
-     *
-     * @var \DateTime
-     */
-    public $qrcode_created_at;
-
-    /**
-     * @OA\Property(
      *     title="Email created at",
      *     description="Email created at",
      *     example="2020-01-27 17:50:45",

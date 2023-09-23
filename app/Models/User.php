@@ -15,10 +15,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
+use App\Enums\DartGameType;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
 use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLocalePreference
 {
@@ -263,5 +265,51 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
 
         foreach($throws as $throw) $sum += $throw->value;
         return round($sum / count($throws), 1);
+    }
+
+    /**
+     *
+     */
+    public function getDartPlaces(): Collection
+    {
+        return $this->DartGames()->get(['place'])->countBy('place');
+    }
+
+    /**
+     *
+     */
+    public function getDartPositions(): Collection
+    {
+        return $this->DartGames()->get(['position'])->countBy('position');
+    }
+
+    /**
+     *
+     */
+    public function getDartActivity(): Collection
+    {
+       $column = DartGame::getTableName().'.created_at';
+       return $this->DartGames(false, false)->get([$column]);
+    }
+
+    /**
+     *
+     */
+    public function getDartGameTypes(): Collection
+    {
+        $games = $this->DartGames()->get(['type', 'points']);
+        $gameTypes = [];
+
+        foreach($games as $game) {
+            $gameType = $game->type === DartGameType::X01 ? $game->points : $game->type->value;
+
+            if(array_key_exists($gameType, $gameTypes)) {
+                $gameTypes[$gameType]++;
+            } else {
+                $gameTypes[$gameType] = 1;
+            }
+        }
+
+       return collect($gameTypes);
     }
 }

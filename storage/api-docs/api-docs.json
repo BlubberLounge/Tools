@@ -1,0 +1,480 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tools Api",
+        "description": "BlubberLounge Tools REST Api",
+        "contact": {
+            "email": "contect@blubber-lounge.de"
+        },
+        "version": "1.1.0"
+    },
+    "servers": [
+        {
+            "url": "http://192.168.178.100:81/api/v1",
+            "description": "Current Server"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Get a Bearer Token",
+                "description": "Get a bearer token by login in with username and password",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Users password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Login"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Logout from current login",
+                "description": "Logout from current login",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/throw": {
+            "post": {
+                "tags": [
+                    "Throw"
+                ],
+                "summary": "Store a newly created resource in storage",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "storeThrow",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "game": {
+                                        "description": "game uuid",
+                                        "type": "string"
+                                    },
+                                    "user": {
+                                        "description": "user id",
+                                        "type": "integer"
+                                    },
+                                    "set": {
+                                        "description": "set number",
+                                        "type": "integer"
+                                    },
+                                    "leg": {
+                                        "description": "leg number",
+                                        "type": "integer"
+                                    },
+                                    "turn": {
+                                        "description": "turn number",
+                                        "type": "integer"
+                                    },
+                                    "throw": {
+                                        "description": "throw number",
+                                        "type": "integer"
+                                    },
+                                    "value": {
+                                        "description": "calculated field value (field * ringMultiplier)",
+                                        "type": "integer"
+                                    },
+                                    "field": {
+                                        "description": "0 to 20 and 25 aka bull",
+                                        "type": "string"
+                                    },
+                                    "ring": {
+                                        "description": "aka. multiplier; O = Out 0x, S = Single 1x, D = Double 2x, T = Tripple 3x",
+                                        "type": "string"
+                                    },
+                                    "x": {
+                                        "description": "normalized cartesian x value",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "y": {
+                                        "description": "normalized cartesian y value",
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "game": "9a334dcd-1d68-4b11-aa17-c21e7a5c9411",
+                                    "user": 1337,
+                                    "set": 1,
+                                    "leg": 1,
+                                    "turn": 3,
+                                    "throw": 26,
+                                    "value": 12,
+                                    "field": "4",
+                                    "ring": "T",
+                                    "x": 0.4398,
+                                    "y": 0.2594
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/{userID}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user by ID",
+                "description": "Get user by ID",
+                "operationId": "getUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/search/{userName}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of users by username",
+                "description": "Get a list of users by username",
+                "operationId": "searchUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showDashboardData": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of statistics used in the dart dashboard from currently logged in user",
+                "description": "Get a list of statistics used in the dart dashboard from currently logged in user",
+                "operationId": "showDashboardData",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showPlaces": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of places from currently logged in user",
+                "description": "Get a list of places from currently logged in user",
+                "operationId": "showPlaces",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showPositions": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of positions from currently logged in user",
+                "description": "Get a list of positions from currently logged in user",
+                "operationId": "showPositions",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showDartActivity": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of dates from currently logged in user",
+                "description": "Get a list of dates from currently logged in user",
+                "operationId": "showDartActivity",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showGameTypes": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of game types from currently logged in user",
+                "description": "Get a list of game types from currently logged in user",
+                "operationId": "showGameTypes",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/user/showThrowsByGame/{dartGame}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a list of throws from currently logged in user by game id",
+                "description": "Get a list of throws from currently logged in user by game id",
+                "operationId": "showThrowsByGame",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Login": {
+                "title": "Login",
+                "description": "Login model",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "access_token": {
+                        "title": "Access Token",
+                        "description": "Access Token (Bearer Token / Sanctum Token)",
+                        "type": "string",
+                        "example": "5|gtAK1319CZAFvsrpQibyWjHiM54hV3pfrkdJkwuB"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Login"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Username",
+                        "description": "Username",
+                        "type": "string",
+                        "example": "charley81"
+                    },
+                    "firstname": {
+                        "title": "Firstname",
+                        "description": "Firstname of the user",
+                        "type": "string",
+                        "example": "Eberhard"
+                    },
+                    "lastname": {
+                        "title": "Lastname",
+                        "description": "Lastname of the user",
+                        "type": "string",
+                        "example": "Müller"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email of the user",
+                        "type": "string",
+                        "example": "admin+EventManager@blubber-lounge.de"
+                    },
+                    "telefon_mobil": {
+                        "title": "Telefon mobile",
+                        "description": "Mobil telefon number",
+                        "type": "string",
+                        "example": "+18 456439282"
+                    },
+                    "dob": {
+                        "title": "Date Of Birth",
+                        "description": "Date Of Birth",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "1999-11-02 06:33:21"
+                    },
+                    "img": {
+                        "title": "Img",
+                        "description": "Profile image path",
+                        "type": "string",
+                        "example": "/storage/avatar/avatar-dummy.png"
+                    },
+                    "email_verified_at": {
+                        "title": "Email created at",
+                        "description": "Email created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "locked": {
+                        "title": "Locked",
+                        "description": "Flag if Account is Blocked/Locked",
+                        "type": "integer",
+                        "format": "boolean",
+                        "example": false
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentification",
+            "description": "Authentification Endpoints"
+        },
+        {
+            "name": "User",
+            "description": "User Endpoints"
+        },
+        {
+            "name": "Throw",
+            "description": "Dart Throw Endpoints"
+        }
+    ]
+}

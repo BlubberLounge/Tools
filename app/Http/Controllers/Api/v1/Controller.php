@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *      version="1.0.0",
+ *      version="1.1.0",
  *      title="Tools Api",
  *      description="BlubberLounge Tools REST Api",
  *      @OA\Contact(
- *          email="admin@blubber-lounge.de"
+ *          email="contect@blubber-lounge.de"
  *      )
  * )
  *
@@ -21,12 +21,20 @@ use Illuminate\Routing\Controller as BaseController;
  *      description="Current Server"
  * )
  *
+ * @OA\Tag(
+ *     name="Authentification",
+ *     description="Authentification Endpoints"
+ * )
  *
  * @OA\Tag(
- *     name="Users",
+ *     name="User",
  *     description="User Endpoints"
  * )
  *
+ * @OA\Tag(
+ *     name="Throw",
+ *     description="Dart Throw Endpoints"
+ * )
  */
 class Controller extends BaseController
 {
@@ -39,7 +47,7 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        // is already set in api_v1.php routing file wold interrupt api AuthProcess
+        // is already set in api_v1.php routing file would interrupt api AuthProcess
         // $this->middleware('auth:sanctum');
     }
 
