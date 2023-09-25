@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@push('scripts')
+{{-- @push('scripts')
     <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')"></script>
-@endpush
+@endpush --}}
 
 @section('content')
 <div class="container">

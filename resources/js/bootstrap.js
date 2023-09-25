@@ -1,7 +1,9 @@
 try {
     window.bootstrap = require('bootstrap');
+    window.moment = require('moment');
+    window.Popper = require('@popperjs/core');
 } catch (e) {
-    //
+    // console.log(e);
 }
 
 import 'animate.css';

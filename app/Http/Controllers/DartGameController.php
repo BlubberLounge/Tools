@@ -91,18 +91,17 @@ class DartGameController extends Controller
         $data['status'] = $dartGame->status;
         $data['points'] = $dartGame->points;
 
-        // if($dartGame->isCreated() && $dartGame->allPlayersAccepted()) {
-        //     $dartGame->status = DartGameStatus::RUNNING->value;
-        //     $dartGame->save();
-        // }
+        if($dartGame->isCreated() && $dartGame->allPlayersAccepted()) {
+            $dartGame->status = DartGameStatus::RUNNING->value;
+            $dartGame->save();
+        }
 
-        // if($dartGame->isCreated()) {
-        //     $data['users'] = $dartGame->usersBy('position')->get();
-        //     $dartGame->notifyAllPlayersGameStarted();
-        //     $view = view('dart.game.waiting', $data);
+        if($dartGame->isCreated()) {
+            $data['users'] = $dartGame->usersBy('position')->get();
+            $dartGame->notifyAllPlayersGameStarted();
+            $view = view('dart.game.waiting', $data);
 
-        // } else
-        if($dartGame->isRunning() || $dartGame->isCreated()) {
+        } else if($dartGame->isRunning() || $dartGame->isCreated()) {
             $data['users'] = $dartGame->usersBy('position')->get();
             $view = view('dart.game.show', $data);
 

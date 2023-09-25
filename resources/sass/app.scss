@@ -92,3 +92,16 @@
         line-height: .8;
     }
 }
+
+.popover {
+    --bs-popover-max-width: 400px;
+}
+
+.popover .popover-body {
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
+// .breadcrumb {
+//     flex-wrap: nowrap;
+// }

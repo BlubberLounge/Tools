@@ -14,7 +14,7 @@
                         </a>
                     </li>
                 @else
-                    <li class="breadcrumb-item active" aria-current="page">{{ __($breadcrumb->title) }}</li>
+                    <li class="breadcrumb-item active text-truncate" aria-current="page">{{ __($breadcrumb->title) }}</li>
                 @endif
 
             @endforeach

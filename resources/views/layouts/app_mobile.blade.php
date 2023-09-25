@@ -71,7 +71,17 @@
                     <div class="me-auto">
                         {{ Breadcrumbs::render() }}
                     </div>
-                    <div>
+                    <div class="">
+                        <button class="btn text-white position-relative" data-bs-toggle="notification" data-bs-title="{{ __('notifications') }}" data-bs-content="{{ __('no notifications available') }}" >
+                            <i class="fa-solid fa-bell fa-xl"></i>
+                            @if(Auth::user()->unreadNotifications->count() > 0)
+                                <span class="position-absolute translate-middle bg-danger border border-dark badge rounded-pill" style="left: .4rem;top: .2rem;--bs-badge-padding-x: .5em;--bs-badge-padding-y: .25em">
+                                    {{ Auth::user()->unreadNotifications->count() > 99 ? '99+' : Auth::user()->unreadNotifications->count() }}
+                                </span>
+                            @endif
+                        </button>
+                    </div>
+                    <div class="">
                         <button id="sidebarCollapse" class="btn text-white">
                             <i class="fa-solid fa-bars fa-xl"></i>
                         </button>

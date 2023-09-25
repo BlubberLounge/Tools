@@ -22,6 +22,8 @@
     "battery simulation": "Batterie Simulation",
 
     "settings": "Einstellungen",
+    "notification": "Benachrichtigung",
+    "notifications": "Benachrichtigungen",
     "devices": "Geräte",
     "language": "Sprache",
     "feedback": "Feedback",
@@ -80,6 +82,7 @@
 
     "abort": "Abbrechen",
     "refresh": "Aktualisieren",
+    "no notifications available": "keine Benachrichtigungen verfügbar",
 
     "If you did not request access, no further action is required.": "Wenn Sie keinen Zugang beantragt haben, sind keine weiteren Maßnahmen erforderlich.",
     "Before the game can begin, each player from the list must accept the game. Each player has received an email notification. Players who have accepted the game have a green frame. Players who have declined the game have a red frame. After all players have accepted the game will start automatically.": "Bevor das spiel beginnen kann muss jeder Spieler aus der liste das spiel akzeptieren. Jeder Spieler hat dazu eine email Benachrichtigung erhalten. Spieler die das Spiel akzeptiert haben haben einen grünen rahmen. Spieler die das Spiel abgelehnt haben haben einen roten rahmen. Nachdem alle Spieler angenommen haben wird das Spiel automatisch gestartet"

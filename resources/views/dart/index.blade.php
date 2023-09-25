@@ -45,10 +45,10 @@
                         {{-- <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span> --}}
                     </option>
                 @endforeach
-
             </select>
         </div>
     </div>
+
     <div class="row mb-5">
         <div class="col col-md-6" style="height: 400px">
             <div id="dartboardContainer" class="d-flex position-relative justify-center align-items-center p-2 h-100 w-100">

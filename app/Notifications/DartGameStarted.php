@@ -11,12 +11,15 @@ class DartGameStarted extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    protected $gameId;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(object $notifiable, $gameId)
     {
         $this->afterCommit();
+        $this->gameId = $gameId;
     }
 
     /**
@@ -52,7 +55,9 @@ class DartGameStarted extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => 'Dart Game Started',
+            'level' => 1, // 1 = info, 2 = warning, 3 = danger
+            'gameId' => $this->gameId,
         ];
     }
 

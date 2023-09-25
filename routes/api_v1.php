@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
 use App\Http\Controllers\Api\v1\DartExpectationDataController;
+use App\Http\Controllers\Api\v1\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +60,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::apiResource('throw', DartThrowController::class)
         ->only(['store'])
         ->parameter('throw', 'dartThrow'); // throw to dartThrow for currect auto-mapping;
+
+
+    Route::resource('notification', NotificationController::class)
+        ->only('index');
 });

@@ -382,7 +382,7 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function notifyAllPlayersGameStarted()
     {
         foreach($this->users as $user) {
-            $user->notify(new DartGameStarted($user));
+            $user->notify(new DartGameStarted($user, $this->id));
         }
     }
 }
