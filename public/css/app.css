@@ -12083,5 +12083,6 @@ textarea.form-control-lg {
 
 .popover .popover-body {
   max-height: 350px;
+  width: 300px;
   overflow-y: scroll;
 }
