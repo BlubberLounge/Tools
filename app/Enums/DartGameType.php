@@ -26,9 +26,9 @@ enum DartGameType: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartGameType::X01 => 'no color',
-            DartGameType::aroundTheClock => 'no color',
-            DartGameType::cricket => 'no color',
+            DartGameType::X01 => 'primary',
+            DartGameType::aroundTheClock => 'info',
+            DartGameType::cricket => 'light',
         };
     }
 }

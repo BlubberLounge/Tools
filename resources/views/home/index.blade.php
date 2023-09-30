@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -24,6 +24,55 @@
                     <div class="mt-5 text-center">
                         {!! Str::replace('-', '<div>-', Illuminate\Foundation\Inspiring::quotes()->random()) !!}</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md rounded">
+            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5 class="text-center">{{ __('active dart game') }}</h5>
+                @if($activeDartGame)
+                    <div>
+                        <h6>{{ $activeDartGame->title }}</h6>
+                        <div class="row p-0 m-0">
+                            @foreach ($activeDartGame->users as $user)
+                                <div class="col">
+                                    <div class="row justify-center">
+                                        {{ $user->name }}
+                                    </div>
+                                    <div class="row justify-center">
+                                        {{ $activeDartGame->remainingPointsByUser($user) }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="col-12 col-md rounded">
+            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5>{{ __('open dart games') }}</h5>
+                <div class="rounded" style="max-height: 300px;overflow-y:scroll;">
+                    <ul class="list-group list-group-flush">
+                        @forelse  ($dartGames as $dartGame)
+                            <li class="list-group-item">
+                                <div class="me-auto">
+                                    <span class="text-body-secondary">{{ $dartGame->title }}</span> vom {{ $dartGame->created_at->format('d.m.Y') }}
+                                </div>
+                                <span class="badge rounded-pill text-bg-{{ $dartGame->type->color() }}">{{ $dartGame->type }}</span>
+                                <span class="badge rounded-pill text-bg-{{ $dartGame->getNumberOfPlayers() <= 2 ? 'secondary' : ($dartGame->getNumberOfPlayers() <= 3 ? 'primary' : 'warning') }}">{{ $dartGame->getNumberOfPlayers() }} Spieler</span>
+                            </li>
+                        @empty
+                            @foreach(["no data", "....", "...", "..", "."] as $c)
+                                <li class="list-group-item" style="opacity:{{.75-$loop->index*.2}};">
+                                    <th scope="row">{{ $c }}</th>
+                                </li>
+                            @endforeach
+                        @endforelse
+                    </ul>
                 </div>
             </div>
         </div>

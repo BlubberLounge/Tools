@@ -18,7 +18,7 @@ use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameUserStatus;
 use App\Notifications\DartGameStarted;
-
+use Ramsey\Uuid\Type\Integer;
 
 class DartGame extends Model // implements Auditable doesn't work because of uuids af primary
 {
@@ -194,13 +194,37 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
             ->withTimestamps();
     }
 
-
     /**
-     * Get all of the throws for the project.
+     * Get all of the throws for the game.
      */
     public function dartThrows(): HasMany
     {
         return $this->hasMany(DartThrow::class);
+    }
+
+    /**
+     * Get all of the throws for the game by user.
+     */
+    public function dartThrowsByUser(User $user): HasMany
+    {
+        return $this->hasMany(DartThrow::class)
+            ->where('user_id', $user->id);
+    }
+
+    /**
+     *
+     */
+    public function currentPointsByUser(User $user): int
+    {
+        return $this->dartThrowsByUser($user)->sum('value');
+    }
+
+    /**
+     *
+     */
+    public function remainingPointsByUser(User $user): int
+    {
+        return $this->points - $this->dartThrowsByUser($user)->sum('value');
     }
 
     /**
@@ -261,6 +285,14 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
                 return false;
 
         return true;
+    }
+
+    /**
+     *
+     */
+    public function getNumberOfPlayers()
+    {
+        return $this->users()->count();
     }
 
     /**

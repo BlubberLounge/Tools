@@ -18,7 +18,10 @@ class HomeController extends Controller
     public function index()
     {
         // Auth::user()->notify(new DartGameStarted(Auth::user()));
-        $data['dartGames'] = Auth::user()->dartGameInvites();
+        $data['dartGames'] = Auth::user()->dartGameInvites()->get();
+        $data['activeDartGames'] = Auth::user()->activeDartGames()->get();
+        $data['activeDartGame'] = Auth::user()->activeDartGame();
+
         return view('home.index', $data);
     }
 

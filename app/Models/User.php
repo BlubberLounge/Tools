@@ -217,7 +217,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      * The DartGames that belong to the user.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function DartGameInvites(): BelongsToMany
     {
@@ -325,5 +324,29 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
         }
 
        return collect($gameTypes);
+    }
+
+    /**
+     *
+     */
+    public function ActiveDartGames(): BelongsToMany
+    {
+        return $this->belongsToMany(DartGame::class)
+            ->withTimestamps()
+            ->wherePivot('status', DartGameUserStatus::ACCEPTED)
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     *
+     */
+    public function ActiveDartGame(): DartGame
+    {
+        return $this->belongsToMany(DartGame::class)
+            ->withTimestamps()
+            ->wherePivot('status', DartGameUserStatus::ACCEPTED)
+            ->orderBy('created_at', 'DESC')
+            ->running()
+            ->first();
     }
 }
