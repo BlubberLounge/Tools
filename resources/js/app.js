@@ -3,7 +3,6 @@ require('./consoleText');
 
 require('./sidebar');
 
-
 const notificationBtnTriggerList = document.querySelectorAll('[data-bs-toggle="notification"]')
 const notificationBtnList = [...notificationBtnTriggerList].map(notificationBtnTriggerEl =>
     new bootstrap.Popover(notificationBtnTriggerEl, {
@@ -103,7 +102,8 @@ const notification = {
                             `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
             }
 
-            content += `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            let modal = `
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -119,7 +119,11 @@ const notification = {
                     </div>
                     </div>
                 </div>
-                </div>`;
+            </div>`;
+
+
+
+            document.body.append(htmlToElement(modal));
         } else {
             content +=
                 `<div class="d-flex flex-column justify-center align-center text-center notification-no-container">`+
@@ -129,9 +133,24 @@ const notification = {
                     `</div>`+
                 `</div>`;
         }
+
         popover.setContent({
             '.popover-header': popover._config.title,
             '.popover-body': content,
         });
+
+        const notificationItemList = document.querySelectorAll('.notification-item');
+        [...notificationItemList].map( item => {
+            item.addEventListener('click', function() {
+                console.log('clicked');
+                popover.hide();
+            });
+        });
     }
 };
+
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html.trim();
+    return template.content.firstChild;
+}

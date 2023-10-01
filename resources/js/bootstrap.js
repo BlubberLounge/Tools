@@ -35,6 +35,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
+const myDefaultAllowList = bootstrap.Tooltip.Default.allowList
+
+// To allow table elements
+// myDefaultAllowList.table = []
+
+// To allow td elements and data-bs-option attributes on td elements
+// myDefaultAllowList.td = ['data-bs-option']
+
+const BootstrapDataAttributes = /^data-bs-[\w-]+/
+myDefaultAllowList['*'].push(BootstrapDataAttributes)
 
 $('#sidebarCollapse').on('click', e =>
 {
