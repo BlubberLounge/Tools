@@ -12078,11 +12078,40 @@ textarea.form-control-lg {
 }
 
 .popover {
-  --bs-popover-max-width: 400px;
+  --bs-popover-max-width: 500px;
 }
 
 .popover .popover-body {
-  max-height: 350px;
-  width: 300px;
+  --bs-popover-body-padding-y: .5rem;
+  max-height: 450px;
+  width: 350px;
   overflow-y: scroll;
+}
+
+.popover-body::-webkit-scrollbar-track {
+  background: var(--bs-popover-header-bg);
+}
+
+.popover-body::-webkit-scrollbar-thumb {
+  background-color: #717171;
+  border-radius: 10px;
+  border: 3px solid var(--bs-popover-header-bg);
+}
+
+.notification-item {
+  text-decoration: none;
+  color: var(--bs-secondary-color);
+  cursor: pointer;
+}
+
+.notification-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.notification-no-container {
+  height: 425px;
+}
+
+.notification-text {
+  font-size: 0.9rem;
 }

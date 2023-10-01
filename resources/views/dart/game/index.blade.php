@@ -17,7 +17,7 @@
 
     <div class="row mb-4 g-1 g-md-3 justify-center">
         @for($i = 2; $i <= 8; $i++)
-            <div class="col-auto">
+            <div class="col-auto" >
                 <a href="{{ route('dart.game.create', ['type' => $i.'01']) }}" id="btnGameType-{{ $i }}01" class="btn btn-primary" data-bl-dart-game-type="{{ $i }}01" role="button">
                     <div class="p-2 p-md-4 d-flex flex-column text-center" data-bs-toggle="tooltip" data-bs-title="{{ __('popover.dartX01', ['points' => $i.'01']) }}">
                         <i class="fa-solid fa-crosshairs mb-3" style="font-size: 2rem;"></i>

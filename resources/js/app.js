@@ -8,7 +8,7 @@ const notificationBtnTriggerList = document.querySelectorAll('[data-bs-toggle="n
 const notificationBtnList = [...notificationBtnTriggerList].map(notificationBtnTriggerEl =>
     new bootstrap.Popover(notificationBtnTriggerEl, {
         html: true,
-        offset: [0, 5],
+        offset: [-100, 5],
         placement: 'bottom',
         // content: function () {
         //     return notification.load();
@@ -64,61 +64,71 @@ const notification = {
     update(popover, notifications)
     {
         let content = '';
-        for(const [i, n] of notifications.entries()) {
-            const title = n.data.title ?? 'no title found';
-            const time = moment().diff(moment(n.created_at), 'days') < 7 ? moment(n.created_at).fromNow() : moment(n.created_at).format('DD.MM.YYYY hh:mm:ss');
-            let icon = '<i class="fa-solid fa-exclamation fa-xl text-info"></i>';
 
-            if(n.data.level == 2) {
-                icon = '<i class="fa-solid fa-circle-exclamation fa-xl text-warning"></i>';
-            } else if(n.data.level == 3) {
-                icon = '<i class="fa-solid fa-triangle-exclamation fa-xl text-danger"></i>';
+        if(typeof notifications !== 'undefined' && notifications.length !== 0) {
+            for(const [i, n] of notifications.entries()) {
+                const title = n.data.title ?? 'no title found';
+                const time = moment().diff(moment(n.created_at), 'days') < 7 ? moment(n.created_at).fromNow() : moment(n.created_at).format('DD.MM.YYYY hh:mm:ss');
+                let icon = '<i class="fa-solid fa-exclamation fa-xl text-info"></i>';
+
+                if(n.data.level == 2) {
+                    icon = '<i class="fa-solid fa-circle-exclamation fa-xl text-warning"></i>';
+                } else if(n.data.level == 3) {
+                    icon = '<i class="fa-solid fa-triangle-exclamation fa-xl text-danger"></i>';
+                }
+
+                // let btns = '';
+
+                // if(n.type == 'DartGameStarted') {
+                //     btns += '<a class="btn btn-primary" href="#" role="button">Link</a>';
+                //     console.log('a');
+                // }
+
+                content += `<a href="#" class="notification-item row align-items-center p-0 py-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">`+
+                                `<div class="col-1 d-flex justify-center">`+
+                                    `${ icon }`+
+                                `</div>`+
+                                `<div class="col">`+
+                                    `<div class="row">`+
+                                        `${ title }`+
+                                    `</div>`+
+                                    `<div class="row">`+
+                                        `${ time }`+
+                                    `</div>`+
+                                `</div>`+
+                                // `<div class="col">`+
+                                //     `${ btns }`+
+                                // `</div>`+
+                            `</a>`+
+                            `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
             }
 
-            // let btns = '';
-
-            // if(n.type == 'DartGameStarted') {
-            //     btns += '<a class="btn btn-primary" href="#" role="button">Link</a>';
-            //     console.log('a');
-            // }
-
-            content += `<div class="row align-items-center">`+
-                            `<div class="col-3 d-flex justify-center">`+
-                                `${ icon }`+
-                            `</div>`+
-                            `<div class="col">`+
-                                `<div class="row">`+
-                                    `<a href="#" class="link-light p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">${ title }</a>`+
-                                `</div>`+
-                                `<div class="row">`+
-                                    `${ time }`+
-                                `</div>`+
-                            `</div>`+
-                            // `<div class="col">`+
-                            //     `${ btns }`+
-                            // `</div>`+
-                            `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`+
-                        `</div>`;
+            content += `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                    </div>
+                </div>
+                </div>`;
+        } else {
+            content +=
+                `<div class="d-flex flex-column justify-center align-center text-center notification-no-container">`+
+                    `<i class="fa-regular fa-bell fa-9x mb-4"></i>`+
+                    `<div class="text-muted fw-medium notification-text">`+
+                        `Hier findest du deine <br /> Benachrichtigungen`+
+                    `</div>`+
+                `</div>`;
         }
-
-        content += `<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-                </div>
-            </div>
-            </div>`;
-
         popover.setContent({
             '.popover-header': popover._config.title,
             '.popover-body': content,

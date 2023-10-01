@@ -72,7 +72,7 @@
                         {{ Breadcrumbs::render() }}
                     </div>
                     <div class="">
-                        <button class="btn text-white position-relative" data-bs-toggle="notification" data-bs-title="{{ __('notifications') }}" data-bs-content="{{ __('no notifications available') }}" >
+                        <button class="btn text-white position-relative" data-bs-toggle="notification" data-bs-title="<span class='ms-auto'>{{ __('notifications') }}</span> <a href='#' ><i class='fa-solid fa-gear'></i></a>" data-bs-content="{{ __('no notifications available') }}" >
                             <i class="fa-solid fa-bell fa-xl"></i>
                             @if(Auth::user()->unreadNotifications->count() > 0)
                                 <span class="position-absolute translate-middle bg-danger border border-dark badge rounded-pill" style="left: .4rem;top: .2rem;--bs-badge-padding-x: .5em;--bs-badge-padding-y: .25em">
