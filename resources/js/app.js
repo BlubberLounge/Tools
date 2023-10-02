@@ -154,3 +154,9 @@ function htmlToElement(html) {
     template.innerHTML = html.trim();
     return template.content.firstChild;
 }
+
+Notification.requestPermission().then( perm => {
+    if(perm === "granted") {
+        new Notification("Hello from the other side!");
+    }
+})
