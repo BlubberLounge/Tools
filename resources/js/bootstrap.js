@@ -41,10 +41,10 @@ const myDefaultAllowList = bootstrap.Tooltip.Default.allowList
 // myDefaultAllowList.table = []
 
 // To allow td elements and data-bs-option attributes on td elements
-// myDefaultAllowList.td = ['data-bs-option']
+// myDefaultAllowList.td = ['data-bl-id'];
 
-const BootstrapDataAttributes = /^data-bs-[\w-]+/
-myDefaultAllowList['*'].push(BootstrapDataAttributes)
+myDefaultAllowList['*'].push(/^data-bs-[\w-]+/);
+myDefaultAllowList['*'].push(/^data-bl-[\w-]+/);
 
 $('#sidebarCollapse').on('click', e =>
 {

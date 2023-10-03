@@ -21,7 +21,7 @@
 }
 
 ::selection {
-    background-color: #222;
+    background-color: var(--bl-clr-gray-80);
     color: white;
 }
 

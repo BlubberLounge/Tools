@@ -99,7 +99,7 @@
 
 .popover .popover-body {
     --bs-popover-body-padding-y: .5rem;
-    max-height: 450px;
+    height: 450px;
     width: 350px;
     overflow-y: scroll;
 }
@@ -130,6 +130,28 @@
 
 .notification-text {
     font-size: .9rem;
+}
+
+// Custom Bootstrap/Popper Popover class
+.popover-notification .popover-body:after {
+    position: absolute;
+    content: "\f0f3";
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 400;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15rem;
+    color: rgba(255, 255, 255, .02);
+    z-index: -1;
+}
+
+.text-fire:before {
+    background-color: #e1bc29;
+    background-image: linear-gradient(316deg, #e1bc29 0%, #e36463 74%);
+    background-clip: text;
+    -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 // .breadcrumb {

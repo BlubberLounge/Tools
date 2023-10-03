@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Enums\DartGameStatus;
+use App\Enums\DartGameUserStatus;
 use App\Http\Controllers\Api\v1\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +95,9 @@ class DartGameController extends Controller
         return $this->sendResponse($data, 'ok');
     }
 
+    /**
+     *
+     */
     public function destroyPlayer(Request $request, DartGame $dartGame, User $user)
     {
         // soft delete
@@ -104,4 +108,36 @@ class DartGameController extends Controller
 
         return $this->sendResponse(null, 'ok');
     }
+
+    /**
+     *
+     */
+    public function accept(Request $request, DartGame $dartGame)
+    {
+        $game = Auth::user()->DartGames()->find($dartGame->id);
+
+        if($game->pivot->status != DartGameUserStatus::PENDING)
+            return $this->sendError('Can\'t update user game status', null, 409);
+
+        $game->pivot->status = DartGameUserStatus::ACCEPTED;
+        $game->pivot->save();
+
+        return $this->sendResponse(null, 'ok');
+    }
+
+    /**
+     *
+     */
+   public function decline(Request $request, DartGame $dartGame)
+   {
+        $game = Auth::user()->DartGames()->find($dartGame->id);
+
+        if($game->pivot->status != DartGameUserStatus::PENDING)
+        	return $this->sendError('Can\'t update user game status', null, 409);
+
+        $game->pivot->status = DartGameUserStatus::DENIED;
+        $game->pivot->save();
+
+    return $this->sendResponse(null, 'ok');
+   }
 }

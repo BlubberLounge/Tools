@@ -45,6 +45,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows']);
         Route::get('/getPlayerStatus/{dartGame}', [DartGameController::class, 'getPlayerStatus']);
         Route::delete('/destroyPlayer/{dartGame}/user/{user}', [DartGameController::class, 'destroyPlayer']);
+        Route::put('/{dartGame}/accept', [DartGameController::class, 'accept']);
+        Route::put('/{dartGame}/decline', [DartGameController::class, 'decline']);
 
         // local and development only
         if(App::environment(['local', 'development']))
@@ -63,5 +65,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 
 
     Route::resource('notification', NotificationController::class)
-        ->only('index');
+        ->only(['index', 'show', 'update']);
 });

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Api\v1\Controller;
+use App\Models\DartGame;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Notifications\DartGameStarted;
+use Illuminate\Notifications\DatabaseNotification;
+
 
 class NotificationController extends Controller
 {
@@ -37,17 +39,28 @@ class NotificationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(DatabaseNotification $notification)
     {
-        //
+        $notification->type = class_basename($notification->type);
+
+        if(array_key_exists('gameId', $notification->data)) {
+            $game = DartGame::where('id', $notification['data']['gameId'])->with('users:name,firstname,lastname,img')->first();
+            $notification->game = $game;
+        }
+
+        $data['notification'] = $notification;
+
+        return $this->sendResponse($data, 'ok');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, DatabaseNotification $notification)
     {
-        //
+        $notification->markAsRead();
+
+        return $this->sendResponse(null, 'ok');
     }
 
     /**
