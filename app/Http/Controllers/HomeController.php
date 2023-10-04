@@ -6,10 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
-use App\Notifications\DartGameStarted;
-use App\Models\User;
-use App\Notifications\UserRegisteredNotification;
-
 class HomeController extends Controller
 {
     /**
@@ -19,14 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Auth::user()->notify(new DartGameStarted(Auth::user()));
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
         $data['activeDartGames'] = Auth::user()->activeDartGames()->get();
         $data['activeDartGame'] = Auth::user()->activeDartGame();
-
-        foreach(User::aboveLevel5()->get() as $user) {
-            $user->notify(new UserRegisteredNotification());
-        }
 
         return view('home.index', $data);
     }

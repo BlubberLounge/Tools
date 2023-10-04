@@ -357,7 +357,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      *
      */
-    public function ActiveDartGame(): DartGame
+    public function ActiveDartGame(): ?DartGame
     {
         return $this->belongsToMany(DartGame::class)
             ->withTimestamps()

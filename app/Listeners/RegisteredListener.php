@@ -6,8 +6,11 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
+
 use App\Classes\DeviceTracker;
 use App\Models\User;
+use App\Notifications\UserRegisteredNotification;
+
 
 class RegisteredListener
 {
@@ -24,10 +27,10 @@ class RegisteredListener
      */
     public function handle(Registered $event): void
     {
-        if (Auth::guard('web')->check()) {
-            DeviceTracker::detectRegistration();
+        DeviceTracker::detectRegistration();
+
+        foreach(User::aboveLevel5()->get() as $user) {
+            $user->notify(new UserRegisteredNotification($user, $event->user));
         }
-        // $abc = User::admins()->first();
-        // dd($abc);
     }
 }

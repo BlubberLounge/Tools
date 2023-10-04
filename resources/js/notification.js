@@ -68,30 +68,42 @@ const notification = {
                     icon = '<i class="fa-solid fa-triangle-exclamation fa-xl text-danger"></i>';
                 }
 
-                // let btns = '';
-
-                // if(n.type == 'DartGameStarted') {
-                //     btns += '<a class="btn btn-primary" href="#" role="button">Link</a>';
-                //     console.log('a');
-                // }
-
-                content += `<a href="#" class="notification-item row align-items-center p-0 py-2" data-bl-id="${ n.id }">`+ //data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                `<div class="col-2 d-flex justify-center">`+
-                                    `${ icon }`+
-                                `</div>`+
-                                `<div class="col">`+
-                                    `<div class="row">`+
-                                        `${ title }`+
-                                    `</div>`+
-                                    `<div class="row">`+
-                                        `${ time }`+
-                                    `</div>`+
-                                `</div>`+
-                                // `<div class="col">`+
-                                //     `${ btns }`+
-                                // `</div>`+
+                if(n.type == 'UserRegisteredNotification') {
+                    content += `<div class="notification-item notification-ok row align-items-center p-0 py-2" data-bl-id="${ n.id }">`+
+                        `<div class="col-2 d-flex justify-center">`+
+                            `${ icon }`+
+                        `</div>`+
+                        `<div class="col">`+
+                            `<div class="row">`+
+                                `${ title }`+
+                            `</div>`+
+                            `<div class="row">`+
+                                `${ time }`+
+                            `</div>`+
+                        `</div>`+
+                        `<div class="col-2 d-flex justify-center">`+
+                            `<a href="#" class="btn btn-mark-as-read">`+
+                                `<i class="fa-solid fa-check"></i>`+
                             `</a>`+
-                            `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
+                        `</div>`+
+                    `</div>`+
+                    `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
+                } else {
+                    content += `<a href="#" class="notification-item notification-modal row align-items-center p-0 py-2" data-bl-id="${ n.id }">`+
+                        `<div class="col-2 d-flex justify-center">`+
+                            `${ icon }`+
+                        `</div>`+
+                        `<div class="col">`+
+                            `<div class="row">`+
+                                `${ title }`+
+                            `</div>`+
+                            `<div class="row">`+
+                                `${ time }`+
+                            `</div>`+
+                        `</div>`+
+                    `</a>`+
+                    `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
+                }
             }
         } else {
             if(counter)
@@ -111,8 +123,34 @@ const notification = {
             '.popover-body': content,
         });
 
-        const notificationItemList = document.querySelectorAll('.notification-item');
-        [...notificationItemList].map( item => {
+        const notificationItemOkList = document.querySelectorAll('.notification-ok');
+        [...notificationItemOkList].map( item => {
+            item.getElementsByClassName('btn-mark-as-read')[0].addEventListener('click', e => {
+                const id = item.getAttribute('data-bl-id');
+                axios.put(`/api/v1/notification/${id}`, null).then ( r => {
+
+                    const notificationItem = e.target.closest('.notification-item');
+
+                    if(notificationItem.previousSibling) {
+                        notificationItem.previousSibling.remove();
+                    } else if(notificationItem.nextSibling) {
+                        notificationItem.nextSibling.remove();
+                    }
+
+                    notificationItem.remove();
+
+                    const counter = document.getElementById('notification-counter');
+                    counter.innerHTML = counter.innerHTML - 1;
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log(error.response.data);
+                    }
+                });
+            });
+        });
+
+        const notificationItemModalList = document.querySelectorAll('.notification-modal');
+        [...notificationItemModalList].map( item => {
             item.addEventListener('click', e => {
                 const id = item.getAttribute('data-bl-id');
                 modal.load(id);

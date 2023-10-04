@@ -12101,15 +12101,26 @@ textarea.form-control-lg {
 .notification-item {
   text-decoration: none;
   color: var(--bs-secondary-color);
+}
+
+.notification-modal {
   cursor: pointer;
 }
 
-.notification-item:hover {
+.notification-modal:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .notification-no-container {
   height: 425px;
+}
+
+.btn-mark-as-read {
+  color: var(--bs-secondary-color);
+}
+
+.btn-mark-as-read:hover {
+  color: var(--bs-body-color);
 }
 
 .notification-text {
