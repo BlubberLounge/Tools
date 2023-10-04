@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-{{-- @push('scripts')
-    <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')"></script>
-@endpush --}}
+@push('scripts')
+    {{-- <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+@endpush
 
 @section('content')
 <div class="container">
@@ -29,8 +30,8 @@
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-12 col-md rounded">
+    <div class="row g-4" data-masonry='{"percentPosition": true }'>
+        <div class="col-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="text-center">{{ __('active dart game') }}</h5>
                 @if($activeDartGame)
@@ -52,7 +53,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-12 col-md rounded">
+        <div class="col-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5>{{ __('open dart games') }}</h5>
                 <div class="rounded" style="max-height: 300px;overflow-y:scroll;">
@@ -75,6 +76,9 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="col-6">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BlSEnWR554eq3VqnHmkuM?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
     </div>
     {{-- <div class="row">
