@@ -1,33 +1,41 @@
 <p align="center">
-    <a href="https://laravel.com" target="_blank">
-        <img src="http://media.maximilian-mewes.de/project/dwa/dart_logo_git.png" width="400">
+    <a href="https://github.com/BlubberLounge/Tools" target="_blank">
+        <img src="https://media.maximilian-mewes.de/project/dwa/dart_logo_git.png" width="400">
     </a>
 </p>
 
-# 🔧 Welcome to Shisha-Tools 🌈
+## Welcome to BlubberLounge Tools 🔧
 
-A collection of more or less useful shisha tools/management software written with Laravel
+A collection of more or less useful management software written by the BlubberLounge Team ❤️‍🔥
 
-# ⚙️ Features
+## ⚙️ Features
 
-- User/Player Management
-- Audit logging
-- 
+- User/Player management
+- Acces Request system
+- Auditing (+ logging)
+- Dart (game) management system
+- Dart statistics
+- Live Dart view
+- Dart lobby management
+- Notification system
+- Device management
+- Battery simulation
+- User feedback system
+- FAQ
+- Api (+ OpenApi/Swagger Documentation)
 
-# 🏆 Goals of this Project
+## 💭 Future ideas
 
-- [ ] Shisha Management System
-- [x] User/Player Management
-- [x] Dart (the game) tracking system
-- [ ] Coal Calculator
-- [ ] Tabacco Calculator
+- [ ] TBD: fill with `Future Ideas`
 
-# 💭 Future ideas
+## Screenshots
 
-- [ ] Fill section with `Future Ideas`
+<p align="center">
+    <img src="https://media.maximilian-mewes.de/project/tools/blubberlounge-tools-home.png" width="400">
+    <img src="https://media.maximilian-mewes.de/project/tools/blubberlounge-tools-dart.png" width="400">
+</p>
 
-
-# 👪 Contributing
+## 👪 Contributing
 
 If you plan to submit a PR bigger than a simple change in one file, here is a short intro about how to do a clean PR. **greatly appreciated**.
 
@@ -35,8 +43,8 @@ If you have a suggestion that would make this better, please fork the repo and c
 You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project locally via git clone `https://github.com/BlubberLounge/Shisha-Tools.git` (replacing `BlubberLounge` with your GitHub Username) and work on your local copy
-2. Add the upstream repository via git remote add upstream `https://github.com/BlubberLounge/Shisha-Tools.git`
+1. Fork the Project locally via git clone `https://github.com/BlubberLounge/Tools.git` (replacing `BlubberLounge` with your GitHub Username) and work on your local copy
+2. Add the upstream repository via git remote add upstream `https://github.com/BlubberLounge/Tools.git`
 3. Ensure you are on the master branch via `git checkout master`
 4. Create your Feature Branch by running `git checkout -b <temp_branch>`
 5. Set the upstream branch via `git push --set-upstream origin <temp_branch>`
@@ -60,7 +68,7 @@ Don't forget to give the project a star! Thanks again!
     </a>
 </p>
 
-## How to install (Development)
+## How to install (for development)
 
 1. Clone this repo
 
@@ -98,7 +106,7 @@ Don't forget to give the project a star! Thanks again!
     php artisan serve
     ```
 
-# 📝 Notes
+## 📝 Notes
 
 
 ## ✌️ Other
