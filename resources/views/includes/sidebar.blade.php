@@ -1,5 +1,5 @@
 <nav id="sidebar" class="p-2 bg-body-tertiary active">
-    <div class="d-flex flex-column h-100" style="flex-shrink: 0">
+    <div class="d-flex flex-column" style="flex-shrink:0;min-height:100%;">
         <div class="d-flex justify-center py-2">
             <a class="d-flex align-items-center" href="{{ url('/') }}">
                 <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
@@ -262,6 +262,6 @@
     <div class="text-center mt-5 pb-4">
         <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'invalid') }} </p>
         <p class="m-0 small" style="color:var(--bl-clr-gray-60);"> Systemtime: {{ now()->format('H:i:s d.m.y') }} </p>
-        <p class="m-0 small" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i> Tools {{ now()->year }}. Some Rights Reserverd.</p>
+        <p class="m-0 small" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i>BlubberLounge Tools {{ now()->year }}. Some Rights Reserverd.</p>
     </div>
 </nav>

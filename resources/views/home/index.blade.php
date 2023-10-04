@@ -31,12 +31,12 @@
     </div>
 
     <div class="row g-4" data-masonry='{"percentPosition": true }'>
-        <div class="col-6 rounded">
+        <div class="col-12 col-lg-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="text-center">{{ __('active dart game') }}</h5>
+                <h5 class="mb-3">{{ __('active dart game') }}</h5>
                 @if($activeDartGame)
                     <div>
-                        <h6>{{ $activeDartGame->title }}</h6>
+                        <h6 class="text-center">{{ $activeDartGame->title }}</h6>
                         <div class="row p-0 m-0">
                             @foreach ($activeDartGame->users as $user)
                                 <div class="col">
@@ -53,9 +53,9 @@
                 @endif
             </div>
         </div>
-        <div class="col-6 rounded">
+        <div class="col-12 col-lg-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5>{{ __('open dart games') }}</h5>
+                <h5 class="mb-3">{{ __('open dart games') }}</h5>
                 <div class="rounded" style="max-height: 300px;overflow-y:scroll;">
                     <ul class="list-group list-group-flush">
                         @forelse  ($dartGames as $dartGame)
@@ -77,10 +77,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BlSEnWR554eq3VqnHmkuM?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="col-12 col-lg-6">
+            <div class="rounded p-0 pt-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5 class="px-3 mb-3">{{ __('recommended playlist') }}</h5>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BlSEnWR554eq3VqnHmkuM?utm_source=generator" width="100%" height="400" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
     </div>
+
+    {{-- {!! $test !!} --}}
     {{-- <div class="row">
         <div id="g_id_onload"
             data-client_id="{{ env('GOOGLE_CLIENT_ID') }}"
