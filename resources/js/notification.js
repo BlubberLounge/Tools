@@ -54,7 +54,8 @@ const notification = {
         let counter = document.getElementById('notification-counter');
 
         if(typeof notifications !== 'undefined' && notifications.length !== 0) {
-            counter.innerHTML = notifications.length;
+            if(counter)
+                counter.innerHTML = notifications.length;
 
             for(const [i, n] of notifications.entries()) {
                 const title = n.data.title ?? 'no title found';
@@ -93,7 +94,8 @@ const notification = {
                             `${(i < notifications.length-1 ? `<hr class="my-1" />` : '')}`;
             }
         } else {
-            counter.remove();
+            if(counter)
+                counter.remove();
 
             content +=
                 `<div class="d-flex flex-column justify-center align-items-center notification-no-container">`+

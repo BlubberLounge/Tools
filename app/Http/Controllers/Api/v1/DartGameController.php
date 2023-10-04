@@ -116,7 +116,7 @@ class DartGameController extends Controller
     {
         $game = Auth::user()->DartGames()->find($dartGame->id);
 
-        if($game->pivot->status != DartGameUserStatus::PENDING)
+        if($game->pivot->status != DartGameUserStatus::PENDING->value)
             return $this->sendError('Can\'t update user game status', null, 409);
 
         $game->pivot->status = DartGameUserStatus::ACCEPTED;
@@ -132,7 +132,7 @@ class DartGameController extends Controller
    {
         $game = Auth::user()->DartGames()->find($dartGame->id);
 
-        if($game->pivot->status != DartGameUserStatus::PENDING)
+        if($game->pivot->status != DartGameUserStatus::PENDING->value)
         	return $this->sendError('Can\'t update user game status', null, 409);
 
         $game->pivot->status = DartGameUserStatus::DENIED;
