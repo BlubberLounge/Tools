@@ -7,19 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class DartGameStarted extends Notification implements ShouldQueue
+class UserRegisteredNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-
-    protected string $gameId;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(object $notifiable, string $gameId)
+    public function __construct()
     {
         $this->afterCommit();
-        $this->gameId = $gameId;
     }
 
     /**
@@ -38,12 +35,9 @@ class DartGameStarted extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    // ->error()
-                    ->priority(3)
-                    ->subject('Dart Game Started')
-                    ->line('You just got invited to a dart game.')
-                    ->line('To accept or decline just press the following button:')
-                    ->action('BlubberLounge Tools', route('home'))
+                    ->priority(2)
+                    ->subject('A new user just registered')
+                    ->action('BlubberLounge Tools', route('invitation.index'))
                     ->line('<img border=0 width=1 alt="" height=1 src="'. route('mail-tracker.t', $this->id) .'" />');
     }
 
@@ -55,9 +49,8 @@ class DartGameStarted extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'Dart Game Started',
-            'level' => 1, // 1 = info, 2 = warning, 3 = danger
-            'gameId' => $this->gameId,
+            'title' => 'New user registered',
+            'level' => 2
         ];
     }
 

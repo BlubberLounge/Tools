@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -121,6 +122,22 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     public function scopeLike($query, $field, $value)
     {
         return $query->where($field, 'LIKE', "%$value%");
+    }
+
+    /**
+     *
+     */
+    public function scopeAdmins(Builder $query): void
+    {
+        $query->whereHas('roles', fn ($q) => $q->where('roles.slug', 'admin'));
+    }
+
+    /**
+     *
+     */
+    public function scopeAboveLevel5(Builder $query): void
+    {
+        $query->whereHas('roles', fn ($q) => $q->where('roles.level', 5));
     }
 
     /**
