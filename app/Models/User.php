@@ -127,9 +127,25 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      *
      */
+    public function scopeDevelopers(Builder $query): void
+    {
+        $query->whereHas('roles', fn ($q) => $q->where('roles.slug', 'admin'));
+    }
+
+    /**
+     *
+     */
     public function scopeAdmins(Builder $query): void
     {
         $query->whereHas('roles', fn ($q) => $q->where('roles.slug', 'admin'));
+    }
+
+    /**
+     *
+     */
+    public function scopeGameMasters(Builder $query): void
+    {
+        $query->whereHas('roles', fn ($q) => $q->where('roles.slug', 'game.master'));
     }
 
     /**

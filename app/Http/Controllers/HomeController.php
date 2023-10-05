@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
+use App\Models\User;
+use App\Notifications\UserRegisteredNotification;
+
 class HomeController extends Controller
 {
     /**
