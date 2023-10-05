@@ -82,7 +82,8 @@
                 </div>
 
                 <div class="mt-1 text-center text-sm text-gray-500">
-                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                    <i class="fa-regular fa-copyright fa-xs"></i> BlubberLounge 2010-{{ now()->format('Y') }}.
+                    <br> Some Rights Reserverd.
                 </div>
             </div>
         </div>
