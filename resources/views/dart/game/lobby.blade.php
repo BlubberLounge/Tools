@@ -17,23 +17,21 @@
             {{ __('Before the game can begin, each player from the list must accept the game. Each player has received an email notification. Players who have accepted the game have a green frame. Players who have declined the game have a red frame. After all players have accepted the game will start automatically.') }}
         </p>
     </div>
-    <div class="row">
+    <div class="row mb-5">
         @foreach ($users as $user)
-        <div class="col-12 col-md d-flex justify-center mb-3">
-            <div class="card w-100 {{ $user->pivot->status === \App\Enums\DartGameUserStatus::ACCEPTED->value ? 'border-success' : ($user->pivot->status === \App\Enums\DartGameUserStatus::DENIED->value ? 'border-danger' : '') }} p-3" data-user-id="{{ $user->id }}">
-                <div class="row align-items-center g-0 ">
-                    <div class="col-3 me-3">
-                        <img src="{{ $user->img }}" class="img rounded-circle" width="75px">
+            <div class="col-6 col-md d-flex justify-center flex-column">
+                <div class="row justify-center mb-2">
+                    <div class="col-auto">
+                        <img src="{{ $user->img }}" width="96" class="rounded-circle border border-3 {{ $user->pivot->status === \App\Enums\DartGameUserStatus::ACCEPTED->value ? 'border-success' : ($user->pivot->status === \App\Enums\DartGameUserStatus::DENIED->value ? 'border-danger' : '') }} p-1" data-user-id="{{ $user->id }}">
                     </div>
-                    <div class="col-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $user->full_name }}</h5>
-                            <p class="card-text"><small class="text-body-secondary user-status">{{ __($user->pivot->status) }}</small></p>
-                        </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <h5>{{ $user->full_name }}</h5>
+                        <p class="card-text"><small class="text-body-secondary user-status">{{ __($user->pivot->status) }}</small></p>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
 

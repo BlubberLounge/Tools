@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\UserController as ApiUserController;
 
 use App\Http\Controllers\DartController;
 use App\Http\Controllers\DartGameController;
+use App\Http\Controllers\DartQueuedUserController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HookahController;
@@ -55,6 +56,7 @@ class PermissionsTableSeeder extends Seeder
             // web
             DartController::class,
             DartGameController::class,
+            DartQueuedUserController::class,
             FAQController::class,
             FeedbackController::class,
             HookahController::class,

@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col">
                         <h1>
-                            <i class="fa-solid fa-sliders"></i> {{ __('dart settings') }}
+                            {{ __('create dart lobby') }}
                         </h1>
                         <p> {{ __('Game type') }}: <u>{{ __($dartGameType) }}</u></p>
                     </div>

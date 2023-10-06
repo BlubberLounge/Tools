@@ -9,11 +9,19 @@ use Illuminate\Auth\Access\Response;
 class DartQueuedUserPolicy
 {
     /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, $ability): bool|null
+    {
+        return $user->level() >= 5 ?: null;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermission('viewany.dart.queued.user');
     }
 
     /**
@@ -21,7 +29,7 @@ class DartQueuedUserPolicy
      */
     public function view(User $user, DartQueuedUser $dartQueuedUser): bool
     {
-        //
+        return $user->hasPermission('view.dart.queued.user');
     }
 
     /**
@@ -29,7 +37,7 @@ class DartQueuedUserPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->hasPermission('create.dart.queued.user');
     }
 
     /**
@@ -37,7 +45,7 @@ class DartQueuedUserPolicy
      */
     public function update(User $user, DartQueuedUser $dartQueuedUser): bool
     {
-        //
+        return $user->hasPermission('update.dart.queued.user');
     }
 
     /**
@@ -45,7 +53,7 @@ class DartQueuedUserPolicy
      */
     public function delete(User $user, DartQueuedUser $dartQueuedUser): bool
     {
-        //
+        return $user->hasPermission('delete.dart.queued.user');
     }
 
     /**
@@ -53,7 +61,7 @@ class DartQueuedUserPolicy
      */
     public function restore(User $user, DartQueuedUser $dartQueuedUser): bool
     {
-        //
+        return $user->hasPermission('restore.dart.queued.user');
     }
 
     /**
@@ -61,6 +69,6 @@ class DartQueuedUserPolicy
      */
     public function forceDelete(User $user, DartQueuedUser $dartQueuedUser): bool
     {
-        //
+        return $user->hasPermission('forcedelete.dart.queued.user');
     }
 }

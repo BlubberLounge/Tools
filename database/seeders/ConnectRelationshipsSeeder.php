@@ -37,6 +37,13 @@ class ConnectRelationshipsSeeder extends Seeder
             );
         }
 
+        $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'game.master')->first(), [
+            'viewany.dart.queued.user',
+            'view.dart.queued.user',
+            'update.dart.queued.user',
+            'delete.dart.queued.user',
+        ]);
+
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'user')->first(), [
             'update.user.language',
             'viewany.device',
@@ -44,16 +51,14 @@ class ConnectRelationshipsSeeder extends Seeder
             'view.calculator',
             'create.feedback',
             'viewany.f.a.q',
-        ]
-    );
+        ]);
 
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'dart.player')->first(), [
                 'viewany.dart',
                 'view.dart.info',
                 'view.dart.checkouts',
                 'view.dart.game',
-            ]
-        );
+        ]);
 
 
     }

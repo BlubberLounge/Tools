@@ -15,7 +15,7 @@
     height: 100vh;
     z-index: 999;
     transition: all .3s;
-    overflow-y: auto;
+    overflow: hidden;
 
     ol, ul {
         padding-left: .625rem;
@@ -24,6 +24,10 @@
             padding-left: 1.1em;
         }
     }
+}
+
+#sidebar:hover {
+    overflow-y: auto;
 }
 
 #sidebar.active {

@@ -99,7 +99,7 @@ class DartGameController extends Controller
         if($dartGame->isCreated()) {
             $data['users'] = $dartGame->usersBy('position')->get();
             $dartGame->notifyAllPlayersGameStarted();
-            $view = view('dart.game.waiting', $data);
+            $view = view('dart.game.lobby', $data);
 
         } else if($dartGame->isRunning() || $dartGame->isCreated()) {
             $data['users'] = $dartGame->usersBy('position')->get();
@@ -161,8 +161,8 @@ class DartGameController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showLive(DartGame $dartGame)
+    public function showLive()
     {
-        //
+        return view('dart.game.live', []);
     }
 }
