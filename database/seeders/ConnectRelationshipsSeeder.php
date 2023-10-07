@@ -38,10 +38,7 @@ class ConnectRelationshipsSeeder extends Seeder
         }
 
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'game.master')->first(), [
-            'viewany.dart.queued.user',
-            'view.dart.queued.user',
-            'update.dart.queued.user',
-            'delete.dart.queued.user',
+
         ]);
 
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'user')->first(), [

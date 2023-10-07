@@ -83,6 +83,20 @@
                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2BlSEnWR554eq3VqnHmkuM?utm_source=generator" width="100%" height="400" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
+        <div class="col-12 col-lg-6">
+            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5 class="mb-3">{{ __('dart queue') }}</h5>
+                <p class="text-success text-center">{{ __('you are in the queue') }}</p>
+                <div class="row justify-center">
+                    <div class="col col-md-8">
+                        <div class="d-grid">
+                            {{-- <button type="button" class="btn btn-outline-warning"> {{ __('put me on the waiting list') }}</button> --}}
+                            <button type="button" class="btn btn-outline-warning"> {{ __('i would like to play in the next game') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- {!! $test !!} --}}

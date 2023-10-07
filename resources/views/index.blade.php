@@ -83,7 +83,7 @@
 
                 <div class="mt-1 text-center text-sm text-gray-500">
                     <i class="fa-regular fa-copyright fa-xs"></i> BlubberLounge 2010-{{ now()->format('Y') }}.
-                    <br> Some Rights Reserverd.
+                    <br> Some Rights Reserved.
                 </div>
             </div>
         </div>
