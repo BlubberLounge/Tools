@@ -4,9 +4,6 @@ require('./consoleText');
 require('./sidebar');
 require('./notification');
 
-var audio = new Audio("/audio/example_audio.mp3");
-audio.play();
-
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl =>

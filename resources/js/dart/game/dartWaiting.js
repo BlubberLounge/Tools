@@ -50,7 +50,7 @@ function updateDisplay(gameId, data)
         const el = parent.getElementsByClassName('user-status')[0];
         el.innerHTML = `${status} `;
         parent.classList.remove('border-success', 'border-danger');
-
+        console.log(status);
         if(status == PlayerStatus.denied) {
             const btn = document.createElement('a');
             btn.href = '#';

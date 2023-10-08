@@ -153,10 +153,41 @@ export default class Dartboard
 
         const hit = new Hit(x, y, points, field, fieldName, ring, ringName);
 
+        this._handleSoundEffect(points);
+
         // console.log(hit);
 
         // dartHit event
         this._dispatchThrowEvent(hit);
+    }
+
+    _handleSoundEffect(points)
+    {
+        const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        let sound = '';
+
+        if(points <= 0) {
+            sound = getRandomElement([
+                'GER_Hans_du_kacknoob',
+                'GER_Hans_omg_du_bist_so_kacke',
+                'GER_Hans_noob_noob',
+                'GER_Hans_daneben',
+                'FR_Mathieu_daneben'
+            ]);
+        } else if(points >= 180) {
+            sound = getRandomElement([
+                'EN_Brain_180',
+                'GER_Hans_180_juhu'
+            ]);
+        } else if(points == 50) {
+            sound = 'calgon';
+        }
+
+        if(sound != '') {
+            var audio = new Audio(`/audio/${sound}.mp3`);
+            audio.play();
+        }
+
     }
 
     _dispatchThrowEvent(hit)
