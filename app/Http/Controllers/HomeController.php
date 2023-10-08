@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 use App\Models\User;
+use App\Models\DartQueue;
 use App\Notifications\UserRegisteredNotification;
 
 class HomeController extends Controller
@@ -21,6 +22,8 @@ class HomeController extends Controller
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
         $data['activeDartGames'] = Auth::user()->activeDartGames()->get();
         $data['activeDartGame'] = Auth::user()->activeDartGame();
+        $data['dartQueue'] = DartQueue::with('parentUser')->get()->unique('parent_user_id')->sortBy('created_at');
+        // dd($data['dartQueue']);
 
         return view('home.index', $data);
     }

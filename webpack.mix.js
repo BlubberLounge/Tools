@@ -17,7 +17,7 @@ mix
     .js('resources/js/auth.js', 'public/js')
     // .js('resources/js/sw.js', 'public/js')
     .js('resources/js/s.js', 'public/js')
-
+    .js('resources/js/home.js', 'public/js')
 
     // Dart
     .js('resources/js/dart/dartIndex.js', 'public/js')

@@ -276,6 +276,24 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     }
 
     /**
+     *
+     */
+    public function dartQueueChilds(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, DartQueue::class, 'parent_user_id', 'child_user_id')
+            ->withTimestamps()
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     *
+     */
+    public function isOnDartQueue(): bool
+    {
+        return DartQueue::where('parent_user_id', $this->id)->orWhere('child_user_id', $this->id)->first() ? true : false;
+    }
+
+    /**
      * Get all of the throws for a user by game id
      */
     // public function throwsByGame(): HasMany

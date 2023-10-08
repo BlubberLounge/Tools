@@ -12147,3 +12147,47 @@ textarea.form-control-lg {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.list ul {
+  position: relative;
+  margin-left: 20px;
+}
+
+.list ul:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px solid var(--bs-secondary-color);
+  z-index: 1;
+}
+
+.list li {
+  position: relative;
+  margin: 0;
+}
+
+.list ul li:before,
+.list ul li:last-child:before {
+  top: 50%;
+}
+
+.list ul li:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 0;
+  border-top: 1px solid var(--bs-secondary-color);
+}
+
+.list ul li:last-child:before {
+  bottom: 0;
+  height: auto;
+  background: var(--bs-list-group-bg);
+  z-index: 1;
+}

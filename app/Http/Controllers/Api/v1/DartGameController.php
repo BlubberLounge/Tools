@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\DartGame;
 use App\Models\User;
+use App\Models\DartQueue;
 
 class DartGameController extends Controller
 {
@@ -128,8 +129,8 @@ class DartGameController extends Controller
     /**
      *
      */
-   public function decline(Request $request, DartGame $dartGame)
-   {
+    public function decline(Request $request, DartGame $dartGame)
+    {
         $game = Auth::user()->DartGames()->find($dartGame->id);
 
         if($game->pivot->status != DartGameUserStatus::PENDING->value)
@@ -138,6 +139,29 @@ class DartGameController extends Controller
         $game->pivot->status = DartGameUserStatus::DENIED;
         $game->pivot->save();
 
-    return $this->sendResponse(null, 'ok');
+        return $this->sendResponse(null, 'ok');
    }
+
+    /**
+     *
+     */
+    public function queueAdd(Request $request)
+    {
+        $newQueue = new DartQueue();
+        $newQueue->parent_user_id = Auth::user()->id;
+
+        $newQueue->save();
+
+        return $this->sendResponse(null, 'ok');
+    }
+
+    /**
+     *
+     */
+    public function queueRemove(Request $request)
+    {
+        DartQueue::where('parent_user_id', Auth::user()->id)->delete();
+
+        return $this->sendResponse(null, 'ok');
+    }
 }
