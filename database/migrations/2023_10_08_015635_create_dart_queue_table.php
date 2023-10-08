@@ -28,7 +28,8 @@ return new class extends Migration
             $table->timestamps();
 
             // composite unique key
-            $table->unique(['parent_user_id', 'child_user_id']);
+            $table->unique('parent_user_id');
+            $table->unique('child_user_id');
         });
     }
 

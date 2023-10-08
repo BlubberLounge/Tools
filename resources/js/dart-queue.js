@@ -16,6 +16,7 @@ document.getElementById('btnQueueAdd').addEventListener('click', e =>
         btnRemove.id = 'btnQueueRemove';
         btnRemove.classList.add('btn', 'p-0', 'text-danger', 'h-100', 'float-end');
         newItem.appendChild(btnRemove);
+        addRemoveEventListener(btnRemove);
 
         document.getElementById('dartQueueList').append(newItem);
         const dartText = document.getElementById('dartQueueText')
@@ -31,21 +32,27 @@ document.getElementById('btnQueueAdd').addEventListener('click', e =>
     });
 });
 
-document.getElementById('btnQueueRemove').addEventListener('click', e =>
+addRemoveEventListener(document.getElementById('btnQueueRemove'));
+
+
+function addRemoveEventListener(element)
 {
-    axios.post(`/api/v1/dart/queue/remove`).then( response => {
-        e.target.closest('li').remove();
+    element.addEventListener('click', e =>
+    {
+        axios.post(`/api/v1/dart/queue/remove`).then( response => {
+            e.target.closest('li').remove();
 
-        const dartText = document.getElementById('dartQueueText')
-        dartText.innerHTML = 'Du bist nicht in der Warteschlange';
-        dartText.classList.remove('text-success');
-        dartText.classList.add('text-danger');
+            const dartText = document.getElementById('dartQueueText')
+            dartText.innerHTML = 'Du bist nicht in der Warteschlange';
+            dartText.classList.remove('text-success');
+            dartText.classList.add('text-danger');
 
-        document.getElementById('btnQueueAdd').classList.remove('disabled');
+            document.getElementById('btnQueueAdd').classList.remove('disabled');
 
-    }).catch(function (error) {
-        if (error.response) {
-            console.log(error.response.data);
-        }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
     });
-});
+}
