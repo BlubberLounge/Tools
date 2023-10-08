@@ -19,10 +19,10 @@
     </div>
     <div class="row mb-5">
         @foreach ($users as $user)
-            <div class="col-6 col-md d-flex justify-center flex-column">
+            <div class="col-6 col-md d-flex justify-center flex-column" data-user-id="{{ $user->id }}">
                 <div class="row justify-center mb-2">
                     <div class="col-auto">
-                        <img src="{{ $user->img }}" width="96" class="rounded-circle border border-3 {{ $user->pivot->status === \App\Enums\DartGameUserStatus::ACCEPTED->value ? 'border-success' : ($user->pivot->status === \App\Enums\DartGameUserStatus::DENIED->value ? 'border-danger' : '') }} p-1" data-user-id="{{ $user->id }}">
+                        <img src="{{ $user->img }}" width="96" class="rounded-circle border border-3 {{ $user->pivot->status === \App\Enums\DartGameUserStatus::ACCEPTED->value ? 'border-success' : ($user->pivot->status === \App\Enums\DartGameUserStatus::DENIED->value ? 'border-danger' : '') }} p-1">
                     </div>
                 </div>
                 <div class="row text-center">

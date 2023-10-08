@@ -174,7 +174,7 @@ export default class Dartboard
                 'GER_Hans_daneben',
                 'FR_Mathieu_daneben'
             ]);
-        } else if(points >= 180) {
+        } else if(points >= 60) {
             sound = getRandomElement([
                 'EN_Brain_180',
                 'GER_Hans_180_juhu'
