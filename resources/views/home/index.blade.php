@@ -57,7 +57,7 @@
         <div class="col-12 col-lg-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="mb-3">{{ __('open dart games') }}</h5>
-                <div class="rounded" style="max-height: 300px;overflow-y:scroll;">
+                <div class="rounded" style="max-height: 300px;overflow-y:auto;">
                     <ul class="list-group list-group-flush">
                         @forelse  ($dartGames as $dartGame)
                             <li class="list-group-item">
@@ -95,7 +95,7 @@
                         {{ __('you are not in the queue') }}
                     @endif
                 </p>
-                <div class="rounded" style="max-height:400px;overflow-y:scroll;">
+                <div class="rounded" style="max-height:400px;overflow-y:auto;">
                     <ol id="dartQueueList" class="list-group list-group-numbered list-group-flush list">
                         @forelse ($dartQueue as $queueItem)
                             <li class="list-group-item">
