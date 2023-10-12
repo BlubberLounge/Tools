@@ -22,8 +22,10 @@ $(function()
     {
         let input = $(e.target).val();
 
-        if(input)
+        if(input) {
             dartSetup.fetchUser($(e.target).val());
-
+        } else {
+            document.getElementById('ListUser').innerHTML = ``;
+        }
     }, 400));
 });

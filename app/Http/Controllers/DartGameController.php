@@ -10,10 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameType;
 use App\Models\DartGame;
-use App\Models\DartX01Game;
-use App\Models\DartAroundTheClockGame;
 use App\Models\DartThrow;
 use App\Models\User;
+use App\Models\DartQueue;
 
 class DartGameController extends Controller
 {
@@ -40,6 +39,7 @@ class DartGameController extends Controller
     public function create(Request $request)
     {
         $data['dartGameType'] = $request->type;
+        $data['dartQueue'] = DartQueue::with('parentUser')->get()->unique('parent_user_id')->sortBy('created_at');
         // var_dump($request);
 
         return view('dart.game.create', $data);

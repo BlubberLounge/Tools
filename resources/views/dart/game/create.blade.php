@@ -77,7 +77,7 @@
 
             <hr class="mb-4" />
 
-            <section id="dart-game-player">
+            <section id="dart-game-player" class="mb-5">
                 <h6> {{ __('selected player') }} </h6>
                 <div class="mb-5" id="selectedUserList">
                     <div class="row d-flex align-items-center">
@@ -112,6 +112,37 @@
                             <span class="input-group-text" id="basic-addon1"> {{ __('search') }} </span>
                             <input type="search" id="SearchUser" class="form-control" placeholder="{{ __('username') }}">
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="mb-5" />
+
+            <section id="dart-game-queue" class="mb-4">
+                <h5> {{ __('dart queue') }} </h5>
+                <div class="row justify-center">
+                    <div class="col-md-10">
+                        <ol id="dartQueueList" class="list-group list-group-numbered list-group-flush list">
+                            @forelse ($dartQueue as $queueItem)
+                                <li class="list-group-item">
+                                    {{ $queueItem->parentUser->name }}
+                                    <span class="text-body-secondary small">{{ $queueItem->created_at->diffForHumans() }}</span>
+                                    <ul class="list-group">
+                                        @foreach ($queueItem->parentUser->dartQueueChilds()->get() as $childUser)
+                                            <li class="list-group-item px-3 py-1 border-0">
+                                                {{ $childUser->name }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @empty
+                                @foreach(["no data", "....", "...", "..", "."] as $c)
+                                    <li class="list-group-item" style="opacity:{{.75-$loop->index*.2}};">
+                                        <th scope="row">{{ $c }}</th>
+                                    </li>
+                                @endforeach
+                            @endforelse
+                        </ol>
                     </div>
                 </div>
             </section>

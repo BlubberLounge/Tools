@@ -55,14 +55,5 @@
             </a>
         </div>
     </div>
-
-    <div class="row justify-center">
-        <div class="col col-md-5">
-            <div class="d-grid">
-                {{-- <button type="button" class="btn btn-outline-warning"> {{ __('put me on the waiting list') }}</button> --}}
-                <button type="button" class="btn btn-outline-warning disabled"> {{ __('I would like to play in the next game') }}</button>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
