@@ -42,6 +42,12 @@ export default class DartSetup
         {
             this._moveElementDown(h.target.closest('div.row'));
         });
+
+        const addBtnList = document.querySelectorAll('.btn-add-player');
+        [...addBtnList].forEach( e => this._addEventListenerAddBtn(e) );
+
+        const addAllBtnList = document.querySelectorAll('.btn-add-all-players');
+        [...addAllBtnList].forEach( e => this._addEventListenerAddAllBtn(e) );
     }
 
     async fetchUser(name)
@@ -121,8 +127,8 @@ export default class DartSetup
         let list = document.querySelector('#selectedUserList');
 
         let userId = selectionRow.getAttribute('data-user-id');
-        let userImg = selectionRow.firstChild.querySelector('img').getAttribute('src');
-        let userName = selectionRow.firstChild.textContent;
+        let userImg = selectionRow.querySelector('img').getAttribute('src');
+        let userName = selectionRow.textContent.trim().split(' ')[0];
 
         // Row
         let row = document.createElement('div');
@@ -331,6 +337,44 @@ export default class DartSetup
             }
 
             node.addEventListener('animationend', handleAnimationEnd, {once: true});
+        });
+    }
+
+    _addEventListenerAddBtn(el)
+    {
+        el.addEventListener('click', h =>
+        {
+            if(DartSetup.count >= 4) {
+                // cheap solution must be changed later
+                alert('Maximum players reached!');
+                return;
+            }
+
+            this._createSelectedRow(h.target.closest('li'));
+            this._animateCSS(h.target.closest('li'), 'fadeOut', .5);
+        });
+    }
+
+    _addEventListenerAddAllBtn(el)
+    {
+        el.addEventListener('click', h =>
+        {
+            if(DartSetup.count >= 4) {
+                // cheap solution must be changed later
+                alert('Maximum players reached!');
+                return;
+            }
+            
+            // parent
+            this._createSelectedRow(h.target.closest('li'));
+
+            // childs
+            const childPlayersList = h.target.closest('li').querySelector('ul').children;
+            for( const childPlayer of childPlayersList)
+                this._createSelectedRow(childPlayer);
+
+
+            this._animateCSS(h.target.closest('li'), 'fadeOut', .5);
         });
     }
 }

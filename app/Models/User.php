@@ -288,6 +288,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      *
      */
+    public function hasDartQueueChilds(): bool
+    {
+        return $this->belongsToMany(User::class, DartQueue::class, 'parent_user_id', 'child_user_id')->exists();
+    }
+
+    /**
+     *
+     */
     public function isOnDartQueue(): bool
     {
         return DartQueue::where('parent_user_id', $this->id)->orWhere('child_user_id', $this->id)->first() ? true : false;

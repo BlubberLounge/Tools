@@ -12006,6 +12006,10 @@ textarea.form-control-lg {
   --bs-btn-color: var(--bs-secondary);
 }
 
+.btn-add-all-players {
+  --bs-btn-color: var(--bs-warning);
+}
+
 * {
   scrollbar-width: auto;
   scrollbar-color: #717171 var(--bs-body-bg);
@@ -12150,7 +12154,7 @@ textarea.form-control-lg {
 
 .list ul {
   position: relative;
-  margin-left: 20px;
+  margin-left: 28px;
 }
 
 .list ul:before {

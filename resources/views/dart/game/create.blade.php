@@ -103,7 +103,6 @@
                     </div>
                 </div>
 
-
                 <h5> {{ __('player selection') }} </h5>
                 <div class="row justify-center">
                     <div class="col-md-7">
@@ -121,16 +120,29 @@
             <section id="dart-game-queue" class="mb-4">
                 <h5> {{ __('dart queue') }} </h5>
                 <div class="row justify-center">
-                    <div class="col-md-10">
+                    <div class="col-12 col-md-10 p-0 px-md-2">
                         <ol id="dartQueueList" class="list-group list-group-numbered list-group-flush list">
                             @forelse ($dartQueue as $queueItem)
-                                <li class="list-group-item">
+                                <li class="list-group-item" data-user-id="{{ $queueItem->parentUser->id }}">
+                                    <img src="{{ $queueItem->parentUser->img }}" width="32px" style="border-radius:50%">
                                     {{ $queueItem->parentUser->name }}
-                                    <span class="text-body-secondary small">{{ $queueItem->created_at->diffForHumans() }}</span>
-                                    <ul class="list-group">
+                                    <span class="text-body-secondary small ">{{ $queueItem->created_at->diffForHumans() }}</span>
+                                    <button type="button" class="btn btn-add-player float-end">
+                                        <i class="fa-solid fa-circle-plus fa-xl"></i>
+                                    </button>
+                                    @if($queueItem->parentUser->hasDartQueueChilds())
+                                        <button type="button" class="btn btn-add-all-players float-end">
+                                            <i class="fa-solid fa-users-viewfinder fa-xl"></i>
+                                        </button>
+                                    @endif
+                                    <ul class="list-group" style="width: 98%;">
                                         @foreach ($queueItem->parentUser->dartQueueChilds()->get() as $childUser)
-                                            <li class="list-group-item px-3 py-1 border-0">
+                                            <li class="list-group-item py-1 border-0" data-user-id="{{ $childUser->id }}">
+                                                <img src="{{ $childUser->img }}" width="32px" style="border-radius:50%">
                                                 {{ $childUser->name }}
+                                                <button type="button" class="btn btn-add-player float-end">
+                                                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                                                </button>
                                             </li>
                                         @endforeach
                                     </ul>
