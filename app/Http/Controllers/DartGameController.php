@@ -78,6 +78,10 @@ class DartGameController extends Controller
         $users = User::findMany($request->input('users.*'));
         $users->each(fn($user) => $user->DartGames()->attach($game, ['position' => $userPositons[$user->id]]));
 
+        // clear queue
+        DartQueue::whereIn('parent_user_id', $request->input('users.*'))->delete();
+        DartQueue::whereIn('child_user_id', $request->input('users.*'))->delete();
+
         return redirect()->route('dart.game.show', ['dartGame' => $game->id]);
     }
 
