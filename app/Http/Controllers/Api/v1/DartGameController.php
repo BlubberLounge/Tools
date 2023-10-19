@@ -87,6 +87,17 @@ class DartGameController extends Controller
     }
 
     /**
+     * Display the specified resource by user.
+     */
+    public function showThrowsByUser(Request $request, string $id, User $user)
+    {
+        $game = DartGame::with(['dartThrows'])->find($id);
+        $data['user'] = array_map(fn($user) => [$user['id'] => $game], $game->users->toArray());
+
+        return $this->sendResponse($data, 'ok');
+    }
+
+    /**
      *
      */
     public function getPlayerStatus(Request $request, String $id)

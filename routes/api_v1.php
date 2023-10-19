@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::prefix('dart')->group(function () {
         Route::put('/updatePlace/{dartGame}/{user}', [DartGameController::class, 'updatePlace']);
         Route::get('/showThrows/{dartGame}', [DartGameController::class, 'showThrows']);
+        Route::get('/showThrows/{dartGame}/user/{user}', [DartGameController::class, 'showThrowsByUser']);
         Route::get('/getPlayerStatus/{dartGame}', [DartGameController::class, 'getPlayerStatus']);
         Route::delete('/destroyPlayer/{dartGame}/user/{user}', [DartGameController::class, 'destroyPlayer']);
         Route::put('/{dartGame}/accept', [DartGameController::class, 'accept']);
