@@ -8,6 +8,7 @@
 
 ### dotenv ###
 .env
+.env.testing
 
 ### Laravel ###
 /vendor/

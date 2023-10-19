@@ -108,6 +108,31 @@ Don't forget to give the project a star! Thanks again!
 
 ## 📝 Notes
 
+### Testing 🧪
+
+
+Run tests sequentially with artisan
+
+```sh
+php artisan test
+php artisan test --profile
+php artisan test --coverage
+
+OR
+
+php artisan test --testsuite=Feature
+php artisan test --testsuite=Unit
+php artisan test --testsuite=Feature --stop-on-failure
+```
+
+Run tests in Parallel with artisan
+
+```sh
+php artisan test --parallel
+php artisan test --parallel --processes=4
+```
+
+[Laravel 10.x Testing Documentation](https://laravel.com/docs/10.x/testing)
 
 ## ✌️ Other
 
