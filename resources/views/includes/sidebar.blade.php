@@ -259,9 +259,21 @@
         @endpermission
     </div>
 
-    <div class="text-center mt-5 pb-4">
-        <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'VERSION_invalid') }}-{{ Str::upper(env('APP_ENV', 'ENV_invalid')) }}  </p>
-        <p class="m-0 small" style="color:var(--bl-clr-gray-60);"> Systemtime: {{ now()->format('H:i:s d.m.y') }} </p>
-        <p class="m-0 small" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i>BlubberLounge Tools {{ now()->year }}. Some Rights Reserverd.</p>
+    <div class="row m-0 mt-5">
+        <div class="col-12 p-0 text-center">
+            <a href="" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('about') }} </a>
+            <a href="" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('changelog') }} </a>
+            <a href="" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('contact') }} </a>
+        </div>
+        <div class="col-12 p-0 text-center">
+            <a href="" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('impressum') }} </a>
+            <a href="" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('privacy') }} </a>
+        </div>
+    </div>
+
+    <div class="text-center mt-3 pb-4">
+        <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'VERSION_invalid') }}-{{ Str::upper(env('APP_ENV', 'ENV_invalid')) }}</p>
+        <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Systemtime: {{ now()->format('H:i:s d.m.y') }}</p>
+        <p class="m-0 small" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i> BlubberLounge Tools {{ now()->year }}. Some Rights Reserverd.</p>
     </div>
 </nav>
