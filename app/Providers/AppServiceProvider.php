@@ -46,25 +46,26 @@ class AppServiceProvider extends ServiceProvider
         }
 
 
-        ParallelTesting::setUpProcess(function (int $token) {
-            // ...
-        });
+        // ParallelTesting::setUpProcess(function (int $token) {
+        //     // ...
+        // });
 
-        ParallelTesting::setUpTestCase(function (int $token, TestCase $testCase) {
-            // ...
-        });
+        // ParallelTesting::setUpTestCase(function (int $token, TestCase $testCase) {
+        //     // ...
+        // });
 
-        // Executed when a test database is created...
-        ParallelTesting::setUpTestDatabase(function (string $database, int $token) {
-            Artisan::call('db:seed');
-        });
+        // // Executed when a test database is created...
+        // ParallelTesting::setUpTestDatabase(function (string $database, int $token) {
+        //     // run all seeders
+        //     // Artisan::call('db:seed');
+        // });
 
-        ParallelTesting::tearDownTestCase(function (int $token, TestCase $testCase) {
-            // ...
-        });
+        // ParallelTesting::tearDownTestCase(function (int $token, TestCase $testCase) {
+        //     // ...
+        // });
 
-        ParallelTesting::tearDownProcess(function (int $token) {
-            // ...
-        });
+        // ParallelTesting::tearDownProcess(function (int $token) {
+        //     // ...
+        // });
     }
 }

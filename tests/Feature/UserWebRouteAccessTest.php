@@ -6,8 +6,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use App\Models\User;
+
 class UserWebRouteAccessTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      */
@@ -18,10 +22,18 @@ class UserWebRouteAccessTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_app_not_found_example(): void
+    public function test_models_can_be_instantiated(): void
     {
-        $response = $this->get('/');
+        // $user = User::factory()->create();
+        $this->assertTrue(true, 'very true');
+    }
 
-        $response->assertStatus(404);
+    public function test_route_test_example(): void
+    {
+        $this->seed();
+        // $this->withoutExceptionHandling();
+        $user = User::getRootUser();
+        $response = $this->actingAs($user)->get('/abc');
+        $response->assertSuccessful();
     }
 }

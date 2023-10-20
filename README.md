@@ -130,6 +130,8 @@ Run tests in Parallel with artisan
 ```sh
 php artisan test --parallel
 php artisan test --parallel --processes=4
+
+php artisan test --parallel --testsuite=Feature --processes=4
 ```
 
 [Laravel 10.x Testing Documentation](https://laravel.com/docs/10.x/testing)

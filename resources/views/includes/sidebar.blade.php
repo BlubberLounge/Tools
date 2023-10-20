@@ -260,7 +260,7 @@
     </div>
 
     <div class="text-center mt-5 pb-4">
-        <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'invalid') }} </p>
+        <p class="m-0 small" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'VERSION_invalid') }}-{{ Str::upper(env('APP_ENV', 'ENV_invalid')) }}  </p>
         <p class="m-0 small" style="color:var(--bl-clr-gray-60);"> Systemtime: {{ now()->format('H:i:s d.m.y') }} </p>
         <p class="m-0 small" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i>BlubberLounge Tools {{ now()->year }}. Some Rights Reserverd.</p>
     </div>
