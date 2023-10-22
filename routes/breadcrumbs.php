@@ -62,7 +62,13 @@ Breadcrumbs::for('dart.game.index', function (BreadcrumbTrail $trail)
 Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail)
 {
     $trail->parent('home');
-    $trail->push('User Management', route('user.index'));
+    $trail->push('User', route('user.index'));
+});
+
+Breadcrumbs::for('user.settings', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('user.index');
+    $trail->push('Settings', route('user.settings'));
 });
 
 Breadcrumbs::for('user.edit', function (BreadcrumbTrail $trail, User $user)

@@ -16,6 +16,7 @@ use App\Helpers\FileHelper;
 use ImageOptimizer;
 use jeremykenedy\LaravelRoles\Models\Role;
 use App\Models\User;
+use PhpParser\Node\Expr\FuncCall;
 
 class UserController extends Controller
 {
@@ -164,5 +165,14 @@ class UserController extends Controller
 
         return redirect()->back()
             ->with('success','Language has been updated successfully');
+    }
+
+    /**
+     *
+     */
+    public function showSettings(): view
+    {
+        $data['user'] = Auth::user();
+        return view('user.settings', $data);
     }
 }

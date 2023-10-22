@@ -141,7 +141,7 @@
                 </a>
             </li>
             <li class="nav-item mt-2">
-                <a class="nav-link" href="#">
+                <a href="{{ route('user.settings') }}" class="nav-link {{ active('user.settings') }}">
                     <i class="fa-solid fa-gears"></i>
                     <span class="nav-text"> {{ __('settings') }} <span>
                 </a>

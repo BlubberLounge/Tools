@@ -103,6 +103,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::prefix('user')->group(function () {
         Route::name('user.')->group(function ()
         {
+            Route::get('/settings', [UserController::class, 'showSettings'])->name('settings');
             Route::put('/language/update', [UserController::class, 'languageUpdate'])->name('language-update');
             Route::get('/{user}/editImage', [UserController::class, 'editImage'])->name('edit-image');
         });

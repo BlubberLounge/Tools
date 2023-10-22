@@ -211,3 +211,24 @@
     background: var(--bs-list-group-bg);
     z-index: 1;
 }
+
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: .3rem;
+}
+
+.form-switch .form-check-input {
+	height: 1.4rem;
+    width: 3rem;
+    margin-top: 0;
+}
+
+.form-switch .form-check-label {
+    margin-left: 1rem;
+}
+
+.form-switch ~ .form-switch-description {
+    margin-left: 4rem;
+
+}
