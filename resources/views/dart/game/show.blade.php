@@ -40,11 +40,23 @@
 
             <section class="mt-3 mb-4">
                 <div class="row justify-center align-items-center">
-                    <div class="btn-group col-6 col-md-5">
+                    <div class="btn-group col-8 col-md-7">
                         <button type="button" class="btn btn-danger"> Abort </button>
                         <button type="button" class="btn btn-warning disabled"> Pause </button>
                         <button type="button" id="keepOn" class="btn btn-danger"> noSleep </button>
+
+                        </button>
                     </div>
+                </div>
+                <div class="row justify-center align-items-center mt-4">
+                    <div class="col-8 col-md-7">
+                        <label for="volume-control" class="form-label">
+                            Volume
+                            <span id="volume-percentage"> 65 </span> %
+                        </label>
+                        <input type="range" class="form-range" id="volume-control" min="0" max="1" step=".05" value=".65">
+                    </div>
+                </div>
             </section>
         </div>
     </div>
