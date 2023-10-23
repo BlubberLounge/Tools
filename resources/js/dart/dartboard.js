@@ -94,16 +94,17 @@ export default class Dartboard
             outerBull: board.radius * this.options.outerBullPercent,
             innerBull: board.radius * this.options.innerBullPercent,
         };
+        if(document.getElementById("volume-control")) {
+            const volumeControl = document.getElementById("volume-control");
+            const volumePercentage = document.getElementById("volume-percentage");
+            volumeControl.value = localStorage.getItem('dart-sound-volume') ?? volumePercentage.innerHTML / 100;
+            volumePercentage.innerHTML = localStorage.getItem('dart-sound-volume') ? localStorage.getItem('dart-sound-volume') * 100 : volumePercentage.innerHTML;
 
-        const volumeControl = document.getElementById("volume-control");
-        const volumePercentage = document.getElementById("volume-percentage");
-        volumeControl.value = localStorage.getItem('dart-sound-volume') ?? volumePercentage.innerHTML / 100;
-        volumePercentage.innerHTML = localStorage.getItem('dart-sound-volume') ? localStorage.getItem('dart-sound-volume') * 100 : volumePercentage.innerHTML;
-
-        volumeControl.addEventListener('change', e => {
-            document.getElementById('volume-percentage').innerHTML = Math.round(e.currentTarget.value * 100);
-            localStorage.setItem('dart-sound-volume', e.currentTarget.value);
-        });
+            volumeControl.addEventListener('change', e => {
+                document.getElementById('volume-percentage').innerHTML = Math.round(e.currentTarget.value * 100);
+                localStorage.setItem('dart-sound-volume', e.currentTarget.value);
+            });
+        }
     }
 
     render()
