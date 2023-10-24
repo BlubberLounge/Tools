@@ -129,6 +129,12 @@
                     </a>
                 </li>
             @endpermission
+                <li class="nav-item">
+                    <a href="{{ route('show-airsoft-calculator') }}" class="nav-link {{ active('show-airsoft-calculator') }}">
+                        <i class="fa-solid fa-gun"></i>
+                        <span class="nav-text"> {{ __('airsoft calculator') }} <span>
+                    </a>
+                </li>
         </ul>
 
         <hr />

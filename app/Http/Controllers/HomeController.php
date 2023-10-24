@@ -33,6 +33,18 @@ class HomeController extends Controller
         return view('home.moving-average');
     }
 
+    public function ShowAirsoftCalculator()
+    {
+        $data['ammoWeights'] = [
+            '.20', '.23', '.25','.28',
+            '.30','.32','.36',
+            '.40','.43','.45','.46','.48','.49',
+            '.50'
+        ];
+
+        return view('home.airsoft-calculator', $data);
+    }
+
     // todo for later.
     // a microservice needs to be written to make BlubberLounges' spotfiy data available for this application.
     // public function callback(Request $request)

@@ -80,6 +80,8 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::get('/moving-average', [HomeController::class, 'ShowMovingAverage'])
         ->name('show-moving-average');
         // ->middleware('permission:view.moving.average');
+    Route::get('/airsoft-calculator', [HomeController::class, 'ShowAirsoftCalculator'])
+        ->name('show-airsoft-calculator');
 
     // route: /dart/*
     // name: dart.*
