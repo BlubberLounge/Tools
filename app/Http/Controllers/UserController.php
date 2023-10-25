@@ -172,7 +172,7 @@ class UserController extends Controller
      */
     public function showSettings(): view
     {
-        $data['user'] = Auth::user();
+        $data['settings'] = Auth::user()->settings;
         return view('user.settings', $data);
     }
 }
