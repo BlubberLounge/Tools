@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    {{-- <script src="{{ mix('js/home.js') }}" defer></script> --}}
+    <script src="{{ mix('js/settings.js') }}" defer></script>
 @endpush
 
 @section('content')

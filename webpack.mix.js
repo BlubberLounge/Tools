@@ -39,6 +39,7 @@ mix
     .js('resources/js/user-profilepicture.js', 'public/js')
     .js('resources/js/feedback-create.js', 'public/js')
     .js('resources/js/feedback-index.js', 'public/js')
+    .js('resources/js/settings.js', 'public/js')
     .css('resources/css/custom.css', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/auth.scss', 'public/css')
