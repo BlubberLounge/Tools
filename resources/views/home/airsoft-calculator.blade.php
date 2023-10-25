@@ -27,9 +27,9 @@
 
                                 @foreach ($ammoWeights as $gramm)
                                     @php
-                                        $joule = number_format((float)(round($i * $i * $gramm * .5) / 1000), 2, '.', '')
+                                        $joule = number_format((float)(($i * $i * $gramm * .5) / 1000), 2, '.', '')
                                     @endphp
-                                    <td class="{{ $joule >= 3 ? 'table-primary' : ($joule >= 2 ? 'table-danger' : ($joule >= 1.2 ? 'table-warning' : 'table-success')) }}">{{ $joule  }}</td>
+                                    <td class="{{ $joule >= 4 ? 'table-primary' : ($joule >= 2.5 ? 'table-danger' : ($joule >= 1.2 ? 'table-warning' : 'table-success')) }}">{{ $joule  }}</td>
                                 @endforeach
                             </tr>
                         @endfor
