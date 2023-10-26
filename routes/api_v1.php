@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         Route::get('/showDartActivity', [UserController::class, 'showDartActivity']);
         Route::get('/showGameTypes', [UserController::class, 'showGameTypes']);
         Route::get('/showThrowsByGame/{dartGame}', [UserController::class, 'showThrowsByGame']);
+        Route::put('/updateSettings', [UserController::class, 'updateSettings']);
     });
 
     Route::apiResource('user', UserController::class)

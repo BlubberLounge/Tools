@@ -47,17 +47,11 @@
                 Allgemein
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveNewsletter'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Newsletter / Updates </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte immer auf dem aktuellen Stand sein und benachrichtigt werden, wenn es Neuigkeiten gibt.
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="receiveNewsletter"
+                    label="Newsletter / Updates"
+                    description="Ich möchte immer auf dem aktuellen Stand sein und benachrichtigt werden, wenn es Neuigkeiten gibt."
+                />
             </div>
         </div>
         <div class="row mb-4">
@@ -65,17 +59,11 @@
                 Geräte
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveNewDeviceLogin'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Neues Gerät </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte benachrichtigt werden, wenn ich mich mit einem neuen Gerät anmelde.
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="receiveNewDeviceLogin"
+                    label="Neues Gerät"
+                    description="Ich möchte benachrichtigt werden, wenn ich mich mit einem neuen Gerät anmelde."
+                />
             </div>
         </div>
         <div class="row mb-4">
@@ -83,39 +71,20 @@
                 Dart
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveDartGameInvitation'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Dartspiel einladung </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte benachrichtigt werden wenn, ich zu einem Dartspiel eingeladen werde. (Empfohlen)
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveDartGameReport'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Dartspielbericht </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte am ende eines Spieles einen kurzen Spielbericht erhalten.
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveDartGameWeeklyReport'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Wöchentliche Spielberichte </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte am ende jeder Woche eine Zusammenfassung meiner Dartspiele erhalten.
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="receiveDartGameInvitation"
+                    label="Dartspiel einladung"
+                    description="Ich möchte benachrichtigt werden wenn, ich zu einem Dartspiel eingeladen werde. (Empfohlen)" />
+
+                <x-form.settings.input-switch
+                    id="receiveDartGameReport"
+                    label="Dartspielbericht"
+                    description="Ich möchte am ende eines Spieles einen kurzen Spielbericht erhalten." />
+
+                <x-form.settings.input-switch
+                    id="receiveDartGameWeeklyReport"
+                    label="Wöchentliche Spielberichte"
+                    description="Ich möchte am ende jeder Woche eine Zusammenfassung meiner Dartspiele erhalten." />
             </div>
         </div>
         <div class="row mb-4">
@@ -123,17 +92,10 @@
                 Konto
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('receiveAccountChanges'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Konto änderungen </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte benachrichtigt werden, wenn sich etwas an meinem Konto ändert (z.b. Benutzergruppe, Rechte, etc.).
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="receiveAccountChanges"
+                    label="Konto änderungen"
+                    description="Ich möchte benachrichtigt werden, wenn sich etwas an meinem Konto ändert (z.b. Benutzergruppe, Rechte, etc.)." />
             </div>
         </div>
         <hr>
@@ -155,28 +117,15 @@
                 Allgemein
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('isProfilePicturePublic'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Profilbild ist öffentlich </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte das jeder Nutzer mein Profilbild sehen kann. (Empfohlen)
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('isOnlineStatusPublic'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Online status ist öffentlich </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte das jeder sehen kann das ich aktuell aktiv bin.
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="isProfilePicturePublic"
+                    label="Profilbild ist öffentlich"
+                    description="Ich möchte das jeder Nutzer mein Profilbild sehen kann. (Empfohlen)" />
+
+                <x-form.settings.input-switch
+                    id="isOnlineStatusPublic"
+                    label="Online status ist öffentlich"
+                    description="Ich möchte das jeder sehen kann das ich aktuell aktiv bin." />
             </div>
         </div>
         <div class="row mb-4">
@@ -184,28 +133,15 @@
                 Dart
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('dartGameInvitation'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Dartspiel </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte zu einem Dartspiel eingeladen werden können. (Empfohlen)
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col p-0">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @checked($settings->value('isDartGameStatisticPublic'))>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"> Dart Statistiken </label>
-                        </div>
-                        <p class="form-switch-description text-secondary">
-                            Ich möchte das jeder meine dart statistiken sehen kann. (Empfohlen)
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.input-switch
+                    id="dartGameInvitation"
+                    label="Dartspiel"
+                    description="Ich möchte zu einem Dartspiel eingeladen werden können. (Empfohlen)" />
+
+                <x-form.settings.input-switch
+                    id="isDartGameStatisticPublic"
+                    label="Dart Statistiken"
+                    description="Ich möchte das jeder meine dart statistiken sehen kann. (Empfohlen)" />
             </div>
         </div>
         <hr>
@@ -226,13 +162,8 @@
                 Theme
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <p class="text-secondary">
-                            Dieses Feature ist derzeit in Entwicklung und wird in Kürze verfügbar sein. Freue dich auf aufregende Updates!
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.info-text
+                    description="Dieses Feature ist derzeit in Entwicklung und wird in Kürze verfügbar sein. Freue dich auf aufregende Updates!" />
             </div>
         </div>
         <div class="row mb-4">
@@ -240,13 +171,8 @@
                 Modus
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <p class="text-secondary">
-                            siehe Sidebar
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.info-text
+                    description="siehe Sidebar" />
             </div>
         </div>
         <hr>
@@ -268,14 +194,9 @@
             </div>
             <div class="col-9">
                 <div class="row">
-                    <div class="col-auto">
-                        <label for="dartGameTitle" class="col-form-label">
-                            DartGame title
-                        </label>
-                      </div>
-                      <div class="col-auto">
-                        <input type="text" id="dartGameTitle" class="form-control">
-                      </div>
+                    <div class="col">
+                        <input type="text" id="dartGameTitle" class="form-control" placeholder="{{ Auth::user()->getGameTitle() }} - keine Funktion">
+                    </div>
                 </div>
             </div>
         </div>
@@ -297,13 +218,8 @@
                 Allgemein
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <p class="text-secondary">
-                            siehe Sidebar
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.info-text
+                    description="siehe Sidebar" />
             </div>
         </div>
         <div class="row mb-4">
@@ -311,14 +227,9 @@
                 Email
             </div>
             <div class="col-9">
-                <div class="row">
-                    <div class="col p-0">
-                        <p class="text-secondary">
-                            Dieses aufregende Feature ist für die Zukunft geplant, jedoch aktuell noch nicht verfügbar. <br />
-                            Wir arbeiten hart daran, um es baldmöglichst für dich bereitzustellen. Freue dich auf zukünftige Updates, die diese Funktion integrieren werden!
-                        </p>
-                    </div>
-                </div>
+                <x-form.settings.info-text
+                    description="Dieses aufregende Feature ist für die Zukunft geplant, jedoch aktuell noch nicht verfügbar.
+                    Wir arbeiten hart daran, um es baldmöglichst für dich bereitzustellen. Freue dich auf zukünftige Updates, die diese Funktion integrieren werden!" />
             </div>
         </div>
         <hr>

@@ -12215,3 +12215,34 @@ textarea.form-control-lg {
 .form-switch ~ .form-switch-description {
   margin-left: 4rem;
 }
+
+.form-check-input.success {
+  animation: success 1500ms 1;
+  -webkit-animation: success 1500ms 1;
+}
+
+.form-check-input.error {
+  animation: error 1500ms 1;
+  -webkit-animation: error 1500ms 1;
+}
+
+@keyframes success {
+  0% {
+    background-color: var(--bs-success);
+    box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
+  }
+  100% {
+    background-color: var(--bs-success);
+    box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
+  }
+}
+@keyframes error {
+  0% {
+    background-color: var(--bs-danger);
+    box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+  }
+  100% {
+    background-color: var(--bs-danger);
+    box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+  }
+}

@@ -67,6 +67,15 @@ Setting::name('isDartGameStatisticPublic')
     ->group('privacyAndSecurity');
 
 /*
+ *  PRESETS - SETTINGS
+ */
+Setting::name('defaultDartGameTitle')
+    ->string()
+    ->default('')
+    ->group('preset');
+
+
+/*
  *  LANGUAGE - SETTINGS
  */
 Setting::name('language')

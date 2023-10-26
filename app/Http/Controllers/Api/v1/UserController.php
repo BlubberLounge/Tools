@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -294,5 +295,17 @@ class UserController extends Controller
         $data['throws'] = Auth::user()->DartThrows()->where('dart_game_id', $id)->get();
 
         return $this->sendResponse($data, 'ok');
+    }
+
+
+
+    /**
+     *
+     */
+    public function updateSettings(Request $request)
+    {
+        Auth::user()->settings->set($request->input('id'), $request->input('value'));
+
+        return $this->sendResponse(null, 'ok');
     }
 }

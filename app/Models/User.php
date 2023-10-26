@@ -314,6 +314,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
      */
     public function getGameTitle(): string
     {
+        // return $this->settings->get('defaultDartGameTitle') ?? $this->full_name.'\'s Game #'. Str::padLeft($this->createdGames->count(), 3, 0);
         return $this->full_name.'\'s Game #'. Str::padLeft($this->createdGames->count(), 3, 0);
     }
 
