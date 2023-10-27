@@ -233,13 +233,13 @@
 }
 
 .form-check-input.success {
-    animation: success 1500ms 1;
-    -webkit-animation: success 1500ms 1;
+    animation: success 1500ms ease-in-out 1;
+    -webkit-animation: success ease-in-out 1500ms 1;
 }
 
 .form-check-input.error {
-    animation: error 1500ms 1;
-    -webkit-animation: error 1500ms 1;
+    animation: error 1500ms ease-in-out 1;
+    -webkit-animation: error ease-in-out 1500ms 1;
 }
 
 @keyframes success
@@ -248,9 +248,12 @@
         background-color: var(--bs-success);
         box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
     }
-    100% {
+    50% {
         background-color: var(--bs-success);
         box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 }
 
@@ -260,9 +263,12 @@
         background-color: var(--bs-success);
         box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
     }
-    100% {
+    50% {
         background-color: var(--bs-success);
         box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 }
 
@@ -272,9 +278,12 @@
         background-color: var(--bs-danger);
         box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
     }
-    100% {
+    50% {
         background-color: var(--bs-danger);
         box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 }
 
@@ -284,8 +293,11 @@
         background-color: var(--bs-danger);
         box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
     }
-    100% {
+    50% {
         background-color: var(--bs-danger);
         box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 }

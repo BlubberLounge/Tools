@@ -9,6 +9,18 @@
     <div class="row">
         <div class="col">
             <h2>Airsoft FPS Chart</h2>
+            <p>
+                Wie lang muss der Lauf sein für eine Cylinder zu Lauf Relation von 1.5 : 1? <br>
+                Volumen Cylinder * 1.5 = Volumen Lauf <br>
+                a^2 * π * b = c^2 * π * d
+                <span class="d-block ms-3"> => <span class="ms-3"> d = ( a^2*b ) / ( c^2*x ) </span> </span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h2>Airsoft FPS Chart</h2>
             <table class="table table-dark table-striped">
                 <thead class="sticky-top">
                     <tr>
