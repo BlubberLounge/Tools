@@ -56,6 +56,18 @@
         </div>
         <div class="col-12 col-lg-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5 class="mb-3">{{ __('share this application') }}</h5>
+                <div class="d-flex justify-center">
+                    <img src="{{ $qrcode }}" alt="" width="200px">
+                </div>
+                <div class="d-flex justify-center">
+                    <button id="BtnShare" class="btn btn-secondary">{{ __('share') }}</button>
+                </div>
+            </div>
+        </div>
+        {{--
+        <div class="col-12 col-lg-6 rounded">
+            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="mb-3">{{ __('open dart games') }}</h5>
                 <div class="rounded" style="max-height: 300px;overflow-y:auto;">
                     <ul class="list-group list-group-flush">
@@ -78,7 +90,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="col-12 col-lg-6">
             <div class="rounded p-0 pt-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="px-3 mb-3">{{ __('recommended playlist') }}</h5>

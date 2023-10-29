@@ -35,7 +35,8 @@ use App\Enums\InvitationStatus;
 */
 
 Route::get('/', function () {
-    return view('index');
+    // return view('login');
+    return redirect('login');
 })->name('index');
 
 Route::get('/register/request', [InvitationController::class, 'request'])->name('register.request');

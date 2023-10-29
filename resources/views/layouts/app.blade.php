@@ -1,11 +1,13 @@
-@mobile
+@include('layouts.app_mobile')
+
+{{-- @mobile
     @include('layouts.app_mobile')
-@endmobile
+@endmobile --}}
 
 {{-- may block requests from desktop soon --}}
-@desktop
+{{-- @desktop
     @include('layouts.app_mobile')
-@enddesktop
+@enddesktop --}}
 
 {{--
 @browser('isBot')

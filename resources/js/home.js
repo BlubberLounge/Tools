@@ -1,6 +1,17 @@
 
 require('./dart-queue');
 
+document.getElementById('BtnShare').addEventListener('click', event => {
+    if (navigator.share) {
+        navigator.share({
+            title: 'BlubberLounge Tools',
+            url: window.location.origin
+        }).then(() => {
+            console.log('Thanks for sharing!');
+        }) .catch(console.error);
+    }
+});
+
 /**
  * Get Player throw data
  */

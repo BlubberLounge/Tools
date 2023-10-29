@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use chillerlan\QRCode\{QRCode, QROptions};
 
 use App\Models\User;
 use App\Models\DartQueue;
@@ -19,6 +20,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $options = new QROptions([
+            'version' => 7, // 7 not 5 because of bit length, may use a url shortener at a later point
+        ]);
+
+        $data['qrcode'] = (new QRCode($options))->render(route('index'));
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
         $data['activeDartGames'] = Auth::user()->activeDartGames()->get();
         $data['activeDartGame'] = Auth::user()->activeDartGame();

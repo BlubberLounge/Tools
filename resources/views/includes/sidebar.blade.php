@@ -273,7 +273,7 @@
         </div>
         <div class="col-12 p-0 text-center">
             <a href="#" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('impressum') }} </a>
-            <a href="#x" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('privacy') }} </a>
+            <a href="#" class="me-2 small link-secondary link-offset-2 link-underline-opacity-50 link-underline-opacity-100-hover"> {{ __('privacy') }} </a>
         </div>
     </div>
 

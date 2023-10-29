@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    @include('layouts.meta_social_share')
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
