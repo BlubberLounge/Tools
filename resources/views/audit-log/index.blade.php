@@ -43,7 +43,9 @@
                                 <div class="ps-3">
                                     {{ $val }}
                                     <span style="color:var(--bl-clr-red)"> => </span>
-                                    {{ $audit->new_values[$key] }}
+                                    @if ($audit->new_values[$key])
+                                        {{ $audit->new_values[$key] }}
+                                    @endif
                                 </div>
                             @empty
                                 @forelse($audit->new_values as $key => $val)
