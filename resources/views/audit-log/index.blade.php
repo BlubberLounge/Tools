@@ -43,7 +43,7 @@
                                 <div class="ps-3">
                                     {{ $val }}
                                     <span style="color:var(--bl-clr-red)"> => </span>
-                                    @if ($audit->new_values[$key])
+                                    @if (array_key_exists($key, $audit->new_values))
                                         {{ $audit->new_values[$key] }}
                                     @endif
                                 </div>
