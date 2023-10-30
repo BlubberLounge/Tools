@@ -75,7 +75,7 @@
                     </div>
                     <div class="">
                         <button class="btn text-white position-relative" data-bs-toggle="notification" data-bs-title="<span class='ms-auto'>{{ __('notifications') }}</span> <a href='#' ><i class='fa-solid fa-gear'></i></a>" data-bs-content="{{ __('no notifications available') }}" >
-                            <i class="fa-solid fa-bell fa-xl"></i>
+                            <i class="fa-solid fa-bell fa-xl mode"></i>
                             @if(Auth::user()->unreadNotifications->count() > 0)
                                 <span id="notification-counter" class="position-absolute translate-middle bg-danger border border-dark badge rounded-pill" style="left: .4rem;top: .2rem;--bs-badge-padding-x: .5em;--bs-badge-padding-y: .25em">
                                     {{ Auth::user()->unreadNotifications->count() > 99 ? '99+' : Auth::user()->unreadNotifications->count() }}
@@ -85,7 +85,7 @@
                     </div>
                     <div class="">
                         <button id="sidebarCollapse" class="btn text-white">
-                            <i class="fa-solid fa-bars fa-xl"></i>
+                            <i class="fa-solid fa-bars fa-xl mode"></i>
                         </button>
                     </div>
                 </div>

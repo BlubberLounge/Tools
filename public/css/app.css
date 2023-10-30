@@ -12034,6 +12034,10 @@ textarea.form-control-lg {
   background-color: #717171;
 }
 
+i.mode {
+  color: var(--bs-body-color);
+}
+
 .device-browser-icon {
   font-size: 2rem;
 }

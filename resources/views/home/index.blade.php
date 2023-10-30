@@ -58,7 +58,7 @@
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="mb-3">{{ __('share this application') }}</h5>
                 <div class="d-flex justify-center">
-                    <img src="{{ $qrcode }}" alt="" width="200px">
+                    <img src="{{ $qrcode }}" alt="" width="300px">
                 </div>
                 <div class="d-flex justify-center">
                     <button id="BtnShare" class="btn btn-secondary">{{ __('share') }}</button>

@@ -77,22 +77,32 @@
                     </ul>
                 </li>
             @endif
-            @permission('viewany.hookah')
+            {{-- @permission('view.moving.averages') --}}
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">
-                        <i class="fa-solid fa-bong"></i>
-                        <span class="nav-text"> {{ __('Hookahs') }} <span>
+                    <a href="{{ route('show-moving-average') }}" class="nav-link {{ active('show-moving-average') }}">
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                        <span class="nav-text"> {{ __('event images') }} <span>
                     </a>
                 </li>
-            @endpermission
-            @permission('viewany.tobacco')
-                <li class="nav-item">
-                    <a href="#" class="nav-link disabled">
-                        <i class="fa-solid fa-box-open"></i>
-                        <span class="nav-text"> {{ __('Tobaccos') }} <span>
-                    </a>
-                </li>
-            @endpermission
+            {{-- @endpermission --}}
+            {{--
+                @permission('viewany.hookah')
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">
+                            <i class="fa-solid fa-bong"></i>
+                            <span class="nav-text"> {{ __('Hookahs') }} <span>
+                        </a>
+                    </li>
+                @endpermission
+                @permission('viewany.tobacco')
+                    <li class="nav-item">
+                        <a href="#" class="nav-link disabled">
+                            <i class="fa-solid fa-box-open"></i>
+                            <span class="nav-text"> {{ __('Tobaccos') }} <span>
+                        </a>
+                    </li>
+                @endpermission
+            --}}
             @permission('view.calculator')
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link has-submenu disabled" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
