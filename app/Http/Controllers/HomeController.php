@@ -54,6 +54,11 @@ class HomeController extends Controller
         return view('home.airsoft-calculator', $data);
     }
 
+    public function ShowIEC7064()
+    {
+        return view('home.iec7064');
+    }
+
     // todo for later.
     // a microservice needs to be written to make BlubberLounges' spotfiy data available for this application.
     // public function callback(Request $request)

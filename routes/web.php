@@ -83,6 +83,8 @@ Route::middleware(['auth', 'verified'])->group(function ()
         // ->middleware('permission:view.moving.average');
     Route::get('/airsoft-calculator', [HomeController::class, 'ShowAirsoftCalculator'])
         ->name('show-airsoft-calculator');
+    Route::get('/iec7064', [HomeController::class, 'ShowIEC7064'])
+        ->name('show-iec7064');
 
     // route: /dart/*
     // name: dart.*

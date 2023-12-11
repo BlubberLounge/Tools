@@ -32,6 +32,7 @@ mix
     .js('resources/js/dart/game/dartResultHeatmap.js', 'public/js')
 
     .js('resources/js/moving-average.js', 'public/js')
+    .js('resources/js/IEC7064_page.js', 'public/js')
 
     // .js('resources/js/simApp.js', 'public/js')
 

@@ -139,12 +139,18 @@
                     </a>
                 </li>
             @endpermission
-                <li class="nav-item">
-                    <a href="{{ route('show-airsoft-calculator') }}" class="nav-link {{ active('show-airsoft-calculator') }}">
-                        <i class="fa-solid fa-gun"></i>
-                        <span class="nav-text"> {{ __('airsoft calculator') }} <span>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ route('show-airsoft-calculator') }}" class="nav-link {{ active('show-airsoft-calculator') }}">
+                    <i class="fa-solid fa-gun"></i>
+                    <span class="nav-text"> {{ __('airsoft calculator') }} <span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('show-iec7064') }}" class="nav-link {{ active('show-iec7064') }}">
+                    <i class="fa-solid fa-globe"></i>
+                    <span class="nav-text"> {{ __('IEC 7064') }} <span>
+                </a>
+            </li>
         </ul>
 
         <hr />
