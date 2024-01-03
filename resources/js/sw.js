@@ -1,35 +1,18 @@
-const CACHE_NAME = `blubber-lounge-v1`;
 
-// Use the install event to pre-cache all initial resources.
-self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    cache.addAll([
-      '/',
-      '/js/sq.js'
-    ]);
-  })());
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith((async () => {
-    const cache = await caches.open(CACHE_NAME);
-
-    // Get the resource from the cache.
-    const cachedResponse = await cache.match(event.request);
-    if (cachedResponse) {
-      return cachedResponse;
-    } else {
-        try {
-          // If the resource was not in the cache, try the network.
-          const fetchResponse = await fetch(event.request);
-
-          // Save the resource in the cache and return it.
-          cache.put(event.request, fetchResponse.clone());
-          return fetchResponse;
-        } catch (e) {
-          // The network failed.
-        }
+self.addEventListener('push', function (e) {
+    console.log("test");
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        //notifications aren't supported or permission not granted!
+        return;
     }
-  })());
+
+    if (e.data) {
+        var msg = e.data.json();
+        console.log(msg)
+        e.waitUntil(self.registration.showNotification(msg.title, {
+            body: msg.body,
+            icon: msg.icon,
+            actions: msg.actions
+        }));
+    }
 });

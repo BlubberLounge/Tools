@@ -68,6 +68,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         ->parameter('throw', 'dartThrow'); // throw to dartThrow for currect auto-mapping;
 
 
+    Route::prefix('notification')->group(function () {
+        Route::post('/push', [NotificationController::class, 'push']);
+    });
     Route::resource('notification', NotificationController::class)
         ->only(['index', 'show', 'update']);
 });

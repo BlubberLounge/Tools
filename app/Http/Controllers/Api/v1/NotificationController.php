@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\WebPushTestNotification;
 
 
 class NotificationController extends Controller
@@ -69,5 +70,12 @@ class NotificationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function push(Request $request)
+    {
+        Auth::user()->updatePushSubscription($request->endpoint, $request->keys['p256dh'], $request->keys['auth']);
+
+        return response()->json(['success' => true],200);
     }
 }

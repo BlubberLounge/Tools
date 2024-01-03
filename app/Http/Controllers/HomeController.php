@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Notification;
+
 use chillerlan\QRCode\{QRCode, QROptions};
 use chillerlan\QRCode\Data\QRMatrix;
-
 use chillerlan\QRCode\Output\QROutputInterface;
 use App\Models\User;
 use App\Models\DartQueue;
 use App\Notifications\UserRegisteredNotification;
+use App\Notifications\WebPushTestNotification;
 
 class HomeController extends Controller
 {
@@ -34,11 +36,15 @@ class HomeController extends Controller
         $data['dartQueue'] = DartQueue::with('parentUser')->get()->unique('parent_user_id')->sortBy('created_at');
         // dd($data['dartQueue']);
 
+        $user = User::find(1);
+
+        // $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
         return view('home.index', $data);
     }
 
     public function ShowMovingAverage()
     {
+        Notification::send(User::all(), new WebPushTestNotification);
         return view('home.moving-average');
     }
 

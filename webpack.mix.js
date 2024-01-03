@@ -15,7 +15,7 @@ mix
     .js('resources/js/app.js', 'public/js')                 // Main js file
     .js('resources/js/dark-mode.js', 'public/js')           // Manages theme toggling
     .js('resources/js/auth.js', 'public/js')
-    // .js('resources/js/sw.js', 'public/js')
+    .js('resources/js/sw.js', 'public')
     .js('resources/js/s.js', 'public/js')
     .js('resources/js/home.js', 'public/js')
 

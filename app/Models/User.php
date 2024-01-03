@@ -23,11 +23,14 @@ use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
 use App\Enums\DartGameUserStatus;
 use Illuminate\Support\Collection;
+use NotificationChannels\WebPush\HasPushSubscriptions;
+
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLocalePreference
 {
     use HasFactory,
         Notifiable,
+        HasPushSubscriptions,
         HasConfig,
         HasApiTokens,
         HasRoleAndPermission,
