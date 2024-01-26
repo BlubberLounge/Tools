@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Mail;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\ParallelTesting;
 use PHPUnit\Framework\TestCase;
+use chillerlan\QRCode\{QRCode, QROptions};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(QRCode::class, function (Application $app) {
+            $options = new QROptions([
+                'version' => 7, // 7 not 5 because of bit length, may use a url shortener at a later point
+            ]);
+
+            return new QRCode($options);
+        });
     }
 
     /**

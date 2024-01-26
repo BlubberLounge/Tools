@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
-use chillerlan\QRCode\{QRCode, QROptions};
-use chillerlan\QRCode\Data\QRMatrix;
-use chillerlan\QRCode\Output\QROutputInterface;
+use chillerlan\QRCode\QRCode;
 use App\Models\User;
 use App\Models\DartQueue;
 use App\Notifications\UserRegisteredNotification;
@@ -22,14 +20,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(QRCode $qRCode)
     {
-        $options = new QROptions([
-            'version' => 7, // 7 not 5 because of bit length, may use a url shortener at a later point
-        ]);
-
-
-        $data['qrcode'] = (new QRCode($options))->render(route('index'));
+        $data['qrcode'] = $qRCode->render(route('index'));
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
         $data['activeDartGames'] = Auth::user()->activeDartGames()->get();
         $data['activeDartGame'] = Auth::user()->activeDartGame();
