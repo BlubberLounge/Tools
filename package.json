@@ -9,16 +9,6 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
-    "devDependencies": {
-        "@popperjs/core": "^2.11.8",
-        "axios": "^1.6.7",
-        "bootstrap": "^5.3.3",
-        "laravel-mix": "^6.0.49",
-        "postcss": "^8.4.35",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.71.1",
-        "sass-loader": "^14.1.1"
-    },
     "dependencies": {
         "animate.css": "^4.1.1",
         "canvas-confetti": "^1.9.2",
@@ -31,5 +21,15 @@
         "nosleep.js": "^0.12.0",
         "plotly.js-dist": "^2.29.1",
         "update": "^0.4.2"
+    },
+    "devDependencies": {
+        "@popperjs/core": "^2.11.8",
+        "axios": "^1.6.7",
+        "bootstrap": "^5.3.3",
+        "laravel-mix": "^6.0.49",
+        "postcss": "^8.4.35",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.71.1",
+        "sass-loader": "^14.1.1"
     }
 }
