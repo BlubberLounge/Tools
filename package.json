@@ -11,25 +11,25 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.8",
-        "axios": "^1.5.0",
-        "bootstrap": "^5.3.1",
+        "axios": "^1.6.7",
+        "bootstrap": "^5.3.3",
         "laravel-mix": "^6.0.49",
-        "postcss": "^8.4.28",
+        "postcss": "^8.4.35",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.66.1",
-        "sass-loader": "^13.3.2"
+        "sass": "^1.71.1",
+        "sass-loader": "^14.1.1"
     },
     "dependencies": {
         "animate.css": "^4.1.1",
-        "canvas-confetti": "^1.6.0",
-        "cropperjs": "^1.6.0",
+        "canvas-confetti": "^1.9.2",
+        "cropperjs": "^1.6.1",
         "d3": "^7.8.5",
-        "echarts": "^5.4.3",
+        "echarts": "^5.5.0",
         "heatmap.js": "^2.0.5",
-        "luxon": "^3.4.2",
-        "moment": "^2.29.4",
+        "luxon": "^3.4.4",
+        "moment": "^2.30.1",
         "nosleep.js": "^0.12.0",
-        "plotly.js-dist": "^2.26.0",
-        "update": "^0.7.4"
+        "plotly.js-dist": "^2.29.1",
+        "update": "^0.4.2"
     }
 }
