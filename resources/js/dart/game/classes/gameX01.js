@@ -19,9 +19,9 @@ export default class GameX01 extends Game
         console.info('X01 Game variant.');
     }
 
-    run()
+    async run()
     {
-        this._show();
+        await this._show();
 
         if (this._remainingPlayerPoints() == 0) {
             this._currentPlayerWon();
@@ -60,7 +60,7 @@ export default class GameX01 extends Game
         throwDisplay.innerHTML = lastThrow.value;
 
         let totalDisplay = playerCard.querySelector('.total');
-        super._animateCounter(totalDisplay, parseInt(totalDisplay.innerHTML), this._remainingPlayerPoints(), 400);
+        await super._animateCounter(totalDisplay, parseInt(totalDisplay.innerHTML), this._remainingPlayerPoints(), 400);
 
         if(lastThrow.throwNum == DartDefinition.maxThrowsPerTurn) {
             let total = 0;
@@ -72,6 +72,8 @@ export default class GameX01 extends Game
 
             turnTotalDisplay.innerHTML = total;
         }
+
+        // await new Promise(r => setTimeout(r, 1000));
 
         // clear display
         let isNextTurn = this.detectNextTurn();
@@ -139,11 +141,13 @@ export default class GameX01 extends Game
 
     _clearDisplay()
     {
+        console.log('cleared');
         this.users.getNonWinner().forEach(user => {
             let playerCard = document.querySelector(`[data-user-id='${user.id}']`);
 
             let totalDisplay = playerCard.querySelector('.total');
             totalDisplay.innerHTML = this.points - user.getTotalPoints();
+            console.log(totalDisplay.innerHTML);
 
             for(let i = 1; i <= DartDefinition.maxThrowsPerTurn; i++) {
                 playerCard.querySelector('.throw-'+i).innerHTML = '<i class="fa-solid fa-xmark text-danger"></i>';

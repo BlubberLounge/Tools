@@ -325,24 +325,29 @@ export default class Game
         return result.responseJSON.data;
     }
 
-    _animateCounter(obj, start, end, duration)
+    async _animateCounter(obj, start, end, duration)
     {
         let diff = Math.abs(start - end);
         duration = (500 + 60 * 2) - (diff * 2);
 
         let startTimestamp = null;
-        const step = (timestamp) =>
-        {
-          if (!startTimestamp) startTimestamp = timestamp;
+        await new Promise(resolve => {
+            const step = (timestamp) =>
+            {
+                if (!startTimestamp) startTimestamp = timestamp;
 
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-          obj.innerHTML = Math.floor(progress * (end - start) + start);
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
 
-          if (progress < 1)
+                if (progress <= .7) {
+                    window.requestAnimationFrame(step);
+                    return;
+                }
+
+                resolve();
+            };
             window.requestAnimationFrame(step);
-        };
-
-        window.requestAnimationFrame(step);
+        });
     }
 
     _dispatchEvent(eventName, content)
