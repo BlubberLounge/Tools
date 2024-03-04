@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\ParallelTesting;
 use PHPUnit\Framework\TestCase;
 use chillerlan\QRCode\{QRCode, QROptions};
+use App\Classes\WebUntis;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             return new QRCode($options);
+        });
+
+        $this->app->singleton(WebUntis::class, function (Application $app) {
+            $untis = new WebUntis(env('WEBUNTIS_SCHOOL'), env('WEBUNTIS_USERNAME'), env('WEBUNTIS_PASSWORD'), env('WEBUNTIS_HOST'));
+            $untis->login();
+            return $untis;
         });
     }
 

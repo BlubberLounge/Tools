@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\WebUntis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Models\DartQueue;
 use App\Notifications\UserRegisteredNotification;
 use App\Notifications\WebPushTestNotification;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -20,7 +22,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(QRCode $qRCode)
+    public function index(QRCode $qRCode, WebUntis $untis)
     {
         $data['qrcode'] = $qRCode->render(route('index'));
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
@@ -30,6 +32,11 @@ class HomeController extends Controller
         // dd($data['dartQueue']);
 
         $user = User::find(1);
+
+        $timetableData = $untis->getOwnTimetableForWeek(Carbon::now()->addDays(1));
+        foreach($timetableData['data']['result']['data'] as $result) {
+            $data['timetable'][] = $result;
+        }
 
         // $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
         return view('home.index', $data);
