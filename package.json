@@ -19,8 +19,7 @@
         "luxon": "^3.4.4",
         "moment": "^2.30.1",
         "nosleep.js": "^0.12.0",
-        "plotly.js-dist": "^2.29.1",
-        "update": "^0.4.2"
+        "plotly.js-dist": "^2.29.1"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.8",
