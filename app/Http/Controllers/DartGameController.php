@@ -40,7 +40,6 @@ class DartGameController extends Controller
     {
         $data['dartGameType'] = $request->type;
         $data['dartQueue'] = DartQueue::with('parentUser')->get()->unique('parent_user_id')->sortBy('created_at');
-        // var_dump($request);
 
         return view('dart.game.create', $data);
     }
@@ -50,9 +49,6 @@ class DartGameController extends Controller
      */
     public function store(StoreDartGameRequest $request)
     {
-        // $data = $request->validated();
-        // dd($request);
-
         $game = new DartGame();
         $game->created_by = Auth::user()->id;
         $game->type = DartGameType::X01;
