@@ -76,15 +76,7 @@
                         @endpermission
                     </ul>
                 </li>
-            @endif
-            {{-- @permission('view.moving.averages') --}}
-                <li class="nav-item">
-                    <a href="{{ route('show-moving-average') }}" class="nav-link {{ active('show-moving-average') }}">
-                        <i class="fa-solid fa-champagne-glasses"></i>
-                        <span class="nav-text"> {{ __('event images') }} <span>
-                    </a>
-                </li>
-            {{-- @endpermission --}}
+            @endifan
             {{--
                 @permission('viewany.hookah')
                     <li class="nav-item">
