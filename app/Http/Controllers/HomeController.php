@@ -38,6 +38,50 @@ class HomeController extends Controller
             $data['timetable'][] = $result;
         }
 
+        //Create a UDP socket
+        // if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0))) {
+        //     $errorcode = socket_last_error();
+        //     $errormsg = socket_strerror($errorcode);
+        //     die("Couldn't create socket: [$errorcode] $errormsg \n");
+        // }
+        // echo "Socket created \n";
+
+        // // Bind the source address
+        // if( !socket_bind($sock, "0.0.0.0" , 22223) ) {
+        //     $errorcode = socket_last_error();
+        //     $errormsg = socket_strerror($errorcode);
+        //     die("Could not bind socket : [$errorcode] $errormsg \n");
+        // }
+        // echo "Socket bind OK \n";
+
+        // $r = socket_recvfrom($sock, $buf, 5120, 0, $remote_ip, $remote_port);
+        // echo "$remote_ip : $remote_port -- \n\n";
+
+        // for ($i = 0; $i < $r; $i++) {
+        //     // Convert the byte to hexadecimal representation
+        //     $hexValue = strtoupper(dechex(ord($buf[$i])));
+
+        //     // Ensure each hexadecimal value has two characters
+        //     if (strlen($hexValue) < 2) {
+        //         $hexValue = '0' . $hexValue;
+        //     }
+
+        //     // Output the hexadecimal value
+        //     echo $hexValue . ' ';
+        // }
+
+        // echo "\n\n\n\n\n\n\n\n<div style='margin-top:2rem;'></div>";
+
+        // $byteArray = unpack('C*', $buf); // 'C*' dekodiert die Daten als 8-Bit-Integer
+
+        // foreach ($byteArray as $byte) {
+        //     echo "$byte \n";
+        // }
+
+        // echo "\n\n\n";
+
+        // socket_close($sock);
+
         // $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
         return view('home.index', $data);
     }
