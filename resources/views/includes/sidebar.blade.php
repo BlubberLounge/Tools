@@ -76,7 +76,7 @@
                         @endpermission
                     </ul>
                 </li>
-            @endifan
+            @endif
             {{--
                 @permission('viewany.hookah')
                     <li class="nav-item">
