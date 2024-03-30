@@ -18,6 +18,7 @@ mix
     .js('resources/js/sw.js', 'public')
     .js('resources/js/s.js', 'public/js')
     .js('resources/js/home.js', 'public/js')
+    .js('resources/js/events.js', 'public/js')
 
     // Dart
     .js('resources/js/dart/dartIndex.js', 'public/js')

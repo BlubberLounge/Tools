@@ -1,0 +1,90 @@
+/*
+ *
+ *  TIMETABLE STYLES
+ *
+ */
+
+ .container-timetable {
+    padding: 0 0 1rem 0;
+}
+
+.timetable {
+    text-align: center;
+    border-spacing: 5px;
+    border-collapse: separate;
+
+    tr:not(:first-child) th:not(:first-child) {
+        padding: 0 .5rem 1rem .5rem;
+        font-weight: 400;
+    }
+
+    td:not(:first-child) {
+        font-weight: 900;
+        padding: .4em .5em;
+        border-radius: 2px;
+    }
+
+    .timeTableUser {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        text-align: left;
+        min-width: 110px;
+        background-color: #344e57;
+    }
+
+    .isStuck {
+        color: #ccc;
+    }
+
+    .isStuck ~ tr {
+        padding: 0;
+    }
+
+    .day {
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+}
+
+td[data-bl-timetable-status="available"] {
+    font-family: $font-font-awesome;
+    background-color: $success;
+
+    &::before {
+        content: '\f00c';
+    }
+}
+
+td[data-bl-timetable-status="maybe"] {
+    font-family: $font-font-awesome;
+    color: #a57214; //TODO
+    background-color: $warning;
+    font-size: 1.1em;
+
+    &::before {
+        content: '\3f';
+    }
+}
+
+td[data-bl-timetable-status="noTime"] {
+    font-family: $font-font-awesome;
+    background-color: $danger;
+
+    &::before {
+        content: '\f00d';
+    }
+}
+
+.btn-timetable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    font-size: 1.25rem;
+}
+
+.btn-timetable ~ .btn-timetable {
+    margin-left: .5rem;
+}

@@ -22,7 +22,7 @@ use App\Http\Controllers\MailTrackerController;
 use App\Mail\InvitationMail;
 use App\Models\Invitation;
 use App\Enums\InvitationStatus;
-
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ Route::middleware(['auth', 'verified'])->group(function ()
 
         });
     });
-    Route::resource('/appointment', DartController::class);
+    Route::resource('/appointment', AppointmentController::class);
 
     // route: /user/*
     // name: user.*

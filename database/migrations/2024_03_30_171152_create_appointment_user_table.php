@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('appointment_user', function (Blueprint $table) {
             $table->id();
 
-            $table->datetime('start')
-                ->nullable();
-            $table->datetime('end')
-                ->nullable();
-            $table->string('title');
-            $table->longText('description');
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('appointment_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->enum('status', ['pending', 'accepted', 'denied'])
+                ->default('pending')
+                ->comment('pending/accepted/denied/blocked');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('appointment_user');
     }
 };

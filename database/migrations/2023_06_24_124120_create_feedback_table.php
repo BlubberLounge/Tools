@@ -25,7 +25,7 @@ return new class extends Migration
                 $table->enum('status', ['new', 'seen', 'good', 'bad'])
                     ->default('new');
                 $table->string('subject')
-                ->comment('message title/subject');
+                    ->comment('message title/subject');
                 $table->text('message');
                 $table->string('area')
                     ->comment('Where? - page/view/url/site')

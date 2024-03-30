@@ -12,6 +12,7 @@
 
 // Custom Sass
 @import 'layout';
+@import 'timetable';
 @import 'buttons';
 
 * {
@@ -98,11 +99,11 @@ i.mode {
     }
 }
 
-.popover {
+.popover-notification {
     --bs-popover-max-width: 500px;
 }
 
-.popover .popover-body {
+.popover-notification .popover-body {
     --bs-popover-body-padding-y: .5rem;
     height: 450px;
     width: 350px;

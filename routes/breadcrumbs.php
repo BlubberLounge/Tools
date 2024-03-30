@@ -18,6 +18,19 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail)
 
 /**
  *
+ * Appointment
+ *
+ */
+Breadcrumbs::for('appointment.index', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push('Event Dashboard', route('appointment.index'));
+});
+
+
+
+/**
+ *
  * Dart
  *
  */

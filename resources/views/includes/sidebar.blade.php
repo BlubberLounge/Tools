@@ -19,6 +19,14 @@
                     <span class="nav-text"> {{ __('home') }} <span>
                 </a>
             </li>
+            @permission('viewany.appointment')
+            <li class="nav-item">
+                <a href="{{ route('appointment.index') }}" class="nav-link {{ active('appointment.index') }}">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span class="nav-text"> {{ __('events') }} <span>
+                </a>
+            </li>
+            @endpermission
             @permission('viewany.dart.game')
                 <li class="nav-item">
                     <a href="{{ route('dart.game.index') }}" class="nav-link {{ active('dart.game.index') }}">

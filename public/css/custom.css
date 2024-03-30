@@ -18,6 +18,12 @@
     --bl-clr-yellow: #f1bf61; /* #ebc23b */
     --bl-clr-red: #bc1a1a;
     --bl-clr-blue: #1DA1F2;
+
+    --bl-clr-bd-green: #457219;
+    --bl-clr-bd-yellow: #ac8e2c;
+    --bl-clr-bd-red: #7c1212;
+
+    --bl-clr-txt-yellow: #a57214;
 }
 
 ::-moz-selection {
@@ -221,4 +227,58 @@ input.is-invalid ~ i {
     border-color: #a94442!important
 }
 
+/* ============================================================================================
+ *      CUSTOM BOOTSTRAP COMPONENTS - May convert to SASS later
+ * ============================================================================================
+ */
+ .btn-bl-success {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bl-clr-green);
+    --bs-btn-border-color: var(--bl-clr-bd-green);
+
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bl-clr-bd-green);
+    --bs-btn-hover-border-color: var(--bl-clr-bd-green);
+
+    --bs-btn-focus-shadow-rgb: var(--bl-clr-bd-green);
+
+    --bs-btn-active-color: var(--bs-white);
+    --bs-btn-active-bg: var(--bl-clr-bd-green);
+    --bs-btn-active-border-color: var(--bl-clr-bd-green);
+}
+
+.btn-bl-warning {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bl-clr-txt-yellow);
+    --bs-btn-bg: var(--bl-clr-yellow);
+    --bs-btn-border-color: var(--bl-clr-bd-yellow);
+
+    --bs-btn-hover-color: var(--bl-clr-txt-yellow);
+    --bs-btn-hover-bg: var(--bl-clr-bd-yellow);
+    --bs-btn-hover-border-color: var(--bl-clr-bd-yellow);
+
+    --bs-btn-focus-shadow-rgb: var(--bl-clr-bd-yellow);
+
+    --bs-btn-active-color: var(--bl-clr-txt-yellow);
+    --bs-btn-active-bg: var(--bl-clr-bd-yellow);
+    --bs-btn-active-border-color: var(--bl-clr-bd-yellow);
+}
+
+.btn-bl-danger {
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bl-clr-red);
+    --bs-btn-border-color: var(--bl-clr-bd-red);
+
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bl-clr-bd-red);
+    --bs-btn-hover-border-color: var(--bl-clr-bd-red);
+
+    --bs-btn-focus-shadow-rgb: var(--bl-clr-bd-red);
+
+    --bs-btn-active-color: var(--bs-white);
+    --bs-btn-active-bg: var(--bl-clr-bd-red);
+    --bs-btn-active-border-color: var(--bl-clr-bd-red);
+}
 

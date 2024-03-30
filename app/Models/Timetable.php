@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Appointment extends Model implements Auditable
+class Timetable extends Model implements Auditable
 {
     use HasFactory,
         \OwenIt\Auditing\Auditable;
@@ -19,18 +18,16 @@ class Appointment extends Model implements Auditable
      * @var array<int, string>
      */
     protected $fillable = [
-        'start',
-        'end',
-        'title',
-        'description',
-        'user_id'
+        'user_id',
+        'date',
+        'status',
     ];
 
     /**
-     *
-     */
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class)->withPivot('status');
-    }
+    * Get the user that owns this TimetableDate
+    */
+   public function user(): BelongsTo
+   {
+       return $this->belongsTo(User::class);
+   }
 }

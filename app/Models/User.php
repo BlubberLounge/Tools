@@ -17,10 +17,12 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 use App\Enums\DartGameType;
+use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
 use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
+use App\Enums\AcquaintanceStatus;
 use App\Enums\DartGameUserStatus;
 use Illuminate\Support\Collection;
 use NotificationChannels\WebPush\HasPushSubscriptions;
@@ -33,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
         HasPushSubscriptions,
         HasConfig,
         HasApiTokens,
+        HasMergedRelationships,
         HasRoleAndPermission,
         \OwenIt\Auditing\Auditable;
 
@@ -184,6 +187,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     }
 
     /**
+     *
+     */
+    public function showOnHomeView()
+    {
+        //
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return  array<string, string>|string
@@ -294,6 +305,156 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     public function hasDartQueueChilds(): bool
     {
         return $this->belongsToMany(User::class, DartQueue::class, 'parent_user_id', 'child_user_id')->exists();
+    }
+
+    /**
+     *
+     */
+    public function appointments(): BelongsToMany
+    {
+        return $this->belongsToMany(Appointment::class)->withPivot('status');
+    }
+
+    /**
+     * Get all of the TimetableData
+     */
+    public function timetableData(): HasMany
+    {
+        return $this->hasMany(Timetable::class);
+    }
+
+        /**
+     * Get all accepted Acquaintances user that should be shown on the timetable
+     */
+    public function timetableAcquaintances()
+    {
+        return $this->acquaintances(AcquaintanceStatus::ACCEPTED, true)->sortBy([
+            ['firstname', 'asc'],
+            ['lastname', 'asc'],
+        ]);
+    }
+
+    // works but is not the best solution
+    public function acquaintances(AcquaintanceStatus $status, bool $showOnHomeView)
+    {
+        $transmitted = $this->acquaintancesSend()
+            ->wherePivot('status', $status)
+            ->wherePivot('showOnHomeView', $showOnHomeView)
+            ->get();
+
+        $received = $this->acquaintancesReceived()
+            ->wherePivot('status', $status)
+            ->wherePivot('showOnHomeView', $showOnHomeView)
+            ->get();
+
+        return $received->merge($transmitted);
+    }
+
+    // works ok. BUT there is no access on pivot tables with this method
+    public function acquaintances_beta()
+    {
+        return $this->mergedRelationWithModel(User::class, 'acquaintances_view');
+    }
+
+    /**
+     * Get all of the acquaintances
+     */
+    public function acquaintancesSend(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, Acquaintance::class, 'transmitter_user_id', 'receiver_user_id')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get all of the acquaintances
+     */
+    public function acquaintancesReceived(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, Acquaintance::class, 'receiver_user_id', 'transmitter_user_id')
+            ->withPivot('status', 'showOnHomeView')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get all pending Acquaintances user
+     */
+    public function pendingAcquaintances(): BelongsToMany
+    {
+        return $this->acquaintancesReceived()->wherePivot('status', AcquaintanceStatus::PENDING);
+    }
+
+    /**
+     * Get all accepted Acquaintances user
+     */
+    public function acceptedAcquaintances(): BelongsToMany
+    {
+        return $this->acquaintancesReceived()->wherePivot('status', AcquaintanceStatus::ACCEPTED);
+    }
+
+    /**
+     * Get all denied Acquaintances user
+     */
+    public function deniedAcquaintances(): BelongsToMany
+    {
+        return $this->acquaintancesReceived()->wherePivot('status', AcquaintanceStatus::DENIED);
+    }
+
+    /**
+     * Get all pending Acquaintances user
+     */
+    public function pendingAcquaintancesMerged()
+    {
+        $transmitted = $this->acquaintancesSend()
+            ->wherePivot('status', AcquaintanceStatus::PENDING)
+            ->get();
+
+        $received = $this->acquaintancesReceived()
+            ->wherePivot('status', AcquaintanceStatus::PENDING)
+            ->get();
+
+        return $received->merge($transmitted)->sortBy([
+            ['firstname', 'asc'],
+            ['lastname', 'asc'],
+        ]);
+    }
+
+    /**
+     * Get all accepted Acquaintances user
+     */
+    public function acceptedAcquaintancesMerged()
+    {
+        $transmitted = $this->acquaintancesSend()
+            ->wherePivot('status', AcquaintanceStatus::ACCEPTED)
+            ->get();
+
+        $received = $this->acquaintancesReceived()
+            ->wherePivot('status', AcquaintanceStatus::ACCEPTED)
+            ->get();
+
+        return $received->merge($transmitted)->sortBy([
+            ['firstname', 'asc'],
+            ['lastname', 'asc'],
+        ]);
+    }
+
+    /**
+     * Get all denied Acquaintances user
+     */
+    public function deniedAcquaintancesMerged()
+    {
+        $transmitted = $this->acquaintancesSend()
+            ->wherePivot('status', AcquaintanceStatus::DENIED)
+            ->get();
+
+        $received = $this->acquaintancesReceived()
+            ->wherePivot('status', AcquaintanceStatus::DENIED)
+            ->get();
+
+        return $received->merge($transmitted)->sortBy([
+            ['firstname', 'asc'],
+            ['lastname', 'asc'],
+        ]);
     }
 
     /**

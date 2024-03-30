@@ -1,13 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AcquaintanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\AppointmentController;
 use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
 use App\Http\Controllers\Api\v1\DartExpectationDataController;
 use App\Http\Controllers\Api\v1\NotificationController;
+use App\Http\Controllers\Api\v1\TimetableController;
+use App\Http\Controllers\Api\v1\UserTimetableController;
+use App\Http\Controllers\Api\v1\UtillityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +24,8 @@ use App\Http\Controllers\Api\v1\NotificationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/ping', [UtillityController::class, 'ping']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {
@@ -37,6 +44,19 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 
     Route::apiResource('user', UserController::class)
         ->only(['show']);
+        Route::apiResource('user.timetable', UserTimetableController::class)
+        ->except(['store', 'update', 'destroy']);
+    Route::get('/user/{user}/timetable/between/{dateFrom}/{dateTo}', [UserTimetableController::class, 'betweenDates'])->name('user.timetable.between');
+
+    Route::apiResource('timetable', TimetableController::class)
+        ->except(['destroy']);
+    Route::get('/timetable/between/{dateFrom}/{dateTo}', [TimetableController::class, 'betweenDates'])->name('timetable.between');
+
+    Route::apiResource('acquaintance', AcquaintanceController::class)
+        ->except(['destroy']);
+    Route::put('/acquaintance/byReceiver/{acquaintance}', [AcquaintanceController::class, 'updateByReceiver'])->name('user.timetable.updateByReceiver');
+    Route::put('/acquaintance/byTransmitter/{acquaintance}', [AcquaintanceController::class, 'updateByTransmitter'])->name('user.timetable.updateByTransmitter');
+    Route::put('/acquaintance/byReceiverOrTransmitter/{acquaintance}', [AcquaintanceController::class, 'updateByReceiverOrTransmitter'])->name('user.timetable.updateByReceiverOrTransmitter');
 
 
     // route: /dart/*
@@ -62,6 +82,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
         ->only(['show', 'update'])
         ->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping;
 
+    Route::apiResource('appointment', AppointmentController::class)
+        ->only(['index']);
 
     Route::apiResource('throw', DartThrowController::class)
         ->only(['store'])

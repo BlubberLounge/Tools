@@ -48,13 +48,14 @@ class ConnectRelationshipsSeeder extends Seeder
             'view.calculator',
             'create.feedback',
             'viewany.f.a.q',
+            'viewany.appointment',
         ]);
 
         $this->attachRoleToPermissions(config('roles.models.role')::where('slug', 'dart.player')->first(), [
-                'viewany.dart',
-                'view.dart.info',
-                'view.dart.checkouts',
-                'view.dart.game',
+            'viewany.dart',
+            'view.dart.info',
+            'view.dart.checkouts',
+            'view.dart.game',
         ]);
 
 

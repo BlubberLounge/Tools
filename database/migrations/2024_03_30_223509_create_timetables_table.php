@@ -11,22 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('timetables', function (Blueprint $table) {
             $table->id();
 
-            $table->datetime('start')
-                ->nullable();
-            $table->datetime('end')
-                ->nullable();
-            $table->string('title');
-            $table->longText('description');
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->date('date')
+                ->nullable();
+            $table->enum('status', ['available', 'maybe', 'noTime'])
+                ->default('available')
+                ->comment('available/maybe/noTime');
 
             $table->timestamps();
-            $table->softDeletes();
+
+            // composite unique key
+            $table->unique(['user_id', 'date']);
         });
     }
 
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('timetables');
     }
 };
