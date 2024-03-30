@@ -23,6 +23,7 @@ use App\Mail\InvitationMail;
 use App\Models\Invitation;
 use App\Enums\InvitationStatus;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,6 +103,16 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
     Route::resource('/dart', DartController::class);
+
+    // route: /appointment/*
+    // name: appointment.*
+    Route::prefix('appointment')->group(function () {
+        Route::name('appointment.')->group(function ()
+        {
+
+        });
+    });
+    Route::resource('/appointment', DartController::class);
 
     // route: /user/*
     // name: user.*
