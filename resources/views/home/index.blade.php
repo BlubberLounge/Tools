@@ -94,7 +94,7 @@
         <div class="col-12 col-lg-6">
             <div class="rounded p-0 pt-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="px-3 mb-3">{{ __('recommended playlist') }}</h5>
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/137l0g3Cnb4BBDSiQ2rlnf?utm_source=generator" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3GvdXXnCuBES5QH8W8NWVx?utm_source=generator" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
         <div class="col-12 col-lg-6">
