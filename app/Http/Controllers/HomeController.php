@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\WebUntis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -22,7 +21,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(QRCode $qRCode, WebUntis $untis)
+    public function index(QRCode $qRCode)
     {
         $data['qrcode'] = $qRCode->render(route('index'));
         $data['dartGames'] = Auth::user()->dartGameInvites()->get();
@@ -32,11 +31,6 @@ class HomeController extends Controller
         // dd($data['dartQueue']);
 
         $user = User::find(1);
-
-        $timetableData = $untis->getOwnTimetableForWeek(Carbon::now()->addDays(1));
-        foreach($timetableData['data']['result']['data'] as $result) {
-            $data['timetable'][] = $result;
-        }
 
         //Create a UDP socket
         // if(!($sock = socket_create(AF_INET, SOCK_DGRAM, 0))) {
