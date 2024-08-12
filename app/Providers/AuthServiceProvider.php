@@ -3,6 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\DartGame;
+use App\Models\Feedback;
+use App\Models\Invitation;
+use App\Models\User;
+use App\Policies\DartGamePolicy;
+use App\Policies\FeedbackPolicy;
+use App\Policies\InvitationPolicy;
+use App\Policies\UserPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {

@@ -56,12 +56,9 @@
         </div>
         <div class="col-12 col-lg-6 rounded">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('share this application') }}</h5>
+                <h5 class="mb-3">{{ __('personal qr-code') }}</h5>
                 <div class="d-flex justify-center">
                     <img src="{{ $qrcode }}" alt="" width="300px">
-                </div>
-                <div class="d-flex justify-center">
-                    <button id="BtnShare" class="btn btn-secondary">{{ __('share') }}</button>
                 </div>
             </div>
         </div>
@@ -97,6 +94,7 @@
                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3GvdXXnCuBES5QH8W8NWVx?utm_source=generator" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
+
         <div class="col-12 col-lg-6">
             <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
                 <h5 class="mb-3">{{ __('dart queue') }}</h5>
@@ -142,6 +140,18 @@
                             <button type="button" id="btnQueueAdd" class="btn btn-outline-warning {{ !Auth::user()->isOnDartQueue() ?: 'disabled' }}"> {{ __('join the queue') }}</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 rounded">
+            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+                <h5 class="mb-3">{{ __('share this application') }}</h5>
+                <div class="d-flex justify-center">
+                    <img src="{{ $qrcode }}" alt="" width="300px">
+                </div>
+                <div class="d-flex justify-center">
+                    <button id="BtnShare" class="btn btn-secondary">{{ __('share') }}</button>
                 </div>
             </div>
         </div>
