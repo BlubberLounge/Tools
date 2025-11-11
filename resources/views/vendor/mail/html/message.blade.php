@@ -2,7 +2,7 @@
 {{-- Header --}}
 <x-slot:header>
 <x-mail::header :url="config('app.url')">
-    <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg">
+    <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg">
 </x-mail::header>
 </x-slot:header>
 

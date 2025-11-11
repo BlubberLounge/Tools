@@ -17,7 +17,7 @@
                     <div class="card-brand-logo">
                         <div class="d-flex justify-center py-3">
                             <a class="d-flex align-items-center" href="{{ url('/') }}">
-                                <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
+                                <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
                             </a>
                             <div class="vertical-divider"></div>
                             <a class="nav-brand-sub d-flex align-items-center" href="{{ url('/') }}">
@@ -32,7 +32,7 @@
                                 <span> Tools </span>
                             </a>
                             <a class="d-flex align-items-center" href="{{ url('/') }}">
-                                <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
+                                <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
                             </a>
                         </div>
                     </div> --}}

@@ -38,11 +38,11 @@
       if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         // Dark Mode
         document.documentElement.setAttribute('data-bs-theme', 'dark')
-        a.src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg'
+        a.src ='https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg'
       } else {
         // Light Mode
         document.documentElement.setAttribute('data-bs-theme', theme)
-        a.src ='https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try.svg'
+        a.src ='https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg'
       }
     }
 

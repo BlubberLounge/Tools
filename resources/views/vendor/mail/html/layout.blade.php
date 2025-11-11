@@ -42,7 +42,7 @@ width: 100% !important;
         <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
             <tr class="header-row" >
                 <td class="header-cell" width="200px">
-                    <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try.svg">
+                    <img src="https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg">
                 </td>
                 <td></td>
             </tr>
@@ -51,7 +51,7 @@ width: 100% !important;
 </tr> --}}
 <tr>
     <td class="header-cell">
-        <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" width="100px">
+        <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" width="100px">
     </td>
 </tr>
 <tr>

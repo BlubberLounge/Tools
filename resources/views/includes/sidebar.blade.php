@@ -2,7 +2,7 @@
     <div class="d-flex flex-column" style="flex-shrink:0;min-height:100%;">
         <div class="d-flex justify-center py-2">
             <a class="d-flex align-items-center" href="{{ url('/') }}">
-                <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
+                <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="100px">
             </a>
             <div class="vertical-divider"></div>
             <a class="nav-brand-sub d-flex align-items-center" href="{{ url('/') }}">

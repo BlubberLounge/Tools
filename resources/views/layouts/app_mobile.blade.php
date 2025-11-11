@@ -11,7 +11,7 @@
 
     <!-- prefetch important images -->
     {{-- <link rel="preload"
-        href="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg"
+        href="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg"
         as="image"
         type="image/svg+xml" /> --}}
 

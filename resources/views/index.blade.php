@@ -10,7 +10,7 @@
 
     <!-- prefetch important images -->
     {{-- <link rel="preload"
-        href="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg"
+        href="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg"
         as="image"
         type="image/svg+xml" /> --}}
 
@@ -61,7 +61,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-center">
                 <a class="navbar-brand m-0" href="{{ url('/') }}">
-                    <img src="https://media.maximilian-mewes.de/project/bl/blubber_lounge_rebrand_try_white_optimized.svg" alt="Dart a Web-App Logo" width="300px">
+                    <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" alt="Dart a Web-App Logo" width="300px">
                 </a>
             </div>
 
@@ -74,7 +74,7 @@
                         </a>
                     </div>
                     <div>
-                        <img src="http://media.maximilian-mewes.de/project/bl/ora_2.png" width="15px">
+                        <img src="http://media.blubber-lounge.de/project/bl/ora_2.png" width="15px">
                         <a href="https://blubber-lounge.de/" class="underline">
                             Blubber Lounge
                         </a>

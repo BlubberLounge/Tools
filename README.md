@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/BlubberLounge/Tools" target="_blank">
-        <img src="https://media.maximilian-mewes.de/project/dwa/dart_logo_git.png" width="400">
+        <img src="https://media.blubber-lounge.de/project/dwa/dart_logo_git.png" width="400">
     </a>
 </p>
 
@@ -31,8 +31,8 @@ A collection of more or less useful management software written by the BlubberLo
 ## Screenshots
 
 <p align="center">
-    <img src="https://media.maximilian-mewes.de/project/tools/blubberlounge-tools-home.png" width="400">
-    <img src="https://media.maximilian-mewes.de/project/tools/blubberlounge-tools-dart.png" width="400">
+    <img src="https://media.blubber-lounge.de/project/tools/blubberlounge-tools-home.png" width="400">
+    <img src="https://media.blubber-lounge.de/project/tools/blubberlounge-tools-dart.png" width="400">
 </p>
 
 ## 👪 Contributing
@@ -64,7 +64,7 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="center">
     <a href="https://laravel.com" target="_blank">
-        <img src="http://media.maximilian-mewes.de/project/dwa/readme_dart_image_replace_with_different_one_later.jpeg" width="500">
+        <img src="http://media.blubber-lounge.de/project/dwa/readme_dart_image_replace_with_different_one_later.jpeg" width="500">
     </a>
 </p>
 
