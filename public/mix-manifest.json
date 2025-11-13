@@ -1,6 +1,6 @@
 {
     "/js/app.js": "/js/app.js?id=d3ef890a566d13caf775400b3e882e74",
-    "/js/dark-mode.js": "/js/dark-mode.js?id=6db16dadbc3e7eb5b0388e3916c57dfd",
+    "/js/dark-mode.js": "/js/dark-mode.js?id=4ce279f6024392c8033abd4863525051",
     "/js/auth.js": "/js/auth.js?id=3e5d3352d2edc4758b94db2931aa9a4a",
     "/sw.js": "/sw.js?id=e3f3353c5b97ff189cbaa4d7b5b42107",
     "/js/s.js": "/js/s.js?id=5e21d96fa1f05ca9958d97d9bddec387",
@@ -25,6 +25,6 @@
     "/css/dart.css": "/css/dart.css?id=59f19f149b854395f64a39ac529747e9",
     "/css/sidebar.css": "/css/sidebar.css?id=199e0e56bbd13f8a4ab20bf5786729d8",
     "/css/auth.css": "/css/auth.css?id=6e6a1461832facf5499b3bebf75a4b39",
-    "/css/custom.css": "/css/custom.css?id=dad475f0c09f354c2994dc11cf121a5e",
+    "/css/custom.css": "/css/custom.css?id=2ed68052d48a21508c687c642b08583e",
     "/css/dartboardResult.css": "/css/dartboardResult.css?id=409e298457cc7b4ccb39eb29f9610bce"
 }

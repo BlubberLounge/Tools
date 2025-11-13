@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
             HookahHeadSeeder::class,
             TobaccoSeeder::class,
 
+            // CocktailSeeder::class,
+            RealDataSeeder::class,
+
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             ConnectRelationshipsSeeder::class,

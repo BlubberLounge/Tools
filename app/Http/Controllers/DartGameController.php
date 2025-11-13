@@ -157,12 +157,4 @@ class DartGameController extends Controller
     {
         //
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function showLive()
-    {
-        return view('dart.game.live', []);
-    }
 }

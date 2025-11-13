@@ -54,6 +54,7 @@ class PermissionsTableSeeder extends Seeder
 
             // web
             AppointmentController::class,
+            CocktailController::class,
             DartController::class,
             DartGameController::class,
             FAQController::class,
@@ -192,11 +193,6 @@ class PermissionsTableSeeder extends Seeder
                 'name'          => 'Can View Moving Averages',
                 'slug'          => 'view.moving.average',
                 'description'   => 'Can view moving averages',
-            ],
-            [
-                'name'          => 'Can View Live Dart Games',
-                'slug'          => 'view.dart.game.live',
-                'description'   => 'Can view live dart games',
             ],
             [
                 'name'          => 'Can View Dart Infos',

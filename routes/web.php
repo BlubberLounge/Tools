@@ -23,6 +23,8 @@ use App\Mail\InvitationMail;
 use App\Models\Invitation;
 use App\Enums\InvitationStatus;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CocktailController;
+use App\Models\Cocktail;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,8 +94,6 @@ Route::middleware(['auth', 'verified'])->group(function ()
     Route::prefix('dart')->group(function () {
         Route::name('dart.')->group(function ()
         {
-            Route::get('/game/live', [DartGameController::class, 'showLive'])
-                ->name('game.live');
             Route::resource('/game', DartGameController::class)
                 ->parameter('game', 'dartGame'); // dart to dartGame for currect auto-mapping
 
@@ -103,6 +103,16 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
     Route::resource('/dart', DartController::class);
+
+    // route: /cocktail/*
+    // name: cocktail.*
+    Route::prefix('cocktail')->group(function () {
+        Route::name('cocktail.')->group(function ()
+        {
+
+        });
+    });
+    Route::resource('/cocktail', CocktailController::class);
 
     // route: /appointment/*
     // name: appointment.*

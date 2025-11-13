@@ -7,7 +7,8 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "npm run update-env-version &&  mix --production",
+        "update-env-version": "node dump-app-version.js"
     },
     "dependencies": {
         "animate.css": "^4.1.1",

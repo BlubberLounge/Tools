@@ -35,14 +35,6 @@
                     </a>
                 </li>
             @endpermission
-            @permission('view.dart.game.live')
-                <li class="nav-item">
-                    <a href="{{ route('dart.game.live') }}" class="nav-link {{ active('dart.game.live') }}">
-                        <i class="fa-solid fa-satellite-dish"></i>
-                        <span class="nav-text"> {{ __('dart live') }} <span>
-                    </a>
-                </li>
-            @endpermission
             @permission('viewany.dart')
                 <li class="nav-item">
                     <a href="{{ route('dart.index') }}" class="nav-link {{ active('dart.index') }}">
@@ -103,6 +95,24 @@
                     </li>
                 @endpermission
             --}}
+            @if(Auth::user()->hasPermission(['viewany.cocktail']))
+                <li class="nav-item">
+                    <a href="{{ route('cocktail.index') }}" class="nav-link has-submenu" data-bs-toggle="collapse" data-bs-target="#submenuCocktail">
+                        <i class="fas fa-cocktail"></i>
+                        <span class="nav-text"> {{ __('cocktails') }} <span>
+                    </a>
+                    <ul id="submenuCocktail" class="{{ active(['cocktail.index']) ?: 'collapse' }} submenu">
+                        @permission('viewany.cocktail')
+                            <li class="submenu-item">
+                                <a href="{{ route('cocktail.index') }}" class="nav-link submenu-link {{ active('cocktail.index') }}">
+                                    <i class="fas fa-cocktail"></i>
+                                    <span class="nav-text"> {{ __('all') }} <span>
+                                </a>
+                            </li>
+                        @endpermission
+                    </ul>
+                </li>
+            @endif
             @permission('view.calculator')
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link has-submenu disabled" data-bs-toggle="collapse" data-bs-target="#submenuCalculators">
