@@ -2,7 +2,7 @@ require('./bootstrap');
 require('./consoleText');
 
 require('./sidebar');
-require('./notification');
+// require('./notification');
 
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

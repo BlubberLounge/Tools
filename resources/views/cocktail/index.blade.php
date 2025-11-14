@@ -107,17 +107,19 @@
         <h1 class="fw-bold fs-2 text-center m-0">{{ __('cocktails') }}</h1>
 
         <div class="d-flex gap-2">
-            <button id="copy-list-btn" type="button" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center">
+            <button id="copy-list-btn" type="button" class="btn btn-outline-secondary btn-sm d-inline-flex d-lg-none align-items-center">
                 <i class="fa-solid fa-copy me-1"></i>
                 <span>Copy List</span>
             </button>
 
-            <button id="add-cocktail-btn" type="button" class="btn btn-success btn-sm d-inline-flex align-items-center">
-                <i class="fa-solid fa-plus me-1"></i>
-                <span>Add</span>
-            </button>
+            @permission('create.cocktail')
+                <button id="add-cocktail-btn" type="button" class="btn btn-success btn-sm d-inline-flex d-lg-none align-items-center">
+                    <i class="fa-solid fa-plus me-1"></i>
+                    <span>Add</span>
+                </button>
+            @endpermission
 
-            <button id="toggle-compact" type="button" class="btn btn-outline-primary btn-sm d-inline-flex align-items-center">
+            <button id="toggle-compact" type="button" class="btn btn-outline-primary btn-sm d-inline-flex d-lg-none align-items-center">
                 <i class="fa-solid fa-compress me-1"></i>
                 <span>Compact View</span>
             </button>

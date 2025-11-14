@@ -62,7 +62,9 @@ class ConnectRelationshipsSeeder extends Seeder
 
         // Trusted
         $this->attachRoleToPermissions($roleTrusted, [
-
+            'view.cocktail',
+            'create.cocktail',
+            'update.cocktail'
         ], [$roleUser]);
 
         // Dart - Player

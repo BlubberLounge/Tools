@@ -65,7 +65,16 @@ Breadcrumbs::for('dart.game.index', function (BreadcrumbTrail $trail)
     $trail->push('dart game', route('dart.game.index'));
 });
 
-
+/**
+ *
+ * Cocktails
+ *
+ */
+Breadcrumbs::for('cocktail.index', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push('cocktail list', route('cocktail.index'));
+});
 
 /**
  *
@@ -101,7 +110,7 @@ Breadcrumbs::for('user.edit-image', function (BreadcrumbTrail $trail, User $user
 
 /**
  *
- * Invitation
+ * Administration
  *
  */
 Breadcrumbs::for('administration', function (BreadcrumbTrail $trail)
