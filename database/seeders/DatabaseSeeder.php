@@ -19,6 +19,12 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            PermissionsTableSeeder::class,
+            RolesTableSeeder::class,
+            ConnectRelationshipsSeeder::class,
+
+            UserSeeder::class,
+
             ManufacturerSeeder::class,
             HookahSeeder::class,
             HookahHeadSeeder::class,
@@ -27,11 +33,6 @@ class DatabaseSeeder extends Seeder
             // CocktailSeeder::class,
             RealDataSeeder::class,
 
-            PermissionsTableSeeder::class,
-            RolesTableSeeder::class,
-            ConnectRelationshipsSeeder::class,
-
-            UserSeeder::class,
             DartGameSeeder::class,
         ]);
 
