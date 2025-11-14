@@ -39,7 +39,7 @@ class RolesTableSeeder extends Seeder
             ],
             [
                 'name'        => 'Game Master',
-                'slug'        => 'game.master',
+                'slug'        => 'dart.master',
                 'description' => 'Has full controll over a (dart) game. In case of Darts users with this role are caller and writers combined.',
                 'level'       => 3,
             ],

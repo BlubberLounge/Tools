@@ -118,6 +118,18 @@ input.is-invalid ~ i {
     padding: .2em 1em;
 }
 
+.btn-bl-brand {
+    background-color: rgb(251 191 36);
+    border-color: rgb(251 191 36);
+    color: #000;
+}
+
+.btn-bl-brand:hover {
+    background-color: rgb(234 169 23);
+    border-color: rgb(234 169 23);
+    color: #000;
+}
+
 .registerText {
     color: var(--bl-clr-gray-40);
 }

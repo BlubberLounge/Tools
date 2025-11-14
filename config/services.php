@@ -37,4 +37,10 @@ return [
         'redirect' => '/auth/callback',
     ],
 
+    'blubberlounge' => [
+        'host' => env('BLUBBERLOUNGE_ID_HOST', 'HOST_INVALID'),
+        'client_id' => env('BLUBBERLOUNGE_ID_CLIENT_ID', 'ID_INVALID'),
+        'client_secret' => env('BLUBBERLOUNGE_ID_CLIENT_SECRET', 'SECRET_INVALID'),
+        'redirect' => env('APP_URL', 'HOST_INVALID') .'/auth/blubberlounge/callback',
+    ]
 ];

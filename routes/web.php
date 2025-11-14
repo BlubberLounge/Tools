@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvitationController;
-use App\Http\Controllers\BatteryController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HookahController;
@@ -23,8 +22,8 @@ use App\Mail\InvitationMail;
 use App\Models\Invitation;
 use App\Enums\InvitationStatus;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\Auth\BlubberLoungeController;
 use App\Http\Controllers\CocktailController;
-use App\Models\Cocktail;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,11 +67,6 @@ Auth::routes(['verify' => true, 'register' => false]);
 /*
  * protected routes
  */
-// Route::middleware(['auth'])->group(function ()
-// {
-//     Route::get('/home', [HomeController::class, 'index'])->name('home');
-// });
-
 Route::middleware(['auth', 'verified'])->group(function ()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -176,6 +170,14 @@ Route::middleware(['auth', 'verified'])->group(function ()
     {
         Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     });
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/blubberlounge/redirect', [BlubberLoungeController::class, 'redirect'])
+        ->name('blubberlounge.redirect');
+
+    Route::get('/auth/blubberlounge/callback', [BlubberLoungeController::class, 'callback'])
+        ->name('blubberlounge.callback');
 });
 
 

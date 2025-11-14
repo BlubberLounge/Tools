@@ -47,10 +47,6 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-body.compact-view .cocktail-image {
-    display: none !important;
-}
-
 .background-test {
     background-image: url('/img/23964.jpg');
     background-repeat: no-repeat;
@@ -125,6 +121,18 @@ input.is-invalid ~ i {
     font-weight: bold;
     font-size: 1.2rem;
     padding: .2em 1em;
+}
+
+.btn-bl-brand {
+    background-color: rgb(251 191 36);
+    border-color: rgb(251 191 36);
+    color: #000;
+}
+
+.btn-bl-brand:hover {
+    background-color: rgb(234 169 23);
+    border-color: rgb(234 169 23);
+    color: #000;
 }
 
 .registerText {

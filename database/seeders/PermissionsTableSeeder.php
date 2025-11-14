@@ -19,6 +19,7 @@ use App\Http\Controllers\HookahController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\TobaccoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CocktailController;
 
 
 class PermissionsTableSeeder extends Seeder
@@ -230,9 +231,14 @@ class PermissionsTableSeeder extends Seeder
                 'description'   => 'Can View devices',
             ],
             [
-                'name'          => 'Can View Calculators',
-                'slug'          => 'view.calculator',
-                'description'   => 'Can view calculators',
+                'name'          => 'Can View Airsoft calculation tables',
+                'slug'          => 'view.airsoft',
+                'description'   => 'Can view airsoft topics',
+            ],
+            [
+                'name'          => 'Can View IEC7064 Checksum calculator',
+                'slug'          => 'view.iec7064',
+                'description'   => 'Can view iec7064',
             ]
         ];
     }

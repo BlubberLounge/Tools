@@ -52,6 +52,8 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
         'dob',
         'img',
         'password',
+        'email_verified_at',
+        'external_id',
         'locked',
     ];
 
@@ -73,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     protected $casts = [
         'dob' => 'date',
         'email_verified_at' => 'datetime',
+        'locked' => 'datetime',
     ];
 
     /**
