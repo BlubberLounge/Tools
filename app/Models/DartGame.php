@@ -409,6 +409,19 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     }
 
     /**
+     * Get the last throw of the game for a specific user.
+     */
+    public function getLastThrowByUser(User $user)
+    {
+        return $this->dartThrowsByUser($user)
+            ->orderBy('set', 'DESC')
+            ->orderBy('leg', 'DESC')
+            ->orderBy('turn', 'DESC')
+            ->orderBy('throw', 'DESC')
+            ->first();
+    }
+
+    /**
      *
      */
     public function notifyAllPlayersGameStarted()

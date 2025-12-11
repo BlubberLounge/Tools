@@ -8,6 +8,7 @@ use App\Models\Scopes\TestScope;
 // use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Enums\DartGameUserStatus;
 
 class DartGameUser extends Pivot implements Auditable
 {
@@ -43,4 +44,22 @@ class DartGameUser extends Pivot implements Auditable
     protected $casts = [
         'status' => DartGameUserStatus::class,
     ];
+
+    /**
+     * Return user ids that are participating in active games.
+     *
+     * @param array $gameStatuses
+     * @return array<int>
+     */
+    public static function activeUserIds(array $gameStatuses = ['created', 'started', 'running']): array
+    {
+        return static::join('dart_games', 'dart_game_user.dart_game_id', '=', 'dart_games.id')
+            ->whereIn('dart_games.status', $gameStatuses)
+            ->where('dart_game_user.status', 'accepted')
+            ->whereNull('dart_game_user.deleted_at')
+            ->pluck('dart_game_user.user_id')
+            ->unique()
+            ->values()
+            ->toArray();
+    }
 }

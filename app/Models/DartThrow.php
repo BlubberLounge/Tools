@@ -20,6 +20,7 @@ class DartThrow extends Model implements Auditable
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'user_id',
         'set',
         'leg',
         'turn',

@@ -139,6 +139,11 @@
                     description="Ich möchte zu einem Dartspiel eingeladen werden können. (Empfohlen)" />
 
                 <x-form.settings.input-switch
+                    id="dartGameInvitationAutoAccept"
+                    label="Dartspiel automatisch akzeptieren"
+                    description="Dartspieleinladungen werden automatisch akzeptiert, ohne dass ich eine E-Mail erhalten oder sie manuell bestätigen muss." />
+
+                <x-form.settings.input-switch
                     id="isDartGameStatisticPublic"
                     label="Dart Statistiken"
                     description="Ich möchte das jeder meine dart statistiken sehen kann. (Empfohlen)" />

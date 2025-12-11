@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v2;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *      version="1.0.0",
+ *      version="2.0.0",
  *      title="Tools Api",
  *      description="BlubberLounge Tools REST Api",
  *      @OA\Contact(
@@ -38,7 +38,7 @@ use Illuminate\Routing\Controller as BaseController;
  */
 class Controller extends BaseController
 {
-    // use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests, ValidatesRequests;
 
     /**
      * Create a new controller instance.

@@ -110,13 +110,13 @@ class DartGameFactory extends Factory
     public function getWeigthedStatus(): DartGameStatus
     {
         $status = Utillity::getRandomWeightedElement([
-            'unkown' => 15,
+            // 'unkown' => 15,
             'created' => 5,
-            'started' => 10,
-            'running' => 8,
-            'done' => 50,
-            'aborted' => 10,
-            'error' => 2,
+            // 'started' => 10,
+            // 'running' => 8,
+            // 'done' => 50,
+            // 'aborted' => 10,
+            // 'error' => 2,
         ]);
 
         return DartGameStatus::fromString($status);

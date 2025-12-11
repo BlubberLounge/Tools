@@ -216,7 +216,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
      */
     public static function getRootUser(): User
     {
-        return User::where('name', 'root')->first();
+        return User::where('name', 'root')->first() ?? User::all()->first();
     }
 
     /**
