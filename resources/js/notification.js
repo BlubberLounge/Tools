@@ -1,35 +1,18 @@
+// Notification popover is now handled via Alpine.js component in the blade template
+// This file provides the notification loading and modal functionality
 
-$('body').on('click', function (e) {
-    $('[data-bs-toggle="notification"]').each(function () {
-        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
-            $(this).popover('hide');
-    });
-});
+// Close notification popover when clicking outside
+document.addEventListener('click', function (e) {
+    const notificationPopover = document.getElementById('notification-popover');
+    const notificationBtn = document.querySelector('[data-notification-toggle]');
 
-const notificationBtnTriggerList = document.querySelectorAll('[data-bs-toggle="notification"]')
-const notificationBtnList = [...notificationBtnTriggerList].map(notificationBtnTriggerEl =>
-    new bootstrap.Popover(notificationBtnTriggerEl, {
-        html: true,
-        offset: [-100, 5],
-        placement: 'bottom',
-        customClass: 'popover-notification',
-        content: function () {
-            return `<div class="d-flex flex-column justify-center align-items-center notification-no-container">`+
-                `<div class="spinner-grow text-secondary mb-3"></div>`+
-                `<div class="text-muted fw-medium notification-text">`+
-                    `Hier findest du deine <br /> Benachrichtigungen`+
-                `</div>`+
-            `</div>`;
+    if (notificationPopover && notificationBtn) {
+        if (!notificationPopover.contains(e.target) && !notificationBtn.contains(e.target)) {
+            // Dispatch event to close the popover via Alpine
+            notificationPopover.dispatchEvent(new CustomEvent('close-popover'));
         }
-    })
-);
-
-[...notificationBtnTriggerList].map(notificationBtnTriggerEl =>
-    notificationBtnTriggerEl.addEventListener('click', () => {
-        const popover = bootstrap.Popover.getInstance(notificationBtnTriggerEl);
-        notification.load(popover);
-    })
-);
+    }
+});
 
 
 
@@ -169,15 +152,6 @@ const modal = {
             const notification = response.data.data.notification;
             this.addToDOM(notification);
 
-            const myModal = new bootstrap.Modal('#dartGameNotificationModal');
-            myModal.show();
-
-            const myModalEl = document.getElementById('dartGameNotificationModal');
-            myModalEl.addEventListener('hidden.bs.modal', event =>
-            {
-                myModalEl.remove(); // cleanup
-            });
-
         }).catch(function (error) {
             if (error.response) {
                 console.log(error.response.data);
@@ -190,7 +164,7 @@ const modal = {
         let userList = '';
 
         for(const [i, n] of notification.game.users.entries()) {
-            let borderColor = null;
+            let borderColor = '';
             const hasAccepted = n.pivot.status === 'accepted';
             const hasDenied = n.pivot.status === 'denied';
 
@@ -198,48 +172,47 @@ const modal = {
                 borderColor = 'border-success';
             } else if(hasDenied) {
                 borderColor = 'border-danger';
-            } else {
-                //
             }
 
-            userList += `<div class="col-6 col-md mb-4">`+
-                `<div class="row justify-center">`+
-                    `<div class="col-auto">`+
-                        `<img src="${n.img}" width="96" class="rounded-circle border border-3 ${borderColor} p-1">`+
-                    `</div>`+
+            userList += `<div class="w-1/2 md:w-auto mb-4">`+
+                `<div class="flex justify-center">`+
+                    `<img src="${n.img}" width="96" class="rounded-full border-4 ${borderColor} p-1">`+
                 `</div>`+
-                `<div class="row text-center">`+
-                    `<div class="col">`+
-                        `${n.name}`+
-                    `</div>`+
+                `<div class="text-center mt-2">`+
+                    `${n.name}`+
                 `</div>`+
             `</div>`;
         }
 
         const html = `
-        <div class="modal fade" id="dartGameNotificationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+        <div x-data="{ open: true }" x-show="open" class="fixed inset-0 z-50" id="dartGameNotificationModal">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/50" @click="open = false; $el.parentElement.remove()"></div>
+
+            <!-- Modal -->
+            <div class="fixed inset-0 flex items-center justify-center p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-hidden" @click.stop>
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--tw-border-color)]">
+                        <h1 class="text-lg font-semibold">
                             ${notification.data.title}
                         </h1>
+                        <button @click="open = false; $el.closest('#dartGameNotificationModal').remove()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row text-center mb-4">
-                            <div class="col">
-                                <h4>
-                                    ${notification.game.title}
-                                </h4>
-                            </div>
+                    <div class="p-6">
+                        <div class="text-center mb-4">
+                            <h4 class="text-xl font-medium">
+                                ${notification.game.title}
+                            </h4>
                         </div>
-                        <div class="row justify-center">
+                        <div class="flex flex-wrap justify-center gap-4">
                             ${userList}
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-around">
-                        <button type="button" id="btnModalDecline" class="btn btn-danger" data-bs-dismiss="modal"> Decline </button>
-                        <button type="button" id="btnModalAccept" class="btn btn-success" data-bs-dismiss="modal"> Accept </button>
+                    <div class="flex items-center justify-around gap-2 px-6 py-4 border-t border-[var(--tw-border-color)]">
+                        <button type="button" id="btnModalDecline" class="btn btn-danger" @click="open = false; $el.closest('#dartGameNotificationModal').remove()"> Decline </button>
+                        <button type="button" id="btnModalAccept" class="btn btn-success" @click="open = false; $el.closest('#dartGameNotificationModal').remove()"> Accept </button>
                     </div>
                 </div>
             </div>
@@ -247,13 +220,20 @@ const modal = {
 
         document.body.append(this.htmlToElement(html));
 
+        // Re-initialize Alpine on the new element
+        if (window.Alpine) {
+            window.Alpine.initTree(document.getElementById('dartGameNotificationModal'));
+        }
+
         document.getElementById('btnModalAccept').addEventListener('click', () => {
             const data = null;
             axios.put(`/api/v1/dart/${notification.game.id}/accept`, data).then( response => {
 
                 axios.put(`/api/v1/notification/${notification.id}`, data).then ( r => {
                     const counter = document.getElementById('notification-counter');
-                    counter.innerHTML = counter.innerHTML - 1;
+                    if (counter) {
+                        counter.innerHTML = parseInt(counter.innerHTML) - 1;
+                    }
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);
@@ -273,7 +253,9 @@ const modal = {
 
                 axios.put(`/api/v1/notification/${notification.id}`, data).then ( r => {
                     const counter = document.getElementById('notification-counter');
-                    counter.innerHTML = counter.innerHTML - 1;
+                    if (counter) {
+                        counter.innerHTML = parseInt(counter.innerHTML) - 1;
+                    }
                 }).catch(function (error) {
                     if (error.response) {
                         console.log(error.response.data);

@@ -12,7 +12,7 @@ import Dartboard from './dartboard';
 import DartCalculator from './dartCalculator';
 import DartDefinition from './dartDefinition';
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     // optimazation: put in seperate file and load sync
     fetchDataRenderPlots();

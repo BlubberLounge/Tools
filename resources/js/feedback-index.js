@@ -4,70 +4,67 @@
  *
  */
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
-    let btnFeedbackRatingList = $('.btn-feedback-rating');
-    let btnFeedbackHeaderList = $('button[data-bl-feedback-status="new"]');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let btnFeedbackRatingList = document.querySelectorAll('.btn-feedback-rating');
+    let btnFeedbackHeaderList = document.querySelectorAll('button[data-bl-feedback-status="new"]');
 
-    btnFeedbackRatingList.each((k, e) =>
+    btnFeedbackRatingList.forEach(btn =>
     {
-        $(e).click(event =>
+        btn.addEventListener('click', function(event)
         {
-            let feedbackID = $(e).closest('.accordion-item').data('bl-feedback-id');
+            let feedbackID = btn.closest('.accordion-item').dataset.blFeedbackId;
 
-            $.ajax({
-                url: '/feedback/'+feedbackID,
+            fetch('/feedback/'+feedbackID, {
                 method: 'PUT',
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
-                data: {
-                    status: $(e).data('bl-feedback-status'),
-                },
-                beforeSend: function() {
-                },
-                success: function(response) {
-                    // console.log(response);
-                    // most cheap
-                    window.location.reload();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // handle the error case
-                    // console.log(errorThrown);
-                    // TODO
-                }
+                body: JSON.stringify({
+                    status: btn.dataset.blFeedbackStatus,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         });
     });
 
-    btnFeedbackHeaderList.each((k, e) =>
+    btnFeedbackHeaderList.forEach(btn =>
     {
-        let feedbackID = $(e).closest('.accordion-item').data('bl-feedback-id');
+        let feedbackID = btn.closest('.accordion-item').dataset.blFeedbackId;
 
-        $(e).click(event =>
+        const clickHandler = function(event)
         {
-            $.ajax({
-                url: '/feedback/'+feedbackID,
+            fetch('/feedback/'+feedbackID, {
                 method: 'PUT',
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
-                data: {
+                body: JSON.stringify({
                     status: 'seen',
-                },
-                beforeSend: function() {
-                },
-                success: function(response) {
-                    // console.log(response);
-                    $(e).closest('.feedback-seen-icon').show();
-                    $(e).off('click'); // remove event listener
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // handle the error case
-                    // console.log(errorThrown);
-                    // TODO
-                }
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const icon = btn.closest('.feedback-seen-icon');
+                if (icon) icon.style.display = 'block';
+                btn.removeEventListener('click', clickHandler);
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
-        });
+        };
+
+        btn.addEventListener('click', clickHandler);
     });
 });

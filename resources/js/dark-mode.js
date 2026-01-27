@@ -1,85 +1,73 @@
 /*!
- * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Licensed under the Creative Commons Attribution 3.0 Unported License.
- *
- * Modified.
+ * Color mode toggler for Tailwind CSS dark mode
+ * Modified from Bootstrap's docs
  */
 
-(() =>
-{
+(() => {
     'use strict'
 
     const storedTheme = localStorage.getItem('theme')
 
-    const getPreferredTheme = () =>
-    {
-      if (storedTheme)
-        return storedTheme
-
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    const getPreferredTheme = () => {
+        if (storedTheme) {
+            return storedTheme
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     }
 
-    const setTheme = function (theme)
-    {
+    const setTheme = (theme) => {
+        const isDark = theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        // Dark Mode
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-      } else {
-        // Light Mode
-        document.documentElement.setAttribute('data-bs-theme', theme)
-      }
+        if (isDark) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+
+        // Update logo based on theme
+        const logo = document.querySelector('.nav-brand');
+        if (logo) {
+            if (isDark) {
+                logo.src = 'https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg'
+            } else {
+                logo.src = 'https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg'
+            }
+        }
     }
 
-    var setTheme00 = function (theme)
-    {
-      var a = document.querySelector('.nav-brand');
-      if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        // Dark Mode
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-        a.src ='https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg'
-      } else {
-        // Light Mode
-        document.documentElement.setAttribute('data-bs-theme', theme)
-        a.src ='https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg'
-      }
-    }
-
+    // Set initial theme immediately to prevent flash
     setTheme(getPreferredTheme())
 
-    const showActiveTheme = theme =>
-    {
-      const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+    const showActiveTheme = (theme) => {
+        const btnToActive = document.querySelector(`[data-theme-value="${theme}"]`)
 
-      document.querySelectorAll('[data-bs-theme-value]').forEach(element =>
-      {
-        element.classList.remove('active')
-      })
+        document.querySelectorAll('[data-theme-value]').forEach(element => {
+            element.classList.remove('active')
+        })
 
-      btnToActive.classList.add('active')
+        if (btnToActive) {
+            btnToActive.classList.add('active')
+        }
     }
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () =>
-    {
-      if (storedTheme !== 'light' || storedTheme !== 'dark') {
-        setTheme00(getPreferredTheme())
-      }
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const currentTheme = localStorage.getItem('theme')
+        if (currentTheme !== 'light' && currentTheme !== 'dark') {
+            setTheme(getPreferredTheme())
+        }
     })
 
-    window.addEventListener('DOMContentLoaded', () =>
-    {
-      showActiveTheme(getPreferredTheme())
+    window.addEventListener('DOMContentLoaded', () => {
+        showActiveTheme(getPreferredTheme())
 
-      document.querySelectorAll('[data-bs-theme-value]')
-        .forEach(toggle => {
-          toggle.addEventListener('click', () =>
-          {
-            const theme = toggle.getAttribute('data-bs-theme-value')
-            localStorage.setItem('theme', theme)
-            setTheme00(theme)
-            showActiveTheme(theme)
-          })
+        document.querySelectorAll('[data-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-theme-value')
+                localStorage.setItem('theme', theme)
+                setTheme(theme)
+                showActiveTheme(theme)
+            })
         })
     })
-  })()
+})()

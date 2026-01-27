@@ -13,7 +13,7 @@
                 Wie lang muss der Lauf sein für eine Cylinder zu Lauf Relation von 1.5 : 1? <br>
                 Volumen Cylinder * 1.5 = Volumen Lauf <br>
                 a^2 * π * b = c^2 * π * d
-                <span class="d-block ms-3"> => <span class="ms-3"> d = ( a^2*b ) / ( c^2*x ) </span> </span>
+                <span class="block ml-3"> => <span class="ml-3"> d = ( a^2*b ) / ( c^2*x ) </span> </span>
             </p>
         </div>
     </div>

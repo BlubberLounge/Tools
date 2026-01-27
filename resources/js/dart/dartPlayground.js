@@ -12,7 +12,7 @@ import Dartboard from './dartboard';
 import DartCalculator from './dartCalculator';
 
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     fetchHeatmapData();
 

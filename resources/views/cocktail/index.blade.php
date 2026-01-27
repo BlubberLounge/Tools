@@ -42,7 +42,7 @@
         navigator.clipboard.writeText(list)
             .then(() => {
                 const originalHTML = this.innerHTML;
-                this.innerHTML = '<i class="fa-solid fa-check me-1"></i>Copied!';
+                this.innerHTML = '<i class="fa-solid fa-check mr-1"></i>Copied!';
                 setTimeout(() => this.innerHTML = originalHTML, 1500);
             })
             .catch(() => alert('Failed to copy.'));
@@ -103,73 +103,73 @@
     @endforeach
 </div> --}}
 <div class="container p-0 py-4">
-    <div class="d-flex justify-content-center justify-content-between justify-content-lg-center align-items-center mb-4">
-        <h1 class="fw-bold fs-2 text-center m-0">{{ __('cocktails') }}</h1>
+    <div class="flex justify-center justify-between justify-content-lg-center items-center mb-4">
+        <h1 class="font-bold fs-2 text-center m-0">{{ __('cocktails') }}</h1>
 
-        <div class="d-flex gap-2">
-            <button id="copy-list-btn" type="button" class="btn btn-outline-secondary btn-sm d-inline-flex d-lg-none align-items-center">
-                <i class="fa-solid fa-copy me-1"></i>
+        <div class="flex gap-2">
+            <button id="copy-list-btn" type="button" class="btn btn-outline-secondary btn-sm d-inline-flex d-lg-none items-center">
+                <i class="fa-solid fa-copy mr-1"></i>
                 <span>Copy List</span>
             </button>
 
             @permission('create.cocktail')
-                <button id="add-cocktail-btn" type="button" class="btn btn-success btn-sm d-inline-flex d-lg-none align-items-center">
-                    <i class="fa-solid fa-plus me-1"></i>
+                <button id="add-cocktail-btn" type="button" class="btn btn-success btn-sm d-inline-flex d-lg-none items-center">
+                    <i class="fa-solid fa-plus mr-1"></i>
                     <span>Add</span>
                 </button>
             @endpermission
 
-            <button id="toggle-compact" type="button" class="btn btn-outline-primary btn-sm d-inline-flex d-lg-none align-items-center">
-                <i class="fa-solid fa-compress me-1"></i>
+            <button id="toggle-compact" type="button" class="btn btn-outline-primary btn-sm d-inline-flex d-lg-none items-center">
+                <i class="fa-solid fa-compress mr-1"></i>
                 <span>Compact View</span>
             </button>
         </div>
     </div>
-    <div class="row justify-center"> {{-- gap-3 --}}
+    <div class="flex flex-wrap justify-center"> {{-- gap-3 --}}
         @foreach($cocktails as $cocktail)
-            <div class="col-6 col-sm-4 col-md-4 col-lg-3 d-flex justify-center p-2">
-                <div class="card shadow-sm border rounded-3 p-0 mb-2 flex-fill d-flex flex-column" style="max-width: 26rem;">
+            <div class="col-6 col-sm-4 col-md-4 col-lg-3 flex justify-center p-2">
+                <div class="card shadow-sm border rounded-3 p-0 mb-2 flex-fill flex flex-col" style="max-width: 26rem;">
                     <img src="{{ asset('storage/'. $cocktail->image) ?? 'https://placehold.co/600x200' }}" class="card-img-top rounded-3 cocktail-image" alt="{{ $cocktail->name }}">
-                    <div class="card-body d-flex flex-column flex-grow-1">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center me-2">
+                    <div class="card-body flex flex-col flex-grow-1">
+                        <div class="flex items-center mb-3">
+                            <div class="flex items-center mr-2">
                                 @for($i = 1; $i <= 5; $i++)
                                     @if ($cocktail->average_rating >= $i)
-                                        <i class="fa-solid fa-star text-warning me-1"></i>
+                                        <i class="fa-solid fa-star text-warning mr-1"></i>
                                     @elseif ($cocktail->average_rating >= ($i - 0.5))
-                                        <i class="fa-solid fa-star-half-stroke text-warning me-1"></i>
+                                        <i class="fa-solid fa-star-half-stroke text-warning mr-1"></i>
                                     @else
-                                        <i class="fa-regular fa-star text-warning me-1"></i>
+                                        <i class="fa-regular fa-star text-warning mr-1"></i>
                                     @endif
                                 @endfor
                             </div>
-                            <span class="badge bg-light text-primary border border-primary me-2 d-none d-md-block">
+                            <span class="badge bg-light text-primary border border-primary mr-2 hidden d-md-block">
                                 {{ number_format($cocktail->average_rating, 1) }} out of 5
                             </span>
-                            <span class="ms-0">
+                            <span class="ml-0">
                                 ({{ $cocktail->timesRated() }})
                             </span>
                         </div>
 
                         <a href="#" class="text-decoration-none mb-3">
-                            <h5 class="card-title fw-semibold">
+                            <h5 class="card-title font-semibold">
                                 {{ $cocktail->name }}
                             </h5>
                         </a>
 
-                        <div class="mt-auto d-flex align-items-center justify-content-between">
-                            <button type="button" class="btn btn-primary me-2">
+                        <div class="mt-auto flex items-center justify-between">
+                            <button type="button" class="btn btn-primary mr-2">
                                 <i class="fa-solid fa-list-ol"></i>
                             </button>
-                            <button type="button" class="btn btn-primary me-2">
+                            <button type="button" class="btn btn-primary mr-2">
                                 <i class="fa-solid fa-comments"></i>
                             </button>
-                            <button type="button" class="btn btn-primary d-none d-lg-block">
+                            <button type="button" class="btn btn-primary hidden d-lg-block">
                                 <i class="fa-solid fa-user-ninja"></i>
                             </button>
-                            <span class="small-75 ms-auto">
+                            <span class="small-75 ml-auto">
                                 {{ $cocktail->createdBy->name }}
-                                <span class="d-none d-md-block">
+                                <span class="hidden d-md-block">
                                     {{ __('am') .' '. $cocktail->created_at->format('d.m.Y') }}
                                 </span>
                             </span>

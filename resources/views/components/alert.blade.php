@@ -1,4 +1,4 @@
-<div class="alert alert-{{ $type }} alert-dismissible fade show" role="alert">
+<div x-data="{ show: true }" x-show="show" x-transition class="alert alert-{{ $type }} alert-dismissible" role="alert">
     {{ $message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <button type="button" @click="show = false" class="btn-close" aria-label="Close"></button>
 </div>

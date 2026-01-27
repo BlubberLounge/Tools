@@ -40,19 +40,19 @@
     "file": "assets/utils-CWqVBBAg.js",
     "name": "utils"
   },
-  "resources/css/custom.css": {
-    "file": "assets/custom-CfRBzdQZ.css",
-    "src": "resources/css/custom.css",
+  "resources/css/tailwind.css": {
+    "file": "assets/tailwind-BTWdZbwa.css",
+    "src": "resources/css/tailwind.css",
     "isEntry": true
   },
   "resources/js/IEC7064_page.js": {
-    "file": "assets/IEC7064_page-B_XqKX0x.js",
+    "file": "assets/IEC7064_page-CwjZaNmH.js",
     "name": "IEC7064_page",
     "src": "resources/js/IEC7064_page.js",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-C6LyTBoK.js",
+    "file": "assets/app-NCDi6pKw.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -61,19 +61,19 @@
     ]
   },
   "resources/js/auth.js": {
-    "file": "assets/auth-U9igp-p-.js",
+    "file": "assets/auth-TS3X5wEH.js",
     "name": "auth",
     "src": "resources/js/auth.js",
     "isEntry": true
   },
   "resources/js/dark-mode.js": {
-    "file": "assets/dark-mode-CQb0yh40.js",
+    "file": "assets/dark-mode-DAce_kXm.js",
     "name": "dark-mode",
     "src": "resources/js/dark-mode.js",
     "isEntry": true
   },
   "resources/js/dart/dartIndex.js": {
-    "file": "assets/dartIndex-2CuzfB4M.js",
+    "file": "assets/dartIndex-Cs-KYsxm.js",
     "name": "dartIndex",
     "src": "resources/js/dart/dartIndex.js",
     "isEntry": true,
@@ -87,7 +87,7 @@
     ]
   },
   "resources/js/dart/dartInfo.js": {
-    "file": "assets/dartInfo-F9v6WZKm.js",
+    "file": "assets/dartInfo-CpFDM4Uz.js",
     "name": "dartInfo",
     "src": "resources/js/dart/dartInfo.js",
     "isEntry": true,
@@ -101,7 +101,7 @@
     ]
   },
   "resources/js/dart/dartPlayground.js": {
-    "file": "assets/dartPlayground-CIV6KBim.js",
+    "file": "assets/dartPlayground-B02QSNDW.js",
     "name": "dartPlayground",
     "src": "resources/js/dart/dartPlayground.js",
     "isEntry": true,
@@ -116,13 +116,13 @@
     ]
   },
   "resources/js/dart/game/dartResult.js": {
-    "file": "assets/dartResult-CbF9n6Cw.js",
+    "file": "assets/dartResult-RRpWrBkg.js",
     "name": "dartResult",
     "src": "resources/js/dart/game/dartResult.js",
     "isEntry": true
   },
   "resources/js/dart/game/dartResultHeatmap.js": {
-    "file": "assets/dartResultHeatmap-DP0nQ4rL.js",
+    "file": "assets/dartResultHeatmap-AFdl-t-r.js",
     "name": "dartResultHeatmap",
     "src": "resources/js/dart/game/dartResultHeatmap.js",
     "isEntry": true,
@@ -134,19 +134,19 @@
     ]
   },
   "resources/js/dart/game/dartSetup.js": {
-    "file": "assets/dartSetup-DypNBPcZ.js",
+    "file": "assets/dartSetup-DNiR8BSh.js",
     "name": "dartSetup",
     "src": "resources/js/dart/game/dartSetup.js",
     "isEntry": true
   },
   "resources/js/dart/game/dartWaiting.js": {
-    "file": "assets/dartWaiting-C2K57B1E.js",
+    "file": "assets/dartWaiting-1CXFnamI.js",
     "name": "dartWaiting",
     "src": "resources/js/dart/game/dartWaiting.js",
     "isEntry": true
   },
   "resources/js/dart/game/show.js": {
-    "file": "assets/show-DcvfM3UG.js",
+    "file": "assets/show-0C8TGIyV.js",
     "name": "show",
     "src": "resources/js/dart/game/show.js",
     "isEntry": true,
@@ -157,37 +157,37 @@
     ]
   },
   "resources/js/events.js": {
-    "file": "assets/events-Czr7Bwrw.js",
+    "file": "assets/events-D-uJRWFt.js",
     "name": "events",
     "src": "resources/js/events.js",
     "isEntry": true
   },
   "resources/js/feedback-create.js": {
-    "file": "assets/feedback-create-BCY1z-24.js",
+    "file": "assets/feedback-create-zgx5snX0.js",
     "name": "feedback-create",
     "src": "resources/js/feedback-create.js",
     "isEntry": true
   },
   "resources/js/feedback-index.js": {
-    "file": "assets/feedback-index-VBAR3UC1.js",
+    "file": "assets/feedback-index-DKSnS75C.js",
     "name": "feedback-index",
     "src": "resources/js/feedback-index.js",
     "isEntry": true
   },
   "resources/js/home.js": {
-    "file": "assets/home-lVpHdb30.js",
+    "file": "assets/home-DWeukn9i.js",
     "name": "home",
     "src": "resources/js/home.js",
     "isEntry": true
   },
   "resources/js/invitation.js": {
-    "file": "assets/invitation-B7I2VsbS.js",
+    "file": "assets/invitation-aTs2hblG.js",
     "name": "invitation",
     "src": "resources/js/invitation.js",
     "isEntry": true
   },
   "resources/js/moving-average.js": {
-    "file": "assets/moving-average-CKuAF5uc.js",
+    "file": "assets/moving-average-B7gtVYto.js",
     "name": "moving-average",
     "src": "resources/js/moving-average.js",
     "isEntry": true,
@@ -212,23 +212,16 @@
     ]
   },
   "resources/js/user-profilepicture.js": {
-    "file": "assets/user-profilepicture-Cxqku6PB.js",
+    "file": "assets/user-profilepicture-DYQQa4me.js",
     "name": "user-profilepicture",
     "src": "resources/js/user-profilepicture.js",
-    "isEntry": true
-  },
-  "resources/sass/app.scss": {
-    "file": "assets/app-qT9QiU94.css",
-    "src": "resources/sass/app.scss",
-    "isEntry": true
-  },
-  "resources/sass/auth.scss": {
-    "file": "assets/auth-DfXov3BB.css",
-    "src": "resources/sass/auth.scss",
-    "isEntry": true
+    "isEntry": true,
+    "css": [
+      "assets/user-profilepicture-BuvTG44M.css"
+    ]
   },
   "resources/sass/dart.scss": {
-    "file": "assets/dart-BRDXe9ox.css",
+    "file": "assets/dart-CbNcihcj.css",
     "src": "resources/sass/dart.scss",
     "isEntry": true
   },
@@ -240,11 +233,6 @@
   "resources/sass/dartboardResult.scss": {
     "file": "assets/dartboardResult-JGUfJwUW.css",
     "src": "resources/sass/dartboardResult.scss",
-    "isEntry": true
-  },
-  "resources/sass/sidebar.scss": {
-    "file": "assets/sidebar-B3KcZC_N.css",
-    "src": "resources/sass/sidebar.scss",
     "isEntry": true
   }
 }

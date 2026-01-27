@@ -2,13 +2,11 @@
 
 @push('scripts')
     @vite(['resources/js/home.js'])
-    {{-- <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 @endpush
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center mb-4">
+    <div class="flex flex-wrap justify-center mb-4">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
@@ -31,22 +29,18 @@
         </div>
     </div>
 
-    <div class="row g-4" data-masonry='{"percentPosition": true }'>
-        <div class="col-12 col-lg-6 rounded">
-            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('active dart game') }}</h5>
+    <div class="columns-1 lg:columns-2 gap-4 space-y-4">
+        <div class="break-inside-avoid">
+            <div class="rounded p-3 bg-[var(--tw-body-tertiary-bg)]">
+                <h5 class="mb-3 font-semibold">{{ __('active dart game') }}</h5>
                 @if($activeDartGame)
                     <div>
                         <h6 class="text-center">{{ $activeDartGame->title }}</h6>
-                        <div class="row p-0 m-0">
+                        <div class="flex justify-around p-0 m-0">
                             @foreach ($activeDartGame->users as $user)
-                                <div class="col">
-                                    <div class="row justify-center">
-                                        {{ $user->name }}
-                                    </div>
-                                    <div class="row justify-center">
-                                        {{ $activeDartGame->remainingPointsByUser($user) }}
-                                    </div>
+                                <div class="text-center">
+                                    <div>{{ $user->name }}</div>
+                                    <div>{{ $activeDartGame->remainingPointsByUser($user) }}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -54,50 +48,26 @@
                 @endif
             </div>
         </div>
-        <div class="col-12 col-lg-6 rounded">
-            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('personal qr-code') }}</h5>
-                <div class="d-flex justify-center">
+
+        <div class="break-inside-avoid">
+            <div class="rounded p-3 bg-[var(--tw-body-tertiary-bg)]">
+                <h5 class="mb-3 font-semibold">{{ __('personal qr-code') }}</h5>
+                <div class="flex justify-center">
                     <img src="{{ $qrcode }}" alt="" width="300px">
                 </div>
             </div>
         </div>
-        {{--
-        <div class="col-12 col-lg-6 rounded">
-            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('open dart games') }}</h5>
-                <div class="rounded" style="max-height: 300px;overflow-y:auto;">
-                    <ul class="list-group list-group-flush">
-                        @forelse  ($dartGames as $dartGame)
-                            <li class="list-group-item">
-                                <div class="me-auto">
-                                    {{ $dartGame->title }}
-                                    <span class="text-body-secondary small">vom {{ $dartGame->created_at->format('d.m.Y') }}</span>
-                                </div>
-                                <span class="badge rounded-pill text-bg-{{ $dartGame->type->color() }}">{{ $dartGame->type }}</span>
-                                <span class="badge rounded-pill text-bg-{{ $dartGame->getNumberOfPlayers() <= 2 ? 'secondary' : ($dartGame->getNumberOfPlayers() <= 3 ? 'primary' : 'warning') }}">{{ $dartGame->getNumberOfPlayers() }} Spieler</span>
-                            </li>
-                        @empty
-                            @foreach(["no data", "....", "...", "..", "."] as $c)
-                                <li class="list-group-item" style="opacity:{{.75-$loop->index*.2}};">
-                                    <th scope="row">{{ $c }}</th>
-                                </li>
-                            @endforeach
-                        @endforelse
-                    </ul>
-                </div>
-            </div>
-        </div> --}}
-        <div class="col-12 col-lg-6">
-            <div class="rounded p-0 pt-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="px-3 mb-3">{{ __('recommended playlist') }}</h5>
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3GvdXXnCuBES5QH8W8NWVx?utm_source=generator" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+        <div class="break-inside-avoid">
+            <div class="rounded p-0 pt-3 bg-[var(--tw-body-tertiary-bg)] overflow-hidden">
+                <h5 class="px-3 mb-3 font-semibold">{{ __('recommended playlist') }}</h5>
+                <iframe class="rounded-b-lg" src="https://open.spotify.com/embed/playlist/3GvdXXnCuBES5QH8W8NWVx?utm_source=generator" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
 
-        <div class="col-12 col-lg-6">
-            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('dart queue') }}</h5>
+        <div class="break-inside-avoid">
+            <div class="rounded p-3 bg-[var(--tw-body-tertiary-bg)]">
+                <h5 class="mb-3 font-semibold">{{ __('dart queue') }}</h5>
                 <p id="dartQueueText" class="text-{{ Auth::user()->isOnDartQueue() ? 'success' : 'danger' }} text-center">
                     @if(Auth::user()->isOnDartQueue())
                         {{ __('you are in the queue') }}
@@ -105,14 +75,14 @@
                         {{ __('you are not in the queue') }}
                     @endif
                 </p>
-                <div class="rounded" style="max-height:400px;overflow-y:auto;">
+                <div class="rounded max-h-[400px] overflow-y-auto">
                     <ol id="dartQueueList" class="list-group list-group-numbered list-group-flush list">
                         @forelse ($dartQueue as $queueItem)
                             <li class="list-group-item">
                                 {{ $queueItem->parentUser->name }}
-                                <span class="text-body-secondary small">{{ $queueItem->created_at->diffForHumans() }}</span>
+                                <span class="text-[var(--tw-muted-color)] text-sm">{{ $queueItem->created_at->diffForHumans() }}</span>
                                 @if(Auth::user()->id === $queueItem->parentUser->id)
-                                    <button id="btnQueueRemove" class="btn p-0 text-danger h-100 float-end">
+                                    <button id="btnQueueRemove" class="btn p-0 text-danger h-full float-right">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 @endif
@@ -133,24 +103,19 @@
                         @endforelse
                     </ol>
                 </div>
-                <div class="row justify-center mt-5 mb-4">
-                    <div class="col col-md-8">
-                        <div class="d-grid">
-                            {{-- <button type="button" class="btn btn-outline-warning"> {{ __('put me on the waiting list') }}</button> --}}
-                            <button type="button" id="btnQueueAdd" class="btn btn-outline-warning {{ !Auth::user()->isOnDartQueue() ?: 'disabled' }}"> {{ __('join the queue') }}</button>
-                        </div>
-                    </div>
+                <div class="flex justify-center mt-5 mb-4">
+                    <button type="button" id="btnQueueAdd" class="btn btn-outline-warning {{ !Auth::user()->isOnDartQueue() ?: 'disabled' }}"> {{ __('join the queue') }}</button>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-lg-6 rounded">
-            <div class="rounded p-3" style="background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
-                <h5 class="mb-3">{{ __('share this application') }}</h5>
-                <div class="d-flex justify-center">
+        <div class="break-inside-avoid">
+            <div class="rounded p-3 bg-[var(--tw-body-tertiary-bg)]">
+                <h5 class="mb-3 font-semibold">{{ __('share this application') }}</h5>
+                <div class="flex justify-center">
                     <img src="{{ $qrcode }}" alt="" width="300px">
                 </div>
-                <div class="d-flex justify-center">
+                <div class="flex justify-center mt-3">
                     <button id="BtnShare" class="btn btn-secondary">{{ __('share') }}</button>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 
 import IEC7064 from "./IEC7064";
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     document.getElementById('btnGenerate').addEventListener('click', e =>
     {

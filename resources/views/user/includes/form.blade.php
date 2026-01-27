@@ -1,12 +1,12 @@
-<div class="row justify-center mb-3">
+<div class="flex flex-wrap justify-center mb-3">
     <div class="col-auto">
         <a href="{{ route('user.edit-image', ['user' => $user->id]) }}">
-            <img src="{{ $user->img }}" width="150" class="rounded-circle">
+            <img src="{{ $user->img }}" width="150" class="rounded-full">
         </a>
     </div>
 </div>
 
-<div class="row justify-content-center">
+<div class="flex flex-wrap justify-center">
     <form action="{{ $action === 'create' ? route('user.store') : route('user.update', $user->id) }}" method="POST"  enctype="multipart/form-data" id="userform">
         @csrf
         @if($action !== 'create')

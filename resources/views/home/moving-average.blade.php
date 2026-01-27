@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
 
-    <div class="row justify-center align-items-center mb-5">
+    <div class="flex flex-wrap justify-center items-center mb-5">
         <div id="movingAveragePlot"></div>
     </div>
 

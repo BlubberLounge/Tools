@@ -2,9 +2,8 @@
     <label for="{{ $attribute }}" class="form-label"> {{ __($label) }} </label>
     <textarea
         id="{{ $attribute }}"
-        class="form-control @error('{{ $attribute }}') is-invalid @enderror"
+        class="form-control resize-none @error('{{ $attribute }}') is-invalid @enderror"
         name="{{ $attribute }}"
-        style="resize: none"
         @if($maxRows > 0) rows="{{ $maxRows }}" @endif
         @if($autofocus) autofocus @endif
         autocomplete="off"

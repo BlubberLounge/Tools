@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-center">
+    <div class="flex flex-wrap justify-center">
         <div class="col-5">
             <div class="mb-3">
                 <label for="inputString" class="form-label">Input</label>

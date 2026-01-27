@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
     plugins: [
+        tailwindcss(),
         laravel({
             input: [
                 // Main files
@@ -36,13 +38,10 @@ export default defineConfig({
                 'resources/js/feedback-index.js',
                 'resources/js/settings.js',
 
-                // CSS
-                'resources/css/custom.css',
+                // Tailwind CSS (main stylesheet)
+                'resources/css/tailwind.css',
 
-                // SASS
-                'resources/sass/app.scss',
-                'resources/sass/auth.scss',
-                'resources/sass/sidebar.scss',
+                // Additional CSS
                 'resources/sass/dart.scss',
                 'resources/sass/dartboard.scss',
                 'resources/sass/dartboardResult.scss',
@@ -50,10 +49,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    resolve: {
-        alias: {
-            '$': 'jquery',
-            'jQuery': 'jquery',
-        },
-    },
 });

@@ -12,7 +12,7 @@
             @forelse ($FAQList as $QA)
                 @php($headerID = 'header-'.$QA->id)
                 @php($bodyID = 'body-'.$QA->id)
-                <div class="accordion-item position-relative">
+                <div class="accordion-item relative">
                     <h2 class="accordion-header" id="{{ $headerID }}">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $bodyID }}" aria-expanded="false" aria-controls="{{ $bodyID }}">
                             <span style="margin-right: auto">

@@ -5,7 +5,7 @@
     
     @include('hookah.includes.title')
 
-    <div class="row justify-content-center">
+    <div class="flex flex-wrap justify-center">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -39,7 +39,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
+        <div class="flex justify-center">
             {!! $hookahs->links() !!}
         </div>
     </div>

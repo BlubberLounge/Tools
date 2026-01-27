@@ -1,7 +1,3 @@
-<div class="row">
-    <div class="col p-0">
-        <p class="text-secondary">
-            {{ __($description) }}
-        </p>
-    </div>
-</div>
+<p class="text-sm text-[var(--tw-muted-color)]">
+    {{ __($description) }}
+</p>

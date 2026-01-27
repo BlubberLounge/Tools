@@ -5,13 +5,13 @@
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboardResult.css') }}" />
+    @vite(['resources/sass/dartboardResult.scss'])
 @endpush
 
 @section('content')
 <div class="container">
     @mobile
-        <div class="row justify-center align-items-center mb-5">
+        <div class="flex flex-wrap justify-center items-center mb-5">
             <div class="col-auto fa-rotate-270">
                 <i class="fa-solid fa-mobile-screen fa-3x animate__animated animate__rotateIn animate__slow animate__infinite"></i>
             </div>
@@ -27,19 +27,19 @@
         <p> Here you can see non-user specific information about <b>dart</b>. </p>
     </section>
 
-    <div class="row justify-center align-items-center mb-5">
+    <div class="flex flex-wrap justify-center items-center mb-5">
         <div id="dartboardDataGraph" class="p-0" style="aspect-ratio: 1 / 1; max-width: 800px;"></div>
     </div>
 
-    <div class="row justify-center align-items-center mb-5">
+    <div class="flex flex-wrap justify-center items-center mb-5">
         <div id="expectationDataGraph"></div>
     </div>
 
-    <div class="row justify-center align-items-center mb-5">
+    <div class="flex flex-wrap justify-center items-center mb-5">
         <div id="graph01"></div>
     </div>
 
-    <div class="row mb-4 pt-2">
+    <div class="flex flex-wrap mb-4 pt-2">
         <h3 class="col-8">
             Dartboard: Wedge/Field values
         </h3>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="row">
-        <div class="col dartboard d-flex justify-content-center align-items-center">
+        <div class="col dartboard flex justify-center items-center">
             <ul class="dartboard_ring">
                 @for($i=0; $i <= sizeOf($dartboard[0])-1; $i++)
                     @foreach($dartboard as $j => $row)
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="row mb-4 mt-2">
+    <div class="flex flex-wrap mb-4 mt-2">
         <h3 class="col-8">
             Heatmap: Wedge/Field values
         </h3>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="row">
-        <div class="col dartboard d-flex justify-content-center align-items-center">
+        <div class="col dartboard flex justify-center items-center">
             <ul class="dartboard_ring">
                 @for($i=0; $i <= sizeOf($dartboard[0])-1; $i++)
                     @foreach($dartboard as $j => $row)
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <div class="row pb-4 pt-2">
+    <div class="flex flex-wrap pb-4 pt-2">
         <h3 class="col-8">
             Heatmap: Average of nearest neighbour Wedge/Field values
         </h3>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="row">
-        <div class="col dartboard d-flex justify-content-center align-items-center">
+        <div class="col dartboard flex justify-center items-center">
             <ul class="dartboard_ring">
                 @for($i=2; $i <= sizeOf($dartboardAverages[0])-1; $i++)
                     @foreach($dartboardAverages as $j => $row)

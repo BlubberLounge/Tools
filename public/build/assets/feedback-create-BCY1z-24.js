@@ -1,1 +1,0 @@
-$(function(){let t=$("#container-form-feedback-create");$("#form-feedback");let a=$("#input-feedback-type");$(".btn-feedback").each((k,e)=>{$(e).click(n=>{$("#container-feedback").hide(),t.show();let c=$(e).val();a.val(c)})})});

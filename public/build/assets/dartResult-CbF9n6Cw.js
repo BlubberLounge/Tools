@@ -1,1 +1,0 @@
-$(function(){i()});function i(){var a=300,e={origin:{y:.35}};let t=(r,c)=>{confetti(Object.assign({},e,c,{particleCount:Math.floor(a*r)}))};t(.25,{spread:26,startVelocity:55}),t(.2,{spread:60}),t(.35,{spread:100,decay:.91,scalar:.8}),t(.1,{spread:120,startVelocity:25,decay:.92,scalar:1.2}),t(.1,{spread:120,startVelocity:45})}

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboard.css') }}" />
+    @vite(['resources/sass/dartboard.scss'])
 @endpush
 
 @section('content')

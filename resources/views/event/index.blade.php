@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 
-    <div class="row justify-content-center">
+    <div class="flex flex-wrap justify-center">
         <h1>Dreck</h1>
     </div>
 </div>

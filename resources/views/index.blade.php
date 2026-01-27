@@ -44,7 +44,7 @@
     @stack('styles')   {{-- get all styles that got pushed to the stack --}}
 </head>
 <body class="antialiased">
-    <div class="background-test relative flex align-items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 py-4 sm:pt-0">
+    <div class="background-test relative flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 py-4 sm:pt-0">
         @if (Route::has('login'))
             <div class="fixed top-0 right-0 px-6 py-4">
                 @auth
@@ -62,7 +62,7 @@
                 </a>
             </div>
 
-            <div class="flex flex-column justify-center mt-4">
+            <div class="flex flex-col justify-center mt-4">
                 <div class="flex items-center justify-content-evenly">
                     <div>
                         <i class="fa-brands fa-github fa-lg ml-4 -mt-px w-5 text-gray-400"></i>

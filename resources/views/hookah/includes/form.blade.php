@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<div class="flex flex-wrap justify-center">
     <form action="{{ $action === 'create' ? route('hookah.store') : route('hookah.update', $hookah->id) }}" method="POST" id="hookahForm">
         @csrf
         @if($action !== 'create')

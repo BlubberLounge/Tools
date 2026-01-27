@@ -6,7 +6,7 @@
 
 import PlayerStatus from "../enums/playerStatus";
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     const gameId = document.getElementById('gameId').value;
     const intervalSec = 15;

@@ -8,20 +8,20 @@
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboardResult.css') }}" />
+    @vite(['resources/sass/dartboardResult.scss'])
 @endpush
 
 @section('content')
-{{-- <div class="row m-0">
+{{-- <div class="flex flex-wrap m-0">
     <div id="scroll-container">
         <div id="scroll-text"> {{ Str::repeat('  WINNER: '.$firstPlaceUser->full_name, 5 ) }} </div>
     </div>
 </div> --}}
 <div class="container-fluid px-4 p-md-0">
-    <div class="row me-0 justify-center">
+    <div class="flex flex-wrap mr-0 justify-center">
         <div class="col col-md-10 col-lg-8">
             <input type="hidden" id="gameId" name="id" value="{{ $id }}">
-            <div class="row px-2 mt-5 align-items-end podium-container">
+            <div class="flex flex-wrap px-2 mt-5 align-items-end podium-container">
                 <div class="col-4 p-0">
                     <div @class(["podium podium-bronze", "podium-bronze-outline" => count($users) <= 2])>
                         <span class="podium-place"> #3 </span>
@@ -73,7 +73,7 @@
             <hr class="my-4 mb-5" />
 
             <h2> Quick Statistics </h2>
-            <div class="row mb-4">
+            <div class="flex flex-wrap mb-4">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -142,11 +142,11 @@
                 </table>
             </div>
 
-            <div class="row row-cols-1 row-cols-xl-4">
+            <div class="flex flex-wrap row-cols-1 row-cols-xl-4">
                 @foreach ($users as $i => $user)
                     <div class="col pb-5">
-                        <div id="heatmap{{ $i+1 }}" class="d-flex position-relative justify-center align-items-center p-2 heatmap heatmap{{ $i+1 }}" style="width: 100%; height: 300px;">
-                            <div id="skeleton-heatmap{{ $i+1 }}" class="position-absolute top-50 start-50 translate-middle">
+                        <div id="heatmap{{ $i+1 }}" class="flex relative justify-center items-center p-2 heatmap heatmap{{ $i+1 }}" style="width: 100%; height: 300px;">
+                            <div id="skeleton-heatmap{{ $i+1 }}" class="absolute top-50 start-50 translate-middle">
                                 <div class="spinner-border">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
