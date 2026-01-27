@@ -43,10 +43,13 @@ class GameStateService
         return [
             'game_id' => $game->id,
             'status' => $game->status,
-            // 'active_player_id' => $currentTurn['player_id'],
+            'type' => $game->type,
+            'points' => $game->points,
             'set' => $currentTurn['set'],
             'leg' => $currentTurn['leg'],
             'turn' => $currentTurn['turn'],
+            'maxThrows' => self::DARTS_PER_TURN,
+            'active_player_id' => $currentTurn['player_id'],
             'players' => $this->buildPlayerStates($game, $currentTurn),
         ];
     }
@@ -58,17 +61,36 @@ class GameStateService
     {
         return $game->users->map(function (User $user) use ($game, $currentTurn) {
             $throws = $this->getCurrentTurnThrows($game, $user, $currentTurn['turn']);
-            $isActivePlayer = $currentTurn['player_id'] === $user->id;
 
             return [
-                'player' => new DartGameUserResource($user),
-                'currentPoints' => $game->currentPointsByUser($user),
-                'remainingPoints' => $game->remainingPointsByUser($user),
+                'id' => $user->id,
+                'name' => $user->name,
+                'status' => $user->pivot->status->value ?? $user->pivot->status,
+                'score' => $game->currentPointsByUser($user),
+                'average' => $this->calculatePlayerAverage($game, $user),
+
+                // 'remainingPoints' => $game->remainingPointsByUser($user),
                 'throws' => DartGameDartThrowResource::collection($throws),
-                'remainingDartsInTurn' => max(0, self::DARTS_PER_TURN - $throws->count()),
-                'isActive' => $isActivePlayer,
+                // 'remainingDartsInTurn' => max(0, self::DARTS_PER_TURN - $throws->count()),
             ];
         });
+    }
+
+    /**
+     * Calculate the average score per dart for a player.
+     */
+    private function calculatePlayerAverage(DartGame $game, User $user): float
+    {
+        $allThrows = $game->dartThrowsByUser($user)->get();
+
+        if ($allThrows->isEmpty()) {
+            return 0.0;
+        }
+
+        $totalPoints = $allThrows->sum('value');
+        $totalDarts = $allThrows->count();
+
+        return round($totalPoints / $totalDarts, 2);
     }
 
     /**
@@ -136,11 +158,12 @@ class GameStateService
     }
 
     /**
-     * Get the last throw made in the game.
+     * Get the last throw made in the game (including soft-deleted throws).
      */
     private function getLastThrow(DartGame $game)
     {
         return $game->dartThrows()
+            ->withTrashed()
             ->orderBy('set', 'DESC')
             ->orderBy('leg', 'DESC')
             ->orderBy('turn', 'DESC')
@@ -153,7 +176,7 @@ class GameStateService
      */
     private function getPlayerTurnState(DartGame $game, User $player, $lastThrow): array
     {
-        $playerLastTurn = $game->dartThrowsByUser($player)->max('turn') ?? self::INITIAL_TURN;
+        $playerLastTurn = $game->dartThrowsByUser($player)->withTrashed()->max('turn') ?? self::INITIAL_TURN;
 
         return [
             'set' => $lastThrow->set,
@@ -173,8 +196,18 @@ class GameStateService
         $currentLeg = $lastThrow->leg;
         $currentTurn = $lastThrow->turn;
 
-        // Check if the last player completed their turn (threw 3 darts)
+        // Check if the last player completed their turn (threw 3 darts or busted)
+        // Include trashed throws to account for busts
         $lastPlayerThrows = $this->countPlayerThrowsInTurn(
+            $game,
+            $lastPlayerId,
+            $currentSet,
+            $currentLeg,
+            $currentTurn,
+            true // Include trashed throws
+        );
+
+        $playerBusted = $this->playerBustedInTurn(
             $game,
             $lastPlayerId,
             $currentSet,
@@ -182,8 +215,7 @@ class GameStateService
             $currentTurn
         );
 
-        // If current player hasn't finished their turn, they're still active
-        if ($lastPlayerThrows < self::DARTS_PER_TURN) {
+        if (!$playerBusted && $lastPlayerThrows < self::DARTS_PER_TURN) {
             return [
                 'set' => $currentSet,
                 'leg' => $currentLeg,
@@ -192,36 +224,49 @@ class GameStateService
             ];
         }
 
-        // Current player finished their turn, move to next player
+        // Last player finished their turn, determine next active player
         $lastPlayerIndex = $this->findPlayerIndex($players, $lastPlayerId);
-        $nextPlayerIndex = ($lastPlayerIndex + 1) % $players->count();
-        $nextPlayer = $players[$nextPlayerIndex];
 
-        // Check if all players have completed this turn
-        $playersCompletedThisTurn = $this->countPlayersCompletedTurn(
-            $game,
-            $players,
-            $currentSet,
-            $currentLeg,
-            $currentTurn
-        );
+        // Look for the next player who hasn't completed this turn yet
+        for ($i = 1; $i <= $players->count(); $i++) {
+            $nextPlayerIndex = ($lastPlayerIndex + $i) % $players->count();
+            $candidatePlayer = $players[$nextPlayerIndex];
 
-        // If all players finished, advance to next turn
-        if ($playersCompletedThisTurn === $players->count()) {
-            return [
-                'set' => $currentSet,
-                'leg' => $currentLeg,
-                'turn' => $currentTurn + 1,
-                'player_id' => $nextPlayer->id,
-            ];
+            // Check if this player has completed their turn (including busts)
+            $candidateThrows = $this->countPlayerThrowsInTurn(
+                $game,
+                $candidatePlayer->id,
+                $currentSet,
+                $currentLeg,
+                $currentTurn,
+                true // Include trashed throws
+            );
+
+            $candidateBusted = $this->playerBustedInTurn(
+                $game,
+                $candidatePlayer->id,
+                $currentSet,
+                $currentLeg,
+                $currentTurn
+            );
+
+            // Player can still throw if they did NOT bust AND have fewer than 3 throws
+            if (!$candidateBusted && $candidateThrows < self::DARTS_PER_TURN) {
+                return [
+                    'set' => $currentSet,
+                    'leg' => $currentLeg,
+                    'turn' => $currentTurn,
+                    'player_id' => $candidatePlayer->id,
+                ];
+            }
         }
 
-        // Some players haven't thrown yet in this turn
+        // All players have completed this turn, advance to next turn
         return [
             'set' => $currentSet,
             'leg' => $currentLeg,
-            'turn' => $currentTurn,
-            'player_id' => $nextPlayer->id,
+            'turn' => $currentTurn + 1,
+            'player_id' => $players->first()->id,
         ];
     }
 
@@ -241,42 +286,35 @@ class GameStateService
         int $userId,
         int $set,
         int $leg,
-        int $turn
+        int $turn,
+        bool $includeTrashed = false
     ): int {
+        $query = $game->dartThrows()
+            ->where('user_id', $userId)
+            ->where('set', $set)
+            ->where('leg', $leg)
+            ->where('turn', $turn);
+
+        if ($includeTrashed) {
+            $query->withTrashed();
+        }
+
+        return $query->count();
+    }
+
+    private function playerBustedInTurn(
+        DartGame $game,
+        int $userId,
+        int $set,
+        int $leg,
+        int $turn
+    ): bool {
         return $game->dartThrows()
+            ->onlyTrashed()
             ->where('user_id', $userId)
             ->where('set', $set)
             ->where('leg', $leg)
             ->where('turn', $turn)
-            ->count();
-    }
-
-    /**
-     * Count how many players have completed their turn (thrown 3 darts).
-     */
-    private function countPlayersCompletedTurn(
-        DartGame $game,
-        Collection $players,
-        int $set,
-        int $leg,
-        int $turn
-    ): int {
-        $completed = 0;
-
-        foreach ($players as $player) {
-            $throwCount = $this->countPlayerThrowsInTurn(
-                $game,
-                $player->id,
-                $set,
-                $leg,
-                $turn
-            );
-
-            if ($throwCount >= self::DARTS_PER_TURN) {
-                $completed++;
-            }
-        }
-
-        return $completed;
+            ->exists();
     }
 }

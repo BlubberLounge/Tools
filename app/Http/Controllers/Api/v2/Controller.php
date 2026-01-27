@@ -6,36 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-/**
- * @OA\Info(
- *      version="2.0.0",
- *      title="Tools Api",
- *      description="BlubberLounge Tools REST Api",
- *      @OA\Contact(
- *          email="contact@blubber-lounge.de"
- *      )
- * )
- *
- * @OA\Server(
- *      url=L5_SWAGGER_CONST_HOST,
- *      description="Current Server"
- * )
- *
- * @OA\Tag(
- *     name="Authentification",
- *     description="Authentification Endpoints"
- * )
- *
- * @OA\Tag(
- *     name="User",
- *     description="User Endpoints"
- * )
- *
- * @OA\Tag(
- *     name="Throw",
- *     description="Dart Throw Endpoints"
- * )
- */
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
@@ -84,5 +54,17 @@ class Controller extends BaseController
         }
 
         return response()->json($response, $code);
+    }
+
+    /**
+     * Get limit parameter from request with default of 20.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $default
+     * @return int
+     */
+    protected function getLimit(\Illuminate\Http\Request $request, int $default = 20): int
+    {
+        return (int) $request->query('limit', $default);
     }
 }

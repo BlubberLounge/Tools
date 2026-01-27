@@ -10,20 +10,17 @@ use Illuminate\Support\Facades\Log;
 abstract class AbstractGameEngine implements GameEngineInterface
 {
     protected GameStateService $stateService;
-    protected TurnService $turnService;
     protected ScoringService $scoringService;
     protected StatisticsService $statisticsService;
     protected WebhookBroadcaster $broadcaster;
 
     public function __construct(
         GameStateService $stateService,
-        TurnService $turnService,
         ScoringService $scoringService,
         StatisticsService $statisticsService,
         WebhookBroadcaster $broadcaster
     ) {
         $this->stateService = $stateService;
-        $this->turnService = $turnService;
         $this->scoringService = $scoringService;
         $this->statisticsService = $statisticsService;
         $this->broadcaster = $broadcaster;

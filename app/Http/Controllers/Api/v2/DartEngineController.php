@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DartEngineController extends Controller
 {
-
     public function availablePlayers(Request $request)
     {
         $user = $request->user();
@@ -79,6 +78,39 @@ class DartEngineController extends Controller
         }
 
         return response()->json($engine->getState($game), 201);
+    }
+
+    public function activeGameState(Request $request, DartGameEngineService $engine)
+    {
+        $user = $request->user();
+        $game = $user->ActiveDartGame();
+
+        if (!$game) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No active game found for this user.',
+            ], 404);
+        }
+
+        $this->authorize('view', $game);
+        return response()->json($engine->getState($game));
+    }
+
+    public function pastGames(Request $request)
+    {
+        $user = $request->user();
+        $limit = $this->getLimit($request);
+
+        $games = $user->DartGames()
+            ->orderBy('created_at', 'DESC')
+            ->limit($limit)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $games,
+            'count' => $games->count(),
+        ]);
     }
 
     public function state(DartGame $game, DartGameEngineService $engine)

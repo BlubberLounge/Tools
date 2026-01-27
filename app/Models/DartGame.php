@@ -414,6 +414,7 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function getLastThrowByUser(User $user)
     {
         return $this->dartThrowsByUser($user)
+            ->withTrashed()
             ->orderBy('set', 'DESC')
             ->orderBy('leg', 'DESC')
             ->orderBy('turn', 'DESC')

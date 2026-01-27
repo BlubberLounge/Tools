@@ -17,12 +17,12 @@ class DartGameEngineService
 
     public function __construct(
         protected GameStateService $stateService,
-        protected TurnService $turnService,
         protected ScoringService $scoringService,
         protected StatisticsService $statisticsService,
         protected WebhookBroadcaster $broadcaster
     ) {
-        $this->engines['X01'] = new X01Engine($stateService, $turnService, $scoringService, $statisticsService, $broadcaster);
+        $this->engines['X01'] = new X01Engine($stateService, $scoringService, $statisticsService, $broadcaster);
+        $this->engines['ATC'] = new AroundTheClockEngine($stateService, $scoringService, $statisticsService, $broadcaster);
     }
 
     /**

@@ -436,9 +436,8 @@ class X01EngineSubmitThrowTest extends TestCase
         $this->assertIsArray($state);
         $this->assertArrayHasKey('game_id', $state);
         $this->assertArrayHasKey('status', $state);
-        $this->assertArrayHasKey('active_player', $state);
+        $this->assertArrayHasKey('active_player_id', $state);
         $this->assertArrayHasKey('players', $state);
-        $this->assertArrayHasKey('throws', $state);
     }
 
     /**

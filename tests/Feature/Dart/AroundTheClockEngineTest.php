@@ -5,67 +5,98 @@ namespace Tests\Feature\Dart;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\DartGame;
+use App\Services\Dart\AroundTheClockEngine;
 use App\Services\Dart\DartGameEngineService;
 use App\Enums\DartGameType;
+use App\Enums\DartGameStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AroundTheClockEngineTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_atc_progression(): void
-    {
-        $user = User::factory()->create();
+    private AroundTheClockEngine $engine;
+    private DartGame $game;
+    private User $player;
 
-        $game = DartGame::factory()->create([
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->engine = app(AroundTheClockEngine::class);
+
+        $this->player = User::factory()->create();
+
+        $this->game = DartGame::factory()->create([
             'type' => DartGameType::aroundTheClock,
-            'start' => 1,
-            'end' => 3,
+            'status' => DartGameStatus::CREATED,
         ]);
 
-        $game->users()->attach($user->id);
+        $this->game->users()->attach(
+            $this->player->id,
+            ['position' => 0, 'status' => 'accepted']
+        );
+    }
 
-        $engine = app(DartGameEngineService::class);
-        $engine->startGame($game);
+    public function test_start_game(): void
+    {
+        $state = $this->engine->start($this->game);
 
-        $engine->submitThrow($game, $user, [
-            'set' => 1,
-            'leg' => 1,
-            'turn' => 1,
-            'throw' => 1,
+        $this->assertEquals(DartGameStatus::RUNNING, $this->game->fresh()->status);
+        $this->assertArrayHasKey('players', $state);
+    }
+
+    public function test_player_progression_through_targets(): void
+    {
+        $this->engine->start($this->game);
+
+        for ($target = 1; $target <= 5; $target++) {
+            $payload = ['field' => $target, 'ring' => 'S', 'x' => null, 'y' => null];
+            $state = $this->engine->submitThrow($this->game, $this->player, $payload);
+            $playerState = $state['players']->firstWhere('id', $this->player->id);
+            $this->assertEquals($target, $playerState['progress']);
+        }
+    }
+
+    public function test_player_hits_all_targets_and_finishes(): void
+    {
+        $this->engine->start($this->game);
+
+        // Hit all 21 targets (1-20 + Bull)
+        $sequence = array_merge(range(1, 20), [25]);
+
+        foreach ($sequence as $target) {
+            $payload = ['field' => $target, 'ring' => 'S', 'x' => null, 'y' => null];
+            $this->engine->submitThrow($this->game, $this->player, $payload);
+        }
+
+        $this->assertTrue($this->engine->isFinished($this->game));
+        $this->assertEquals(DartGameStatus::DONE, $this->game->fresh()->status);
+    }
+
+    public function test_atc_progression(): void
+    {
+        $this->engine->start($this->game);
+        $this->engine->submitThrow($this->game, $this->player, [
             'field' => 1,
             'ring' => 'S',
         ]);
 
-        $state = $engine->getState($game);
-
-        $this->assertEquals(2, $state['atc_players'][0]['position']);
+        $state = $this->engine->getState($this->game);
+        $this->assertEquals(1, $state['players'][0]['progress']);
     }
 
     public function test_atc_win(): void
     {
-        $user = User::factory()->create();
+        $this->engine->start($this->game);
 
-        $game = DartGame::factory()->create([
-            'type' => DartGameType::aroundTheClock,
-            'start' => 1,
-            'end' => 1,
-        ]);
+        $sequence = array_merge(range(1, 20), [25]);
+        foreach ($sequence as $target) {
+            $this->engine->submitThrow($this->game, $this->player, [
+                'field' => $target,
+                'ring' => 'S',
+            ]);
+        }
 
-        $game->users()->attach($user->id);
-
-        $engine = app(DartGameEngineService::class);
-        $engine->startGame($game);
-
-        $engine->submitThrow($game, $user, [
-            'set' => 1,
-            'leg' => 1,
-            'turn' => 1,
-            'throw' => 1,
-            'field' => 1,
-            'ring' => 'S',
-        ]);
-
-        $this->assertTrue($game->fresh()->isDone());
+        $this->assertTrue($this->game->fresh()->isDone());
     }
 }
