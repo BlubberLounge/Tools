@@ -111,7 +111,7 @@ class DartGameEngineService
     public function addUser(DartGame $game, int $userId, array $data = []): void
     {
         $user = User::find($userId);
-        $autoAccept = $user && $user->settings->value('dartGameInvitationAutoAccept') === true;
+        $autoAccept = $user && (bool) $user->settings->value('dartGameInvitationAutoAccept', true);
 
         $pivotData = [
             'status' => $autoAccept ? 'accepted' : ($data['status'] ?? 'pending'),

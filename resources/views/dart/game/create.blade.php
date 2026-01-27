@@ -1,7 +1,7 @@
 @extends('layouts.dart')
 
 @push('scripts')
-    <script src="{{ mix('js/dartSetup.js') }}"></script>
+    @vite(['resources/js/dart/game/dartSetup.js'])
 @endpush
 
 @section('content')

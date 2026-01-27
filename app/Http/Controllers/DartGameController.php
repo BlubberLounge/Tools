@@ -13,6 +13,7 @@ use App\Models\DartGame;
 use App\Models\DartThrow;
 use App\Models\User;
 use App\Models\DartQueue;
+use App\Services\Dart\DartGameEngineService;
 
 class DartGameController extends Controller
 {
@@ -47,7 +48,7 @@ class DartGameController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDartGameRequest $request)
+    public function store(StoreDartGameRequest $request, DartGameEngineService $engine)
     {
         $game = new DartGame();
         $game->created_by = Auth::user()->id;
@@ -67,12 +68,19 @@ class DartGameController extends Controller
         $game->trippleIn = $request->trippleIn ?? 1;
         $game->save();
 
-        // create simple Hashmap
-        foreach($request->input('users.*') as $user)
-            $userPositons[$user] = $request->userPositions[$user];
+        // create simple Hashmap for positions
+        $userPositions = [];
+        foreach($request->input('users.*') as $user) {
+            $userPositions[$user] = $request->userPositions[$user];
+        }
 
-        $users = User::findMany($request->input('users.*'));
-        $users->each(fn($user) => $user->DartGames()->attach($game, ['position' => $userPositons[$user->id]]));
+        // Sort user IDs by position and add via engine (respects auto-accept setting)
+        $sortedUserIds = array_keys(array_flip(array_keys($userPositions)));
+        usort($sortedUserIds, fn($a, $b) => $userPositions[$a] <=> $userPositions[$b]);
+
+        foreach ($sortedUserIds as $position => $userId) {
+            $engine->addUser($game, $userId, ['position' => $position]);
+        }
 
         // clear queue
         DartQueue::whereIn('parent_user_id', $request->input('users.*'))->delete();

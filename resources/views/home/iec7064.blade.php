@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/IEC7064_page.js') }}" defer></script>
+    @vite(['resources/js/IEC7064_page.js'])
 @endpush
 
 @section('content')

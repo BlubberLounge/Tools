@@ -1,0 +1,7 @@
+/*!
+ * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Licensed under the Creative Commons Attribution 3.0 Unported License.
+ *
+ * Modified.
+ */(()=>{const a=localStorage.getItem("theme"),r=()=>a||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),c=function(e){e==="dark"||e==="auto"&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.setAttribute("data-bs-theme","dark"):document.documentElement.setAttribute("data-bs-theme",e)};var d=function(e){var t=document.querySelector(".nav-brand");e==="dark"||e==="auto"&&window.matchMedia("(prefers-color-scheme: dark)").matches?(document.documentElement.setAttribute("data-bs-theme","dark"),t.src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg"):(document.documentElement.setAttribute("data-bs-theme",e),t.src="https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg")};c(r());const o=e=>{const t=document.querySelector(`[data-bs-theme-value="${e}"]`);document.querySelectorAll("[data-bs-theme-value]").forEach(s=>{s.classList.remove("active")}),t.classList.add("active")};window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{(a!=="light"||a!=="dark")&&d(r())}),window.addEventListener("DOMContentLoaded",()=>{o(r()),document.querySelectorAll("[data-bs-theme-value]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-bs-theme-value");localStorage.setItem("theme",t),d(t),o(t)})})})})();

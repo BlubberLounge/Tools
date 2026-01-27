@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/events.js') }}"></script>
+    @vite(['resources/js/events.js'])
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script defer>
         document.addEventListener('DOMContentLoaded', function() {

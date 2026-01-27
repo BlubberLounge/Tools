@@ -1,5 +1,4 @@
-
-require('./dart-queue');
+import './dart-queue';
 
 document.getElementById('BtnShare').addEventListener('click', event => {
     if (navigator.share) {

@@ -1,8 +1,7 @@
-require('./bootstrap');
-require('./consoleText');
-
-require('./sidebar');
-// require('./notification');
+import './bootstrap';
+import './consoleText';
+import './sidebar';
+import './notification';
 
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

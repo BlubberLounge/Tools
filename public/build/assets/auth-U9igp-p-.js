@@ -1,0 +1,1 @@
+$(function(){let e=!0;$("#password-toggler").on("mousedown touchstart",t=>{e&&($("#password").attr("type","text"),e=!1)}).bind("mouseup mouseleave touchend",t=>{e||($("#password").attr("type","password"),e=!0)})});

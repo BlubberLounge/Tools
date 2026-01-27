@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/feedback-index.js') }}" defer></script>
+    @vite(['resources/js/feedback-index.js'])
 @endpush
 
 @section('content')

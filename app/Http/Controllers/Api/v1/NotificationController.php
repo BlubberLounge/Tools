@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\WebPushTestNotification;
+use App\Notifications\WebPushTestNotification;
 
 
 class NotificationController extends Controller

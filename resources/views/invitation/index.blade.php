@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/invitation.js') }}"></script>
+    @vite(['resources/js/invitation.js'])
 @endpush
 
 @section('content')

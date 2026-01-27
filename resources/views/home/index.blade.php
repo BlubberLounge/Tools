@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/home.js') }}" defer></script>
+    @vite(['resources/js/home.js'])
     {{-- <script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 @endpush

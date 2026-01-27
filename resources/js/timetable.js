@@ -298,4 +298,4 @@ class Timetable
 }
 
 // EXPORT
-module.exports = Timetable;
+export default Timetable;

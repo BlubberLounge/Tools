@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/dartInfo.js') }}"></script>
+    @vite(['resources/js/dart/dartInfo.js'])
 @endpush
 
 @push('styles')

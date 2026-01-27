@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 {{-- @push('scripts')
-    <script src="{{ mix('js/auth.js') }}" defer></script>
+    @vite(['resources/js/auth.js'])
 @endpush --}}
 
 @section('content')

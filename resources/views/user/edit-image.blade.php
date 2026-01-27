@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/user-profilepicture.js') }}"></script>
+    @vite(['resources/js/user-profilepicture.js'])
 @endpush
 
 @push('styles')
