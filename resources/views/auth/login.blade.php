@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 {{-- @push('scripts')
-    <script src="{{ mix('js/auth.js') }}" defer></script>
+    @vite(['resources/js/auth.js'])
 @endpush --}}
 
 @section('content')
@@ -15,7 +15,7 @@
 
                 <div class="col col-md-5 p-md-5 pb-md-3">
                     <div class="card-brand-logo">
-                        <div class="d-flex justify-center py-3">
+                        <div class="d-flex justify-content-center py-3">
                             <a class="d-flex align-items-center" href="{{ url('/') }}">
                                 <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" alt="BlubberLounge Logo" width="150px">
                             </a>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     {{-- <div class="card-brand-logo">
-                        <div class="d-flex flex-column justify-center py-3">
+                        <div class="d-flex flex-column justify-content-center py-3">
                             <a class="nav-brand-sub d-flex flex-column align-items-center mb-4" href="{{ url('/') }}">
                                 <i class="fa-solid fa-screwdriver-wrench" style="font-size: 2rem"></i>
                                 <span> Tools </span>
@@ -123,8 +123,8 @@
                                         or
                                     </span>
                                 </div>
-                                <div class="d-flex justify-content-center items-center">
-                                    <a href="{{ route('blubberlounge.redirect') }}" class="btn btn-bl-brand d-flex justify-content-center items-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ route('blubberlounge.redirect') }}" class="btn btn-bl-brand d-flex justify-content-center align-items-center">
                                         <img src="https://media.blubber-lounge.de/images/bubbles_rect.svg" width="20" class="me-2">
                                         Sign in with BlubberLounge
                                     </a>

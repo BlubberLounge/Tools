@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             @auth
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dart.index') }}"> Dart Game </a>
                     </li>
@@ -48,7 +48,7 @@
             @endauth
 
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
@@ -64,7 +64,7 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                        <button class="btn btn-link nav-link dropdown-toggle flex items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
                             {{ Auth::user()->name }}
                         </button>
 
@@ -99,36 +99,36 @@
                                 </a>
                             </li>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
                             </form>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                        <button class="btn btn-link nav-link dropdown-toggle flex items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
                           <i class="bi my-1 fa-solid fa-moon theme-icon-active" data-bs-theme-icon="fa-moon"></i>
-                          <span class="d-lg-none ms-2">Toggle theme</span>
+                          <span class="d-lg-none ml-2">Toggle theme</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 8rem;">
                           <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light">
-                              <i class="bi me-2 fa-solid fa-sun opacity-50 theme-icon" data-bs-theme-icon="fa-sun"></i>
+                            <button type="button" class="dropdown-item flex items-center" data-bs-theme-value="light">
+                              <i class="bi mr-2 fa-solid fa-sun opacity-50 theme-icon" data-bs-theme-icon="fa-sun"></i>
                               Light
-                              <i class="bi ms-auto d-none fa-solid fa-check"></i>
+                              <i class="bi ml-auto hidden fa-solid fa-check"></i>
                             </button>
                           </li>
                           <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark">
-                                <i class="bi me-2 fa-solid fa-moon opacity-50 theme-icon" data-bs-theme-icon="fa-moon"></i>
+                            <button type="button" class="dropdown-item flex items-center active" data-bs-theme-value="dark">
+                                <i class="bi mr-2 fa-solid fa-moon opacity-50 theme-icon" data-bs-theme-icon="fa-moon"></i>
                               Dark
-                              <i class="bi ms-auto d-none fa-solid fa-check"></i>
+                              <i class="bi ml-auto hidden fa-solid fa-check"></i>
                             </button>
                           </li>
                           <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
-                              <i class="bi me-2 fa-solid fa-circle-half-stroke opacity-50 theme-icon" data-bs-theme-icon="fa-circle-half-stroke"></i>
+                            <button type="button" class="dropdown-item flex items-center" data-bs-theme-value="auto">
+                              <i class="bi mr-2 fa-solid fa-circle-half-stroke opacity-50 theme-icon" data-bs-theme-icon="fa-circle-half-stroke"></i>
                               Auto
-                              <i class="bi ms-auto d-none fa-solid fa-check"></i>
+                              <i class="bi ml-auto hidden fa-solid fa-check"></i>
                             </button>
                           </li>
                         </ul>

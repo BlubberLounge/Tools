@@ -7,20 +7,34 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\ParallelTesting;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use chillerlan\QRCode\{QRCode, QROptions};
+
+use App\Models\DartGame;
+use App\Models\Feedback;
+use App\Models\Invitation;
+use App\Models\User;
+use App\Policies\DartGamePolicy;
+use App\Policies\FeedbackPolicy;
+use App\Policies\InvitationPolicy;
+use App\Policies\UserPolicy;
+use App\Listeners\RegisteredListener;
+use App\Listeners\LoginListener;
+use App\Listeners\LogSendingMessage;
+use App\Listeners\LogSentMessage;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(QRCode::class, function (Application $app) {
             $options = new QROptions([
@@ -29,57 +43,35 @@ class AppServiceProvider extends ServiceProvider
 
             return new QRCode($options);
         });
-
-        // $this->app->singleton(WebUntis::class, function (Application $app) {
-        //     $untis = new WebUntis(env('WEBUNTIS_SCHOOL'), env('WEBUNTIS_USERNAME'), env('WEBUNTIS_PASSWORD'), env('WEBUNTIS_HOST'));
-        //     $untis->login();
-        //     return $untis;
-        // });
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Paginator::useBootstrap();
 
-        // Blade::directive('datetime', function (string $expression) {
-        //     return "<?php echo ($expression)->format('m/d/Y H:i'); ? >";
-        // });
-        // use in blade like @datetime(now())
+        // Register policies (migrated from AuthServiceProvider)
+        Gate::policy(DartGame::class, DartGamePolicy::class);
+        Gate::policy(Feedback::class, FeedbackPolicy::class);
+        Gate::policy(Invitation::class, InvitationPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
 
-        // never sent a message to a real email when developing this application
-        if ($this->app->environment('local'))
+        // Register event listeners (migrated from EventServiceProvider)
+        Event::listen(Registered::class, SendEmailVerificationNotification::class);
+        Event::listen(Registered::class, RegisteredListener::class);
+        Event::listen(Login::class, LoginListener::class);
+        Event::listen(MessageSending::class, LogSendingMessage::class);
+        Event::listen(MessageSent::class, LogSentMessage::class);
+
+        // Never send a message to a real email when developing this application
+        if ($this->app->environment('local')) {
             Mail::alwaysTo(env('MAIL_TO_DEVELOPMENT', 'info@blubber-lounge.de'));
-
-        if($this->app->environment('production')) {
-            URL::forceScheme('https');
         }
 
-
-        // ParallelTesting::setUpProcess(function (int $token) {
-        //     // ...
-        // });
-
-        // ParallelTesting::setUpTestCase(function (int $token, TestCase $testCase) {
-        //     // ...
-        // });
-
-        // // Executed when a test database is created...
-        // ParallelTesting::setUpTestDatabase(function (string $database, int $token) {
-        //     // run all seeders
-        //     // Artisan::call('db:seed');
-        // });
-
-        // ParallelTesting::tearDownTestCase(function (int $token, TestCase $testCase) {
-        //     // ...
-        // });
-
-        // ParallelTesting::tearDownProcess(function (int $token) {
-        //     // ...
-        // });
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

@@ -17,7 +17,7 @@ const chartOptions = {
     locale: 'DE',
 };
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     const dartboard = new Dartboard('#dartboardContainer', {size: 380});
     dartboard.render();

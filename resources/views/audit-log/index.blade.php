@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 {{-- @push('scripts')
-    <script src="{{ mix('js/settings.js') }}" defer></script>
+    @vite(['resources/js/settings.js'])
 @endpush --}}
 
 @section('content')
@@ -40,7 +40,7 @@
                                 <div style="font-weight: bold">
                                     {{ $key }}
                                 </div>
-                                <div class="ps-3">
+                                <div class="pl-3">
                                     {{ $val }}
                                     <span style="color:var(--bl-clr-red)"> => </span>
                                     @if (array_key_exists($key, $audit->new_values))
@@ -62,7 +62,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
+        <div class="flex justify-center">
             {!! $audits->links() !!}
         </div>
     </div>

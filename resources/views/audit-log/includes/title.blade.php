@@ -7,7 +7,7 @@
     </div>
 @endif
 
-<div class="row pb-4 pt-2">
+<div class="flex flex-wrap pb-4 pt-2">
     <h3 class="col-8">
         Audit Log
         <small class="text-muted">{{ substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@") + 1) }}</small>

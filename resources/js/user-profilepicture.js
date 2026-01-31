@@ -5,8 +5,9 @@
  */
 
 import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 
-$(function() {
+document.addEventListener('DOMContentLoaded', function() {
     var cropper;
     var croppable = false;
     var URL = window.URL || window.webkitURL;
@@ -33,7 +34,7 @@ $(function() {
     var uploadedImageName = 'cropped.jpg';
     var uploadedImageURL;
 
-    $('#originalImage').change(e =>
+    document.getElementById('originalImage').addEventListener('change', function(e)
     {
         var files = e.currentTarget.files;
         var file;
@@ -41,8 +42,8 @@ $(function() {
         if (files && files.length) {
             file = files[0];
 
-            // $('.step-2').show();
-            // $('.step-1').hide();
+            // document.querySelector('.step-2').style.display = 'block';
+            // document.querySelector('.step-1').style.display = 'none';
 
             if (/^image\/\w+/.test(file.type)) {
                 uploadedImageType = file.type;
@@ -63,12 +64,12 @@ $(function() {
         }
     });
 
-    $('#cropImage').click(e =>
+    document.getElementById('cropImage').addEventListener('click', function(e)
     {
         if (!croppable)
             return;
 
         let canvas = cropper.getCroppedCanvas({ maxWidth: 4096, maxHeight: 4096 });
-        $('#croppedImage').val(canvas.toDataURL());
+        document.getElementById('croppedImage').value = canvas.toDataURL();
     });
 });

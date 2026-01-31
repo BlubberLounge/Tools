@@ -8,7 +8,7 @@ import Dart from './classes/dart';
 import NoSleep from 'nosleep.js';
 
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     var noSleepToggle = false;
     var noSleep = new NoSleep();

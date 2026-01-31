@@ -41,7 +41,6 @@ class DeviceTracker
             $device->device_type = $device_type;
             $device->device_family = $device_family;
             $device->device_model = $device_model;
-            $device->device_grade = $result->mobileGrade();
 
             $device->browser = $browser;
             $device->browser_family = $result->browserFamily();

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 
-    <div class="row pb-4 pt-2">
+    <div class="flex flex-wrap pb-4 pt-2">
         <h3 class="col-8">
             Checkout Calculator
         </h3>
@@ -12,11 +12,11 @@
         </small>
     </div>
 
-    <div class="row d-flex justify-content-between">
-        <div class="col-6 d-flex justify-content-end align-items-center">
+    <div class="flex flex-wrap flex justify-between">
+        <div class="col-6 flex justify-content-end items-center">
             <form action="{{ route('dart.show-checkout-calculator') }}" method="GET" id="checkoutForm">
                 @csrf
-                <div class="row g-3 align-items-center pb-4">
+                <div class="flex flex-wrap g-3 items-center pb-4">
                     <div class="col-auto">
                         <label for="score" class="col-form-label"> Score </label>
                     </div>
@@ -29,8 +29,8 @@
                         </span>
                     </div>
                 </div>
-                <div class="row pb-4">
-                    <div class="col d-flex justify-content-center align-items-center">
+                <div class="flex flex-wrap pb-4">
+                    <div class="col flex justify-center items-center">
                         <button type="submit" class="btn btn-primary">
                             let's go...
                         </button>
@@ -39,7 +39,7 @@
                 @csrf
             </form>
         </div>
-        <div class="col-5 d-flex flex-column justify-content-center">
+        <div class="col-5 flex flex-col justify-center">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="limitResults" name="limitResults" form="checkoutForm" {{ $limitResults ? 'checked' : null}}>
                 <label class="form-check-label" for="limitResults">Limit to 150 results</label>
@@ -75,7 +75,7 @@
         </div>
     @endif
 
-    <div class="row justify-content-center">
+    <div class="flex flex-wrap justify-center">
         <div class="col">
             <table class="table table-striped table-hover" id="checkoutTable">
                 <thead>

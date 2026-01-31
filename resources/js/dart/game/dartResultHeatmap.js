@@ -8,7 +8,7 @@ import h337 from 'heatmap.js';
 import Dartboard from '../dartboard';
 
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     fetchHeatmapData();
     let dartboards = [];

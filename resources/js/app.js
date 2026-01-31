@@ -1,21 +1,7 @@
-require('./bootstrap');
-require('./consoleText');
+import './alpine-setup';
+import './consoleText';
+import './sidebar';
+import './notification';
 
-require('./sidebar');
-// require('./notification');
-
-
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl =>
-    new bootstrap.Tooltip(tooltipTriggerEl, {
-        html: true,
-        offset: [0, 10],
-        // title: function() {
-        //     let date = moment(popoverTriggerEl.getAttribute('data-bl-timetable-date'));
-        //     return 'Status ändern vom ' + date.format('DD.MM.YYYY');
-        // },
-        // content: function () {
-        //     return timetable.getActions(popoverTriggerEl);
-        // }
-    })
-);
+// Tooltips are now handled by Alpine.js x-tooltip directive
+// Usage: <element x-tooltip="'Tooltip text'"> or <element x-tooltip data-tooltip="Tooltip text">

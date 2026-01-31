@@ -6,7 +6,7 @@
 
 import DartSetup from './classes/dartSetup.js';
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     var dartSetup = new DartSetup();
 
@@ -18,12 +18,12 @@ $(function()
         };
     };
 
-    $('#SearchUser').on('input', debounce(function(e)
+    document.getElementById('SearchUser').addEventListener('input', debounce(function(e)
     {
-        let input = $(e.target).val();
+        let input = e.target.value;
 
         if(input) {
-            dartSetup.fetchUser($(e.target).val());
+            dartSetup.fetchUser(input);
         } else {
             document.getElementById('ListUser').innerHTML = ``;
         }

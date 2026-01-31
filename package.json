@@ -1,19 +1,23 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "npm run update-env-version &&  mix --production",
-        "update-env-version": "node dump-app-version.js"
+        "dev": "vite",
+        "build": "vite build",
+        "version:bump": "node dump-app-version.js"
     },
     "dependencies": {
+        "@alpinejs/collapse": "^3.15.5",
+        "@dartbot/dartboard": "^0.4.0",
+        "@floating-ui/dom": "^1.7.5",
+        "@fortawesome/fontawesome-free": "^7.1.0",
+        "alpinejs": "^3.15.5",
         "animate.css": "^4.1.1",
         "canvas-confetti": "^1.9.2",
-        "cropperjs": "^1.6.1",
+        "chart.js": "^4.5.1",
+        "chartjs-adapter-luxon": "^1.3.1",
+        "chartjs-plugin-annotation": "^3.1.0",
+        "cropperjs": "^1.6.2",
         "d3": "^7.8.5",
         "echarts": "^5.5.0",
         "fullcalendar": "^6.1.11",
@@ -24,13 +28,12 @@
         "plotly.js-dist": "^2.29.1"
     },
     "devDependencies": {
-        "@popperjs/core": "^2.11.8",
+        "@tailwindcss/vite": "^4.1.18",
+        "autoprefixer": "^10.4.23",
         "axios": "^1.6.7",
-        "bootstrap": "^5.3.3",
-        "laravel-mix": "^6.0.49",
-        "postcss": "^8.4.35",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.71.1",
-        "sass-loader": "^14.1.1"
+        "laravel-vite-plugin": "^1.2.0",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^4.1.18",
+        "vite": "^6.2.4"
     }
 }

@@ -27,10 +27,13 @@ class Feedback extends Model implements Auditable
      */
     protected $fillable = [
         'type',
+        'severity',
         'status',
         'subject',
         'message',
+        'steps_to_reproduce',
         'area',
+        'device_info',
     ];
 
     /**
@@ -41,6 +44,7 @@ class Feedback extends Model implements Auditable
     protected $casts = [
         'type' => FeedbackType::class,
         'status' => FeedbackStatus::class,
+        'device_info' => 'array',
     ];
 
     /**

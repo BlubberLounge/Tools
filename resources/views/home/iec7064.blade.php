@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/IEC7064_page.js') }}" defer></script>
+    @vite(['resources/js/IEC7064_page.js'])
 @endpush
 
 @section('content')
 <div class="container">
-    <div class="row justify-center">
+    <div class="flex flex-wrap justify-center">
         <div class="col-5">
             <div class="mb-3">
                 <label for="inputString" class="form-label">Input</label>

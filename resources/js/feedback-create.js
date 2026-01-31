@@ -4,22 +4,21 @@
  *
  */
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
-    let formFeedbackCreate = $('#container-form-feedback-create');
-    let formFeedback = $('#form-feedback');
-    let inputFeedbackType = $('#input-feedback-type');
-    let btnFeedbackTypeList = $('.btn-feedback');
+    let formFeedbackCreate = document.getElementById('container-form-feedback-create');
+    let inputFeedbackType = document.getElementById('input-feedback-type');
+    let btnFeedbackTypeList = document.querySelectorAll('.btn-feedback');
 
-    btnFeedbackTypeList.each((k, e) =>
+    btnFeedbackTypeList.forEach(btn =>
     {
-        $(e).click(event =>
+        btn.addEventListener('click', function(event)
         {
-            $('#container-feedback').hide();
-            formFeedbackCreate.show();
+            document.getElementById('container-feedback').style.display = 'none';
+            formFeedbackCreate.style.display = 'block';
 
-            let feedbackType = $(e).val();
-            inputFeedbackType.val(feedbackType);
+            let feedbackType = btn.value;
+            inputFeedbackType.value = feedbackType;
         });
     });
 });

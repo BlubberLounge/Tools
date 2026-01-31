@@ -4,7 +4,7 @@
  *
  */
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     const approveBtns = document.querySelectorAll('.btn-approve');
     addEventListenerList(approveBtns, 'click', e =>

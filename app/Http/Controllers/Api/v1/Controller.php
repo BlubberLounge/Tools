@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *      version="1.1.0",
+ *      version="1.0.0",
  *      title="Tools Api",
  *      description="BlubberLounge Tools REST Api",
  *      @OA\Contact(
- *          email="contect@blubber-lounge.de"
+ *          email="contact@blubber-lounge.de"
  *      )
  * )
  *

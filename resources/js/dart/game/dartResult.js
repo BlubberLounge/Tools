@@ -5,7 +5,7 @@
  */
 
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     // cool, ultra lightweight, but only supports click event
     // let confetti = new Confetti('confetti');

@@ -61,6 +61,11 @@ Setting::name('dartGameInvitation')
     ->default(true)
     ->group('privacyAndSecurity');
 
+Setting::name('dartGameInvitationAutoAccept')
+    ->boolean()
+    ->default(true)
+    ->group('privacyAndSecurity');
+
 Setting::name('isDartGameStatisticPublic')
     ->boolean()
     ->default(false)

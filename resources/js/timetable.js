@@ -3,9 +3,7 @@
  *
  *
  */
-$(function() {
-
-});
+// Note: This file uses jQuery extensively and requires jQuery to be loaded
 
 const TimetableStaus = {
     AVAILABLE: 'available',
@@ -298,4 +296,4 @@ class Timetable
 }
 
 // EXPORT
-module.exports = Timetable;
+export default Timetable;

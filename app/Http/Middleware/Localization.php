@@ -19,17 +19,16 @@ class Localization
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = null;
+        $locale = 'de'; // Default locale
 
-        if(Session::has('locale')) {
+        if (Session::has('locale')) {
             $locale = Session::get('locale');
-        } else if(Auth::guard('web')->check()) {
-            if(Auth::user()->settings->get('language')) {
-                $locale = Auth::user()->settings->get('language')->value;
+        } elseif (Auth::guard('web')->check()) {
+            $languageSetting = Auth::user()->settings->get('language');
+            if ($languageSetting) {
+                $locale = $languageSetting->value;
                 Session::put('locale', $locale);
             }
-        } else {
-            $locale = 'de';
         }
 
         App::setLocale($locale);

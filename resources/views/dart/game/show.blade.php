@@ -1,16 +1,16 @@
 @extends('layouts.dart')
 
 @push('scripts')
-    <script src="{{ mix('js/show.js') }}"></script>
+    @vite(['resources/js/dart/game/show.js'])
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dartboard.css') }}" />
+    @vite(['resources/sass/dartboard.scss'])
 @endpush
 
 @section('content')
 <div class="container-fluid px-2 p-md-0 mt-3">
-    <div class="row me-0 justify-center">
+    <div class="flex flex-wrap mr-0 justify-center">
         <div class="col col-md-8 col-lg-6">
             <input type="hidden" id="gameId" name="id" value="{{ $id }}">
             <input type="hidden" id="gameType" name="type" value="{{ $type }}">
@@ -24,11 +24,11 @@
             @endif
 
             <section class="mt-4 mb-5">
-                <div class="row justify-center align-items-center">
+                <div class="flex flex-wrap justify-center items-center">
                     {{-- <div id="skeleton-dartboard" class="placeholder-wave" style="position:relative; display:flex; justify-content:center; width: 360px; height: 360px;">
                         <span class="placeholder col"></span>
                     </div> --}}
-                    <div id="skeleton-dartboard" class=" d-flex justify-center align-items-center" style="width: 360px; height: 360px;">
+                    <div id="skeleton-dartboard" class=" flex justify-center items-center" style="width: 360px; height: 360px;">
                         <div class="spinner-border">
                             <span class="visually-hidden">Loading...</span>
                         </div>
@@ -39,7 +39,7 @@
             </section>
 
             <section class="mt-3 mb-4">
-                <div class="row justify-center align-items-center">
+                <div class="flex flex-wrap justify-center items-center">
                     <div class="btn-group col-8 col-md-7">
                         <button type="button" class="btn btn-danger"> Abort </button>
                         <button type="button" class="btn btn-warning disabled"> Pause </button>
@@ -48,7 +48,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row justify-center align-items-center mt-4">
+                <div class="flex flex-wrap justify-center items-center mt-4">
                     <div class="col-8 col-md-7">
                         <label for="volume-control" class="form-label">
                             Volume

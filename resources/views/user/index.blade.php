@@ -4,15 +4,15 @@
 <div class="container-fluid px-3">
 
     @include('user.includes.title')
-    <div class="row px-4 mb-2">
+    <div class="flex flex-wrap px-4 mb-2">
         Online:
         @foreach ($onlineUsers as $usera)
-            <div class="col-auto p-0 mx-1 d-flex align-items-center">
+            <div class="col-auto p-0 mx-1 flex items-center">
                 <span class="badge text-bg-primary">{{ $usera->full_name }}</span>
             </div>
         @endforeach
     </div>
-    <div class="row justify-content-center px-4">
+    <div class="flex flex-wrap justify-center px-4">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -21,7 +21,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
-                    <th scope="col" class="d-none d-xl-table-cell">E-Mail</th>
+                    <th scope="col" class="hidden d-xl-table-cell">E-Mail</th>
                     <th scope="col">Role</th>
                     <th scope="col" class="text-center">Actions</th>
                 </tr>
@@ -38,7 +38,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->firstname }}</td>
                         <td>{{ $user->lastname }}</td>
-                        <td class="d-none d-xl-table-cell">{{ $user->email }}</td>
+                        <td class="hidden d-xl-table-cell">{{ $user->email }}</td>
                         <td>
                             @foreach ($user->getRoles() as $k => $role)
                                 {{ $role->name . (count($user->getRoles())-1 != $k ? ', ' : '') }}
@@ -61,7 +61,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
+        <div class="flex justify-center">
             {!! $users->links() !!}
         </div>
     </div>

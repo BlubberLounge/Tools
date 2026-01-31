@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/simApp.js') }}" defer></script>
+    @vite(['resources/js/simApp.js'])
 @endpush
 
 @section('content')
@@ -9,12 +9,12 @@
     
     @include('battery.includes.title')
 
-    <div class="row justify-content-between g-5 pb-1">
+    <div class="flex flex-wrap justify-between g-5 pb-1">
         <div class="col-3 border-end mb-5">
             <h1 class="mb-3">Initial Parameter</h1>
             <form id="form-start-parameter" class="form-horizontal">
                 <fieldset id="fieldsetParameter">
-                    <div class="row align-items-center">
+                    <div class="flex flex-wrap items-center">
                         <label for="settingPresets" class="col col-form-label">Presets:</label>
                         <div class="col-8">
                             <select class="form-select form-select-sm" id="settingPreset">
@@ -22,7 +22,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="batteryMaxVoltage" class="col col-form-label">max. Voltage:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="batteryMinVoltage" class="col col-form-label">min. Voltage:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="batteryCapacity" class="col col-form-label">Battery Capacity:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="batteryLevel" class="col col-form-label">Battery Level:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="readInterval" class="col col-form-label">Interval:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 align-items-center">
+                    <div class="flex flex-wrap g-3 items-center">
                         <label for="staticLoad" class="col col-form-label">Static load:</label>
                         <div class="col">
                             <div class="input-group input-group-sm">
@@ -78,7 +78,7 @@
                     </div>
                 </fieldset>
                 <hr class="my-2">
-                <div class="row g-3 align-items-center">
+                <div class="flex flex-wrap g-3 items-center">
                     <label for="staticLoad" class="col col-form-label">Current load:</label>
                     <div class="col">
                         <div class="input-group input-group-sm">
@@ -99,7 +99,7 @@
                     </tr>
                     <tr>
                         <td>State:</td>
-                        <td id="stateInfo" class="text-end fw-bold text-primary" colspan="2"> NOT STARTED </td>
+                        <td id="stateInfo" class="text-end font-bold text-primary" colspan="2"> NOT STARTED </td>
                     </tr>
                     <tr>
                         <td>Started @</td>
@@ -146,19 +146,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 text-center position-relative">
+        <div class="col-6 text-center relative">
             <h1>Discharge Curves</h1>
             
-            {{-- <button type="button" class="btn btn-dark position-absolute end-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa-solid fa-gear"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+            {{-- <button type="button" class="btn btn-dark absolute end-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-gear"></i><span class="absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
             </button> --}}
 
             <canvas id="dischargeCurveChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
-    <div class="row justify-content-between g-5">
+    <div class="flex flex-wrap justify-between g-5">
         <div class="col border-end text-center">
-            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger me-2" style="font-size: .45em;"></i>Live Data</h1>
+            <h1> <i class="fa-solid fa-circle fa-2xs fa-fade text-danger mr-2" style="font-size: .45em;"></i>Live Data</h1>
             <canvas id="liveDataChart" style="width:100%;max-height:300px;margin:0;"></canvas>
         </div>
         <div class="col-2">

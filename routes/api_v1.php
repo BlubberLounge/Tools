@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\AppointmentController;
+use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
 use App\Http\Controllers\Api\v1\DartExpectationDataController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Api\v1\UtillityController;
 */
 
 Route::get('/ping', [UtillityController::class, 'ping']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {

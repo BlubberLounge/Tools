@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('scripts')
-    <script src="{{ mix('js/feedback-index.js') }}" defer></script>
+    @vite(['resources/js/feedback-index.js'])
 @endpush
 
 @section('content')
@@ -16,8 +16,8 @@
             @forelse ($feedbackList as $feedback)
                 @php($headerID = 'header-'.$feedback->id)
                 @php($bodyID = 'body-'.$feedback->id)
-                <div class="accordion-item position-relative mb-4" data-bl-feedback-id="{{ $feedback->id }}">
-                    <div class="position-absolute" style="z-index: 100;top:-10px;">
+                <div class="accordion-item relative mb-4" data-bl-feedback-id="{{ $feedback->id }}">
+                    <div class="absolute" style="z-index: 100;top:-10px;">
                         <span class="badge rounded-pill feedback-type-{{ $feedback->type }}" style="background-color:{{ $feedback->type->color() }};"> {{ $feedback->type }} </span>
                     </div>
                     <h2 class="accordion-header feedback-type-{{ $feedback->type }}" id="{{ $headerID }}">
@@ -51,27 +51,27 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row mt-3">
+                            <div class="flex flex-wrap mt-3">
                                 <h3>
                                     Subject
                                 </h3>
                             </div>
-                            <div class="row mb-3">
+                            <div class="flex flex-wrap mb-3">
                                 <div class="col">
                                     {{ $feedback->subject }}
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="flex flex-wrap mt-3">
                                 <h3>
                                     Message
                                 </h3>
                             </div>
-                            <div class="row mb-5">
+                            <div class="flex flex-wrap mb-5">
                                 <div class="col">
                                     {{ $feedback->message }}
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="flex flex-wrap mt-3">
                                 <h3>
                                     Additional Information
                                 </h3>
@@ -91,7 +91,7 @@
                                     <b>Letztes update:</b> {{ $feedback->updated_at->format('d.m.Y - h:i:s') }}
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="flex flex-wrap mt-3">
                                 <h3>
                                     Device Information
                                 </h3>
@@ -128,7 +128,7 @@
             @endforelse
         </div>
         @if ($feedbackList->hasPages())
-            <div class="d-flex justify-content-center">
+            <div class="flex justify-center">
                 {!! $feedbackList->links() !!}
             </div>
         @endif

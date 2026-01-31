@@ -1,7 +1,7 @@
 import Plotly from 'plotly.js-dist';
 
 
-$(function()
+document.addEventListener('DOMContentLoaded', function()
 {
     const yData = [...Array(5).fill(10), ...Array(11).keys(), 5, ...Array(8).fill(20), 50, 60, 100, 80, 60, 50, ...Array(11).fill(10), 20, 30, 40, 50, 60, ...Array(20).fill(0), ...Array(3).fill(50), ...Array(3).fill(25), ...Array(3).fill(50), ...Array(3).fill(25), ...Array(3).fill(50), ...Array(3).fill(25), ...Array(3).fill(50), ...Array(3).fill(25), ...Array(10).fill(50), 60, 70, 80, 90,...Array(20).fill(100), 90, 80, 70, 60, 50, 40, 30, 20, 10, ...Array(10).fill(30), ...Array(3).fill(25), ...Array(40).keys()];
     // const yData = [2,4,6,8,12,14,16,18,20];

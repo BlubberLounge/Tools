@@ -17,11 +17,10 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 use App\Enums\DartGameType;
-use Staudenmeir\LaravelMergedRelations\Eloquent\HasMergedRelationships;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 use OwenIt\Auditing\Contracts\Auditable;
-use DarkGhostHunter\Laraconfig\HasConfig;
 use App\Classes\DeviceTracker;
+use App\Classes\UserSettings;
 use App\Enums\AcquaintanceStatus;
 use App\Enums\DartGameUserStatus;
 use Illuminate\Support\Collection;
@@ -33,9 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     use HasFactory,
         Notifiable,
         HasPushSubscriptions,
-        HasConfig,
         HasApiTokens,
-        HasMergedRelationships,
         HasRoleAndPermission,
         \OwenIt\Auditing\Auditable;
 
@@ -100,6 +97,14 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
                 return $value;
             }
         );
+    }
+
+    /**
+     * Get the user settings accessor.
+     */
+    public function getSettingsAttribute(): UserSettings
+    {
+        return new UserSettings($this);
     }
 
     /**
@@ -216,7 +221,7 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
      */
     public static function getRootUser(): User
     {
-        return User::where('name', 'root')->first();
+        return User::where('name', 'root')->first() ?? User::all()->first();
     }
 
     /**
@@ -351,12 +356,6 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
             ->get();
 
         return $received->merge($transmitted);
-    }
-
-    // works ok. BUT there is no access on pivot tables with this method
-    public function acquaintances_beta()
-    {
-        return $this->mergedRelationWithModel(User::class, 'acquaintances_view');
     }
 
     /**
