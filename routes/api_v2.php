@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\UtillityController;
 use App\Http\Controllers\Api\v2\DartEngineController;
 use App\Http\Controllers\Api\v2\FeedbackController;
+use App\Http\Controllers\Api\v2\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,11 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     // Feedback from DartApp
     Route::post('feedback', [FeedbackController::class, 'store']);
+
+    // Push Notifications
+    Route::post('push/subscribe', [NotificationController::class, 'subscribe']);
+    Route::post('push/unsubscribe', [NotificationController::class, 'unsubscribe']);
 });
+
+// Public route for VAPID public key (no auth required)
+Route::get('push/vapid-public-key', [NotificationController::class, 'vapidPublicKey']);
