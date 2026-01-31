@@ -1,16 +1,17 @@
-<nav id="sidebar" class="p-1 bg-[var(--tw-body-tertiary-bg)] active">
+<nav id="sidebar" class="active">
     <div class="flex flex-col shrink-0 h-full">
-        <div class="flex justify-center py-1">
-            <a class="flex items-center" href="{{ url('/') }}">
-                <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="80px">
+        <!-- Logo Section -->
+        <div class="flex justify-center items-center py-3 mb-2">
+            <a class="flex items-center hover:opacity-80 transition-opacity" href="{{ url('/') }}">
+                <img src="https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg" class="nav-brand" alt="BlubberLounge Logo" width="90px">
             </a>
-            <div class="vertical-divider"></div>
-            <a class="nav-brand-sub flex items-center text-base" href="{{ url('/') }}">
+            <div class="vertical-divider mx-3 h-8"></div>
+            <a class="nav-brand-sub flex items-center text-xl hover:text-primary transition-colors" href="{{ url('/') }}">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
             </a>
         </div>
 
-        <hr class="mb-1 border-[var(--tw-border-color)]" />
+        <hr class="mb-3 border-[var(--tw-border-color)] opacity-50" />
 
         <ul class="nav nav-pills flex-col mb-auto">
             <li class="nav-item">
@@ -149,123 +150,65 @@
             @endpermission
         </ul>
 
-        <hr class="border-[var(--tw-border-color)] my-1" />
+        <hr class="border-[var(--tw-border-color)] my-2 opacity-50" />
 
-        <ul class="nav nav-pills nav-sm flex-col">
-            <li class="nav-item">
-                <a href="#" class="flex items-center py-1">
-                    <img src="{{ Auth::user()->img }}" width="32" class="rounded-full mr-2">
-                    <strong class="text-xs"> {{ Auth::user()->full_name }} </strong>
-                </a>
-            </li>
-            <li class="nav-item mt-1">
-                <a href="{{ route('user.settings') }}" class="nav-link {{ active('user.settings') }}">
-                    <i class="fa-solid fa-gears"></i>
-                    <span class="nav-text"> {{ __('settings') }} </span>
-                </a>
-            </li>
+        <!-- User Section (compact) -->
+        <div class="flex items-center px-2 py-1 mb-1">
+            <img src="{{ Auth::user()->img }}" width="28" class="rounded-full ring-2 ring-primary/30">
+            <span class="ml-2 text-xs font-medium truncate">{{ Auth::user()->full_name }}</span>
+        </div>
+
+        <ul class="nav nav-pills nav-sm flex-col text-xs">
+            <li><a href="{{ route('user.settings') }}" class="nav-link py-1 {{ active('user.settings') }}"><i class="fa-solid fa-gears"></i><span class="nav-text">{{ __('settings') }}</span></a></li>
             @permission('viewany.device')
-                <li class="nav-item">
-                    <a href="{{ route('device.index') }}" class="nav-link {{ active('device.index') }}">
-                        <i class="fa-solid fa-desktop"></i>
-                        <span class="nav-text"> {{ __('devices') }} </span>
-                    </a>
-                </li>
+                <li><a href="{{ route('device.index') }}" class="nav-link py-1 {{ active('device.index') }}"><i class="fa-solid fa-desktop"></i><span class="nav-text">{{ __('devices') }}</span></a></li>
             @endpermission
             @permission('create.feedback')
-                <li class="nav-item">
-                    <a href="{{ route('feedback.create') }}" class="nav-link {{ request()->routeIs('feedback.create') ? 'active' : '' }}" >
-                        <i class="fa-solid fa-circle-question"></i>
-                        <span class="nav-text"> {{ __('feedback') }} </span>
-                    </a>
-                </li>
+                <li><a href="{{ route('feedback.create') }}" class="nav-link py-1 {{ request()->routeIs('feedback.create') ? 'active' : '' }}"><i class="fa-solid fa-circle-question"></i><span class="nav-text">{{ __('feedback') }}</span></a></li>
             @endpermission
             @permission('viewany.f.a.q')
-                <li class="nav-item">
-                    <a href="{{ route('faq.index') }}" class="nav-link {{ active('faq.*') }}" >
-                        <i class="fa-solid fa-comment-dots"></i>
-                        <span class="nav-text"> {{ __('tools FAQ') }} </span>
-                    </a>
-                </li>
+                <li><a href="{{ route('faq.index') }}" class="nav-link py-1 {{ active('faq.*') }}"><i class="fa-solid fa-comment-dots"></i><span class="nav-text">{{ __('tools FAQ') }}</span></a></li>
             @endpermission
             @level(5)
-                <li class="nav-item mt-2" x-data="{ open: false }">
-                    <a href="#" @click.prevent="open = !open" class="nav-link has-submenu">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span class="nav-text"> {{ __('administration') }} </span>
-                    </a>
+                <li class="mt-1" x-data="{ open: false }">
+                    <a href="#" @click.prevent="open = !open" class="nav-link py-1 has-submenu"><i class="fa-solid fa-shield-halved"></i><span class="nav-text">{{ __('administration') }}</span></a>
                     <ul x-show="open" x-collapse class="submenu" id="submenuAdministration">
-                        <li class="submenu-item">
-                            <a href="{{ route('audit-log.index') }}" class="nav-link submenu-link">
-                                <i class="fa-solid fa-list-ul"></i>
-                                <span class="nav-text"> {{ __('audit log') }} </span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('invitation.index') }}" class="nav-link submenu-link">
-                                <i class="fa-regular fa-envelope"></i>
-                                <span class="nav-text"> {{ __('access requests') }} </span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('user.index') }}" class="nav-link submenu-link">
-                                <i class="fa-solid fa-users"></i>
-                                <span class="nav-text"> {{ __('user management') }} </span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('feedback.index') }}" class="nav-link submenu-link">
-                                <i class="fa-solid fa-circle-question"></i>
-                                <span class="nav-text"> {{ __('user feedback') }} </span>
-                            </a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="{{ route('l5-swagger.default.api') }}" class="nav-link submenu-link">
-                                <i class="fa-solid fa-users"></i>
-                                <span class="nav-text"> {{ __('api documentation') }} </span>
-                            </a>
-                        </li>
+                        <li><a href="{{ route('audit-log.index') }}" class="nav-link submenu-link py-0.5"><i class="fa-solid fa-list-ul"></i><span class="nav-text">{{ __('audit log') }}</span></a></li>
+                        <li><a href="{{ route('invitation.index') }}" class="nav-link submenu-link py-0.5"><i class="fa-regular fa-envelope"></i><span class="nav-text">{{ __('access requests') }}</span></a></li>
+                        <li><a href="{{ route('user.index') }}" class="nav-link submenu-link py-0.5"><i class="fa-solid fa-users"></i><span class="nav-text">{{ __('user management') }}</span></a></li>
+                        <li><a href="{{ route('feedback.index') }}" class="nav-link submenu-link py-0.5"><i class="fa-solid fa-circle-question"></i><span class="nav-text">{{ __('user feedback') }}</span></a></li>
+                        <li><a href="{{ route('l5-swagger.default.api') }}" class="nav-link submenu-link py-0.5"><i class="fa-solid fa-book"></i><span class="nav-text">{{ __('api documentation') }}</span></a></li>
                     </ul>
                 </li>
             @endlevel
-            <li class="nav-item mt-1">
-                <a href="{{ route('logout') }}" class="nav-link text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span class="nav-text"> {{ __('logout') }} </span>
-                </a>
-            </li>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                @csrf
-            </form>
+            <li class="mt-1"><a href="{{ route('logout') }}" class="nav-link py-1 text-danger" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa-solid fa-right-from-bracket"></i><span class="nav-text">{{ __('logout') }}</span></a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
         </ul>
 
-        <hr class="border-[var(--tw-border-color)] my-1" />
+        <hr class="border-[var(--tw-border-color)] my-2 opacity-50" />
 
-        <div class="flex btn-group text-xs" id="bd-theme">
-            <button type="button" class="btn btn-dark btn-sm flex items-center flex-1 px-1 py-0.5" data-theme-value="light">
-                <i class="mr-1 fa-solid fa-sun opacity-50 theme-icon text-xs"></i>
-                {{ __('Light') }}
+        <!-- Theme & Language Toggle -->
+        <div class="flex gap-1 mb-1" id="bd-theme">
+            <button type="button" class="flex-1 py-1.5 text-xs rounded bg-[var(--tw-body-bg)] hover:bg-[var(--tw-border-color)] transition-colors" data-theme-value="light" title="Light">
+                <i class="fa-solid fa-sun text-yellow-500"></i>
             </button>
-            <button type="button" class="btn btn-dark btn-sm flex items-center flex-1 px-1 py-0.5" data-theme-value="dark">
-                <i class="mr-1 fa-solid fa-moon opacity-50 theme-icon text-xs"></i>
-                {{ __('Dark') }}
+            <button type="button" class="flex-1 py-1.5 text-xs rounded bg-[var(--tw-body-bg)] hover:bg-[var(--tw-border-color)] transition-colors" data-theme-value="dark" title="Dark">
+                <i class="fa-solid fa-moon text-blue-400"></i>
             </button>
-            <button type="button" class="btn btn-dark btn-sm flex items-center flex-1 px-1 py-0.5 active" data-theme-value="auto">
-                <i class="mr-1 fa-solid fa-circle-half-stroke opacity-50 theme-icon text-xs"></i>
-                {{ __('Auto') }}
+            <button type="button" class="flex-1 py-1.5 text-xs rounded bg-[var(--tw-body-bg)] hover:bg-[var(--tw-border-color)] transition-colors" data-theme-value="auto" title="Auto">
+                <i class="fa-solid fa-circle-half-stroke text-purple-400"></i>
             </button>
         </div>
         @permission('update.user.language')
             @if(config('app.available_locales'))
-                <form id="form-locale-selector" action="{{ route('user.language-update') }}" method="POST" class="mt-1">
+                <form id="form-locale-selector" action="{{ route('user.language-update') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="flex btn-group btn-sm w-full" id="language-selector">
+                    <div class="flex gap-1" id="language-selector">
                         @foreach (config('app.available_locales') as $k => $locale)
-                            <input id="locale_{{ $locale }}" class="sr-only peer" type="radio" name="locale" value="{{ $locale }}" @checked($locale == App::currentLocale())>
-                            <label class="btn btn-dark btn-sm flex-1 px-1 py-0.5 peer-checked:bg-secondary" for="locale_{{ $locale }}">
-                                <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale}}"></span>
+                            <input id="locale_{{ $locale }}" class="hidden peer/{{ $locale }}" type="radio" name="locale" value="{{ $locale }}" @checked($locale == App::currentLocale())>
+                            <label class="flex-1 py-1.5 text-center text-xs rounded cursor-pointer bg-[var(--tw-body-bg)] hover:bg-[var(--tw-border-color)] peer-checked/{{ $locale }}:bg-primary peer-checked/{{ $locale }}:text-white transition-colors" for="locale_{{ $locale }}">
+                                <span class="fi fi-{{ $locale === 'en' ? 'gb' : $locale }}"></span>
                             </label>
                         @endforeach
                     </div>
@@ -274,20 +217,15 @@
         @endpermission
     </div>
 
-    <div class="mt-2">
-        <div class="p-0 text-center">
-            <a href="#" class="mr-1 text-xs link-secondary hover:underline"> {{ __('about') }} </a>
-            <a href="#" class="mr-1 text-xs link-secondary hover:underline"> {{ __('changelog') }} </a>
-            <a href="#" class="text-xs link-secondary hover:underline"> {{ __('contact') }} </a>
+    <!-- Footer (compact) -->
+    <div class="mt-auto pt-2 text-center text-xs text-[var(--tw-muted-color)]">
+        <div class="flex justify-center gap-2 flex-wrap">
+            <a href="#" class="hover:text-primary">{{ __('about') }}</a>
+            <a href="#" class="hover:text-primary">{{ __('impressum') }}</a>
+            <a href="#" class="hover:text-primary">{{ __('privacy') }}</a>
         </div>
-        <div class="p-0 text-center">
-            <a href="#" class="mr-1 text-xs link-secondary hover:underline"> {{ __('impressum') }} </a>
-            <a href="#" class="text-xs link-secondary hover:underline"> {{ __('privacy') }} </a>
-        </div>
-    </div>
-
-    <div class="text-center mt-1 pb-1">
-        <p class="m-0 text-xs" style="color:var(--bl-clr-gray-60);">Tools v{{ env('APP_VERSION', 'VERSION_invalid') }}-{{ Str::upper(env('APP_ENV', 'ENV_invalid')) }}</p>
-        <p class="m-0 text-xs" style="color:var(--bl-clr-gray-70);"><i class="fa-regular fa-copyright fa-xs"></i> BlubberLounge {{ now()->year }}</p>
+        <p class="mt-1 mb-0 opacity-70">
+            <span class="text-primary font-semibold">Tools</span> v{{ env('APP_VERSION', 'VERSION_invalid') }}
+        </p>
     </div>
 </nav>

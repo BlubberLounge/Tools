@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "@alpinejs/collapse": "^3.15.5",
+        "@dartbot/dartboard": "^0.4.0",
         "@floating-ui/dom": "^1.7.5",
         "@fortawesome/fontawesome-free": "^7.1.0",
         "alpinejs": "^3.15.5",

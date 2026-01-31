@@ -38,8 +38,8 @@ export default defineConfig({
                 'resources/js/feedback-index.js',
                 'resources/js/settings.js',
 
-                // Tailwind CSS (main stylesheet)
-                'resources/css/tailwind.css',
+                // Main CSS
+                'resources/css/app.css',
 
                 // Additional CSS
                 'resources/sass/dart.scss',

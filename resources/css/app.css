@@ -1,8 +1,572 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import '@fortawesome/fontawesome-free/css/all.css';
-
 @import "tailwindcss";
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+
+@source '../../resources/**/*.blade.php';
+@source '../../resources/**/*.js';
+
+/* ============================================================================================
+ *  THEME CONFIGURATION
+ * ============================================================================================ */
+@theme {
+    --font-sans: 'Nunito', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-roboto: 'Roboto', sans-serif;
+
+    --color-primary: #f97316;
+    --color-secondary: #5baabd;
+    --color-success: #67ab24;
+    --color-danger: #bc1a1a;
+    --color-warning: #f1bf61;
+}
+
+
+/* ============================================================================================
+ *  BASE STYLES
+ * ============================================================================================ */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    @apply bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200;
+    line-height: 1.625;
+}
+
+::selection {
+    @apply bg-slate-700 text-white;
+}
+
+/* ============================================================================================
+ *  FORM INPUTS - Enhanced Design
+ * ============================================================================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+textarea,
+select {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    @apply text-slate-800 dark:text-slate-200;
+    @apply bg-slate-50 dark:bg-slate-900;
+    @apply border-2 border-slate-300 dark:border-slate-700;
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    @apply border-orange-500;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    @apply bg-slate-50 dark:bg-slate-900;
+}
+
+input:hover:not(:focus),
+textarea:hover:not(:focus),
+select:hover:not(:focus) {
+    @apply border-slate-500 dark:border-slate-400;
+}
+
+input::placeholder,
+textarea::placeholder {
+    @apply text-slate-400 dark:text-slate-500;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    @apply bg-slate-200 dark:bg-slate-800;
+}
+
+/* Invalid State */
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+    @apply border-red-600;
+}
+
+input.is-invalid:focus,
+textarea.is-invalid:focus,
+select.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(188, 26, 26, 0.15);
+}
+
+/* Input with Icon */
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    padding-left: 2.75rem;
+}
+
+.input-group .input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    @apply text-slate-400 dark:text-slate-500;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.input-group input:focus ~ .input-icon {
+    @apply text-orange-500;
+}
+
+/* Checkbox & Radio */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    @apply border-2 border-slate-300 dark:border-slate-700;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    accent-color: #f97316;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    @apply bg-orange-500 border-orange-500;
+}
+
+/* Form Switch Toggle */
+.form-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.form-switch input[type="checkbox"] {
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    @apply bg-slate-300 dark:bg-slate-700;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='white'/%3e%3c/svg%3e");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: background-position 0.2s ease, background-color 0.2s ease;
+    appearance: none;
+    cursor: pointer;
+}
+
+.form-switch input[type="checkbox"]:checked {
+    @apply bg-orange-500;
+    background-position: right center;
+}
+
+.form-switch input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.25);
+}
+
+/* Label */
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    @apply text-slate-800 dark:text-slate-200;
+    margin-bottom: 0.375rem;
+}
+
+/* Invalid Feedback */
+.invalid-feedback {
+    @apply text-red-600;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+}
+
+/* ============================================================================================
+ *  SCROLLBAR
+ * ============================================================================================ */
+.custom-scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: #717171 transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-slate-50 dark:bg-slate-900;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #717171;
+    border-radius: 10px;
+    @apply border-2 border-slate-50 dark:border-slate-900;
+}
+
+/* ============================================================================================
+ *  SIDEBAR
+ * ============================================================================================ */
+#app {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 250px;
+    height: 100vh;
+    margin-left: -250px;
+    padding: 1rem 0.75rem;
+    @apply bg-slate-200 dark:bg-slate-800;
+    @apply border-r border-slate-300 dark:border-slate-700;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 99999;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#sidebar.active {
+    margin-left: 0;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar ul ul {
+    padding-left: 0.75rem;
+    margin-top: 0.25rem;
+    margin-left: 0.75rem;
+    @apply border-l-2 border-slate-300 dark:border-slate-700;
+}
+
+main {
+    position: relative;
+    width: calc(100% - 250px);
+    left: 250px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar:not(.active) ~ main {
+    width: 100vw;
+    left: 0;
+}
+
+@media (max-width: 992px) {
+    #sidebar {
+        margin-left: 0;
+    }
+    #sidebar.active {
+        margin-left: -250px;
+    }
+    #sidebar.active ~ main {
+        width: 100vw;
+        left: 0;
+    }
+    #sidebar:not(.active) ~ main {
+        width: calc(100% - 250px);
+        left: 250px;
+    }
+}
+
+/* Sidebar Nav Links */
+#sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    @apply text-slate-800 dark:text-slate-200;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+#sidebar .nav-link:hover {
+    @apply bg-slate-300 dark:bg-slate-700;
+    transform: translateX(4px);
+}
+
+#sidebar .nav-link.active {
+    @apply bg-orange-500 text-white;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+#sidebar .nav-link.active:hover {
+    transform: none;
+}
+
+#sidebar .nav-link i {
+    display: flex;
+    justify-content: center;
+    min-width: 1.25rem;
+    margin-right: 0.75rem;
+    opacity: 0.7;
+}
+
+#sidebar .nav-link:hover i,
+#sidebar .nav-link.active i {
+    opacity: 1;
+}
+
+/* Submenu */
+.has-submenu {
+    justify-content: space-between;
+}
+
+.has-submenu::after {
+    font: var(--fa-font-solid);
+    content: "\f078";
+    font-size: 0.65em;
+    transition: transform 0.2s ease;
+}
+
+.submenu-link {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem 0.5rem 1rem;
+}
+
+.submenu-link:hover {
+    @apply bg-orange-500/10 text-orange-500;
+    transform: none;
+}
+
+.submenu-link.active {
+    @apply bg-orange-500/20 text-orange-500;
+    box-shadow: none;
+}
+
+/* Compact Nav (nav-sm) */
+#sidebar .nav-sm .nav-link {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+#sidebar .nav-sm .nav-link i {
+    font-size: 0.75rem;
+    min-width: 1rem;
+    margin-right: 0.5rem;
+}
+
+#sidebar .nav-sm .nav-text {
+    margin-left: 0;
+}
+
+/* Nav Brand */
+.nav-brand-sub {
+    font-size: 1.5rem;
+    @apply text-slate-800 dark:text-slate-200;
+}
+
+.vertical-divider {
+    @apply border-l border-slate-300 dark:border-slate-700;
+    opacity: 0.5;
+}
+
+/* ============================================================================================
+ *  TOP BAR
+ * ============================================================================================ */
+#topBar {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    padding: 0.5rem 1rem;
+    @apply bg-slate-200 dark:bg-slate-800;
+    border-radius: 0.5rem;
+}
+
+/* ============================================================================================
+ *  THEME TOGGLE
+ * ============================================================================================ */
+#bd-theme button.active {
+    background-color: #f97316 !important;
+    color: white !important;
+}
+
+#bd-theme button.active i {
+    color: white !important;
+}
+
+/* Language Selector */
+#language-selector label:has(input:checked),
+#language-selector input:checked + label {
+    background-color: #f97316 !important;
+    color: white !important;
+}
+
+/* ============================================================================================
+ *  BREADCRUMBS
+ * ============================================================================================ */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.875rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: '>';
+    padding: 0 0.5rem;
+    @apply text-slate-400 dark:text-slate-500;
+}
+
+.breadcrumb-item a {
+    @apply text-slate-500 dark:text-slate-400;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    @apply text-orange-500;
+}
+
+.breadcrumb-item.active {
+    @apply text-slate-400 dark:text-slate-500;
+}
+
+/* ============================================================================================
+ *  NOTIFICATIONS
+ * ============================================================================================ */
+.notification-no-container {
+    height: 425px;
+}
+
+/* ============================================================================================
+ *  SPECIAL COMPONENTS
+ * ============================================================================================ */
+/* Icon Mode Color */
+i.mode {
+    @apply text-slate-800 dark:text-slate-200;
+}
+
+/* Feedback Types */
+.feedback-type-general button { @apply text-white bg-gray-500; }
+.feedback-type-bug button { @apply bg-red-800; }
+.feedback-type-information button { @apply text-slate-900 bg-sky-500; }
+.feedback-type-enhancement button { @apply text-amber-700 bg-amber-300; }
+
+/* Form Check Animations */
+@keyframes success {
+    0%, 50% { @apply bg-green-600; box-shadow: 0 0 0 0.25rem rgba(13, 253, 13, 0.25); }
+    100% { box-shadow: none; }
+}
+
+@keyframes error {
+    0%, 50% { @apply bg-red-600; box-shadow: 0 0 0 0.25rem rgba(253, 13, 13, 0.25); }
+    100% { box-shadow: none; }
+}
+
+.form-check-input.success { animation: success 1500ms ease-in-out 1; }
+.form-check-input.error { animation: error 1500ms ease-in-out 1; }
+
+/* Bootstrap Icons Compatibility */
+.bi {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    fill: currentcolor;
+}
+
+/* Dartboard */
+.dartboard {
+    --offset: -90deg;
+    --item-total: 20;
+    min-height: 90vh;
+}
+
+.dartboard_ring {
+    position: relative;
+    list-style: none;
+}
+
+.dartboard_ring > * {
+    display: block;
+    position: absolute;
+    margin: -3em;
+    width: 2.8em;
+    border-radius: 0.5rem;
+    --angle: calc(360deg/var(--item-total));
+    --rotation: calc(var(--offset) + var(--angle)*var(--item-count));
+    transform: rotate(var(--rotation)) translate(var(--radius)) rotate(calc(var(--rotation)*-1));
+}
+
+/* Timetable */
+.timetable {
+    text-align: center;
+    border-spacing: 5px;
+    border-collapse: separate;
+}
+
+.timetable td:not(:first-child) {
+    font-weight: 900;
+    padding: 0.4em 0.5em;
+    border-radius: 2px;
+}
+
+.timetable .timeTableUser {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    text-align: left;
+    min-width: 110px;
+    background-color: #344e57;
+}
+
+td[data-bl-timetable-status="available"] {
+    font-family: var(--fa-font-solid);
+    @apply bg-green-600;
+}
+td[data-bl-timetable-status="available"]::before { content: '\f00c'; }
+
+td[data-bl-timetable-status="maybe"] {
+    font-family: var(--fa-font-solid);
+    @apply text-amber-700 bg-amber-300;
+}
+td[data-bl-timetable-status="maybe"]::before { content: '\3f'; }
+
+td[data-bl-timetable-status="noTime"] {
+    font-family: var(--fa-font-solid);
+    @apply bg-red-600;
+}
+td[data-bl-timetable-status="noTime"]::before { content: '\f00d'; }
+
+/* Audit Log Table */
+#table-auditLog {
+    font-size: 0.8rem;
+}
+
+/* Checkout Table */
+#checkoutTable tbody td,
+#checkoutTable th + th {
+    text-align: center;
+}
