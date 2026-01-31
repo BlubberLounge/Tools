@@ -41,3 +41,6 @@ Route::prefix('dart-push')->group(function () {
 
 // Admin route for sending notifications (should be protected in production)
 Route::post('dart-push/send', [DartPushController::class, 'sendUpdateNotification']);
+
+// Dart App Feedback (anonymous, no auth required)
+Route::post('dart-feedback', [FeedbackController::class, 'storeAnonymous']);

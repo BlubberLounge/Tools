@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 class FeedbackController extends Controller
 {
     /**
-     * Store feedback from the DartApp.
+     * Store feedback from the DartApp (authenticated).
      *
      * Accepts bug reports and general feedback submissions.
      */
@@ -20,17 +20,49 @@ class FeedbackController extends Controller
         $validated = $request->validated();
         $user = $request->user();
 
-        // Map the incoming type/category to FeedbackType
+        $feedback = $this->createFeedback($validated);
+        $feedback->user()->associate($user);
+        $feedback->save();
+
+        return $this->sendResponse(
+            ['id' => $feedback->id],
+            $validated['type'] === 'bug'
+                ? 'Bug report received. Thank you for helping improve the app!'
+                : 'Feedback received. We appreciate your input!'
+        );
+    }
+
+    /**
+     * Store anonymous feedback from the DartApp (no auth required).
+     */
+    public function storeAnonymous(StoreFeedbackApiRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        $feedback = $this->createFeedback($validated);
+        $feedback->save();
+
+        return $this->sendResponse(
+            ['id' => $feedback->id],
+            $validated['type'] === 'bug'
+                ? 'Bug report received. Thank you for helping improve the app!'
+                : 'Feedback received. We appreciate your input!'
+        );
+    }
+
+    /**
+     * Create a Feedback model from validated data.
+     */
+    private function createFeedback(array $validated): Feedback
+    {
         $feedbackType = $this->mapToFeedbackType(
             $validated['type'],
             $validated['category'] ?? null
         );
 
-        // Build subject line based on type
         $subject = $this->buildSubject($validated);
 
-        // Create the feedback record
-        $feedback = new Feedback([
+        return new Feedback([
             'type' => $feedbackType,
             'severity' => $validated['severity'] ?? null,
             'status' => FeedbackStatus::NEW,
@@ -40,18 +72,6 @@ class FeedbackController extends Controller
             'area' => 'DartApp',
             'device_info' => $validated['deviceInfo'] ?? null,
         ]);
-
-        $feedback->user()->associate($user);
-        $feedback->save();
-
-        return $this->sendResponse(
-            [
-                'id' => $feedback->id,
-            ],
-            $validated['type'] === 'bug'
-                ? 'Bug report received. Thank you for helping improve the app!'
-                : 'Feedback received. We appreciate your input!'
-        );
     }
 
     /**
