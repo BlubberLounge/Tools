@@ -53,6 +53,10 @@ class CreateDartGameRequest extends FormRequest
             'options.hitsPerField' => ['nullable', 'integer', 'min:1', 'max:4'],
             'options.includeBull' => ['nullable', 'boolean'],
             'options.rounds' => ['nullable', 'integer', 'min:1', 'max:20'],
+            'options.lives' => ['nullable', 'integer', 'min:1', 'max:10'],
+            'options.target_score' => ['nullable', 'integer', 'min:1'],
+            'options.rookie_protection' => ['nullable', 'boolean'],
+            'options.rookie_turns' => ['nullable', 'integer', 'min:1', 'max:10'],
 
             // Team data (for team game creation)
             'teams' => ['nullable', 'array', 'required_if:game_type,team'],

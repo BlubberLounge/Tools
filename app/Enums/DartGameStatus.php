@@ -16,6 +16,10 @@ enum DartGameStatus: string implements EnumTypeOrStatus
     case DONE = 'done';
     case ABORTED = 'aborted';
     case ERROR = 'error';
+    case INITIALISED = 'initialised';
+    case PAUSED = 'paused';
+    case PLAYER_WON = 'playerWon';
+    case FINISHED = 'finished';
 
     public static function fromString(string $string): DartGameStatus
     {
@@ -37,6 +41,10 @@ enum DartGameStatus: string implements EnumTypeOrStatus
             DartGameStatus::DONE => 'var(--bs-warning)',
             DartGameStatus::ABORTED => 'var(--bs-pink)',
             DartGameStatus::ERROR => 'var(--bs-danger)',
+            DartGameStatus::INITIALISED => 'var(--bs-info)',
+            DartGameStatus::PAUSED => 'var(--bs-secondary)',
+            DartGameStatus::PLAYER_WON => 'var(--bs-success)',
+            DartGameStatus::FINISHED => 'var(--bs-warning)',
         };
     }
 }

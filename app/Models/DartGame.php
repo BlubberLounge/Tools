@@ -69,6 +69,9 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
         'singleIn',
         'doubleIn',
         'trippleIn',
+
+        // Sync
+        'client_game_id',
     ];
 
     /**
@@ -161,10 +164,26 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     /**
      *
      */
+    public function scopeInitialised(Builder $query): void
+    {
+        $query->where($this->getTable().'.status', DartGameStatus::INITIALISED);
+    }
+
+    public function scopePaused(Builder $query): void
+    {
+        $query->where($this->getTable().'.status', DartGameStatus::PAUSED);
+    }
+
+    public function scopeFinished(Builder $query): void
+    {
+        $query->where($this->getTable().'.status', DartGameStatus::FINISHED);
+    }
+
     public function scopeOpen(Builder $query): void
     {
         $query->where($this->getTable().'.status', DartGameStatus::UNKOWN)
-            ->orWhere($this->getTable().'.status', DartGameStatus::CREATED);
+            ->orWhere($this->getTable().'.status', DartGameStatus::CREATED)
+            ->orWhere($this->getTable().'.status', DartGameStatus::INITIALISED);
     }
 
     /**
@@ -316,6 +335,26 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function isAborted(): bool
     {
         return $this->status === DartGameStatus::ABORTED;
+    }
+
+    public function isInitialised(): bool
+    {
+        return $this->status === DartGameStatus::INITIALISED;
+    }
+
+    public function isPaused(): bool
+    {
+        return $this->status === DartGameStatus::PAUSED;
+    }
+
+    public function isPlayerWon(): bool
+    {
+        return $this->status === DartGameStatus::PLAYER_WON;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status === DartGameStatus::FINISHED;
     }
 
     /**

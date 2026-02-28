@@ -5,6 +5,11 @@ use App\Http\Controllers\Api\v2\DartEngineController;
 use App\Http\Controllers\Api\v2\DartTeamController;
 use App\Http\Controllers\Api\v2\DartTournamentController;
 use App\Http\Controllers\Api\v2\DartPlayerInvitationController;
+use App\Http\Controllers\Api\v2\DartLocalPlayerController;
+use App\Http\Controllers\Api\v2\DartSettingsController;
+use App\Http\Controllers\Api\v2\DartStatisticsController;
+use App\Http\Controllers\Api\v2\DartHistoryController;
+use App\Http\Controllers\Api\v2\AuthTokenExchangeController;
 use App\Http\Controllers\Api\v2\DartPushController;
 use App\Http\Controllers\Api\v2\FeedbackController;
 use App\Http\Controllers\Api\v2\NotificationController;
@@ -26,6 +31,26 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::post('dart/{game}/user/{user}/undo', [DartEngineController::class, 'undoThrow']);
     Route::patch('dart/{game}/status', [DartEngineController::class, 'updateStatus']);
     Route::get('dart/{game}/detail', [DartEngineController::class, 'detail']);
+    Route::post('dart/{game}/complete', [DartEngineController::class, 'complete']);
+
+    // Local players (offline player profiles)
+    Route::get('dart/players/local', [DartLocalPlayerController::class, 'index']);
+    Route::post('dart/players/local', [DartLocalPlayerController::class, 'store']);
+    Route::put('dart/players/local/{localPlayer}', [DartLocalPlayerController::class, 'update']);
+    Route::delete('dart/players/local/{localPlayer}', [DartLocalPlayerController::class, 'destroy']);
+
+    // Settings sync
+    Route::get('dart/settings', [DartSettingsController::class, 'show']);
+    Route::post('dart/settings', [DartSettingsController::class, 'upsert']);
+
+    // Statistics & Leaderboard
+    Route::get('dart/statistics/{user}', [DartStatisticsController::class, 'show']);
+    Route::get('dart/leaderboard', [DartStatisticsController::class, 'leaderboard']);
+
+    // Game history & bulk sync
+    Route::get('dart/history', [DartHistoryController::class, 'index']);
+    Route::post('dart/history/sync', [DartHistoryController::class, 'sync']);
+    Route::get('dart/sync/status', [DartHistoryController::class, 'status']);
 
     // Team management (scoped to a game)
     Route::prefix('dart/{game}/teams')->group(function () {
@@ -93,3 +118,7 @@ Route::post('dart-push/send', [DartPushController::class, 'sendUpdateNotificatio
 
 // Dart App Feedback (anonymous, no auth required)
 Route::post('dart-feedback', [FeedbackController::class, 'storeAnonymous']);
+
+// Token exchange: OAuth access token → Sanctum token (unauthenticated - this IS the login flow)
+Route::post('auth/token-exchange', [AuthTokenExchangeController::class, 'exchange'])
+    ->middleware('throttle:10,1');

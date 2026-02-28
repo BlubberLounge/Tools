@@ -109,12 +109,20 @@ class GameStateService
      * If a player is specified, returns that player's current turn state.
      * Otherwise, returns the global active turn state.
      */
-    public function determineCurrentTurn(DartGame $game, ?User $player = null): array
+    /**
+     * @param array $excludePlayerIds Player IDs to skip in turn rotation (e.g. eliminated players).
+     */
+    public function determineCurrentTurn(DartGame $game, ?User $player = null, array $excludePlayerIds = []): array
     {
         $players = $this->getOrderedPlayers($game);
 
+        // Filter out excluded players for turn determination
+        $activePlayers = empty($excludePlayerIds)
+            ? $players
+            : $players->filter(fn($p) => !in_array($p->id, $excludePlayerIds))->values();
+
         if ($this->isGameJustStarted($game)) {
-            return $this->getInitialTurnState($player, $players);
+            return $this->getInitialTurnState($player, $activePlayers);
         }
 
         $lastThrow = $this->getLastThrow($game);
@@ -123,7 +131,7 @@ class GameStateService
             return $this->getPlayerTurnState($game, $player, $lastThrow);
         }
 
-        return $this->getNextTurnState($game, $players, $lastThrow);
+        return $this->getNextTurnState($game, $activePlayers, $lastThrow);
     }
 
     /**

@@ -61,7 +61,7 @@ class DartGameUser extends Pivot implements Auditable
      * @param array $gameStatuses
      * @return array<int>
      */
-    public static function activeUserIds(array $gameStatuses = ['created', 'started', 'running']): array
+    public static function activeUserIds(array $gameStatuses = ['created', 'started', 'running', 'initialised', 'paused']): array
     {
         return static::join('dart_games', 'dart_game_user.dart_game_id', '=', 'dart_games.id')
             ->whereIn('dart_games.status', $gameStatuses)

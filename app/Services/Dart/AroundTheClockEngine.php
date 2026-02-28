@@ -25,6 +25,8 @@ class AroundTheClockEngine extends AbstractGameEngine
     public function submitThrow(DartGame $game, User $user, array $payload): array
     {
         return $this->transaction(function () use ($game, $user, $payload) {
+            $this->normalizeCoordinates($payload);
+
             $position = $this->determineThrowPosition($game, $user);
             $payload = array_merge($payload, $position);
 
@@ -43,19 +45,11 @@ class AroundTheClockEngine extends AbstractGameEngine
             $dartThrow->value = $value;
             $dartThrow->x = $payload['x'] ?? null;
             $dartThrow->y = $payload['y'] ?? null;
+            $dartThrow->r = $payload['r'] ?? null;
+            $dartThrow->theta = $payload['theta'] ?? null;
             $dartThrow->save();
 
-            // Check if player hit the current target
-            $playerProgress = $this->getPlayerProgress($game, $user);
-            $currentTarget = self::SEQUENCE[$playerProgress];
-            $hitTarget = $this->hitTarget($payload, $currentTarget);
-
-            if ($hitTarget) {
-                // Advance player's progress
-                $this->advancePlayerProgress($game, $user);
-            }
-
-            // Check if player finished
+            // Check if player finished (progress is derived from throw history)
             if ($this->isPlayerFinished($game, $user)) {
                 $this->stateService->finishGame($game);
             }
@@ -100,33 +94,34 @@ class AroundTheClockEngine extends AbstractGameEngine
     }
 
     /**
-     * Get the current progress for a player (how many targets have been hit).
+     * Get the current progress for a player by walking throws in order
+     * and counting sequential target hits. Non-target hits don't advance.
      */
     private function getPlayerProgress(DartGame $game, User $user): int
     {
-        // Count successful hits for this player
-        return $game->dartThrowsByUser($user)
-            ->where('field', '!=', 0) // Only count non-miss throws
-            ->whereNotNull('value')
-            ->count();
-    }
+        $throws = $game->dartThrowsByUser($user)
+            ->orderBy('set')
+            ->orderBy('leg')
+            ->orderBy('turn')
+            ->orderBy('throw')
+            ->get();
 
-    /**
-     * Check if the thrown dart hit the current target.
-     */
-    private function hitTarget(array $payload, int $targetField): bool
-    {
-        // Player must hit the target field (in any ring: S, D, T)
-        return intval($payload['field']) === $targetField;
-    }
+        $progress = 0;
+        foreach ($throws as $throw) {
+            if ($progress >= self::SEQUENCE_LENGTH) break;
 
-    /**
-     * Advance player's progress by marking them as having hit the current target.
-     */
-    private function advancePlayerProgress(DartGame $game, User $user): void
-    {
-        // Progress is tracked by counting successful throws
-        // The last throw will be recorded in submitThrow
+            $currentTarget = self::SEQUENCE[$progress];
+            // Hit = field matches target and ring is not O (miss)
+            $ring = $throw->ring instanceof \App\Enums\DartRingType
+                ? $throw->ring->value
+                : (string) $throw->ring;
+
+            if (intval($throw->field) === $currentTarget && $ring !== 'O') {
+                $progress++;
+            }
+        }
+
+        return $progress;
     }
 
     /**
@@ -175,38 +170,6 @@ class AroundTheClockEngine extends AbstractGameEngine
 
     private function validateThrow(DartGame $game, User $user, array $data): void
     {
-        if ($game->status !== DartGameStatus::RUNNING) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Spiel läuft nicht.',
-                'actual_state' => $game->status
-            ], 403));
-        }
-
-        $activePlayerId = $this->stateService->determineCurrentTurn($game)['player_id'];
-        if ($user->id !== $activePlayerId) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Nicht der aktive Spieler.',
-            ], 403));
-        }
-
-        if (!$game->users->contains($user)) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Spieler ist nicht Teil dieses Spiels.',
-            ], 403));
-        }
-
-        if (($data['field'] < 0 || $data['field'] > 20) && !in_array($data['field'], ['25'])) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Ungültiges Feld.',
-                'field' => $data['field'],
-            ], 422));
-        }
-
-        if (!in_array($data['ring'], ['O', 'S', 'D', 'T'])) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Ungültiger Ring.',
-                'ring' => $data['ring'],
-            ], 422));
-        }
+        $this->validateCommonThrow($game, $user, $data);
     }
 }

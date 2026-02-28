@@ -26,8 +26,9 @@ class X01Engine extends AbstractGameEngine
     {
         return $this->transaction(function () use ($game, $user, $payload) {
 
+            $this->normalizeCoordinates($payload);
+
             $position = $this->determineThrowPosition($game, $user);
-            // dd($position);
             $payload = array_merge($payload, $position);
 
             $this->validateThrow($game, $user, $payload);
@@ -45,6 +46,8 @@ class X01Engine extends AbstractGameEngine
             $dartThrow->value = $value;
             $dartThrow->x = $payload['x'] ?? null;
             $dartThrow->y = $payload['y'] ?? null;
+            $dartThrow->r = $payload['r'] ?? null;
+            $dartThrow->theta = $payload['theta'] ?? null;
             $dartThrow->save();
 
             $sum = $game->dartThrowsByUser($user)->sum('value');
@@ -116,7 +119,21 @@ class X01Engine extends AbstractGameEngine
      */
     protected function isBustCondition(int $remaining, DartThrow $dartThrow, string $checkoutType): bool
     {
-        return $remaining < 0;
+        if ($remaining < 0) {
+            return true;
+        }
+
+        // For double/master checkout: remaining=1 is unreachable (minimum double is 2)
+        if (in_array($checkoutType, ['double', 'master']) && $remaining === 1) {
+            return true;
+        }
+
+        // Hit zero but invalid checkout dart → bust
+        if ($remaining === 0 && !$this->isValidCheckout($dartThrow, $checkoutType)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -136,16 +153,17 @@ class X01Engine extends AbstractGameEngine
      */
     protected function isValidCheckout(DartThrow $dartThrow, string $checkoutType): bool
     {
-        switch ($checkoutType) {
-            case 'single':
-                return true; // Any dart can finish
-            case 'double':
-                return in_array($dartThrow->ring, ['D', 'BULL']);
-            case 'triple':
-                return $dartThrow->ring === 'T';
-            default:
-                return false;
-        }
+        $ring = $dartThrow->ring instanceof \App\Enums\DartRingType
+            ? $dartThrow->ring->value
+            : (string) $dartThrow->ring;
+
+        return match ($checkoutType) {
+            'single' => true,
+            'double' => $ring === 'D',
+            'triple' => $ring === 'T',
+            'master' => in_array($ring, ['D', 'T']),
+            default => false,
+        };
     }
 
     /**
@@ -153,8 +171,26 @@ class X01Engine extends AbstractGameEngine
      */
     protected function getCheckoutType(DartGame $game): string
     {
-        // Check game settings or default to double out for X01
-        // return $game->doubleOut ? 'double' : 'single';
+        // Check options JSON first (new format)
+        $checkout = $game->getOption('checkout');
+        if ($checkout) {
+            return match ($checkout) {
+                'any', 'single' => 'single',
+                'double' => 'double',
+                'triple' => 'triple',
+                'master' => 'master',
+                default => 'single',
+            };
+        }
+
+        // Legacy fallback: check boolean fields
+        if ($game->doubleOut && !$game->singleOut && !$game->trippleOut) {
+            return 'double';
+        }
+        if ($game->trippleOut && !$game->singleOut && !$game->doubleOut) {
+            return 'triple';
+        }
+
         return 'single';
     }
 
@@ -269,8 +305,8 @@ class X01Engine extends AbstractGameEngine
         }
 
         if ($darts === 1) {
-            // Only doubles up to 40 (D20)
-            return $points % 2 === 0 && $points <= 40;
+            // Doubles: D1-D20 (2,4,...,40) or D25 (bull = 50)
+            return $points === 50 || ($points % 2 === 0 && $points <= 40);
         }
 
         if ($darts === 2) {
@@ -330,39 +366,7 @@ class X01Engine extends AbstractGameEngine
 
     private function validateThrow(DartGame $game, User $user, array $data): void
     {
-        if ($game->status !== DartGameStatus::RUNNING) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Spiel läuft nicht.',
-                'actual_state' => $game->status
-            ], 403));
-        }
-
-        $activePlayerId = $this->stateService->determineCurrentTurn($game)['player_id'];
-        if ($user->id !== $activePlayerId) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Nicht der aktive Spieler.',
-            ], 403));
-        }
-
-        if (!$game->users->contains($user)) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Spieler ist nicht Teil dieses Spiels.',
-            ], 403));
-        }
-
-        if (($data['field'] < 0 || $data['field'] > 20) && !in_array($data['field'], ['25', '50'])) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Ungültiges Feld.',
-                'field' => $data['field'],
-            ], 422));
-        }
-
-        if (!in_array($data['ring'], ['O', 'S', 'D', 'T'])) {
-            throw new HttpResponseException(response()->json([
-                'error' => 'Ungültiger Ring.',
-                'ring' => $data['ring'],
-            ], 422));
-        }
+        $this->validateCommonThrow($game, $user, $data);
     }
 
     /**

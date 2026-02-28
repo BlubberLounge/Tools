@@ -130,17 +130,14 @@ class DartEngineController extends Controller
 
     public function submitThrow(DartGame $game, User $user, Request $request, DartGameEngineService $engine)
     {
-        $payload = $request->all();
-        // $payload = $request->validate([
-        //     'set' => 'required|integer|min:1',
-        //     'leg' => 'required|integer|min:1',
-        //     'turn' => 'required|integer|min:1',
-        //     'throw' => 'required|integer|min:1',
-        //     'field' => ['required', 'regex:/^\d+$/'],
-        //     'ring' => 'required|string|in:S,D,T,O,BULL,SBULL',
-        //     'x' => 'nullable|numeric',
-        //     'y' => 'nullable|numeric',
-        // ]);
+        $payload = $request->validate([
+            'field' => ['required', 'integer', 'min:0', 'max:25'],
+            'ring' => 'required|string|in:S,D,T,O',
+            'x' => 'nullable|numeric',
+            'y' => 'nullable|numeric',
+            'r' => 'nullable|numeric|min:0',
+            'theta' => 'nullable|numeric',
+        ]);
 
         return response()->json($engine->submitThrow($game, $user, $payload));
     }
@@ -172,6 +169,60 @@ class DartEngineController extends Controller
     public function updateStatus(DartGame $game, UpdateDartGameStatusRequest $request, DartGameEngineService $engine)
     {
         $game->update(['status' => DartGameStatus::from($request->validated('status'))]);
+
+        return response()->json($engine->getState($game));
+    }
+
+    /**
+     * Complete a game with final results.
+     *
+     * POST /api/v2/dart/{game}/complete
+     */
+    public function complete(DartGame $game, Request $request, DartGameEngineService $engine)
+    {
+        $this->authorize('update', $game);
+
+        if (!in_array($game->status, [DartGameStatus::RUNNING, DartGameStatus::DONE, DartGameStatus::PLAYER_WON])) {
+            return response()->json([
+                'error' => 'Game cannot be completed in its current state.',
+                'status' => $game->status,
+            ], 422);
+        }
+
+        $validated = $request->validate([
+            'winner_id' => ['nullable', 'integer', 'exists:users,id'],
+            'placements' => ['nullable', 'array'],
+            'placements.*.user_id' => ['required', 'integer', 'exists:users,id'],
+            'placements.*.place' => ['required', 'integer', 'min:1'],
+            'duration' => ['nullable', 'integer', 'min:0'],
+            'stats' => ['nullable', 'array'],
+        ]);
+
+        // Update placements in pivot
+        if (!empty($validated['placements'])) {
+            foreach ($validated['placements'] as $placement) {
+                $game->users()->updateExistingPivot($placement['user_id'], [
+                    'place' => $placement['place'],
+                ]);
+            }
+        }
+
+        // Store completion data in options
+        $options = $game->options ? $game->options->toArray() : [];
+        if (isset($validated['winner_id'])) {
+            $options['winner_id'] = $validated['winner_id'];
+        }
+        if (isset($validated['duration'])) {
+            $options['duration'] = $validated['duration'];
+        }
+        if (isset($validated['stats'])) {
+            $options['final_stats'] = $validated['stats'];
+        }
+
+        $game->update([
+            'options' => $options,
+            'status' => DartGameStatus::FINISHED,
+        ]);
 
         return response()->json($engine->getState($game));
     }

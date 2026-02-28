@@ -17,6 +17,7 @@ use App\Models\DartTournamentRound;
 use App\Models\DartTournamentMatch;
 use App\Models\User;
 use App\Services\Dart\DartGameEngineService;
+use App\Services\Dart\TournamentBracketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -159,9 +160,9 @@ class DartTournamentController extends Controller
     }
 
     /**
-     * Generate bracket/schedule (stub — seeding logic to be implemented).
+     * Generate bracket/schedule for the tournament.
      */
-    public function seed(DartTournament $tournament)
+    public function seed(DartTournament $tournament, TournamentBracketService $bracketService)
     {
         abort_if(
             $tournament->status !== DartTournamentStatus::CREATED,
@@ -175,11 +176,15 @@ class DartTournamentController extends Controller
             'At least 2 participants are required to seed a tournament.'
         );
 
-        // TODO: Implement seeding logic (bracket generation for single_elimination, schedule for round_robin)
+        if ($tournament->isSingleElimination()) {
+            $bracketService->seedSingleElimination($tournament);
+        } elseif ($tournament->isRoundRobin()) {
+            $bracketService->seedRoundRobin($tournament);
+        }
 
         $tournament->update(['status' => 'seeded']);
 
-        $tournament->load(['participants', 'rounds.matches']);
+        $tournament->load(['participants', 'rounds.matches.player1', 'rounds.matches.player2']);
 
         return response()->json(new DartTournamentDetailResource($tournament));
     }
@@ -291,9 +296,9 @@ class DartTournamentController extends Controller
     }
 
     /**
-     * Complete a match — record winner and update standings.
+     * Complete a match — record winner, advance bracket, check round/tournament completion.
      */
-    public function completeMatch(DartTournament $tournament, DartTournamentMatch $match, Request $request)
+    public function completeMatch(DartTournament $tournament, DartTournamentMatch $match, Request $request, TournamentBracketService $bracketService)
     {
         abort_if($match->dart_tournament_id !== $tournament->id, 404);
         abort_if($match->status !== DartTournamentMatchStatus::RUNNING, 422, 'Match is not running.');
@@ -325,7 +330,22 @@ class DartTournamentController extends Controller
             'losses' => \DB::raw('losses + 1'),
         ]);
 
-        // TODO: Advance winner to next round (single elimination), check round completion
+        // Single elimination: mark loser as eliminated
+        if ($tournament->isSingleElimination()) {
+            $tournament->participants()->updateExistingPivot($loserId, [
+                'eliminated' => true,
+            ]);
+            $bracketService->advanceWinner($tournament, $match);
+        }
+
+        // Check round completion
+        $round = $match->round;
+        if ($round) {
+            $bracketService->checkRoundComplete($tournament, $round);
+        }
+
+        // Check tournament completion
+        $bracketService->checkTournamentComplete($tournament);
 
         return response()->json(new DartTournamentMatchResource($match->load(['player1', 'player2', 'winner'])));
     }

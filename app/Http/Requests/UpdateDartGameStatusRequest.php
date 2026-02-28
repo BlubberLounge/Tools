@@ -16,7 +16,7 @@ class UpdateDartGameStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string', 'in:created,started,running,done,aborted'],
+            'status' => ['required', 'string', 'in:created,started,running,done,aborted,initialised,paused,playerWon,finished'],
         ];
     }
 

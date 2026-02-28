@@ -26,6 +26,7 @@ class DartGameEngineService
     ) {
         $this->engines['X01'] = new X01Engine($stateService, $scoringService, $statisticsService, $broadcaster);
         $this->engines['ATC'] = new AroundTheClockEngine($stateService, $scoringService, $statisticsService, $broadcaster);
+        $this->engines['ELIMINATION'] = new EliminationEngine($stateService, $scoringService, $statisticsService, $broadcaster);
     }
 
     /**
@@ -38,6 +39,7 @@ class DartGameEngineService
             DartGameType::cricket => 'CRICKET',
             DartGameType::aroundTheClock => 'ATC',
             DartGameType::highscore => 'HIGHSCORE',
+            DartGameType::elimination => 'ELIMINATION',
         };
 
         return $this->engines[$type]

@@ -13,6 +13,7 @@ enum DartGameType: string implements EnumTypeOrStatus
     case aroundTheClock = 'aroundTheClock';
     case cricket = 'cricket';
     case highscore = 'highscore';
+    case elimination = 'elimination';
 
     public static function fromString(string $string): DartGameType
     {
@@ -31,6 +32,7 @@ enum DartGameType: string implements EnumTypeOrStatus
             DartGameType::aroundTheClock => 'info',
             DartGameType::cricket => 'light',
             DartGameType::highscore => 'success',
+            DartGameType::elimination => 'danger',
         };
     }
 }

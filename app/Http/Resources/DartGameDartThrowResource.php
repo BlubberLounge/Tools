@@ -21,6 +21,8 @@ class DartGameDartThrowResource extends JsonResource
             'ring' => $this->ring,
             'x' => $this->x,
             'y' => $this->y,
+            'r' => $this->r,
+            'theta' => $this->theta,
         ];
     }
 }
