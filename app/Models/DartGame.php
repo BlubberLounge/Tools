@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
 use App\Enums\DartGameUserStatus;
+use App\Enums\DartPlayType;
 use App\Notifications\DartGameStarted;
 use Ramsey\Uuid\Type\Integer;
 
@@ -41,6 +43,7 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
      */
     protected $fillable = [
         'type',
+        'game_type',
         'status',
         'private',
         'title',
@@ -55,6 +58,9 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
 
         // Cricket
         'fields',
+
+        // Mode-specific options (JSON)
+        'options',
 
         // Generall / X01
         'singleOut',
@@ -72,8 +78,10 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
      */
     protected $casts = [
         'type' => DartGameType::class,
+        'game_type' => DartPlayType::class,
         'status' => DartGameStatus::class,
         'fields' => AsCollection::class,
+        'options' => AsCollection::class,
     ];
 
     /**
@@ -175,7 +183,7 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('status', 'position', 'place')
+            ->withPivot('status', 'position', 'place', 'dart_team_id')
             ->orderBy('position', 'ASC')
             ->wherePivot('deleted_at', null)
             ->withTimestamps();
@@ -188,10 +196,45 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function usersBy($column, $order = 'asc'): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('status', 'position', 'place')
+            ->withPivot('status', 'position', 'place', 'dart_team_id')
             ->orderBy($column, $order)
             ->wherePivot('deleted_at', null)
             ->withTimestamps();
+    }
+
+    /**
+     * Teams in this game (for team mode).
+     */
+    public function teams(): HasMany
+    {
+        return $this->hasMany(DartTeam::class)->orderBy('position', 'ASC');
+    }
+
+    /**
+     * Get a game option value with a default fallback.
+     */
+    public function getOption(string $key, mixed $default = null): mixed
+    {
+        if ($this->options === null) {
+            return $default;
+        }
+        return $this->options->get($key, $default);
+    }
+
+    /**
+     * Whether this is a team game.
+     */
+    public function isTeamGame(): bool
+    {
+        return $this->game_type === DartPlayType::TEAM;
+    }
+
+    /**
+     * The tournament match this game belongs to (if any).
+     */
+    public function tournamentMatch(): HasOne
+    {
+        return $this->hasOne(DartTournamentMatch::class, 'dart_game_id');
     }
 
     /**

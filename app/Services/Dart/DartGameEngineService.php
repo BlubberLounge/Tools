@@ -7,8 +7,11 @@ use App\Models\DartGame;
 use App\Enums\DartGameType;
 use App\Models\User;
 use App\Models\DartGameUser;
+use App\Models\DartTeam;
 use App\Models\DartThrow;
+use App\Enums\DartPlayType;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 class DartGameEngineService
@@ -34,6 +37,7 @@ class DartGameEngineService
             DartGameType::X01 => 'X01',
             DartGameType::cricket => 'CRICKET',
             DartGameType::aroundTheClock => 'ATC',
+            DartGameType::highscore => 'HIGHSCORE',
         };
 
         return $this->engines[$type]
@@ -64,6 +68,10 @@ class DartGameEngineService
         $game->doubleIn = $data['doubleIn'] ?? true;
         $game->trippleIn = $data['trippleIn'] ?? true;
 
+        // New: play type and mode-specific options
+        $game->game_type = $data['game_type'] ?? DartPlayType::STANDARD->value;
+        $game->options = $data['options'] ?? null;
+
         $game->save();
 
         if (isset($data['users']) && is_array($data['users'])) {
@@ -82,6 +90,25 @@ class DartGameEngineService
             $this->addUsers($game, $requested);
         }
 
+        // Create teams if this is a team game
+        if (isset($data['teams']) && is_array($data['teams'])) {
+            foreach ($data['teams'] as $position => $teamData) {
+                $team = $game->teams()->create([
+                    'name' => $teamData['name'],
+                    'color' => $teamData['color'],
+                    'position' => $position,
+                ]);
+
+                // Assign players to the team via the pivot
+                if (isset($teamData['players'])) {
+                    DartGameUser::where('dart_game_id', $game->id)
+                        ->whereIn('user_id', $teamData['players'])
+                        ->whereNull('deleted_at')
+                        ->update(['dart_team_id' => $team->id]);
+                }
+            }
+        }
+
         return $game;
     }
 
@@ -98,6 +125,15 @@ class DartGameEngineService
     public function getState(DartGame $game): array
     {
         return $this->engineFor($game)->getState($game);
+    }
+
+    /**
+     * Undo the last throw for a player in a game.
+     * Soft-deletes the most recent non-deleted throw.
+     */
+    public function undoThrow(DartGame $game, User $user): array
+    {
+        return $this->engineFor($game)->undoThrow($game, $user);
     }
 
     /**

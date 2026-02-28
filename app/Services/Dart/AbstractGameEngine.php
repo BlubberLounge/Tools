@@ -3,6 +3,7 @@
 namespace App\Services\Dart;
 
 use App\Models\DartGame;
+use App\Models\DartThrow;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -45,5 +46,24 @@ abstract class AbstractGameEngine implements GameEngineInterface
     protected function transaction(callable $fn)
     {
         return DB::transaction($fn);
+    }
+
+    /**
+     * Undo the last throw for a user. Default implementation soft-deletes the most recent throw.
+     */
+    public function undoThrow(DartGame $game, User $user): array
+    {
+        $lastThrow = $game->dartThrowsByUser($user)
+            ->orderBy('set', 'DESC')
+            ->orderBy('leg', 'DESC')
+            ->orderBy('turn', 'DESC')
+            ->orderBy('throw', 'DESC')
+            ->first();
+
+        if ($lastThrow) {
+            $lastThrow->delete();
+        }
+
+        return $this->getState($game);
     }
 }

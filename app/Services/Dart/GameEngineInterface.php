@@ -33,4 +33,9 @@ interface GameEngineInterface
      * Optional: erlaubt Engine-spezifische Cleanup-Arbeiten.
      */
     public function finish(DartGame $game): void;
+
+    /**
+     * Undo the last throw for the given user.
+     */
+    public function undoThrow(DartGame $game, User $user): array;
 }

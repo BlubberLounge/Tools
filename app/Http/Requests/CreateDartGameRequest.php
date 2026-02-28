@@ -43,6 +43,23 @@ class CreateDartGameRequest extends FormRequest
 
             'users' => ['nullable', 'array'],
             'users.*' => ['integer', 'exists:users,id'],
+
+            // Play type (standard, team, tournament)
+            'game_type' => ['nullable', 'string', 'in:standard,team,tournament'],
+
+            // Mode-specific options
+            'options' => ['nullable', 'array'],
+            'options.checkout' => ['nullable', 'string', 'in:any,single,double,master'],
+            'options.hitsPerField' => ['nullable', 'integer', 'min:1', 'max:4'],
+            'options.includeBull' => ['nullable', 'boolean'],
+            'options.rounds' => ['nullable', 'integer', 'min:1', 'max:20'],
+
+            // Team data (for team game creation)
+            'teams' => ['nullable', 'array', 'required_if:game_type,team'],
+            'teams.*.name' => ['required_with:teams', 'string', 'max:50'],
+            'teams.*.color' => ['required_with:teams', 'string', 'max:7'],
+            'teams.*.players' => ['required_with:teams', 'array'],
+            'teams.*.players.*' => ['integer', 'exists:users,id'],
         ];
     }
 

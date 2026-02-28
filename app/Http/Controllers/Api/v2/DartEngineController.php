@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Api\v2\Controller;
 use App\Http\Requests\CreateDartGameRequest;
+use App\Http\Requests\UpdateDartGameStatusRequest;
+use App\Http\Resources\DartGameDetailResource;
 use App\Http\Resources\UserResource;
+use App\Enums\DartGameStatus;
 use App\Models\DartGame;
 use App\Models\DartQueue;
 use App\Models\User;
@@ -149,5 +152,39 @@ class DartEngineController extends Controller
         $result = $engine->endGamesForUsers([$user->id]);
 
         return response()->json($result);
+    }
+
+    /**
+     * Undo the last throw for a player in a game.
+     *
+     * POST /api/v2/dart/{game}/user/{user}/undo
+     */
+    public function undoThrow(DartGame $game, User $user, DartGameEngineService $engine)
+    {
+        return response()->json($engine->undoThrow($game, $user));
+    }
+
+    /**
+     * Update game status (e.g., abort a game).
+     *
+     * PATCH /api/v2/dart/{game}/status
+     */
+    public function updateStatus(DartGame $game, UpdateDartGameStatusRequest $request, DartGameEngineService $engine)
+    {
+        $game->update(['status' => DartGameStatus::from($request->validated('status'))]);
+
+        return response()->json($engine->getState($game));
+    }
+
+    /**
+     * Get full game detail including all throws (for replay/stats).
+     *
+     * GET /api/v2/dart/{game}/detail
+     */
+    public function detail(DartGame $game)
+    {
+        $game->load(['users', 'dartThrows', 'teams.users']);
+
+        return response()->json(new DartGameDetailResource($game));
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Scopes\TestScope;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameUserStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DartGameUser extends Pivot implements Auditable
 {
@@ -31,6 +32,7 @@ class DartGameUser extends Pivot implements Auditable
     protected $fillable = [
         'dart_game_id',
         'user_id',
+        'dart_team_id',
         'status',
         'position',
         'place',
@@ -44,6 +46,14 @@ class DartGameUser extends Pivot implements Auditable
     protected $casts = [
         'status' => DartGameUserStatus::class,
     ];
+
+    /**
+     * The team this player belongs to in this game.
+     */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(DartTeam::class, 'dart_team_id');
+    }
 
     /**
      * Return user ids that are participating in active games.
