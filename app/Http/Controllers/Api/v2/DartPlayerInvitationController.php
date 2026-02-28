@@ -67,6 +67,7 @@ class DartPlayerInvitationController extends Controller
                 'email' => $validated['email'],
                 'firstname' => $validated['firstname'] ?? null,
                 'lastname' => $validated['lastname'] ?? null,
+                'user_external_id' => $user->external_id,
                 'metadata' => [
                     'local_player_id' => $validated['local_player_id'] ?? null,
                     'invited_by_tools_user_id' => $user->id,

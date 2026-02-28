@@ -56,7 +56,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->index(['dart_tournament_id', 'dart_tournament_round_id']);
+            $table->index(['dart_tournament_id', 'dart_tournament_round_id'], 'tournament_match_round_index');
             $table->index('dart_game_id');
         });
     }

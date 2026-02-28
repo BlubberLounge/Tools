@@ -1,19 +1,30 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        DB::statement("ALTER TABLE dart_games MODIFY COLUMN `type` ENUM('X01','aroundTheClock','cricket','highscore','elimination') NOT NULL");
-        DB::statement("ALTER TABLE dart_tournaments MODIFY COLUMN `game_mode` ENUM('X01','aroundTheClock','cricket','highscore','elimination') NOT NULL");
+        Schema::table('dart_games', function (Blueprint $table) {
+            $table->enum('type', ['X01', 'aroundTheClock', 'cricket', 'highscore', 'elimination'])->change();
+        });
+
+        Schema::table('dart_tournaments', function (Blueprint $table) {
+            $table->enum('game_mode', ['X01', 'aroundTheClock', 'cricket', 'highscore', 'elimination'])->change();
+        });
     }
 
     public function down(): void
     {
-        DB::statement("ALTER TABLE dart_games MODIFY COLUMN `type` ENUM('X01','aroundTheClock','cricket','highscore') NOT NULL");
-        DB::statement("ALTER TABLE dart_tournaments MODIFY COLUMN `game_mode` ENUM('X01','aroundTheClock','cricket','highscore') NOT NULL");
+        Schema::table('dart_games', function (Blueprint $table) {
+            $table->enum('type', ['X01', 'aroundTheClock', 'cricket', 'highscore'])->change();
+        });
+
+        Schema::table('dart_tournaments', function (Blueprint $table) {
+            $table->enum('game_mode', ['X01', 'aroundTheClock', 'cricket', 'highscore'])->change();
+        });
     }
 };

@@ -158,6 +158,22 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
     }
 
     /**
+     * Validate an external OAuth access token by calling the Auth server's /api/user endpoint.
+     */
+    public function validateExternalToken(string $accessToken): ?array
+    {
+        $response = Http::withToken($accessToken)
+            ->timeout(10)
+            ->get($this->apiHost . '/user');
+
+        if (!$response->successful()) {
+            return null;
+        }
+
+        return $response->json();
+    }
+
+    /**
      * Obtain an M2M access token via client_credentials grant.
      */
     public function getM2MToken(array $scopes = ['m2m:write']): string

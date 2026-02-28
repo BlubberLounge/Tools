@@ -32,7 +32,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique(['dart_tournament_id', 'user_id']);
+            $table->unique(['dart_tournament_id', 'user_id'], 'tournament_participant_unique');
         });
     }
 
