@@ -5,10 +5,16 @@ namespace App\Services\OAuth;
 use App\Models\User;
 use App\Interfaces\OAuthServiceInterface;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 
 class BlubberLoungeOAuthService implements OAuthServiceInterface
 {
+    /**
+     * State expiration time in minutes.
+     */
+    protected int $stateExpirationMinutes = 10;
     protected string $clientId;
     protected string $clientSecret;
     protected string $redirectUri;
@@ -32,8 +38,9 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
     public function getAuthorizationUrl(array $scopes = []): string
     {
         $scopes = empty($scopes) ? $this->defaultScopes : $scopes;
-        $state = Str::random(40);
-        session()->put('oauth_state', $state);
+
+        // Create self-contained encrypted state (no session needed)
+        $state = $this->generateState();
 
         $query = http_build_query([
             'client_id' => $this->clientId,
@@ -45,6 +52,42 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
         ]);
 
         return $this->baseUrl . '/oauth/authorize?' . $query;
+    }
+
+    /**
+     * Generate an encrypted state token that contains its own expiration.
+     */
+    public function generateState(): string
+    {
+        $payload = [
+            'nonce' => Str::random(32),
+            'expires_at' => now()->addMinutes($this->stateExpirationMinutes)->timestamp,
+        ];
+
+        return base64_encode(Crypt::encryptString(json_encode($payload)));
+    }
+
+    /**
+     * Verify the state token is valid and not expired.
+     */
+    public function verifyState(?string $state): bool
+    {
+        if (empty($state)) {
+            return false;
+        }
+
+        try {
+            $decrypted = Crypt::decryptString(base64_decode($state));
+            $payload = json_decode($decrypted, true);
+
+            if (!$payload || !isset($payload['expires_at'])) {
+                return false;
+            }
+
+            return $payload['expires_at'] > now()->timestamp;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function exchangeCodeForToken(string $code): array
@@ -94,11 +137,13 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
     {
         $response = $this->exchangeCodeForToken($request['code']);
 
-        $accessToken = $response['access_token'];
-
-        if (!$accessToken) {
-            return response()->json(['error' => 'Access token not received', 'response' => $response], 400);
+        if (!isset($response['access_token'])) {
+            $error = $response['error'] ?? 'unknown_error';
+            $description = $response['error_description'] ?? 'Token exchange failed';
+            abort(400, "OAuth Error: {$error} - {$description}");
         }
+
+        $accessToken = $response['access_token'];
 
         $user = Http::withToken($accessToken)
             ->get($this->apiHost . '/user')
@@ -110,5 +155,57 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
         $user['expires_in'] = $response['expires_in'];
 
         return $user;
+    }
+
+    /**
+     * Obtain an M2M access token via client_credentials grant.
+     */
+    public function getM2MToken(array $scopes = ['m2m:write']): string
+    {
+        $cacheKey = 'blubberlounge_m2m_token_' . md5(implode(',', $scopes));
+
+        return Cache::remember($cacheKey, now()->addMinutes(50), function () use ($scopes) {
+            $response = Http::asForm()
+                ->post($this->baseUrl . '/oauth/token', [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'scope' => implode(' ', $scopes),
+                ]);
+
+            if (!$response->successful()) {
+                throw new \RuntimeException(
+                    'Failed to obtain M2M token: ' . ($response->json('error_description') ?? $response->body())
+                );
+            }
+
+            return $response->json('access_token');
+        });
+    }
+
+    /**
+     * Call the Auth server's invitation API to create an invitation.
+     */
+    public function createInvitation(array $data): array
+    {
+        $token = $this->getM2MToken(['m2m:write']);
+
+        $response = Http::withToken($token)
+            ->post($this->apiHost . '/invitations', $data);
+
+        return $response->json();
+    }
+
+    /**
+     * Check invitation status on the Auth server.
+     */
+    public function getInvitationStatus(string $invitationToken): array
+    {
+        $token = $this->getM2MToken(['m2m:read']);
+
+        $response = Http::withToken($token)
+            ->get($this->apiHost . '/invitations/' . $invitationToken . '/status');
+
+        return $response->json();
     }
 }

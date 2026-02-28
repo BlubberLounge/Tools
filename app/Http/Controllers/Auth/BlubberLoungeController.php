@@ -7,6 +7,7 @@ use App\Services\OAuth\BlubberLoungeOAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\DartPlayerInvitation;
 use Illuminate\Support\Facades\Hash;
 
 class BlubberLoungeController extends Controller
@@ -28,9 +29,7 @@ class BlubberLoungeController extends Controller
 
     public function callback(Request $request, BlubberLoungeOAuthService $service)
     {
-        $stored = session()->pull('oauth_state');
-
-        if ($request->get('state') !== $stored) {
+        if (!$service->verifyState($request->get('state'))) {
             abort(403, 'Invalid OAuth state');
         }
 
@@ -54,6 +53,7 @@ class BlubberLoungeController extends Controller
                 'name'              => $externalUser['name'],
                 'firstname'         => $externalUser['firstname'] ?? $externalUser['name'],
                 'lastname'          => $externalUser['lastname'] ?? null,
+                'email'             => $email,
                 'dob'               => null,
                 'img'               => '/storage/avatar/avatar-dummy.jpg',
                 'external_id'       => $externalId,
@@ -61,13 +61,33 @@ class BlubberLoungeController extends Controller
             ]);
         }
 
-        $user->update([
-            'email'             => $email,
-            'email_verified_at' => $externalUser['email_verified_at'] ?? now(), // null,
+        // Auto-link pending player invitations by email
+        if ($email) {
+            $pendingInvitation = DartPlayerInvitation::where('email', $email)
+                ->whereIn('status', ['pending', 'sent'])
+                ->first();
+
+            if ($pendingInvitation) {
+                $pendingInvitation->markAsRegistered($user);
+            }
+        }
+
+        // Only update email if it changed and no other user has it
+        $updateData = [
+            'email_verified_at' => $externalUser['email_verified_at'] ?? now(),
             'access_token'      => $externalUser['access_token'],
             'refresh_token'     => $externalUser['refresh_token'],
             'token_expires_at'  => now()->addSeconds($externalUser['expires_in'] ?? 3600),
-        ]);
+        ];
+
+        if ($email && $user->email !== $email) {
+            $emailTaken = User::where('email', $email)->where('id', '!=', $user->id)->exists();
+            if (!$emailTaken) {
+                $updateData['email'] = $email;
+            }
+        }
+
+        $user->update($updateData);
 
         Auth::login($user);
         $request->session()->regenerate();

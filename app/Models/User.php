@@ -462,6 +462,50 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     /**
      *
      */
+    /**
+     * Invitations this user has sent to offline players.
+     */
+    public function sentPlayerInvitations(): HasMany
+    {
+        return $this->hasMany(DartPlayerInvitation::class, 'invited_by_user_id');
+    }
+
+    /**
+     * The invitation that led to this user's registration (if any).
+     */
+    public function receivedPlayerInvitation()
+    {
+        return $this->hasOne(DartPlayerInvitation::class, 'registered_user_id');
+    }
+
+    /**
+     * Users this user has invited (completed invitations only).
+     */
+    public function invitedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'dart_player_invitations',
+            'invited_by_user_id',
+            'registered_user_id'
+        )->wherePivot('status', 'registered')
+         ->withPivot('email', 'local_player_id', 'created_at');
+    }
+
+    /**
+     * The user who invited this user (if registered via invitation).
+     */
+    public function invitedByUser(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'dart_player_invitations',
+            'registered_user_id',
+            'invited_by_user_id'
+        )->wherePivot('status', 'registered')
+         ->withPivot('email', 'local_player_id', 'created_at');
+    }
+
     public function isOnDartQueue(): bool
     {
         return DartQueue::where('parent_user_id', $this->id)->orWhere('child_user_id', $this->id)->first() ? true : false;
