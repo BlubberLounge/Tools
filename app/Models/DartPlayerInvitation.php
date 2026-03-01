@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Dart\LocalPlayerResolver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -44,5 +45,30 @@ class DartPlayerInvitation extends Model
             'status' => 'registered',
             'registered_user_id' => $user->id,
         ]);
+
+        // Backfill game data: associate any synced games/throws with the new user
+        if ($this->local_player_id) {
+            app(LocalPlayerResolver::class)->backfill($this->local_player_id, $user->id);
+        }
+
+        // Auto-create accepted acquaintance between inviter and registered user
+        if ($this->invited_by_user_id && $this->invited_by_user_id !== $user->id) {
+            $exists = Acquaintance::where(function ($q) use ($user) {
+                $q->where('transmitter_user_id', $this->invited_by_user_id)
+                  ->where('receiver_user_id', $user->id);
+            })->orWhere(function ($q) use ($user) {
+                $q->where('transmitter_user_id', $user->id)
+                  ->where('receiver_user_id', $this->invited_by_user_id);
+            })->exists();
+
+            if (!$exists) {
+                Acquaintance::create([
+                    'transmitter_user_id' => $this->invited_by_user_id,
+                    'receiver_user_id' => $user->id,
+                    'status' => 'accepted',
+                    'showOnHomeView' => true,
+                ]);
+            }
+        }
     }
 }

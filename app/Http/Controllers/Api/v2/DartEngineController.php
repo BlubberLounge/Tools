@@ -207,21 +207,22 @@ class DartEngineController extends Controller
             }
         }
 
-        // Store completion data in options
-        $options = $game->options ? $game->options->toArray() : [];
+        // Store completion data in settings
+        $settings = $game->settings ? $game->settings->toArray() : [];
         if (isset($validated['winner_id'])) {
-            $options['winner_id'] = $validated['winner_id'];
+            $settings['winner_id'] = $validated['winner_id'];
         }
         if (isset($validated['duration'])) {
-            $options['duration'] = $validated['duration'];
+            $settings['duration'] = $validated['duration'];
         }
         if (isset($validated['stats'])) {
-            $options['final_stats'] = $validated['stats'];
+            $settings['final_stats'] = $validated['stats'];
         }
 
         $game->update([
-            'options' => $options,
+            'settings' => $settings,
             'status' => DartGameStatus::FINISHED,
+            'finished_at' => now(),
         ]);
 
         return response()->json($engine->getState($game));

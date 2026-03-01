@@ -47,16 +47,16 @@ class CreateDartGameRequest extends FormRequest
             // Play type (standard, team, tournament)
             'game_type' => ['nullable', 'string', 'in:standard,team,tournament'],
 
-            // Mode-specific options
-            'options' => ['nullable', 'array'],
-            'options.checkout' => ['nullable', 'string', 'in:any,single,double,master'],
-            'options.hitsPerField' => ['nullable', 'integer', 'min:1', 'max:4'],
-            'options.includeBull' => ['nullable', 'boolean'],
-            'options.rounds' => ['nullable', 'integer', 'min:1', 'max:20'],
-            'options.lives' => ['nullable', 'integer', 'min:1', 'max:10'],
-            'options.target_score' => ['nullable', 'integer', 'min:1'],
-            'options.rookie_protection' => ['nullable', 'boolean'],
-            'options.rookie_turns' => ['nullable', 'integer', 'min:1', 'max:10'],
+            // Mode-specific settings
+            'settings' => ['nullable', 'array'],
+            'settings.checkout' => ['nullable', 'string', 'in:any,single,double,master'],
+            'settings.hitsPerField' => ['nullable', 'integer', 'min:1', 'max:4'],
+            'settings.includeBull' => ['nullable', 'boolean'],
+            'settings.rounds' => ['nullable', 'integer', 'min:1', 'max:20'],
+            'settings.lives' => ['nullable', 'integer', 'min:1', 'max:10'],
+            'settings.target_score' => ['nullable', 'integer', 'min:1'],
+            'settings.rookie_protection' => ['nullable', 'boolean'],
+            'settings.rookie_turns' => ['nullable', 'integer', 'min:1', 'max:10'],
 
             // Team data (for team game creation)
             'teams' => ['nullable', 'array', 'required_if:game_type,team'],

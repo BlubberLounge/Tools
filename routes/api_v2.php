@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v2\DartStatisticsController;
 use App\Http\Controllers\Api\v2\DartHistoryController;
 use App\Http\Controllers\Api\v2\AuthTokenExchangeController;
 use App\Http\Controllers\Api\v2\DartPushController;
+use App\Http\Controllers\Api\v2\AcquaintanceController;
 use App\Http\Controllers\Api\v2\FeedbackController;
 use App\Http\Controllers\Api\v2\NotificationController;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', [UtillityController::class, 'ping']);
 
-Route::middleware(['auth:sanctum'])->group(function ()
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function ()
 {
     Route::get('dart/players', [DartEngineController::class, 'availablePlayers']);
     Route::post('dart/new', [DartEngineController::class, 'store']);
@@ -95,6 +96,17 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::post('dart/invitations', [DartPlayerInvitationController::class, 'store']);
     Route::get('dart/invitations/{invitation}/status', [DartPlayerInvitationController::class, 'status']);
 
+    // Acquaintances (QR code friend scanning)
+    Route::get('dart/acquaintances/qr-token', [AcquaintanceController::class, 'qrToken']);
+    Route::get('dart/acquaintances', [AcquaintanceController::class, 'index']);
+    Route::post('dart/acquaintances', [AcquaintanceController::class, 'store']);
+
+    // Logout (revoke current Sanctum token)
+    Route::post('auth/logout', function (Request $request) {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out']);
+    });
+
     // Feedback from DartApp
     Route::post('feedback', [FeedbackController::class, 'store']);
 
@@ -106,18 +118,20 @@ Route::middleware(['auth:sanctum'])->group(function ()
 // Public route for VAPID public key (no auth required)
 Route::get('push/vapid-public-key', [NotificationController::class, 'vapidPublicKey']);
 
-// Dart App Push Notifications (anonymous, no auth required)
-Route::prefix('dart-push')->group(function () {
+// Dart App Push Notifications (anonymous, rate limited)
+Route::prefix('dart-push')->middleware('throttle:10,1')->group(function () {
     Route::get('vapid-key', [DartPushController::class, 'vapidPublicKey']);
     Route::post('subscribe', [DartPushController::class, 'subscribe']);
     Route::post('unsubscribe', [DartPushController::class, 'unsubscribe']);
 });
 
-// Admin route for sending notifications (should be protected in production)
-Route::post('dart-push/send', [DartPushController::class, 'sendUpdateNotification']);
+// Admin route for sending notifications
+Route::post('dart-push/send', [DartPushController::class, 'sendUpdateNotification'])
+    ->middleware(['auth:sanctum', 'throttle:5,1']);
 
-// Dart App Feedback (anonymous, no auth required)
-Route::post('dart-feedback', [FeedbackController::class, 'storeAnonymous']);
+// Dart App Feedback (anonymous, rate limited)
+Route::post('dart-feedback', [FeedbackController::class, 'storeAnonymous'])
+    ->middleware('throttle:5,1');
 
 // Token exchange: OAuth access token → Sanctum token (unauthenticated - this IS the login flow)
 Route::post('auth/token-exchange', [AuthTokenExchangeController::class, 'exchange'])

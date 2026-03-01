@@ -118,28 +118,28 @@ class EliminationEngine extends AbstractGameEngine
             ];
         }
 
-        $options = $game->options ? $game->options->toArray() : [];
-        $options['player_states'] = $states;
-        $game->update(['options' => $options]);
+        $settings = $game->settings ? $game->settings->toArray() : [];
+        $settings['player_states'] = $states;
+        $game->update(['settings' => $settings]);
     }
 
     /**
-     * Get player states from game options.
+     * Get player states from game settings.
      */
     private function getPlayerStates(DartGame $game): array
     {
         $game->refresh();
-        return $game->getOption('player_states', []);
+        return $game->getSetting('player_states', []);
     }
 
     /**
-     * Save player states to game options.
+     * Save player states to game settings.
      */
     private function savePlayerStates(DartGame $game, array $states): void
     {
-        $options = $game->options ? $game->options->toArray() : [];
-        $options['player_states'] = $states;
-        $game->update(['options' => $options]);
+        $settings = $game->settings ? $game->settings->toArray() : [];
+        $settings['player_states'] = $states;
+        $game->update(['settings' => $settings]);
     }
 
     /**
@@ -147,7 +147,7 @@ class EliminationEngine extends AbstractGameEngine
      */
     private function getStartingLives(DartGame $game): int
     {
-        return (int) $game->getOption('lives', self::DEFAULT_LIVES);
+        return (int) $game->getSetting('lives', self::DEFAULT_LIVES);
     }
 
     /**
@@ -155,11 +155,11 @@ class EliminationEngine extends AbstractGameEngine
      */
     private function isRookieProtected(DartGame $game, int $userId): bool
     {
-        if (!$game->getOption('rookie_protection', false)) {
+        if (!$game->getSetting('rookie_protection', false)) {
             return false;
         }
 
-        $rookieTurns = (int) $game->getOption('rookie_turns', self::DEFAULT_ROOKIE_TURNS);
+        $rookieTurns = (int) $game->getSetting('rookie_turns', self::DEFAULT_ROOKIE_TURNS);
         $user = $game->users->firstWhere('id', $userId);
         if (!$user) return false;
 
@@ -229,7 +229,7 @@ class EliminationEngine extends AbstractGameEngine
         }
 
         // Target score mode: everyone below target loses a life
-        $targetScore = $game->getOption('target_score');
+        $targetScore = $game->getSetting('target_score');
         if ($targetScore !== null) {
             $losers = array_keys(array_filter($roundScores, fn($s) => $s < (int) $targetScore));
         } else {

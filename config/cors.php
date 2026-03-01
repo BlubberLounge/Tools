@@ -17,7 +17,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 
     'allowed_origins' => [
         env('FRONTEND_URL', 'http://localhost:3001'),
@@ -28,7 +28,7 @@ return [
         '#^https?://localhost(:\d+)?$#',
     ],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['Authorization', 'Content-Type', 'Accept', 'X-Requested-With'],
 
     'exposed_headers' => [],
 

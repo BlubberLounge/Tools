@@ -11,13 +11,17 @@ class DartGameDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'client_game_id' => $this->client_game_id,
             'type' => $this->type,
             'game_type' => $this->game_type,
             'status' => $this->status,
             'title' => $this->title,
             'comment' => $this->comment,
             'points' => $this->points,
-            'options' => $this->options,
+            'settings' => $this->settings,
+            'options' => $this->settings,
+            'started_at' => $this->started_at,
+            'finished_at' => $this->finished_at,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -73,6 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
         'dob' => 'date',
         'email_verified_at' => 'datetime',
         'locked' => 'datetime',
+        'access_token' => 'encrypted',
+        'refresh_token' => 'encrypted',
+        'token_expires_at' => 'datetime',
     ];
 
     /**

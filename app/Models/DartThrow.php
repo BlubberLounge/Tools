@@ -21,6 +21,7 @@ class DartThrow extends Model implements Auditable
      */
     protected $fillable = [
         'user_id',
+        'local_player_id',
         'set',
         'leg',
         'turn',

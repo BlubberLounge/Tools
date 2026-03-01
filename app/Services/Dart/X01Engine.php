@@ -171,8 +171,8 @@ class X01Engine extends AbstractGameEngine
      */
     protected function getCheckoutType(DartGame $game): string
     {
-        // Check options JSON first (new format)
-        $checkout = $game->getOption('checkout');
+        // Check settings JSON first (new format)
+        $checkout = $game->getSetting('checkout');
         if ($checkout) {
             return match ($checkout) {
                 'any', 'single' => 'single',

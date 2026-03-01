@@ -12,11 +12,16 @@ class AuthTokenExchangeController extends Controller
 {
     public function exchange(Request $request, BlubberLoungeOAuthService $oauthService)
     {
-        $validated = $request->validate([
-            'access_token' => ['required', 'string'],
-        ]);
+        // Accept token from Authorization header (preferred) or request body (fallback)
+        $accessToken = $request->bearerToken();
+        if (!$accessToken) {
+            $validated = $request->validate([
+                'access_token' => ['required', 'string'],
+            ]);
+            $accessToken = $validated['access_token'];
+        }
 
-        $externalUser = $oauthService->validateExternalToken($validated['access_token']);
+        $externalUser = $oauthService->validateExternalToken($accessToken);
 
         if (!$externalUser || !isset($externalUser['id'])) {
             return response()->json(['error' => 'Invalid or expired OAuth token'], 401);
@@ -24,15 +29,18 @@ class AuthTokenExchangeController extends Controller
 
         $externalId = $externalUser['id'];
         $email = $externalUser['email'] ?? null;
+        $emailVerified = $externalUser['email_verified_at'] ?? null;
 
         // Find by external_id
         $user = User::where('external_id', $externalId)->first();
 
-        // If not found, try by email and link
+        // If not found, try by email — but only if the Auth server confirmed the email is verified
         if (!$user && $email) {
-            $user = User::where('email', $email)->first();
-            if ($user) {
-                $user->update(['external_id' => $externalId]);
+            if ($emailVerified) {
+                $user = User::where('email', $email)->first();
+                if ($user) {
+                    $user->update(['external_id' => $externalId]);
+                }
             }
         }
 
@@ -63,34 +71,60 @@ class AuthTokenExchangeController extends Controller
             }
         }
 
-        // Update email if changed
-        $updateData = [
-            'email_verified_at' => $externalUser['email_verified_at'] ?? now(),
-        ];
+        // Update email if changed (only if verified by Auth server)
+        $updateData = [];
+        if ($emailVerified) {
+            $updateData['email_verified_at'] = $emailVerified;
+        }
 
-        if ($email && $user->email !== $email) {
+        if ($email && $emailVerified && $user->email !== $email) {
             $emailTaken = User::where('email', $email)->where('id', '!=', $user->id)->exists();
             if (!$emailTaken) {
                 $updateData['email'] = $email;
             }
         }
 
-        $user->update($updateData);
+        if (!empty($updateData)) {
+            $user->update($updateData);
+        }
 
         // Issue Sanctum token
         $sanctumToken = $user->createToken('dart-pwa')->plainTextToken;
 
+        // Collect local_player_id → registered user mappings
+        $localPlayerMappings = [];
+        if ($email) {
+            $invitations = DartPlayerInvitation::where('email', $email)
+                ->where('status', 'registered')
+                ->whereNotNull('local_player_id')
+                ->whereNotNull('registered_user_id')
+                ->with('registeredUser:id,external_id,name,firstname,lastname,img')
+                ->get();
+
+            $localPlayerMappings = $invitations->map(fn ($inv) => [
+                'local_player_id' => $inv->local_player_id,
+                'user_id' => $inv->registered_user_id,
+                'external_id' => $inv->registeredUser?->external_id,
+                'name' => $inv->registeredUser?->name,
+                'firstname' => $inv->registeredUser?->firstname,
+                'lastname' => $inv->registeredUser?->lastname,
+                'img' => $inv->registeredUser?->img,
+            ])->toArray();
+        }
+
         return response()->json([
             'sanctum_token' => $sanctumToken,
             'user' => [
-                'id'        => $user->id,
-                'name'      => $user->name,
-                'firstname' => $user->firstname,
-                'lastname'  => $user->lastname,
-                'email'     => $user->email,
-                'img'       => $user->img,
+                'id'          => $user->id,
+                'external_id' => $user->external_id,
+                'name'        => $user->name,
+                'firstname'   => $user->firstname,
+                'lastname'    => $user->lastname,
+                'email'       => $user->email,
+                'img'         => $user->img,
             ],
             'is_new_user' => $isNewUser,
+            'local_player_mappings' => $localPlayerMappings,
         ]);
     }
 }

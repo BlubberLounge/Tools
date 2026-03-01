@@ -17,7 +17,10 @@ class GameStateService
 
     public function startGame(DartGame $game): void
     {
-        $game->update(['status' => DartGameStatus::RUNNING]);
+        $game->update([
+            'status' => DartGameStatus::RUNNING,
+            'started_at' => $game->started_at ?? now(),
+        ]);
     }
 
     public function abortGame(DartGame $game): void
@@ -27,7 +30,10 @@ class GameStateService
 
     public function finishGame(DartGame $game): void
     {
-        $game->update(['status' => DartGameStatus::DONE]);
+        $game->update([
+            'status' => DartGameStatus::DONE,
+            'finished_at' => now(),
+        ]);
     }
 
     /**

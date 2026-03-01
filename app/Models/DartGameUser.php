@@ -32,6 +32,7 @@ class DartGameUser extends Pivot implements Auditable
     protected $fillable = [
         'dart_game_id',
         'user_id',
+        'local_player_id',
         'dart_team_id',
         'status',
         'position',

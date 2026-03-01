@@ -70,9 +70,9 @@ class DartGameEngineService
         $game->doubleIn = $data['doubleIn'] ?? true;
         $game->trippleIn = $data['trippleIn'] ?? true;
 
-        // New: play type and mode-specific options
+        // New: play type and mode-specific settings
         $game->game_type = $data['game_type'] ?? DartPlayType::STANDARD->value;
-        $game->options = $data['options'] ?? null;
+        $game->settings = $data['settings'] ?? null;
 
         $game->save();
 

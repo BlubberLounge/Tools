@@ -21,17 +21,44 @@ class DartLocalPlayerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'id' => ['nullable', 'string', 'uuid', 'max:36'],
             'name' => ['required', 'string', 'max:255'],
             'avatar_url' => ['nullable', 'string', 'max:2048'],
+            'statistics' => ['nullable', 'array'],
         ]);
 
-        $player = DartLocalPlayer::create([
-            'user_id' => $request->user()->id,
+        $attrs = [
             'name' => $validated['name'],
             'avatar_url' => $validated['avatar_url'] ?? null,
-        ]);
+            'statistics' => $validated['statistics'] ?? null,
+        ];
 
-        return response()->json(new DartLocalPlayerResource($player), 201);
+        if (!empty($validated['id'])) {
+            // Client provided an id — upsert by id + user_id
+            $player = DartLocalPlayer::withTrashed()
+                ->where('id', $validated['id'])
+                ->where('user_id', $request->user()->id)
+                ->first();
+
+            if ($player) {
+                $player->restore();
+                $player->update($attrs);
+            } else {
+                $player = new DartLocalPlayer($attrs);
+                $player->id = $validated['id'];
+                $player->user_id = $request->user()->id;
+                $player->save();
+            }
+        } else {
+            // No client id — create with auto-generated UUID
+            $player = DartLocalPlayer::create([
+                'user_id' => $request->user()->id,
+                ...$attrs,
+            ]);
+        }
+
+        $status = $player->wasRecentlyCreated ? 201 : 200;
+        return response()->json(new DartLocalPlayerResource($player), $status);
     }
 
     public function update(Request $request, DartLocalPlayer $localPlayer)

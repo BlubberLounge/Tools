@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Enums\DartGameType;
 use App\Enums\DartGameStatus;
+use App\Models\DartThrow;
 use App\Enums\DartGameUserStatus;
 use App\Enums\DartPlayType;
 use App\Notifications\DartGameStarted;
@@ -59,8 +60,12 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
         // Cricket
         'fields',
 
-        // Mode-specific options (JSON)
-        'options',
+        // Mode-specific settings (JSON)
+        'settings',
+
+        // Timestamps
+        'started_at',
+        'finished_at',
 
         // Generall / X01
         'singleOut',
@@ -84,7 +89,9 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
         'game_type' => DartPlayType::class,
         'status' => DartGameStatus::class,
         'fields' => AsCollection::class,
-        'options' => AsCollection::class,
+        'settings' => AsCollection::class,
+        'started_at' => 'datetime',
+        'finished_at' => 'datetime',
     ];
 
     /**
@@ -230,14 +237,14 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     }
 
     /**
-     * Get a game option value with a default fallback.
+     * Get a game setting value with a default fallback.
      */
-    public function getOption(string $key, mixed $default = null): mixed
+    public function getSetting(string $key, mixed $default = null): mixed
     {
-        if ($this->options === null) {
+        if ($this->settings === null) {
             return $default;
         }
-        return $this->options->get($key, $default);
+        return $this->settings->get($key, $default);
     }
 
     /**
@@ -441,16 +448,18 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
      */
     public function getLongestStreak()
     {
+        $throwsTable = (new DartThrow)->getTable();
+
         $DBresult = DB::table($this->getTable())
             ->selectRaw('user_id, field, ring, CAST(streak AS UNSIGNED) as streak')
-            ->from(function($q) {
+            ->from(function($q) use ($throwsTable) {
                 return $q   // Ugly but very fast Sub-Query to find the highest Streak
                     ->selectRaw(DB::raw('
                     t.id, t.dart_game_id, t.user_id, t.deleted_at, t.ring, t.field,
                     @streak := IF(field = @last_field AND ring = @last_ring, @streak+1, 1) AS streak, @last_field := field AS last_field, @last_ring := t.ring AS last_ring
-                    FROM devt_dart_throws t
+                    FROM ' . $throwsTable . ' t
                     JOIN (SELECT @streak := 0, @last_field := "0" COLLATE utf8mb4_unicode_ci) j
-                    WHERE dart_game_id = "'.$this->id.'" AND deleted_at IS NULL
+                    WHERE dart_game_id = "'.$this->id.'" AND deleted_at IS NULL AND t.user_id IS NOT NULL
                     ORDER BY user_id ASC'
                 ));
             })
@@ -476,6 +485,7 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     {
         $DBresult = $this->dartThrows()
             ->selectRaw('user_id, COUNT(*) as count')
+            ->whereNotNull('user_id')
             ->where('ring', 'O')
             ->groupBy('user_id')
             ->get();
