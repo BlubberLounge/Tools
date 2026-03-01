@@ -449,23 +449,25 @@ class DartGame extends Model // implements Auditable doesn't work because of uui
     public function getLongestStreak()
     {
         $throwsTable = (new DartThrow)->getTable();
+        $gameId = $this->id;
 
-        $DBresult = DB::table($this->getTable())
-            ->selectRaw('user_id, field, ring, CAST(streak AS UNSIGNED) as streak')
-            ->from(function($q) use ($throwsTable) {
-                return $q   // Ugly but very fast Sub-Query to find the highest Streak
-                    ->selectRaw(DB::raw('
-                    t.id, t.dart_game_id, t.user_id, t.deleted_at, t.ring, t.field,
-                    @streak := IF(field = @last_field AND ring = @last_ring, @streak+1, 1) AS streak, @last_field := field AS last_field, @last_ring := t.ring AS last_ring
-                    FROM ' . $throwsTable . ' t
-                    JOIN (SELECT @streak := 0, @last_field := "0" COLLATE utf8mb4_unicode_ci) j
-                    WHERE dart_game_id = "'.$this->id.'" AND deleted_at IS NULL AND t.user_id IS NOT NULL
-                    ORDER BY user_id ASC'
-                ));
-            })
-            ->groupBy('user_id', 'ring', 'field', 'streak')
-            // ->join('users', 'users.id', '=', 'user_id')
-            ->get();
+        // Use parameterized query to prevent SQL injection
+        $DBresult = DB::select('
+            SELECT user_id, field, ring, CAST(streak AS UNSIGNED) as streak
+            FROM (
+                SELECT t.id, t.dart_game_id, t.user_id, t.deleted_at, t.ring, t.field,
+                    @streak := IF(field = @last_field AND ring = @last_ring, @streak+1, 1) AS streak,
+                    @last_field := field AS last_field,
+                    @last_ring := t.ring AS last_ring
+                FROM ' . $throwsTable . ' t
+                JOIN (SELECT @streak := 0, @last_field := "0" COLLATE utf8mb4_unicode_ci) j
+                WHERE dart_game_id = ? AND deleted_at IS NULL AND t.user_id IS NOT NULL
+                ORDER BY user_id ASC
+            ) sub
+            GROUP BY user_id, ring, field, streak
+        ', [$gameId]);
+
+        $DBresult = collect($DBresult);
 
         $max = $DBresult->max('streak');
         $result = $DBresult->firstWhere('streak', $max);

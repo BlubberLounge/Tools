@@ -31,7 +31,7 @@ class DartStatisticsController extends Controller
     public function leaderboard(Request $request)
     {
         $metric = $request->query('metric', 'wins');
-        $limit = (int) $request->query('limit', 20);
+        $limit = min(max((int) $request->query('limit', 20), 1), 100);
 
         $gameType = null;
         if ($request->has('game_type')) {

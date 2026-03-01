@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function ()
     // Local players (offline player profiles)
     Route::get('dart/players/local', [DartLocalPlayerController::class, 'index']);
     Route::post('dart/players/local', [DartLocalPlayerController::class, 'store']);
+    Route::post('dart/players/local/link', [DartPlayerInvitationController::class, 'linkByQrToken']);
     Route::put('dart/players/local/{localPlayer}', [DartLocalPlayerController::class, 'update']);
     Route::delete('dart/players/local/{localPlayer}', [DartLocalPlayerController::class, 'destroy']);
 
@@ -95,6 +96,7 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function ()
     Route::get('dart/invitations', [DartPlayerInvitationController::class, 'index']);
     Route::post('dart/invitations', [DartPlayerInvitationController::class, 'store']);
     Route::get('dart/invitations/{invitation}/status', [DartPlayerInvitationController::class, 'status']);
+    Route::delete('dart/invitations/{invitation}', [DartPlayerInvitationController::class, 'destroy']);
 
     // Acquaintances (QR code friend scanning)
     Route::get('dart/acquaintances/qr-token', [AcquaintanceController::class, 'qrToken']);

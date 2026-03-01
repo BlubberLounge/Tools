@@ -63,8 +63,8 @@ class Controller extends BaseController
      * @param int $default
      * @return int
      */
-    protected function getLimit(\Illuminate\Http\Request $request, int $default = 20): int
+    protected function getLimit(\Illuminate\Http\Request $request, int $default = 20, int $max = 100): int
     {
-        return (int) $request->query('limit', $default);
+        return min(max((int) $request->query('limit', $default), 1), $max);
     }
 }

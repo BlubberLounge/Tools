@@ -40,6 +40,9 @@ class DartHistoryController extends Controller
 
         // Optional: only return games created/updated after a given timestamp
         if ($since = $request->query('since')) {
+            if (strtotime($since) === false) {
+                return $this->sendError('Invalid date format for "since" parameter.', [], 422);
+            }
             $query->where('dart_games.created_at', '>', $since);
         }
 
@@ -94,6 +97,36 @@ class DartHistoryController extends Controller
 
         $user = $request->user();
         $results = [];
+
+        // Build allowed user IDs: self + accepted acquaintances
+        $allowedUserIds = collect([$user->id]);
+        $allowedUserIds = $allowedUserIds->merge(
+            $user->acceptedAcquaintancesMerged()->pluck('id')
+        );
+
+        // Validate that all submitted user_ids are allowed
+        $submittedUserIds = collect();
+        foreach ($validated['games'] as $gameData) {
+            foreach ($gameData['users'] ?? [] as $entry) {
+                if (!empty($entry['user_id'])) {
+                    $submittedUserIds->push($entry['user_id']);
+                }
+            }
+            foreach ($gameData['throws'] ?? [] as $entry) {
+                if (!empty($entry['user_id'])) {
+                    $submittedUserIds->push($entry['user_id']);
+                }
+            }
+        }
+
+        $unauthorized = $submittedUserIds->unique()->diff($allowedUserIds);
+        if ($unauthorized->isNotEmpty()) {
+            return $this->sendError(
+                'You can only sync games for yourself or your acquaintances.',
+                ['unauthorized_user_ids' => $unauthorized->values()],
+                403
+            );
+        }
 
         // Collect all local_player_ids and batch-resolve them
         $allLocalIds = $this->collectLocalPlayerIds($validated['games']);

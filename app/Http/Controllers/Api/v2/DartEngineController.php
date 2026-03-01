@@ -130,6 +130,8 @@ class DartEngineController extends Controller
 
     public function submitThrow(DartGame $game, User $user, Request $request, DartGameEngineService $engine)
     {
+        $this->authorize('update', $game);
+
         $payload = $request->validate([
             'field' => ['required', 'integer', 'min:0', 'max:25'],
             'ring' => 'required|string|in:S,D,T,O',
@@ -158,6 +160,8 @@ class DartEngineController extends Controller
      */
     public function undoThrow(DartGame $game, User $user, DartGameEngineService $engine)
     {
+        $this->authorize('update', $game);
+
         return response()->json($engine->undoThrow($game, $user));
     }
 
@@ -168,6 +172,8 @@ class DartEngineController extends Controller
      */
     public function updateStatus(DartGame $game, UpdateDartGameStatusRequest $request, DartGameEngineService $engine)
     {
+        $this->authorize('update', $game);
+
         $game->update(['status' => DartGameStatus::from($request->validated('status'))]);
 
         return response()->json($engine->getState($game));
@@ -235,6 +241,8 @@ class DartEngineController extends Controller
      */
     public function detail(DartGame $game)
     {
+        $this->authorize('view', $game);
+
         $game->load(['users', 'dartThrows', 'teams.users']);
 
         return response()->json(new DartGameDetailResource($game));

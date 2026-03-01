@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\DartPlayerInvitation;
 use App\Services\OAuth\BlubberLoungeOAuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthTokenExchangeController extends Controller
 {
@@ -56,18 +58,26 @@ class AuthTokenExchangeController extends Controller
                 'dob'         => null,
                 'img'         => '/storage/avatar/avatar-dummy.jpg',
                 'external_id' => $externalId,
-                'password'    => 'external_account',
+                'password'    => Hash::make(Str::random(64)),
             ]);
         }
 
         // Auto-link pending player invitations by email
         if ($email) {
-            $pendingInvitation = DartPlayerInvitation::where('email', $email)
-                ->whereIn('status', ['pending', 'sent'])
-                ->first();
+            $pendingInvitations = DartPlayerInvitation::where('email', $email)
+                ->where(function ($q) {
+                    // Pending/sent: normal flow
+                    $q->whereIn('status', ['pending', 'sent'])
+                      // Or registered but never linked to a user (status sync race condition)
+                      ->orWhere(function ($q2) {
+                          $q2->where('status', 'registered')
+                             ->whereNull('registered_user_id');
+                      });
+                })
+                ->get();
 
-            if ($pendingInvitation) {
-                $pendingInvitation->markAsRegistered($user);
+            foreach ($pendingInvitations as $invitation) {
+                $invitation->markAsRegistered($user);
             }
         }
 
@@ -87,6 +97,9 @@ class AuthTokenExchangeController extends Controller
         if (!empty($updateData)) {
             $user->update($updateData);
         }
+
+        // Revoke existing dart-pwa tokens before issuing a new one
+        $user->tokens()->where('name', 'dart-pwa')->delete();
 
         // Issue Sanctum token
         $sanctumToken = $user->createToken('dart-pwa')->plainTextToken;

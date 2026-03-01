@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v2\Controller;
 use App\Http\Resources\DartLocalPlayerResource;
 use App\Models\DartLocalPlayer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DartLocalPlayerController extends Controller
 {
@@ -44,8 +45,13 @@ class DartLocalPlayerController extends Controller
                 $player->restore();
                 $player->update($attrs);
             } else {
+                // ID might already exist for a different user (account switch on same device)
+                $idTaken = DartLocalPlayer::withTrashed()
+                    ->where('id', $validated['id'])
+                    ->exists();
+
                 $player = new DartLocalPlayer($attrs);
-                $player->id = $validated['id'];
+                $player->id = $idTaken ? (string) Str::uuid() : $validated['id'];
                 $player->user_id = $request->user()->id;
                 $player->save();
             }

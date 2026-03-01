@@ -30,8 +30,10 @@ class DartPushController extends Controller
             'endpoint' => ['required', 'url'],
             'keys.p256dh' => ['required', 'string'],
             'keys.auth' => ['required', 'string'],
-            'user_id' => ['nullable', 'integer'],
         ]);
+
+        // Only use authenticated user's ID, never accept user_id from request body
+        $userId = $request->user()?->id;
 
         // Check if subscription already exists for this endpoint
         $existing = DartPushSubscription::findByEndpoint($validated['endpoint']);
@@ -40,7 +42,7 @@ class DartPushController extends Controller
             // Update existing subscription
             $existing->update([
                 'device_id' => $validated['device_id'],
-                'user_id' => $validated['user_id'] ?? null,
+                'user_id' => $userId,
                 'p256dh_key' => $validated['keys']['p256dh'],
                 'auth_key' => $validated['keys']['auth'],
                 'user_agent' => $request->userAgent(),
@@ -50,7 +52,7 @@ class DartPushController extends Controller
             // Create new subscription
             $subscription = DartPushSubscription::create([
                 'device_id' => $validated['device_id'],
-                'user_id' => $validated['user_id'] ?? null,
+                'user_id' => $userId,
                 'endpoint' => $validated['endpoint'],
                 'p256dh_key' => $validated['keys']['p256dh'],
                 'auth_key' => $validated['keys']['auth'],
@@ -87,6 +89,10 @@ class DartPushController extends Controller
      */
     public function sendUpdateNotification(Request $request): JsonResponse
     {
+        if ($request->user()->level() < 5) {
+            return $this->sendError('Unauthorized.', [], 403);
+        }
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string'],

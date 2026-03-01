@@ -35,23 +35,27 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
         $this->apiHost = config($baseConfig . '.host') . '/api';
     }
 
-    public function getAuthorizationUrl(array $scopes = []): string
+    public function getAuthorizationUrl(array $scopes = [], ?string $invitationToken = null): string
     {
         $scopes = empty($scopes) ? $this->defaultScopes : $scopes;
 
         // Create self-contained encrypted state (no session needed)
         $state = $this->generateState();
 
-        $query = http_build_query([
+        $params = [
             'client_id' => $this->clientId,
             'response_type' => 'code',
             'redirect_uri' => $this->redirectUri,
             'scope' => implode(' ', $scopes),
             'state' => $state,
             'prompt' => 'login', // "none", "consent", or "login"
-        ]);
+        ];
 
-        return $this->baseUrl . '/oauth/authorize?' . $query;
+        if ($invitationToken) {
+            $params['invitation'] = $invitationToken;
+        }
+
+        return $this->baseUrl . '/oauth/authorize?' . http_build_query($params);
     }
 
     /**
@@ -220,7 +224,14 @@ class BlubberLoungeOAuthService implements OAuthServiceInterface
         $token = $this->getM2MToken(['m2m:read']);
 
         $response = Http::withToken($token)
+            ->timeout(10)
             ->get($this->apiHost . '/invitations/' . $invitationToken . '/status');
+
+        if (!$response->successful()) {
+            throw new \RuntimeException(
+                'Auth server invitation status check failed: ' . $response->status()
+            );
+        }
 
         return $response->json();
     }

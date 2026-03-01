@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\Http\Controllers\Api\v2\Controller;
+use App\Models\Acquaintance;
 use App\Models\DartPlayerInvitation;
 use App\Models\User;
+use App\Services\Dart\LocalPlayerResolver;
 use App\Services\OAuth\BlubberLoungeOAuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,6 +33,7 @@ class DartPlayerInvitationController extends Controller
         }
 
         $validated = $validator->validated();
+        $validated['email'] = strtolower($validated['email']);
         $user = $request->user();
 
         // Check if already a registered Tools user
@@ -68,6 +71,7 @@ class DartPlayerInvitationController extends Controller
                 'firstname' => $validated['firstname'] ?? null,
                 'lastname' => $validated['lastname'] ?? null,
                 'user_external_id' => $user->external_id,
+                'client_id' => config('services.blubberlounge.client_id'),
                 'metadata' => [
                     'local_player_id' => $validated['local_player_id'] ?? null,
                     'invited_by_tools_user_id' => $user->id,
@@ -81,19 +85,18 @@ class DartPlayerInvitationController extends Controller
             );
         }
 
+        // If already registered on Auth, resolve locally and begin migration
+        if (!empty($authResponse['already_registered']) && isset($authResponse['user'])) {
+            return $this->handleAlreadyRegistered(
+                $authResponse['user'],
+                $validated,
+                $user,
+            );
+        }
+
         if (!isset($authResponse['success']) || !$authResponse['success']) {
             $error = $authResponse['error'] ?? 'unknown_error';
             $message = $authResponse['message'] ?? 'Auth server rejected the invitation.';
-
-            // If already registered on Auth, return the external_id so PWA can map
-            if ($error === 'already_registered' && isset($authResponse['user'])) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $message,
-                    'already_registered' => true,
-                    'auth_user' => $authResponse['user'],
-                ], 409);
-            }
 
             // If Auth already has a pending invitation for this email
             if ($error === 'invitation_exists' && isset($authResponse['invitation'])) {
@@ -111,11 +114,11 @@ class DartPlayerInvitationController extends Controller
             return $this->sendError($message, $authResponse, 422);
         }
 
-        // Store local tracking record
+        // Store local tracking record (email already lowercased above)
         $invitation = DartPlayerInvitation::create([
             'auth_invitation_token' => $authResponse['invitation']['token'],
             'invited_by_user_id' => $user->id,
-            'email' => $validated['email'],
+            'email' => $validated['email'],  // already lowercased
             'firstname' => $validated['firstname'] ?? null,
             'lastname' => $validated['lastname'] ?? null,
             'local_player_id' => $validated['local_player_id'] ?? null,
@@ -130,6 +133,7 @@ class DartPlayerInvitationController extends Controller
             'status' => $invitation->status,
             'expires_at' => $invitation->expires_at->toIso8601String(),
             'local_player_id' => $invitation->local_player_id,
+            'registration_url' => $authResponse['invitation']['registration_url'] ?? null,
         ], 'Invitation sent successfully.');
     }
 
@@ -189,11 +193,15 @@ class DartPlayerInvitationController extends Controller
                     $externalId = $authStatus['registered_user']['external_id'] ?? null;
                     $toolsUser = $externalId ? User::where('external_id', $externalId)->first() : null;
 
+                    // Fallback: try finding by invitation email
+                    if (!$toolsUser && $invitation->email) {
+                        $toolsUser = User::where('email', $invitation->email)->first();
+                    }
+
                     if ($toolsUser) {
                         $invitation->markAsRegistered($toolsUser);
-                    } else {
-                        $invitation->update(['status' => 'registered']);
                     }
+                    // Don't update status without linking user — let token exchange handle it
                 } elseif (isset($authStatus['status']) && $authStatus['status'] === 'expired') {
                     $invitation->update(['status' => 'expired']);
                 }
@@ -221,5 +229,170 @@ class DartPlayerInvitationController extends Controller
             ],
             'expires_at' => $invitation->expires_at?->toIso8601String(),
         ], 'Invitation status retrieved.');
+    }
+
+    /**
+     * Delete an invitation.
+     *
+     * DELETE /api/v2/dart/invitations/{invitation}
+     */
+    public function destroy(DartPlayerInvitation $invitation, Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if ($invitation->invited_by_user_id !== $user->id) {
+            return $this->sendError('Unauthorized.', [], 403);
+        }
+
+        $invitation->delete();
+
+        return $this->sendResponse(null, 'Invitation deleted.');
+    }
+
+    /**
+     * Handle the case where the invited email already belongs to a registered Auth user.
+     * Find or defer the Tools user mapping and trigger backfill if possible.
+     */
+    private function handleAlreadyRegistered(array $authUser, array $validated, User $inviter): JsonResponse
+    {
+        $externalId = $authUser['external_id'] ?? null;
+        $localPlayerId = $validated['local_player_id'] ?? null;
+
+        $toolsUser = $externalId ? User::where('external_id', $externalId)->first() : null;
+
+        // Check for existing invitation for this email (avoid duplicates)
+        $existingInvitation = DartPlayerInvitation::where('email', $validated['email'])
+            ->where('invited_by_user_id', $inviter->id)
+            ->first();
+
+        if ($toolsUser) {
+            // Tools user exists — immediate migration
+            $invitation = $existingInvitation ?? DartPlayerInvitation::create([
+                'invited_by_user_id' => $inviter->id,
+                'email' => $validated['email'],
+                'firstname' => $validated['firstname'] ?? null,
+                'lastname' => $validated['lastname'] ?? null,
+                'local_player_id' => $localPlayerId,
+                'status' => 'sent',
+            ]);
+
+            if ($existingInvitation && $localPlayerId && !$existingInvitation->local_player_id) {
+                $invitation->update(['local_player_id' => $localPlayerId]);
+            }
+
+            // markAsRegistered handles backfill + acquaintance creation
+            $invitation->markAsRegistered($toolsUser);
+
+            return $this->sendResponse([
+                'already_registered' => true,
+                'invitation_id' => $invitation->id,
+                'user' => [
+                    'id' => $toolsUser->id,
+                    'external_id' => $toolsUser->external_id,
+                    'name' => $toolsUser->name,
+                    'firstname' => $toolsUser->firstname,
+                    'lastname' => $toolsUser->lastname,
+                    'img' => $toolsUser->img,
+                ],
+                'local_player_id' => $localPlayerId,
+            ], 'User already registered. Migration completed.');
+        }
+
+        // Tools user not found yet — store invitation for deferred migration
+        if (!$existingInvitation) {
+            DartPlayerInvitation::create([
+                'invited_by_user_id' => $inviter->id,
+                'email' => $validated['email'],
+                'firstname' => $validated['firstname'] ?? null,
+                'lastname' => $validated['lastname'] ?? null,
+                'local_player_id' => $localPlayerId,
+                'status' => 'sent',
+            ]);
+        }
+
+        return $this->sendResponse([
+            'already_registered' => true,
+            'pending_migration' => true,
+            'auth_user' => $authUser,
+            'local_player_id' => $localPlayerId,
+        ], 'User already registered on Auth. Migration will complete on next login.');
+    }
+
+    /**
+     * Link a local player to an existing user via QR token scan.
+     * The device owner scans the guest's acquaintance QR code.
+     *
+     * POST /api/v2/dart/players/local/link
+     */
+    public function linkByQrToken(Request $request): JsonResponse
+    {
+        $request->validate([
+            'qr_token' => ['required', 'string'],
+            'local_player_id' => ['required', 'string', 'max:255'],
+        ]);
+
+        // Validate QR token (same HMAC logic as AcquaintanceController)
+        $parts = explode('.', $request->input('qr_token'));
+        if (count($parts) !== 2) {
+            return $this->sendError('Invalid token format.', [], 422);
+        }
+
+        [$payload, $signature] = $parts;
+
+        $expectedSignature = hash_hmac('sha256', $payload, config('app.key'));
+        if (!hash_equals($expectedSignature, $signature)) {
+            return $this->sendError('Invalid token signature.', [], 422);
+        }
+
+        $data = json_decode(base64_decode($payload), true);
+        if (!$data || !isset($data['eid'], $data['exp'])) {
+            return $this->sendError('Invalid token payload.', [], 422);
+        }
+
+        if (now()->timestamp > $data['exp']) {
+            return $this->sendError('QR code has expired.', [], 422);
+        }
+
+        $inviter = $request->user();
+        $targetExternalId = $data['eid'];
+        $localPlayerId = $request->input('local_player_id');
+
+        $targetUser = User::where('external_id', $targetExternalId)->first();
+        if (!$targetUser) {
+            return $this->sendError('User not found.', [], 404);
+        }
+
+        if ($targetUser->id === $inviter->id) {
+            return $this->sendError('You cannot link a local player to yourself.', [], 422);
+        }
+
+        // Create invitation record with immediate registered status
+        $invitation = DartPlayerInvitation::create([
+            'invited_by_user_id' => $inviter->id,
+            'email' => $targetUser->email,
+            'firstname' => $targetUser->firstname,
+            'lastname' => $targetUser->lastname,
+            'local_player_id' => $localPlayerId,
+            'status' => 'sent',
+        ]);
+
+        $invitation->markAsRegistered($targetUser);
+
+        // Backfill game data
+        $backfillResult = app(LocalPlayerResolver::class)->backfill($localPlayerId, $targetUser->id);
+
+        return $this->sendResponse([
+            'invitation_id' => $invitation->id,
+            'user' => [
+                'id' => $targetUser->id,
+                'external_id' => $targetUser->external_id,
+                'name' => $targetUser->name,
+                'firstname' => $targetUser->firstname,
+                'lastname' => $targetUser->lastname,
+                'img' => $targetUser->img,
+            ],
+            'local_player_id' => $localPlayerId,
+            'backfill' => $backfillResult,
+        ], 'Local player linked successfully.');
     }
 }

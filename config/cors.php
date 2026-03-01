@@ -24,9 +24,9 @@ return [
         'https://dart.blubber-lounge.de',
     ],
 
-    'allowed_origins_patterns' => [
+    'allowed_origins_patterns' => env('APP_ENV') === 'local' ? [
         '#^https?://localhost(:\d+)?$#',
-    ],
+    ] : [],
 
     'allowed_headers' => ['Authorization', 'Content-Type', 'Accept', 'X-Requested-With'],
 
