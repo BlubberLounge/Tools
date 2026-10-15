@@ -4,6 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "test:js": "vitest run",
         "version:bump": "node dump-app-version.js"
     },
     "dependencies": {
@@ -26,15 +27,18 @@
         "luxon": "^3.4.4",
         "moment": "^2.30.1",
         "nosleep.js": "^0.12.0",
-        "plotly.js-dist": "^2.29.1"
+        "plotly.js-dist": "^2.29.1",
+        "three": "^0.170.0"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.18",
         "autoprefixer": "^10.4.23",
         "axios": "^1.6.7",
         "laravel-vite-plugin": "^1.2.0",
+        "pngjs": "^7.0.0",
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.18",
-        "vite": "^6.2.4"
+        "vite": "^6.2.4",
+        "vitest": "^3.2.7"
     }
 }
