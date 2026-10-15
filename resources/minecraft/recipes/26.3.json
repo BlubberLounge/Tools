@@ -1,0 +1,2412 @@
+{
+    "version": "26.3",
+    "name": "Java Edition 26.3",
+    "updated": "2026-10-15",
+    "sources": [
+        {
+            "title": "Java Edition 26.3 server jar data (recipe, villager_trade, cooking fuel providers)",
+            "url": "https://www.minecraft.net/en-us/download/server",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Minecraft Wiki: Crafting",
+            "url": "https://minecraft.wiki/w/Crafting",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Minecraft Wiki: Smelting",
+            "url": "https://minecraft.wiki/w/Smelting",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Minecraft Wiki: Trading",
+            "url": "https://minecraft.wiki/w/Trading",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Minecraft Wiki: Hopper",
+            "url": "https://minecraft.wiki/w/Hopper",
+            "retrieved": "2026-10-15"
+        }
+    ],
+    "notes": "Recipes, villager trades and fuel burn times are read from the data files of the official 26.3 server jar and cross-checked with the Minecraft Wiki. Only the recipes that farm chains need, not the whole recipe book. Where the game accepts several items (any planks, any log, sand or red sand) one representative item is listed. Cooking: a furnace takes 10 s per item, a blast furnace or smoker 5 s and burns fuel twice as fast, so fuel per item is the same. Trades are the default trades (not the trade rebalance experiment); a villager restocks up to twice per Minecraft day (20 minutes) when it can reach its job site.",
+    "defaults": {
+        "fuel": "coal",
+        "restocks_per_day": 2,
+        "hopper_items_per_hour": 9000
+    },
+    "fuels": [
+        {
+            "item": "coal",
+            "smelts": 8.0
+        },
+        {
+            "item": "charcoal",
+            "smelts": 8.0
+        },
+        {
+            "item": "coal_block",
+            "smelts": 80.0
+        },
+        {
+            "item": "dried_kelp_block",
+            "smelts": 20.005
+        },
+        {
+            "item": "blaze_rod",
+            "smelts": 12.0
+        },
+        {
+            "item": "lava_bucket",
+            "smelts": 100.0
+        },
+        {
+            "item": "oak_planks",
+            "smelts": 1.5
+        },
+        {
+            "item": "bamboo",
+            "smelts": 0.25
+        }
+    ],
+    "items": [
+        {
+            "id": "activator_rail",
+            "name": "Activator Rail"
+        },
+        {
+            "id": "anvil",
+            "name": "Anvil"
+        },
+        {
+            "id": "apple",
+            "name": "Apple"
+        },
+        {
+            "id": "arrow",
+            "name": "Arrow"
+        },
+        {
+            "id": "bamboo",
+            "name": "Bamboo"
+        },
+        {
+            "id": "barrel",
+            "name": "Barrel"
+        },
+        {
+            "id": "beef",
+            "name": "Raw Beef"
+        },
+        {
+            "id": "blast_furnace",
+            "name": "Blast Furnace"
+        },
+        {
+            "id": "blaze_rod",
+            "name": "Blaze Rod"
+        },
+        {
+            "id": "bone",
+            "name": "Bone"
+        },
+        {
+            "id": "bone_block",
+            "name": "Bone Block"
+        },
+        {
+            "id": "bone_meal",
+            "name": "Bone Meal"
+        },
+        {
+            "id": "book",
+            "name": "Book"
+        },
+        {
+            "id": "bookshelf",
+            "name": "Bookshelf"
+        },
+        {
+            "id": "bow",
+            "name": "Bow"
+        },
+        {
+            "id": "bread",
+            "name": "Bread"
+        },
+        {
+            "id": "bucket",
+            "name": "Bucket"
+        },
+        {
+            "id": "cake",
+            "name": "Cake"
+        },
+        {
+            "id": "carrot",
+            "name": "Carrot"
+        },
+        {
+            "id": "cauldron",
+            "name": "Cauldron"
+        },
+        {
+            "id": "charcoal",
+            "name": "Charcoal"
+        },
+        {
+            "id": "chest",
+            "name": "Chest"
+        },
+        {
+            "id": "chest_minecart",
+            "name": "Minecart with Chest"
+        },
+        {
+            "id": "coal",
+            "name": "Coal"
+        },
+        {
+            "id": "coal_block",
+            "name": "Block of Coal"
+        },
+        {
+            "id": "cobblestone",
+            "name": "Cobblestone"
+        },
+        {
+            "id": "comparator",
+            "name": "Redstone Comparator"
+        },
+        {
+            "id": "composter",
+            "name": "Composter"
+        },
+        {
+            "id": "cooked_beef",
+            "name": "Steak"
+        },
+        {
+            "id": "cooked_porkchop",
+            "name": "Cooked Porkchop"
+        },
+        {
+            "id": "crafting_table",
+            "name": "Crafting Table"
+        },
+        {
+            "id": "detector_rail",
+            "name": "Detector Rail"
+        },
+        {
+            "id": "diamond",
+            "name": "Diamond"
+        },
+        {
+            "id": "dispenser",
+            "name": "Dispenser"
+        },
+        {
+            "id": "dried_kelp",
+            "name": "Dried Kelp"
+        },
+        {
+            "id": "dried_kelp_block",
+            "name": "Dried Kelp Block"
+        },
+        {
+            "id": "dropper",
+            "name": "Dropper"
+        },
+        {
+            "id": "egg",
+            "name": "Egg"
+        },
+        {
+            "id": "emerald",
+            "name": "Emerald"
+        },
+        {
+            "id": "enchanting_table",
+            "name": "Enchanting Table"
+        },
+        {
+            "id": "experience_bottle",
+            "name": "Bottle o' Enchanting"
+        },
+        {
+            "id": "feather",
+            "name": "Feather"
+        },
+        {
+            "id": "firework_rocket",
+            "name": "Firework Rocket"
+        },
+        {
+            "id": "flint",
+            "name": "Flint"
+        },
+        {
+            "id": "furnace",
+            "name": "Furnace"
+        },
+        {
+            "id": "glass",
+            "name": "Glass"
+        },
+        {
+            "id": "glass_pane",
+            "name": "Glass Pane"
+        },
+        {
+            "id": "gold_block",
+            "name": "Block of Gold"
+        },
+        {
+            "id": "gold_ingot",
+            "name": "Gold Ingot"
+        },
+        {
+            "id": "gold_nugget",
+            "name": "Gold Nugget"
+        },
+        {
+            "id": "golden_apple",
+            "name": "Golden Apple"
+        },
+        {
+            "id": "golden_carrot",
+            "name": "Golden Carrot"
+        },
+        {
+            "id": "gunpowder",
+            "name": "Gunpowder"
+        },
+        {
+            "id": "hay_block",
+            "name": "Hay Bale"
+        },
+        {
+            "id": "hopper",
+            "name": "Hopper"
+        },
+        {
+            "id": "hopper_minecart",
+            "name": "Minecart with Hopper"
+        },
+        {
+            "id": "iron_bars",
+            "name": "Iron Bars"
+        },
+        {
+            "id": "iron_block",
+            "name": "Block of Iron"
+        },
+        {
+            "id": "iron_chain",
+            "name": "Iron Chain"
+        },
+        {
+            "id": "iron_ingot",
+            "name": "Iron Ingot"
+        },
+        {
+            "id": "iron_nugget",
+            "name": "Iron Nugget"
+        },
+        {
+            "id": "kelp",
+            "name": "Kelp"
+        },
+        {
+            "id": "ladder",
+            "name": "Ladder"
+        },
+        {
+            "id": "lantern",
+            "name": "Lantern"
+        },
+        {
+            "id": "lava_bucket",
+            "name": "Lava Bucket"
+        },
+        {
+            "id": "leather",
+            "name": "Leather"
+        },
+        {
+            "id": "lectern",
+            "name": "Lectern"
+        },
+        {
+            "id": "lever",
+            "name": "Lever"
+        },
+        {
+            "id": "milk_bucket",
+            "name": "Milk Bucket"
+        },
+        {
+            "id": "minecart",
+            "name": "Minecart"
+        },
+        {
+            "id": "oak_log",
+            "name": "Oak Log"
+        },
+        {
+            "id": "oak_planks",
+            "name": "Oak Planks"
+        },
+        {
+            "id": "oak_slab",
+            "name": "Oak Slab"
+        },
+        {
+            "id": "observer",
+            "name": "Observer"
+        },
+        {
+            "id": "obsidian",
+            "name": "Obsidian"
+        },
+        {
+            "id": "paper",
+            "name": "Paper"
+        },
+        {
+            "id": "piston",
+            "name": "Piston"
+        },
+        {
+            "id": "porkchop",
+            "name": "Raw Porkchop"
+        },
+        {
+            "id": "powered_rail",
+            "name": "Powered Rail"
+        },
+        {
+            "id": "quartz",
+            "name": "Nether Quartz"
+        },
+        {
+            "id": "rabbit_hide",
+            "name": "Rabbit Hide"
+        },
+        {
+            "id": "rail",
+            "name": "Rail"
+        },
+        {
+            "id": "raw_gold",
+            "name": "Raw Gold"
+        },
+        {
+            "id": "raw_iron",
+            "name": "Raw Iron"
+        },
+        {
+            "id": "redstone",
+            "name": "Redstone Dust"
+        },
+        {
+            "id": "redstone_block",
+            "name": "Block of Redstone"
+        },
+        {
+            "id": "redstone_torch",
+            "name": "Redstone Torch"
+        },
+        {
+            "id": "repeater",
+            "name": "Redstone Repeater"
+        },
+        {
+            "id": "rotten_flesh",
+            "name": "Rotten Flesh"
+        },
+        {
+            "id": "sand",
+            "name": "Sand"
+        },
+        {
+            "id": "scaffolding",
+            "name": "Scaffolding"
+        },
+        {
+            "id": "shears",
+            "name": "Shears"
+        },
+        {
+            "id": "slime_ball",
+            "name": "Slimeball"
+        },
+        {
+            "id": "slime_block",
+            "name": "Slime Block"
+        },
+        {
+            "id": "smoker",
+            "name": "Smoker"
+        },
+        {
+            "id": "smooth_stone",
+            "name": "Smooth Stone"
+        },
+        {
+            "id": "smooth_stone_slab",
+            "name": "Smooth Stone Slab"
+        },
+        {
+            "id": "stick",
+            "name": "Stick"
+        },
+        {
+            "id": "sticky_piston",
+            "name": "Sticky Piston"
+        },
+        {
+            "id": "stone",
+            "name": "Stone"
+        },
+        {
+            "id": "stone_pressure_plate",
+            "name": "Stone Pressure Plate"
+        },
+        {
+            "id": "string",
+            "name": "String"
+        },
+        {
+            "id": "sugar",
+            "name": "Sugar"
+        },
+        {
+            "id": "sugar_cane",
+            "name": "Sugar Cane"
+        },
+        {
+            "id": "tnt",
+            "name": "TNT"
+        },
+        {
+            "id": "tnt_minecart",
+            "name": "Minecart with TNT"
+        },
+        {
+            "id": "torch",
+            "name": "Torch"
+        },
+        {
+            "id": "wheat",
+            "name": "Wheat"
+        },
+        {
+            "id": "white_bed",
+            "name": "White Bed"
+        },
+        {
+            "id": "white_carpet",
+            "name": "White Carpet"
+        },
+        {
+            "id": "white_wool",
+            "name": "White Wool"
+        }
+    ],
+    "recipes": [
+        {
+            "id": "paper",
+            "type": "crafting",
+            "output": {
+                "item": "paper",
+                "count": 3
+            },
+            "inputs": [
+                {
+                    "item": "sugar_cane",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "book",
+            "type": "crafting",
+            "output": {
+                "item": "book",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "paper",
+                    "count": 3
+                },
+                {
+                    "item": "leather",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "bookshelf",
+            "type": "crafting",
+            "output": {
+                "item": "bookshelf",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 6
+                },
+                {
+                    "item": "book",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "oak_planks",
+            "type": "crafting",
+            "output": {
+                "item": "oak_planks",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "oak_log",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "stick",
+            "type": "crafting",
+            "output": {
+                "item": "stick",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "chest",
+            "type": "crafting",
+            "output": {
+                "item": "chest",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 8
+                }
+            ]
+        },
+        {
+            "id": "hopper",
+            "type": "crafting",
+            "output": {
+                "item": "hopper",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 5
+                },
+                {
+                    "item": "chest",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "rail",
+            "type": "crafting",
+            "output": {
+                "item": "rail",
+                "count": 16
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 6
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "powered_rail",
+            "type": "crafting",
+            "output": {
+                "item": "powered_rail",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "gold_ingot",
+                    "count": 6
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "detector_rail",
+            "type": "crafting",
+            "output": {
+                "item": "detector_rail",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 6
+                },
+                {
+                    "item": "stone_pressure_plate",
+                    "count": 1
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "activator_rail",
+            "type": "crafting",
+            "output": {
+                "item": "activator_rail",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 6
+                },
+                {
+                    "item": "stick",
+                    "count": 2
+                },
+                {
+                    "item": "redstone_torch",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "stone_pressure_plate",
+            "type": "crafting",
+            "output": {
+                "item": "stone_pressure_plate",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "stone",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "redstone_torch",
+            "type": "crafting",
+            "output": {
+                "item": "redstone_torch",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "redstone",
+                    "count": 1
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "torch",
+            "type": "crafting",
+            "output": {
+                "item": "torch",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "coal",
+                    "count": 1
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "torch_from_charcoal",
+            "type": "crafting",
+            "output": {
+                "item": "torch",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "charcoal",
+                    "count": 1
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "minecart",
+            "type": "crafting",
+            "output": {
+                "item": "minecart",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "id": "hopper_minecart",
+            "type": "crafting",
+            "output": {
+                "item": "hopper_minecart",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "hopper",
+                    "count": 1
+                },
+                {
+                    "item": "minecart",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "chest_minecart",
+            "type": "crafting",
+            "output": {
+                "item": "chest_minecart",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "chest",
+                    "count": 1
+                },
+                {
+                    "item": "minecart",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "tnt_minecart",
+            "type": "crafting",
+            "output": {
+                "item": "tnt_minecart",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "tnt",
+                    "count": 1
+                },
+                {
+                    "item": "minecart",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "iron_block",
+            "type": "crafting",
+            "output": {
+                "item": "iron_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "iron_ingot_from_iron_block",
+            "type": "crafting",
+            "output": {
+                "item": "iron_ingot",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "iron_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "iron_ingot_from_nuggets",
+            "type": "crafting",
+            "output": {
+                "item": "iron_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_nugget",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "iron_nugget",
+            "type": "crafting",
+            "output": {
+                "item": "iron_nugget",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "gold_block",
+            "type": "crafting",
+            "output": {
+                "item": "gold_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gold_ingot",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "gold_ingot_from_gold_block",
+            "type": "crafting",
+            "output": {
+                "item": "gold_ingot",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "gold_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "gold_nugget",
+            "type": "crafting",
+            "output": {
+                "item": "gold_nugget",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "gold_ingot",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "gold_ingot_from_nuggets",
+            "type": "crafting",
+            "output": {
+                "item": "gold_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gold_nugget",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "redstone_block",
+            "type": "crafting",
+            "output": {
+                "item": "redstone_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "redstone",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "redstone",
+            "type": "crafting",
+            "output": {
+                "item": "redstone",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "redstone_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "coal_block",
+            "type": "crafting",
+            "output": {
+                "item": "coal_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "coal",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "coal",
+            "type": "crafting",
+            "output": {
+                "item": "coal",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "coal_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "iron_bars",
+            "type": "crafting",
+            "output": {
+                "item": "iron_bars",
+                "count": 16
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 6
+                }
+            ]
+        },
+        {
+            "id": "iron_chain",
+            "type": "crafting",
+            "output": {
+                "item": "iron_chain",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_nugget",
+                    "count": 2
+                },
+                {
+                    "item": "iron_ingot",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "lantern",
+            "type": "crafting",
+            "output": {
+                "item": "lantern",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_nugget",
+                    "count": 8
+                },
+                {
+                    "item": "torch",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "bucket",
+            "type": "crafting",
+            "output": {
+                "item": "bucket",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "shears",
+            "type": "crafting",
+            "output": {
+                "item": "shears",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "anvil",
+            "type": "crafting",
+            "output": {
+                "item": "anvil",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_block",
+                    "count": 3
+                },
+                {
+                    "item": "iron_ingot",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "cauldron",
+            "type": "crafting",
+            "output": {
+                "item": "cauldron",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 7
+                }
+            ]
+        },
+        {
+            "id": "bread",
+            "type": "crafting",
+            "output": {
+                "item": "bread",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "wheat",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "hay_block",
+            "type": "crafting",
+            "output": {
+                "item": "hay_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "wheat",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "wheat",
+            "type": "crafting",
+            "output": {
+                "item": "wheat",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "hay_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "sugar_from_sugar_cane",
+            "type": "crafting",
+            "output": {
+                "item": "sugar",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "sugar_cane",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "tnt",
+            "type": "crafting",
+            "output": {
+                "item": "tnt",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gunpowder",
+                    "count": 5
+                },
+                {
+                    "item": "sand",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "glass_pane",
+            "type": "crafting",
+            "output": {
+                "item": "glass_pane",
+                "count": 16
+            },
+            "inputs": [
+                {
+                    "item": "glass",
+                    "count": 6
+                }
+            ]
+        },
+        {
+            "id": "smooth_stone_slab",
+            "type": "crafting",
+            "output": {
+                "item": "smooth_stone_slab",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "smooth_stone",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "furnace",
+            "type": "crafting",
+            "output": {
+                "item": "furnace",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "cobblestone",
+                    "count": 8
+                }
+            ]
+        },
+        {
+            "id": "blast_furnace",
+            "type": "crafting",
+            "output": {
+                "item": "blast_furnace",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "iron_ingot",
+                    "count": 5
+                },
+                {
+                    "item": "furnace",
+                    "count": 1
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "smoker",
+            "type": "crafting",
+            "output": {
+                "item": "smoker",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_log",
+                    "count": 4
+                },
+                {
+                    "item": "furnace",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "piston",
+            "type": "crafting",
+            "output": {
+                "item": "piston",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 3
+                },
+                {
+                    "item": "cobblestone",
+                    "count": 4
+                },
+                {
+                    "item": "iron_ingot",
+                    "count": 1
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "sticky_piston",
+            "type": "crafting",
+            "output": {
+                "item": "sticky_piston",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "slime_ball",
+                    "count": 1
+                },
+                {
+                    "item": "piston",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "observer",
+            "type": "crafting",
+            "output": {
+                "item": "observer",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "cobblestone",
+                    "count": 6
+                },
+                {
+                    "item": "redstone",
+                    "count": 2
+                },
+                {
+                    "item": "quartz",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "dispenser",
+            "type": "crafting",
+            "output": {
+                "item": "dispenser",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "cobblestone",
+                    "count": 7
+                },
+                {
+                    "item": "bow",
+                    "count": 1
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "bow",
+            "type": "crafting",
+            "output": {
+                "item": "bow",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "stick",
+                    "count": 3
+                },
+                {
+                    "item": "string",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "dropper",
+            "type": "crafting",
+            "output": {
+                "item": "dropper",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "cobblestone",
+                    "count": 7
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "repeater",
+            "type": "crafting",
+            "output": {
+                "item": "repeater",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "redstone_torch",
+                    "count": 2
+                },
+                {
+                    "item": "redstone",
+                    "count": 1
+                },
+                {
+                    "item": "stone",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "comparator",
+            "type": "crafting",
+            "output": {
+                "item": "comparator",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "redstone_torch",
+                    "count": 3
+                },
+                {
+                    "item": "quartz",
+                    "count": 1
+                },
+                {
+                    "item": "stone",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "lever",
+            "type": "crafting",
+            "output": {
+                "item": "lever",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "stick",
+                    "count": 1
+                },
+                {
+                    "item": "cobblestone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "slime_block",
+            "type": "crafting",
+            "output": {
+                "item": "slime_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "slime_ball",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "slime_ball",
+            "type": "crafting",
+            "output": {
+                "item": "slime_ball",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "slime_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "white_wool_from_string",
+            "type": "crafting",
+            "output": {
+                "item": "white_wool",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "string",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "white_bed",
+            "type": "crafting",
+            "output": {
+                "item": "white_bed",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "white_wool",
+                    "count": 3
+                },
+                {
+                    "item": "oak_planks",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "white_carpet",
+            "type": "crafting",
+            "output": {
+                "item": "white_carpet",
+                "count": 3
+            },
+            "inputs": [
+                {
+                    "item": "white_wool",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "dried_kelp_block",
+            "type": "crafting",
+            "output": {
+                "item": "dried_kelp_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "dried_kelp",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "dried_kelp",
+            "type": "crafting",
+            "output": {
+                "item": "dried_kelp",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "dried_kelp_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "bone_meal",
+            "type": "crafting",
+            "output": {
+                "item": "bone_meal",
+                "count": 3
+            },
+            "inputs": [
+                {
+                    "item": "bone",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "bone_block",
+            "type": "crafting",
+            "output": {
+                "item": "bone_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "bone_meal",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "bone_meal_from_bone_block",
+            "type": "crafting",
+            "output": {
+                "item": "bone_meal",
+                "count": 9
+            },
+            "inputs": [
+                {
+                    "item": "bone_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "leather",
+            "type": "crafting",
+            "output": {
+                "item": "leather",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "rabbit_hide",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "crafting_table",
+            "type": "crafting",
+            "output": {
+                "item": "crafting_table",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "oak_slab",
+            "type": "crafting",
+            "output": {
+                "item": "oak_slab",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "barrel",
+            "type": "crafting",
+            "output": {
+                "item": "barrel",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_planks",
+                    "count": 6
+                },
+                {
+                    "item": "oak_slab",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "composter",
+            "type": "crafting",
+            "output": {
+                "item": "composter",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_slab",
+                    "count": 7
+                }
+            ]
+        },
+        {
+            "id": "lectern",
+            "type": "crafting",
+            "output": {
+                "item": "lectern",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_slab",
+                    "count": 4
+                },
+                {
+                    "item": "bookshelf",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "enchanting_table",
+            "type": "crafting",
+            "output": {
+                "item": "enchanting_table",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "book",
+                    "count": 1
+                },
+                {
+                    "item": "diamond",
+                    "count": 2
+                },
+                {
+                    "item": "obsidian",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "id": "golden_carrot",
+            "type": "crafting",
+            "output": {
+                "item": "golden_carrot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gold_nugget",
+                    "count": 8
+                },
+                {
+                    "item": "carrot",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "golden_apple",
+            "type": "crafting",
+            "output": {
+                "item": "golden_apple",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gold_ingot",
+                    "count": 8
+                },
+                {
+                    "item": "apple",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "arrow",
+            "type": "crafting",
+            "output": {
+                "item": "arrow",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "flint",
+                    "count": 1
+                },
+                {
+                    "item": "stick",
+                    "count": 1
+                },
+                {
+                    "item": "feather",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "ladder",
+            "type": "crafting",
+            "output": {
+                "item": "ladder",
+                "count": 3
+            },
+            "inputs": [
+                {
+                    "item": "stick",
+                    "count": 7
+                }
+            ]
+        },
+        {
+            "id": "scaffolding",
+            "type": "crafting",
+            "output": {
+                "item": "scaffolding",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "bamboo",
+                    "count": 6
+                },
+                {
+                    "item": "string",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "firework_rocket_simple",
+            "type": "crafting",
+            "output": {
+                "item": "firework_rocket",
+                "count": 3
+            },
+            "inputs": [
+                {
+                    "item": "gunpowder",
+                    "count": 1
+                },
+                {
+                    "item": "paper",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "cake",
+            "type": "crafting",
+            "output": {
+                "item": "cake",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "milk_bucket",
+                    "count": 3
+                },
+                {
+                    "item": "sugar",
+                    "count": 2
+                },
+                {
+                    "item": "egg",
+                    "count": 1
+                },
+                {
+                    "item": "wheat",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "glass",
+            "type": "smelting",
+            "output": {
+                "item": "glass",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "sand",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "stone",
+            "type": "smelting",
+            "output": {
+                "item": "stone",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "cobblestone",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "smooth_stone",
+            "type": "smelting",
+            "output": {
+                "item": "smooth_stone",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "stone",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "charcoal",
+            "type": "smelting",
+            "output": {
+                "item": "charcoal",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "oak_log",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "iron_ingot_from_smelting_raw_iron",
+            "type": "smelting",
+            "output": {
+                "item": "iron_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "raw_iron",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "iron_ingot_from_blasting_raw_iron",
+            "type": "blasting",
+            "output": {
+                "item": "iron_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "raw_iron",
+                    "count": 1
+                }
+            ],
+            "seconds": 5
+        },
+        {
+            "id": "gold_ingot_from_smelting_raw_gold",
+            "type": "smelting",
+            "output": {
+                "item": "gold_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "raw_gold",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "gold_ingot_from_blasting_raw_gold",
+            "type": "blasting",
+            "output": {
+                "item": "gold_ingot",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "raw_gold",
+                    "count": 1
+                }
+            ],
+            "seconds": 5
+        },
+        {
+            "id": "dried_kelp_from_smelting",
+            "type": "smelting",
+            "output": {
+                "item": "dried_kelp",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "kelp",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "dried_kelp_from_smoking",
+            "type": "smoking",
+            "output": {
+                "item": "dried_kelp",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "kelp",
+                    "count": 1
+                }
+            ],
+            "seconds": 5
+        },
+        {
+            "id": "cooked_beef",
+            "type": "smelting",
+            "output": {
+                "item": "cooked_beef",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "beef",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "cooked_beef_from_smoking",
+            "type": "smoking",
+            "output": {
+                "item": "cooked_beef",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "beef",
+                    "count": 1
+                }
+            ],
+            "seconds": 5
+        },
+        {
+            "id": "cooked_porkchop",
+            "type": "smelting",
+            "output": {
+                "item": "cooked_porkchop",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "porkchop",
+                    "count": 1
+                }
+            ],
+            "seconds": 10
+        },
+        {
+            "id": "cooked_porkchop_from_smoking",
+            "type": "smoking",
+            "output": {
+                "item": "cooked_porkchop",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "porkchop",
+                    "count": 1
+                }
+            ],
+            "seconds": 5
+        },
+        {
+            "id": "trade_farmer_wheat_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "wheat",
+                    "count": 20
+                }
+            ],
+            "profession": "farmer",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_farmer_carrot_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "carrot",
+                    "count": 22
+                }
+            ],
+            "profession": "farmer",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_farmer_emerald_bread",
+            "type": "trading",
+            "output": {
+                "item": "bread",
+                "count": 6
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 1
+                }
+            ],
+            "profession": "farmer",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_librarian_paper_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "paper",
+                    "count": 24
+                }
+            ],
+            "profession": "librarian",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_librarian_book_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "book",
+                    "count": 4
+                }
+            ],
+            "profession": "librarian",
+            "level": "apprentice",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_librarian_emerald_bookshelf",
+            "type": "trading",
+            "output": {
+                "item": "bookshelf",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 9
+                }
+            ],
+            "profession": "librarian",
+            "level": "novice",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_librarian_emerald_lantern",
+            "type": "trading",
+            "output": {
+                "item": "lantern",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 1
+                }
+            ],
+            "profession": "librarian",
+            "level": "apprentice",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_librarian_emerald_glass",
+            "type": "trading",
+            "output": {
+                "item": "glass",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 1
+                }
+            ],
+            "profession": "librarian",
+            "level": "journeyman",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_fletcher_stick_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "stick",
+                    "count": 32
+                }
+            ],
+            "profession": "fletcher",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_fletcher_string_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "string",
+                    "count": 14
+                }
+            ],
+            "profession": "fletcher",
+            "level": "journeyman",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_fisherman_string_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "string",
+                    "count": 20
+                }
+            ],
+            "profession": "fisherman",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_fisherman_coal_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "coal",
+                    "count": 10
+                }
+            ],
+            "profession": "fisherman",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_shepherd_white_wool_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "white_wool",
+                    "count": 18
+                }
+            ],
+            "profession": "shepherd",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_leatherworker_leather_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "leather",
+                    "count": 6
+                }
+            ],
+            "profession": "leatherworker",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_cleric_rotten_flesh_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "rotten_flesh",
+                    "count": 32
+                }
+            ],
+            "profession": "cleric",
+            "level": "novice",
+            "max_uses": 16
+        },
+        {
+            "id": "trade_cleric_gold_ingot_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "gold_ingot",
+                    "count": 3
+                }
+            ],
+            "profession": "cleric",
+            "level": "apprentice",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_cleric_emerald_redstone",
+            "type": "trading",
+            "output": {
+                "item": "redstone",
+                "count": 2
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 1
+                }
+            ],
+            "profession": "cleric",
+            "level": "novice",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_cleric_emerald_experience_bottle",
+            "type": "trading",
+            "output": {
+                "item": "experience_bottle",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "emerald",
+                    "count": 3
+                }
+            ],
+            "profession": "cleric",
+            "level": "master",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_butcher_dried_kelp_block_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "dried_kelp_block",
+                    "count": 10
+                }
+            ],
+            "profession": "butcher",
+            "level": "expert",
+            "max_uses": 12
+        },
+        {
+            "id": "trade_butcher_coal_emerald",
+            "type": "trading",
+            "output": {
+                "item": "emerald",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "coal",
+                    "count": 15
+                }
+            ],
+            "profession": "butcher",
+            "level": "apprentice",
+            "max_uses": 16
+        }
+    ]
+}
