@@ -49,25 +49,19 @@ class ScoringServiceTest extends TestCase
     }
 
     /**
-     * Test: calculateValue for bull (BULL) - inner bull / bullseye
+     * Test: calculateValue for bull - inner bull / bullseye (field 25, ring D)
      */
     public function test_calculate_value_bull(): void
     {
-        $this->assertEquals(50, $this->scoringService->calculateValue('50', 'BULL'));
-        // Field is ignored for bull
-        $this->assertEquals(50, $this->scoringService->calculateValue('25', 'BULL'));
-        $this->assertEquals(50, $this->scoringService->calculateValue('0', 'BULL'));
+        $this->assertEquals(50, $this->scoringService->calculateValue('25', 'D'));
     }
 
     /**
-     * Test: calculateValue for single bull (SBULL) - outer bull
+     * Test: calculateValue for single bull - outer bull (field 25, ring S)
      */
     public function test_calculate_value_single_bull(): void
     {
-        $this->assertEquals(25, $this->scoringService->calculateValue('25', 'SBULL'));
-        // Field is ignored for SBULL
-        $this->assertEquals(25, $this->scoringService->calculateValue('50', 'SBULL'));
-        $this->assertEquals(25, $this->scoringService->calculateValue('0', 'SBULL'));
+        $this->assertEquals(25, $this->scoringService->calculateValue('25', 'S'));
     }
 
     /**
@@ -147,11 +141,11 @@ class ScoringServiceTest extends TestCase
     public function test_calculate_value_case_sensitivity(): void
     {
         // Should work with uppercase (as per implementation)
-        $this->assertEquals(50, $this->scoringService->calculateValue('50', 'BULL'));
-        $this->assertEquals(25, $this->scoringService->calculateValue('25', 'SBULL'));
+        $this->assertEquals(50, $this->scoringService->calculateValue('25', 'D'));
+        $this->assertEquals(25, $this->scoringService->calculateValue('25', 'S'));
 
         // Lowercase should return 0 (no match)
-        $this->assertEquals(0, $this->scoringService->calculateValue('50', 'bull'));
-        $this->assertEquals(0, $this->scoringService->calculateValue('25', 'sbull'));
+        $this->assertEquals(0, $this->scoringService->calculateValue('25', 'd'));
+        $this->assertEquals(0, $this->scoringService->calculateValue('25', 's'));
     }
 }

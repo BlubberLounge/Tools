@@ -304,8 +304,8 @@ class X01EngineSubmitThrowTest extends TestCase
             'leg' => 1,
             'turn' => 1,
             'throw' => 1,
-            'field' => 50,
-            'ring' => 'BULL',
+            'field' => 25,
+            'ring' => 'D',
         ]);
 
         $this->assertEquals(DartGameStatus::DONE, $this->game->fresh()->status);

@@ -4,6 +4,7 @@ namespace Tests\Unit\Dart;
 
 use Tests\TestCase;
 use App\Services\Dart\ScoringService;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ScoringServiceTest extends TestCase
 {
@@ -15,15 +16,13 @@ class ScoringServiceTest extends TestCase
         $this->service = app(ScoringService::class);
     }
 
-    /**
-     * @dataProvider ringValuesProvider
-     */
+    #[DataProvider('ringValuesProvider')]
     public function test_calculate_value_by_ring_and_field(string $field, string $ring, int $expected): void
     {
         $this->assertEquals($expected, $this->service->calculateValue($field, $ring));
     }
 
-    public function ringValuesProvider(): array
+    public static function ringValuesProvider(): array
     {
         return [
             // Single ring values
@@ -39,8 +38,8 @@ class ScoringServiceTest extends TestCase
             ['5', 'T', 15],
             ['20', 'T', 60],
             // Bull values
-            ['0', 'BULL', 50],
-            ['0', 'SBULL', 25],
+            ['25', 'D', 50],
+            ['25', 'S', 25],
             // Invalid ring
             ['10', 'INVALID', 0],
             ['5', 'X', 0],
