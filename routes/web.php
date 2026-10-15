@@ -101,6 +101,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/chain-planner', [MinecraftController::class, 'showChainPlanner'])
             ->middleware('permission:view.minecraft.chain.planner')
             ->name('chain-planner');
+        Route::get('/farm-viewer', [MinecraftController::class, 'showFarmViewer'])
+            ->middleware('permission:view.minecraft.farm.viewer')
+            ->name('farm-viewer');
     });
 
     // route: /appointment/*

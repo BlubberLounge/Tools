@@ -4,6 +4,9 @@
 *.htaccess
 .claude
 
+# Minecraft block texture atlas: Mojang assets, built locally (scripts/minecraft/build-atlas.mjs)
+/public/minecraft/atlas/
+
 # Created by https://www.toptal.com/developers/gitignore/api/laravel,windows,visualstudiocode,dotenv,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=laravel,windows,visualstudiocode,dotenv,node
 

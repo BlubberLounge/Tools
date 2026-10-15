@@ -45,6 +45,14 @@ return [
             'route' => 'minecraft.chain-planner',
             'permission' => 'view.minecraft.chain.planner',
         ],
+        [
+            'id' => 'farm-viewer',
+            'title' => '3D farm viewer',
+            'description' => 'Fly through a farm design in 3D and step through it layer by layer, with a material list.',
+            'icon' => 'fa-solid fa-cubes',
+            'route' => 'minecraft.farm-viewer',
+            'permission' => 'view.minecraft.farm.viewer',
+        ],
     ],
 
 ];

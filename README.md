@@ -23,7 +23,7 @@ A collection of more or less useful management software written by the BlubberLo
 - User feedback system
 - FAQ
 - Api (+ OpenApi/Swagger Documentation)
-- Minecraft tools (anvil enchantment planner, farm module catalogue, farm chain planner)
+- Minecraft tools (anvil enchantment planner, farm module catalogue, farm chain planner, 3D farm viewer)
 
 ## 💭 Future ideas
 
@@ -269,6 +269,47 @@ per edge (one hopper line moves 9000 items per hour at 20 TPS).
   (`manual`, `auto`), `choices` (`{item: recipe id | "source"}`), `designs` (`{item: design id}`),
   `module_rates` (`{item: items per hour}`), `furnace_rates` (`{smelting|blasting|smoking: items per
   hour}`), `restocks_per_day` and `fuel`. A loop answers 422 with `data.loop`.
+
+**3D farm viewer** (`/minecraft/farm-viewer`, optional `?design={id}`, permission `view.minecraft.farm.viewer`):
+
+- 3D view on our own three.js renderer (npm `three`, bundled by Vite into a chunk that only loads
+  with the viewer): orbit mode (drag rotates, scroll zooms, right-drag pans; touch: one finger
+  rotates, two fingers zoom and pan), fly mode (`F`; WASD, Space/Shift, mouse look with pointer
+  lock, scroll = speed; hidden on touch devices and narrow screens), top-down preset (`T`), reset
+  (`R`), help overlay (`H`). Slice view: one layer along Y (top-down), X or Z with a slider and
+  arrow/Page keys, the nearest blocks behind the layer faded, block counts per layer and a
+  material list for the whole model in stacks and shulker boxes.
+- Renderer code: `resources/js/minecraft/viewer/` - `model.js` (model format, loader, validation),
+  `blocks.js` (block table lookup, face textures, material items), `shapes.js` (box models for
+  slabs, stairs, trapdoors, hoppers, rails, redstone parts, torches, fences, walls, panes, chests,
+  doors, ...), `mesher.js` (16^3 chunks, face culling against opaque neighbours and between equal
+  glass/water blocks, solid/cutout/translucent layers, shading baked into vertex colours),
+  `slice.js` (layers, counts, material list), `renderer.js` (three.js scene and controls).
+  Unknown shapes render as a cube with the block's texture; blocks missing from the table as grey
+  cubes.
+- Block table `resources/minecraft/viewer/blocks.json` (own data): per block id the shape, texture
+  names, render layer, tint, the flat fallback colour and the material-list item. Every block a
+  model uses must be listed (the model test checks it).
+- Models: one JSON file per model in `public/minecraft/models/{id}.json` (format documented in
+  `model.js`: size, palette with block properties, run-length encoded grid, source URL and
+  licence, optional `design` = farm catalogue design id, max 128 x 128 x 128). The page finds a
+  model by `?design=` (catalogue design id, then model id). The three committed models are
+  hand-built examples (`scripts/minecraft/build-example-models.mjs`), not published designs.
+- **Adding a model to a design:** take a public `.litematic`, `.schem` or structure `.nbt` whose
+  licence allows redistribution and run
+  `node scripts/minecraft/convert-schematic.mjs <file> --id <model-id> --name "<name>" --design <catalogue-design-id> --source-url <url> --license "<licence>" [--author "<name>"] [--version 1.21]`.
+  The converter trims empty borders, keeps only the block properties the viewer uses and warns
+  about blocks missing from the block table; add those, then run `php artisan test tests/Unit/Minecraft`
+  and `npm run test:js` (both validate every committed model).
+- **Textures:** Minecraft block textures are Mojang assets and are not committed. Build the atlas
+  locally from a client jar you own:
+  `node scripts/minecraft/build-atlas.mjs "%APPDATA%/.minecraft/versions/<version>/<version>.jar"`.
+  It writes `public/minecraft/atlas/atlas.png` and `atlas.json` (git-ignored) with the first frame
+  of every texture the block table and the models use. Without an atlas the viewer draws flat
+  colours from the block table; with it the help overlay credits Mojang. The script never
+  downloads anything.
+- JS tests: `npm run test:js` (vitest, `tests/js/`): model loader, mesher culling and fallback,
+  shapes, slice and material list, NBT and the three schematic formats.
 
 ## ✌️ Other
 

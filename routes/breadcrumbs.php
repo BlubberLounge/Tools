@@ -96,6 +96,12 @@ Breadcrumbs::for('minecraft.chain-planner', function (BreadcrumbTrail $trail)
     $trail->push(__('farm chain planner'), route('minecraft.chain-planner'));
 });
 
+Breadcrumbs::for('minecraft.farm-viewer', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('3D farm viewer'), route('minecraft.farm-viewer'));
+});
+
 /**
  *
  * User

@@ -8,3 +8,6 @@
 
 /.github export-ignore
 CHANGELOG.md export-ignore
+
+# Node scripts carry a shebang; CRLF breaks it
+*.mjs text eol=lf

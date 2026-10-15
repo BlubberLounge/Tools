@@ -1,0 +1,31 @@
+{
+    "format": 1,
+    "id": "example-kelp-column",
+    "design": null,
+    "name": "Kelp column (example)",
+    "version": "1.21",
+    "size": [5,13,5],
+    "palette": [
+        {"name":"minecraft:air"},
+        {"name":"minecraft:stone_bricks"},
+        {"name":"minecraft:chest","properties":{"facing":"south"}},
+        {"name":"minecraft:comparator","properties":{"facing":"west"}},
+        {"name":"minecraft:redstone_lamp"},
+        {"name":"minecraft:lantern"},
+        {"name":"minecraft:glass"},
+        {"name":"minecraft:hopper","properties":{"facing":"down"}},
+        {"name":"minecraft:oak_planks"},
+        {"name":"minecraft:ladder","properties":{"facing":"north"}},
+        {"name":"minecraft:sand"},
+        {"name":"minecraft:kelp_plant"},
+        {"name":"minecraft:redstone_block"},
+        {"name":"minecraft:sticky_piston","properties":{"facing":"south"}},
+        {"name":"minecraft:redstone_wire"},
+        {"name":"minecraft:observer","properties":{"facing":"south"}},
+        {"name":"minecraft:repeater","properties":{"facing":"north"}},
+        {"name":"minecraft:kelp"},
+        {"name":"minecraft:water","properties":{"level":"0"}}
+    ],
+    "blocks": [12,1,1,2,1,3,1,4,10,1,1,5,5,0,3,6,2,0,1,6,1,7,1,6,1,0,1,8,3,6,1,0,1,9,3,0,1,5,6,0,3,6,2,0,1,6,1,10,1,6,1,0,1,8,3,6,1,0,1,9,10,0,3,6,2,0,1,6,1,11,1,6,1,0,1,8,3,6,1,0,1,9,6,0,1,12,3,0,1,6,1,13,1,6,2,0,1,6,1,11,1,6,1,0,1,8,3,6,1,0,1,9,6,0,1,14,3,0,1,6,1,15,1,6,2,0,1,6,1,11,1,6,2,0,3,6,8,0,1,16,3,0,3,6,2,0,1,6,1,11,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,11,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,11,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,11,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,11,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,17,1,6,2,0,3,6,12,0,3,6,2,0,1,6,1,18,1,6,2,0,3,6,6,0],
+    "source": {"url":"https://github.com/BlubberLounge/Tools","author":"BlubberLounge Tools","license":"MIT (own example)","note":"Hand-built example layout to show the viewer, not a published design and not tested in game."}
+}
