@@ -95,6 +95,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/anvil-planner', [MinecraftController::class, 'showAnvilPlanner'])
             ->middleware('permission:view.minecraft.anvil.planner')
             ->name('anvil-planner');
+        Route::get('/farm-viewer', [MinecraftController::class, 'showFarmViewer'])
+            ->middleware('permission:view.minecraft.farm.viewer')
+            ->name('farm-viewer');
     });
 
     // route: /appointment/*

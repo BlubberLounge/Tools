@@ -84,6 +84,12 @@ Breadcrumbs::for('minecraft.anvil-planner', function (BreadcrumbTrail $trail)
     $trail->push(__('anvil enchantment planner'), route('minecraft.anvil-planner'));
 });
 
+Breadcrumbs::for('minecraft.farm-viewer', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('3D farm viewer'), route('minecraft.farm-viewer'));
+});
+
 /**
  *
  * User

@@ -248,6 +248,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.anvil.planner',
                 'description'   => 'Can use the Minecraft anvil enchantment planner and its API',
             ],
+            [
+                'name'          => 'Can Use Minecraft Farm Viewer',
+                'slug'          => 'view.minecraft.farm.viewer',
+                'description'   => 'Can use the Minecraft 3D farm viewer',
+            ],
         ];
     }
 }

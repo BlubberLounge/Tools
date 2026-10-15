@@ -28,6 +28,7 @@ export default defineConfig({
 
                 // Minecraft
                 'resources/js/minecraft/anvilPlanner.js',
+                'resources/js/minecraft/farmViewer.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',
@@ -49,6 +50,7 @@ export default defineConfig({
                 'resources/sass/dartboard.scss',
                 'resources/sass/dartboardResult.scss',
                 'resources/css/minecraft-anvil.css',
+                'resources/css/minecraft-farm-viewer.css',
             ],
             refresh: true,
         }),
