@@ -1,0 +1,1729 @@
+{
+    "version": "1.21",
+    "name": "Java Edition 1.21",
+    "released": "2024-06-13",
+    "sources": [
+        {
+            "title": "Anvil mechanics",
+            "url": "https://minecraft.wiki/w/Anvil_mechanics",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Enchanting",
+            "url": "https://minecraft.wiki/w/Enchanting",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Mace",
+            "url": "https://minecraft.wiki/w/Mace",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Experience",
+            "url": "https://minecraft.wiki/w/Experience",
+            "retrieved": "2026-10-15"
+        }
+    ],
+    "notes": "1.21.0 (Tricky Trials): mace with Density, Breach and Wind Burst; Smite, Bane of Arthropods and Fire Aspect apply to the mace; Density, Breach, Smite and Bane of Arthropods exclude each other. No copper tools or armour (1.21.9), no spears or Lunge (1.21.11).",
+    "anvil": {
+        "level_cap": 39,
+        "prior_work_penalty": "2^n-1",
+        "incompatible_penalty": 1
+    },
+    "xp_sources": {
+        "mobs": [
+            {
+                "id": "zombie",
+                "name": "Zombie",
+                "xp": 5
+            },
+            {
+                "id": "skeleton",
+                "name": "Skeleton",
+                "xp": 5
+            },
+            {
+                "id": "creeper",
+                "name": "Creeper",
+                "xp": 5
+            },
+            {
+                "id": "spider",
+                "name": "Spider",
+                "xp": 5
+            },
+            {
+                "id": "cave_spider",
+                "name": "Cave Spider",
+                "xp": 5
+            },
+            {
+                "id": "enderman",
+                "name": "Enderman",
+                "xp": 5
+            },
+            {
+                "id": "witch",
+                "name": "Witch",
+                "xp": 5
+            },
+            {
+                "id": "drowned",
+                "name": "Drowned",
+                "xp": 5
+            },
+            {
+                "id": "husk",
+                "name": "Husk",
+                "xp": 5
+            },
+            {
+                "id": "stray",
+                "name": "Stray",
+                "xp": 5
+            },
+            {
+                "id": "bogged",
+                "name": "Bogged",
+                "xp": 5
+            },
+            {
+                "id": "phantom",
+                "name": "Phantom",
+                "xp": 5
+            },
+            {
+                "id": "ghast",
+                "name": "Ghast",
+                "xp": 5
+            },
+            {
+                "id": "shulker",
+                "name": "Shulker",
+                "xp": 5
+            },
+            {
+                "id": "silverfish",
+                "name": "Silverfish",
+                "xp": 5
+            },
+            {
+                "id": "wither_skeleton",
+                "name": "Wither Skeleton",
+                "xp": 5
+            },
+            {
+                "id": "piglin",
+                "name": "Piglin",
+                "xp": 5
+            },
+            {
+                "id": "zombified_piglin",
+                "name": "Zombified Piglin",
+                "xp": 5
+            },
+            {
+                "id": "hoglin",
+                "name": "Hoglin",
+                "xp": 5
+            },
+            {
+                "id": "zoglin",
+                "name": "Zoglin",
+                "xp": 5
+            },
+            {
+                "id": "pillager",
+                "name": "Pillager",
+                "xp": 5
+            },
+            {
+                "id": "vindicator",
+                "name": "Vindicator",
+                "xp": 5
+            },
+            {
+                "id": "vex",
+                "name": "Vex",
+                "xp": 5
+            },
+            {
+                "id": "endermite",
+                "name": "Endermite",
+                "xp": 3
+            },
+            {
+                "id": "slime_large",
+                "name": "Slime (large)",
+                "xp": 4
+            },
+            {
+                "id": "magma_cube_large",
+                "name": "Magma Cube (large)",
+                "xp": 4
+            },
+            {
+                "id": "blaze",
+                "name": "Blaze",
+                "xp": 10
+            },
+            {
+                "id": "breeze",
+                "name": "Breeze",
+                "xp": 10
+            },
+            {
+                "id": "guardian",
+                "name": "Guardian",
+                "xp": 10
+            },
+            {
+                "id": "elder_guardian",
+                "name": "Elder Guardian",
+                "xp": 10
+            },
+            {
+                "id": "evoker",
+                "name": "Evoker",
+                "xp": 10
+            },
+            {
+                "id": "ravager",
+                "name": "Ravager",
+                "xp": 20
+            },
+            {
+                "id": "piglin_brute",
+                "name": "Piglin Brute",
+                "xp": 20
+            },
+            {
+                "id": "wither",
+                "name": "Wither",
+                "xp": 50
+            }
+        ],
+        "smelting": [
+            {
+                "id": "cactus",
+                "name": "Cactus (smelted to green dye)",
+                "xp": 1.0
+            }
+        ]
+    },
+    "exclusive_sets": {
+        "armor": [
+            "protection",
+            "blast_protection",
+            "fire_protection",
+            "projectile_protection"
+        ],
+        "boots": [
+            "frost_walker",
+            "depth_strider"
+        ],
+        "bow": [
+            "infinity",
+            "mending"
+        ],
+        "crossbow": [
+            "multishot",
+            "piercing"
+        ],
+        "damage": [
+            "sharpness",
+            "smite",
+            "bane_of_arthropods",
+            "impaling",
+            "density",
+            "breach"
+        ],
+        "mining": [
+            "fortune",
+            "silk_touch"
+        ],
+        "riptide": [
+            "loyalty",
+            "channeling"
+        ]
+    },
+    "enchantments": [
+        {
+            "id": "aqua_affinity",
+            "name": "Aqua Affinity",
+            "max_level": 1,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "bane_of_arthropods",
+            "name": "Bane of Arthropods",
+            "max_level": 5,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "binding_curse",
+            "name": "Curse of Binding",
+            "max_level": 1,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": true
+        },
+        {
+            "id": "blast_protection",
+            "name": "Blast Protection",
+            "max_level": 4,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "armor",
+            "curse": false
+        },
+        {
+            "id": "breach",
+            "name": "Breach",
+            "max_level": 4,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "channeling",
+            "name": "Channeling",
+            "max_level": 1,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "density",
+            "name": "Density",
+            "max_level": 5,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "depth_strider",
+            "name": "Depth Strider",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "boots",
+            "curse": false
+        },
+        {
+            "id": "efficiency",
+            "name": "Efficiency",
+            "max_level": 5,
+            "item_multiplier": 1,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "feather_falling",
+            "name": "Feather Falling",
+            "max_level": 4,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "fire_aspect",
+            "name": "Fire Aspect",
+            "max_level": 2,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "fire_protection",
+            "name": "Fire Protection",
+            "max_level": 4,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": "armor",
+            "curse": false
+        },
+        {
+            "id": "flame",
+            "name": "Flame",
+            "max_level": 1,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "fortune",
+            "name": "Fortune",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "mining",
+            "curse": false
+        },
+        {
+            "id": "frost_walker",
+            "name": "Frost Walker",
+            "max_level": 2,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "boots",
+            "curse": false
+        },
+        {
+            "id": "impaling",
+            "name": "Impaling",
+            "max_level": 5,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "infinity",
+            "name": "Infinity",
+            "max_level": 1,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": "bow",
+            "curse": false
+        },
+        {
+            "id": "knockback",
+            "name": "Knockback",
+            "max_level": 2,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "looting",
+            "name": "Looting",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "loyalty",
+            "name": "Loyalty",
+            "max_level": 3,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "luck_of_the_sea",
+            "name": "Luck of the Sea",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "lure",
+            "name": "Lure",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "mending",
+            "name": "Mending",
+            "max_level": 1,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "multishot",
+            "name": "Multishot",
+            "max_level": 1,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "crossbow",
+            "curse": false
+        },
+        {
+            "id": "piercing",
+            "name": "Piercing",
+            "max_level": 4,
+            "item_multiplier": 1,
+            "book_multiplier": 1,
+            "exclusive_set": "crossbow",
+            "curse": false
+        },
+        {
+            "id": "power",
+            "name": "Power",
+            "max_level": 5,
+            "item_multiplier": 1,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "projectile_protection",
+            "name": "Projectile Protection",
+            "max_level": 4,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": "armor",
+            "curse": false
+        },
+        {
+            "id": "protection",
+            "name": "Protection",
+            "max_level": 4,
+            "item_multiplier": 1,
+            "book_multiplier": 1,
+            "exclusive_set": "armor",
+            "curse": false
+        },
+        {
+            "id": "punch",
+            "name": "Punch",
+            "max_level": 2,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "quick_charge",
+            "name": "Quick Charge",
+            "max_level": 3,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "respiration",
+            "name": "Respiration",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "riptide",
+            "name": "Riptide",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": "riptide",
+            "curse": false
+        },
+        {
+            "id": "sharpness",
+            "name": "Sharpness",
+            "max_level": 5,
+            "item_multiplier": 1,
+            "book_multiplier": 1,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "silk_touch",
+            "name": "Silk Touch",
+            "max_level": 1,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": "mining",
+            "curse": false
+        },
+        {
+            "id": "smite",
+            "name": "Smite",
+            "max_level": 5,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": "damage",
+            "curse": false
+        },
+        {
+            "id": "soul_speed",
+            "name": "Soul Speed",
+            "max_level": 3,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "sweeping_edge",
+            "name": "Sweeping Edge",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "swift_sneak",
+            "name": "Swift Sneak",
+            "max_level": 3,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "thorns",
+            "name": "Thorns",
+            "max_level": 3,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "unbreaking",
+            "name": "Unbreaking",
+            "max_level": 3,
+            "item_multiplier": 2,
+            "book_multiplier": 1,
+            "exclusive_set": null,
+            "curse": false
+        },
+        {
+            "id": "vanishing_curse",
+            "name": "Curse of Vanishing",
+            "max_level": 1,
+            "item_multiplier": 8,
+            "book_multiplier": 4,
+            "exclusive_set": null,
+            "curse": true
+        },
+        {
+            "id": "wind_burst",
+            "name": "Wind Burst",
+            "max_level": 3,
+            "item_multiplier": 4,
+            "book_multiplier": 2,
+            "exclusive_set": null,
+            "curse": false
+        }
+    ],
+    "items": [
+        {
+            "id": "wooden_sword",
+            "name": "Wooden Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "stone_sword",
+            "name": "Stone Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_sword",
+            "name": "Iron Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_sword",
+            "name": "Golden Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_sword",
+            "name": "Diamond Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_sword",
+            "name": "Netherite Sword",
+            "category": "Swords",
+            "enchantments": [
+                "bane_of_arthropods",
+                "fire_aspect",
+                "knockback",
+                "looting",
+                "mending",
+                "sharpness",
+                "smite",
+                "sweeping_edge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "wooden_axe",
+            "name": "Wooden Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "stone_axe",
+            "name": "Stone Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_axe",
+            "name": "Iron Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_axe",
+            "name": "Golden Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_axe",
+            "name": "Diamond Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_axe",
+            "name": "Netherite Axe",
+            "category": "Axes",
+            "enchantments": [
+                "bane_of_arthropods",
+                "efficiency",
+                "fortune",
+                "mending",
+                "sharpness",
+                "silk_touch",
+                "smite",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "wooden_pickaxe",
+            "name": "Wooden Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "stone_pickaxe",
+            "name": "Stone Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_pickaxe",
+            "name": "Iron Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_pickaxe",
+            "name": "Golden Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_pickaxe",
+            "name": "Diamond Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_pickaxe",
+            "name": "Netherite Pickaxe",
+            "category": "Pickaxes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "wooden_shovel",
+            "name": "Wooden Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "stone_shovel",
+            "name": "Stone Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_shovel",
+            "name": "Iron Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_shovel",
+            "name": "Golden Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_shovel",
+            "name": "Diamond Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_shovel",
+            "name": "Netherite Shovel",
+            "category": "Shovels",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "wooden_hoe",
+            "name": "Wooden Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "stone_hoe",
+            "name": "Stone Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_hoe",
+            "name": "Iron Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_hoe",
+            "name": "Golden Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_hoe",
+            "name": "Diamond Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_hoe",
+            "name": "Netherite Hoe",
+            "category": "Hoes",
+            "enchantments": [
+                "efficiency",
+                "fortune",
+                "mending",
+                "silk_touch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "leather_helmet",
+            "name": "Leather Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "chainmail_helmet",
+            "name": "Chainmail Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_helmet",
+            "name": "Iron Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_helmet",
+            "name": "Golden Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_helmet",
+            "name": "Diamond Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_helmet",
+            "name": "Netherite Helmet",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "turtle_helmet",
+            "name": "Turtle Shell",
+            "category": "Helmets",
+            "enchantments": [
+                "aqua_affinity",
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "respiration",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "leather_chestplate",
+            "name": "Leather Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "chainmail_chestplate",
+            "name": "Chainmail Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_chestplate",
+            "name": "Iron Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_chestplate",
+            "name": "Golden Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_chestplate",
+            "name": "Diamond Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_chestplate",
+            "name": "Netherite Chestplate",
+            "category": "Chestplates",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "leather_leggings",
+            "name": "Leather Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "chainmail_leggings",
+            "name": "Chainmail Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_leggings",
+            "name": "Iron Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_leggings",
+            "name": "Golden Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_leggings",
+            "name": "Diamond Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_leggings",
+            "name": "Netherite Leggings",
+            "category": "Leggings",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "fire_protection",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "swift_sneak",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "leather_boots",
+            "name": "Leather Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "chainmail_boots",
+            "name": "Chainmail Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "iron_boots",
+            "name": "Iron Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "golden_boots",
+            "name": "Golden Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "diamond_boots",
+            "name": "Diamond Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "netherite_boots",
+            "name": "Netherite Boots",
+            "category": "Boots",
+            "enchantments": [
+                "binding_curse",
+                "blast_protection",
+                "depth_strider",
+                "feather_falling",
+                "fire_protection",
+                "frost_walker",
+                "mending",
+                "projectile_protection",
+                "protection",
+                "soul_speed",
+                "thorns",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "bow",
+            "name": "Bow",
+            "category": "Ranged weapons",
+            "enchantments": [
+                "flame",
+                "infinity",
+                "mending",
+                "power",
+                "punch",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "crossbow",
+            "name": "Crossbow",
+            "category": "Ranged weapons",
+            "enchantments": [
+                "mending",
+                "multishot",
+                "piercing",
+                "quick_charge",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "trident",
+            "name": "Trident",
+            "category": "Ranged weapons",
+            "enchantments": [
+                "channeling",
+                "impaling",
+                "loyalty",
+                "mending",
+                "riptide",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "mace",
+            "name": "Mace",
+            "category": "Melee weapons",
+            "enchantments": [
+                "bane_of_arthropods",
+                "breach",
+                "density",
+                "fire_aspect",
+                "mending",
+                "smite",
+                "unbreaking",
+                "vanishing_curse",
+                "wind_burst"
+            ]
+        },
+        {
+            "id": "elytra",
+            "name": "Elytra",
+            "category": "Equipment",
+            "enchantments": [
+                "binding_curse",
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "shield",
+            "name": "Shield",
+            "category": "Equipment",
+            "enchantments": [
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "fishing_rod",
+            "name": "Fishing Rod",
+            "category": "Tools",
+            "enchantments": [
+                "luck_of_the_sea",
+                "lure",
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "shears",
+            "name": "Shears",
+            "category": "Tools",
+            "enchantments": [
+                "efficiency",
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "flint_and_steel",
+            "name": "Flint and Steel",
+            "category": "Tools",
+            "enchantments": [
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "brush",
+            "name": "Brush",
+            "category": "Tools",
+            "enchantments": [
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "carrot_on_a_stick",
+            "name": "Carrot on a Stick",
+            "category": "Tools",
+            "enchantments": [
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "warped_fungus_on_a_stick",
+            "name": "Warped Fungus on a Stick",
+            "category": "Tools",
+            "enchantments": [
+                "mending",
+                "unbreaking",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "compass",
+            "name": "Compass",
+            "category": "Other",
+            "enchantments": [
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "carved_pumpkin",
+            "name": "Carved Pumpkin",
+            "category": "Other",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "skeleton_skull",
+            "name": "Skeleton Skull",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "wither_skeleton_skull",
+            "name": "Wither Skeleton Skull",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "zombie_head",
+            "name": "Zombie Head",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "creeper_head",
+            "name": "Creeper Head",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "piglin_head",
+            "name": "Piglin Head",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "dragon_head",
+            "name": "Dragon Head",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        },
+        {
+            "id": "player_head",
+            "name": "Player Head",
+            "category": "Heads",
+            "enchantments": [
+                "binding_curse",
+                "vanishing_curse"
+            ]
+        }
+    ]
+}
