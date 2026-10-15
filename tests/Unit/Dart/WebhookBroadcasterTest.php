@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Services\Dart\WebhookBroadcaster;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use App\Models\DartGame;
 
 class WebhookBroadcasterTest extends TestCase
@@ -18,12 +19,23 @@ class WebhookBroadcasterTest extends TestCase
         $this->broadcaster = app(WebhookBroadcaster::class);
     }
 
+    /**
+     * The broadcaster only reads the game id, so an unsaved game is enough.
+     */
+    private function makeGame(): DartGame
+    {
+        $game = new DartGame();
+        $game->id = (string) Str::uuid();
+
+        return $game;
+    }
+
     public function test_broadcast_sends_to_configured_webhooks(): void
     {
         Http::fake();
         config(['dart.webhooks' => ['https://example.com/webhook']]);
 
-        $game = DartGame::factory()->create();
+        $game = $this->makeGame();
         $this->broadcaster->broadcast($game, 'test.event', ['foo' => 'bar']);
 
         Http::assertSentCount(1);
@@ -34,7 +46,7 @@ class WebhookBroadcasterTest extends TestCase
         Http::fake();
         config(['dart.webhooks' => []]);
 
-        $game = DartGame::factory()->create();
+        $game = $this->makeGame();
         $this->broadcaster->broadcast($game, 'test.event', []);
 
         Http::assertSentCount(0);
@@ -45,13 +57,13 @@ class WebhookBroadcasterTest extends TestCase
         Http::fake();
         config(['dart.webhooks' => ['https://example.com/webhook']]);
 
-        $game = DartGame::factory()->create();
+        $game = $this->makeGame();
         $this->broadcaster->broadcast($game, 'game.started', ['test' => 'data']);
 
         Http::assertSent(function ($request) use ($game) {
             $json = $request->body();
             return str_contains($json, '"event":"game.started"')
-                && str_contains($json, '"game_id":' . $game->id)
+                && str_contains($json, '"game_id":"' . $game->id . '"')
                 && str_contains($json, '"timestamp"');
         });
     }
@@ -64,7 +76,7 @@ class WebhookBroadcasterTest extends TestCase
             'https://webhook2.com/endpoint',
         ]]);
 
-        $game = DartGame::factory()->create();
+        $game = $this->makeGame();
         $this->broadcaster->broadcast($game, 'test.event', []);
 
         Http::assertSentCount(2);
@@ -76,7 +88,7 @@ class WebhookBroadcasterTest extends TestCase
         Log::shouldReceive('warning')->once();
         config(['dart.webhooks' => ['https://example.com/webhook']]);
 
-        $game = DartGame::factory()->create();
+        $game = $this->makeGame();
         $this->broadcaster->broadcast($game, 'test.event', []);
     }
 }
