@@ -50,8 +50,13 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BA648SOw.css",
+    "file": "assets/app-B6nGz3Wi.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/minecraft-anvil.css": {
+    "file": "assets/minecraft-anvil-B08cCnnX.css",
+    "src": "resources/css/minecraft-anvil.css",
     "isEntry": true
   },
   "resources/js/IEC7064_page.js": {
@@ -188,6 +193,12 @@
     "file": "assets/invitation-aTs2hblG.js",
     "name": "invitation",
     "src": "resources/js/invitation.js",
+    "isEntry": true
+  },
+  "resources/js/minecraft/anvilPlanner.js": {
+    "file": "assets/anvilPlanner-DrozqlSo.js",
+    "name": "anvilPlanner",
+    "src": "resources/js/minecraft/anvilPlanner.js",
     "isEntry": true
   },
   "resources/js/moving-average.js": {
