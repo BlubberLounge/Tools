@@ -24,14 +24,12 @@ use App\Classes\UserSettings;
 use App\Enums\AcquaintanceStatus;
 use App\Enums\DartGameUserStatus;
 use Illuminate\Support\Collection;
-use NotificationChannels\WebPush\HasPushSubscriptions;
 
 
 class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLocalePreference
 {
     use HasFactory,
         Notifiable,
-        HasPushSubscriptions,
         HasApiTokens,
         HasRoleAndPermission,
         \OwenIt\Auditing\Auditable;

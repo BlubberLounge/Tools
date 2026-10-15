@@ -34,17 +34,17 @@ enum DartGameStatus: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartGameStatus::UNKOWN => 'var(--bs-gray)',
-            DartGameStatus::CREATED => 'var(--bs-success)',
-            DartGameStatus::STARTED => 'var(--bs-success)',
-            DartGameStatus::RUNNING => 'var(--bs-primary)',
-            DartGameStatus::DONE => 'var(--bs-warning)',
-            DartGameStatus::ABORTED => 'var(--bs-pink)',
-            DartGameStatus::ERROR => 'var(--bs-danger)',
-            DartGameStatus::INITIALISED => 'var(--bs-info)',
-            DartGameStatus::PAUSED => 'var(--bs-secondary)',
-            DartGameStatus::PLAYER_WON => 'var(--bs-success)',
-            DartGameStatus::FINISHED => 'var(--bs-warning)',
+            DartGameStatus::UNKOWN => '#6b7280',
+            DartGameStatus::CREATED => '#22c55e',
+            DartGameStatus::STARTED => '#22c55e',
+            DartGameStatus::RUNNING => '#3b82f6',
+            DartGameStatus::DONE => '#f59e0b',
+            DartGameStatus::ABORTED => '#ec4899',
+            DartGameStatus::ERROR => '#ef4444',
+            DartGameStatus::INITIALISED => '#06b6d4',
+            DartGameStatus::PAUSED => '#64748b',
+            DartGameStatus::PLAYER_WON => '#22c55e',
+            DartGameStatus::FINISHED => '#f59e0b',
         };
     }
 }

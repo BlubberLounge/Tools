@@ -23,7 +23,6 @@ use App\Models\Invitation;
 use App\Enums\InvitationStatus;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\BlubberLoungeController;
-use App\Http\Controllers\CocktailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,18 +50,6 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 // https://github.com/laravel/ui/blob/4.x/src/AuthRouteMethods.php
 Auth::routes(['verify' => true, 'register' => false]);
-
-// Route::get('/auth/redirect', function () {
-//     return Socialite::driver('google')->redirect();
-// })->name('auth.google.redirect');
-
-// Route::get('/auth/callback', function () {
-//     $user = Socialite::driver('google')->user();
-//     dd($user);
-
-//     // $user->token
-// })->name('auth.google.callback');
-
 
 /*
  * protected routes
@@ -97,16 +84,6 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
     Route::resource('/dart', DartController::class);
-
-    // route: /cocktail/*
-    // name: cocktail.*
-    Route::prefix('cocktail')->group(function () {
-        Route::name('cocktail.')->group(function ()
-        {
-
-        });
-    });
-    Route::resource('/cocktail', CocktailController::class);
 
     // route: /appointment/*
     // name: appointment.*

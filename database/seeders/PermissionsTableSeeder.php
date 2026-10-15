@@ -19,7 +19,6 @@ use App\Http\Controllers\HookahController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\TobaccoController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CocktailController;
 
 
 class PermissionsTableSeeder extends Seeder
@@ -55,7 +54,6 @@ class PermissionsTableSeeder extends Seeder
 
             // web
             AppointmentController::class,
-            CocktailController::class,
             DartController::class,
             DartGameController::class,
             FAQController::class,

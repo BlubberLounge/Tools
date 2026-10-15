@@ -30,9 +30,6 @@ class DatabaseSeeder extends Seeder
             HookahHeadSeeder::class,
             TobaccoSeeder::class,
 
-            // CocktailSeeder::class,
-            RealDataSeeder::class,
-
             DartGameSeeder::class,
         ]);
 

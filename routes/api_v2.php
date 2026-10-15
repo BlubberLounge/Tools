@@ -10,10 +10,8 @@ use App\Http\Controllers\Api\v2\DartSettingsController;
 use App\Http\Controllers\Api\v2\DartStatisticsController;
 use App\Http\Controllers\Api\v2\DartHistoryController;
 use App\Http\Controllers\Api\v2\AuthTokenExchangeController;
-use App\Http\Controllers\Api\v2\DartPushController;
 use App\Http\Controllers\Api\v2\AcquaintanceController;
 use App\Http\Controllers\Api\v2\FeedbackController;
-use App\Http\Controllers\Api\v2\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -112,24 +110,7 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function ()
     // Feedback from DartApp
     Route::post('feedback', [FeedbackController::class, 'store']);
 
-    // Push Notifications
-    Route::post('push/subscribe', [NotificationController::class, 'subscribe']);
-    Route::post('push/unsubscribe', [NotificationController::class, 'unsubscribe']);
 });
-
-// Public route for VAPID public key (no auth required)
-Route::get('push/vapid-public-key', [NotificationController::class, 'vapidPublicKey']);
-
-// Dart App Push Notifications (anonymous, rate limited)
-Route::prefix('dart-push')->middleware('throttle:10,1')->group(function () {
-    Route::get('vapid-key', [DartPushController::class, 'vapidPublicKey']);
-    Route::post('subscribe', [DartPushController::class, 'subscribe']);
-    Route::post('unsubscribe', [DartPushController::class, 'unsubscribe']);
-});
-
-// Admin route for sending notifications
-Route::post('dart-push/send', [DartPushController::class, 'sendUpdateNotification'])
-    ->middleware(['auth:sanctum', 'throttle:5,1']);
 
 // Dart App Feedback (anonymous, rate limited)
 Route::post('dart-feedback', [FeedbackController::class, 'storeAnonymous'])

@@ -26,9 +26,9 @@ enum DartGameUserStatus: string implements EnumTypeOrStatus
     {
         return match($this)
         {
-            DartGameUserStatus::PENDING => 'var(--bs-gray)',
-            DartGameUserStatus::ACCEPTED => 'var(--bs-success)',
-            DartGameUserStatus::DENIED => 'var(--bs-danger)',
+            DartGameUserStatus::PENDING => '#6b7280',
+            DartGameUserStatus::ACCEPTED => '#22c55e',
+            DartGameUserStatus::DENIED => '#ef4444',
         };
     }
 }

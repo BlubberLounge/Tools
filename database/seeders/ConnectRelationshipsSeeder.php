@@ -57,14 +57,10 @@ class ConnectRelationshipsSeeder extends Seeder
             'viewany.f.a.q',
             'view.airsoft',
             'view.iec7064',
-            'viewany.cocktail'
         ], [$roleUnverified]);
 
         // Trusted
         $this->attachRoleToPermissions($roleTrusted, [
-            'view.cocktail',
-            'create.cocktail',
-            'update.cocktail'
         ], [$roleUser]);
 
         // Dart - Player

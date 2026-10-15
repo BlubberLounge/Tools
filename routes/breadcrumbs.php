@@ -67,17 +67,6 @@ Breadcrumbs::for('dart.game.index', function (BreadcrumbTrail $trail)
 
 /**
  *
- * Cocktails
- *
- */
-Breadcrumbs::for('cocktail.index', function (BreadcrumbTrail $trail)
-{
-    $trail->parent('home');
-    $trail->push('cocktail list', route('cocktail.index'));
-});
-
-/**
- *
  * User
  *
  */
