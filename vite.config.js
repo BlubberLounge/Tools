@@ -26,6 +26,9 @@ export default defineConfig({
                 'resources/js/dart/game/dartResult.js',
                 'resources/js/dart/game/dartResultHeatmap.js',
 
+                // Minecraft
+                'resources/js/minecraft/anvilPlanner.js',
+
                 // Battery simulator
                 'resources/js/simApp.js',
 
@@ -45,6 +48,7 @@ export default defineConfig({
                 'resources/sass/dart.scss',
                 'resources/sass/dartboard.scss',
                 'resources/sass/dartboardResult.scss',
+                'resources/css/minecraft-anvil.css',
             ],
             refresh: true,
         }),

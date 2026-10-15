@@ -54,6 +54,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'password',
             'password_confirmation',
         ]);
+
+        // role/permission middleware throws plain exceptions; answer them with 403 instead of 500
+        $exceptions->map(
+            \jeremykenedy\LaravelRoles\App\Exceptions\AccessDeniedException::class,
+            fn ($e) => new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException($e->getMessage(), $e)
+        );
     })
     ->booting(function () {
         // Configure rate limiting

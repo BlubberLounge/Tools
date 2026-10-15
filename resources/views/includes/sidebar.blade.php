@@ -45,6 +45,24 @@
             </li>
         @endif
 
+        {{-- Minecraft: entries come from config/minecraft.php (App\Minecraft\ToolRegistry) --}}
+        @php($minecraftTools = \App\Minecraft\ToolRegistry::visibleTo(Auth::user()))
+        @if(Auth::user()->hasPermission(\App\Minecraft\ToolRegistry::SECTION_PERMISSION) || count($minecraftTools) > 0)
+            <li>
+                <details {{ active(\App\Minecraft\ToolRegistry::routeNames()) ? 'open' : '' }}>
+                    <summary><i class="fa-solid fa-cube w-4 text-center"></i>{{ __('minecraft') }}</summary>
+                    <ul>
+                        @permission(\App\Minecraft\ToolRegistry::SECTION_PERMISSION)
+                            <li><a href="{{ route('minecraft.index') }}" class="{{ active('minecraft.index') }}"><i class="fa-solid fa-table-cells-large w-4 text-center"></i>{{ __('minecraft tools') }}</a></li>
+                        @endpermission
+                        @foreach($minecraftTools as $tool)
+                            <li><a href="{{ route($tool['route']) }}" class="{{ active($tool['route']) }}"><i class="{{ $tool['icon'] }} w-4 text-center"></i>{{ __($tool['title']) }}</a></li>
+                        @endforeach
+                    </ul>
+                </details>
+            </li>
+        @endif
+
         @permission('view.battery')
             <li><a href="{{ route('battery') }}" class="{{ active('battery') }}"><i class="fa-solid fa-battery-three-quarters fa-rotate-270 w-4 text-center"></i>{{ __('battery simulation') }}</a></li>
         @endpermission

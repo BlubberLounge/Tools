@@ -237,7 +237,17 @@ class PermissionsTableSeeder extends Seeder
                 'name'          => 'Can View IEC7064 Checksum calculator',
                 'slug'          => 'view.iec7064',
                 'description'   => 'Can view iec7064',
-            ]
+            ],
+            [
+                'name'          => 'Can View Minecraft Tools',
+                'slug'          => 'view.minecraft',
+                'description'   => 'Can view the Minecraft tools overview',
+            ],
+            [
+                'name'          => 'Can Use Minecraft Anvil Planner',
+                'slug'          => 'view.minecraft.anvil.planner',
+                'description'   => 'Can use the Minecraft anvil enchantment planner and its API',
+            ],
         ];
     }
 }

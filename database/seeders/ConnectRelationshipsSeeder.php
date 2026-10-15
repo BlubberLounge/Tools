@@ -57,6 +57,8 @@ class ConnectRelationshipsSeeder extends Seeder
             'viewany.f.a.q',
             'view.airsoft',
             'view.iec7064',
+            'view.minecraft',
+            'view.minecraft.anvil.planner',
         ], [$roleUnverified]);
 
         // Trusted

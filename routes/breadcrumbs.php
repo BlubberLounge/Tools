@@ -65,6 +65,25 @@ Breadcrumbs::for('dart.game.index', function (BreadcrumbTrail $trail)
     $trail->push('dart game', route('dart.game.index'));
 });
 
+
+
+/**
+ *
+ * Minecraft
+ *
+ */
+Breadcrumbs::for('minecraft.index', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('home');
+    $trail->push(__('minecraft'), route('minecraft.index'), ['faIcon' => 'fa-solid fa-cube']);
+});
+
+Breadcrumbs::for('minecraft.anvil-planner', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('anvil enchantment planner'), route('minecraft.anvil-planner'));
+});
+
 /**
  *
  * User

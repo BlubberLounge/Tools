@@ -23,6 +23,7 @@ A collection of more or less useful management software written by the BlubberLo
 - User feedback system
 - FAQ
 - Api (+ OpenApi/Swagger Documentation)
+- Minecraft tools (anvil enchantment planner)
 
 ## 💭 Future ideas
 
@@ -135,6 +136,38 @@ php artisan test --parallel --testsuite=Feature --processes=4
 ```
 
 [Laravel 10.x Testing Documentation](https://laravel.com/docs/10.x/testing)
+
+### Minecraft tools ⛏️
+
+The sidebar group `Minecraft` and the overview page `/minecraft` are built from the registry in
+`config/minecraft.php` (read by `App\Minecraft\ToolRegistry`).
+
+**Adding a tool:** build its page and named route, add a permission (`PermissionsTableSeeder`,
+`ConnectRelationshipsSeeder` and a migration for existing databases), then add one entry
+(`id`, `title`, `description`, `icon`, `route`, `permission`) to `config/minecraft.php`. Entries
+whose route does not exist are skipped, so unbuilt tools never show up.
+
+**Anvil enchantment planner** (`/minecraft/anvil-planner`, permission `view.minecraft.anvil.planner`):
+
+- Data: one JSON file per Java version in `resources/minecraft/enchantments/{version}.json`, written
+  by hand from the Minecraft Wiki. Each file lists its sources with the retrieval date, the anvil
+  constants (`level_cap`, `prior_work_penalty`, `incompatible_penalty`), XP sources (mob drops,
+  smelting XP), exclusive sets, enchantments (max level, item and book multiplier, exclusive set,
+  curse flag) and every survival-enchantable item with its allowed enchantments.
+- Exclusive sets work like the game: two enchantments clash when one lists the other in its
+  `exclusive_set` (Riptide excludes Loyalty and Channeling, which still go together).
+- Adding a version: copy the newest file to `{version}.json`, set `version`, `name`, `released` and
+  `sources`, apply the changes from the wiki and run
+  `php artisan test tests/Unit/Minecraft` - `EnchantmentDataTest` validates every file (known
+  fields, no unknown ids, no exclusive set with a single member). No code change is needed; the
+  version picker lists all files, newest first.
+- Planner: `App\Minecraft\AnvilPlanner` finds the cheapest order with a dynamic program over book
+  subsets (every step at or below the level cap, prior-work penalty `2^n - 1`, item always in the
+  left slot). When no order fits, it returns the cheapest order anyway with `possible: false` and
+  the first step that is too expensive. `App\Minecraft\Experience` converts levels to XP points.
+- API (session or Sanctum token, 60 requests per minute): `GET /api/v1/minecraft/versions`,
+  `GET /api/v1/minecraft/versions/{version}`, `POST /api/v1/minecraft/anvil/plan` with
+  `version`, `item`, `enchantments` (`{id: level}`), optional `present` and `prior_work`.
 
 ## ✌️ Other
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MailTrackerController;
+use App\Http\Controllers\MinecraftController;
 
 use App\Mail\InvitationMail;
 use App\Models\Invitation;
@@ -84,6 +85,17 @@ Route::middleware(['auth', 'verified'])->group(function ()
         });
     });
     Route::resource('/dart', DartController::class);
+
+    // route: /minecraft/*
+    // name: minecraft.*
+    Route::prefix('minecraft')->name('minecraft.')->group(function () {
+        Route::get('/', [MinecraftController::class, 'index'])
+            ->middleware('permission:view.minecraft')
+            ->name('index');
+        Route::get('/anvil-planner', [MinecraftController::class, 'showAnvilPlanner'])
+            ->middleware('permission:view.minecraft.anvil.planner')
+            ->name('anvil-planner');
+    });
 
     // route: /appointment/*
     // name: appointment.*

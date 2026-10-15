@@ -375,6 +375,111 @@
                 }
             }
         },
+        "/minecraft/versions": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Minecraft versions with anvil data",
+                "description": "Java versions that have an enchantment data file, newest first",
+                "operationId": "minecraftVersions",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/minecraft/versions/{version}": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Items and enchantments of one version",
+                "operationId": "minecraftVersion",
+                "parameters": [
+                    {
+                        "name": "version",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "26.3"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Unknown version"
+                    }
+                }
+            }
+        },
+        "/minecraft/anvil/plan": {
+            "post": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Cheapest anvil order for a set of enchanted books",
+                "operationId": "minecraftAnvilPlan",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "version",
+                                    "item",
+                                    "enchantments"
+                                ],
+                                "properties": {
+                                    "version": {
+                                        "type": "string",
+                                        "example": "26.3"
+                                    },
+                                    "item": {
+                                        "type": "string",
+                                        "example": "diamond_sword"
+                                    },
+                                    "enchantments": {
+                                        "type": "object",
+                                        "example": {
+                                            "sharpness": 5,
+                                            "looting": 3
+                                        }
+                                    },
+                                    "present": {
+                                        "type": "object",
+                                        "example": {
+                                            "mending": 1
+                                        }
+                                    },
+                                    "prior_work": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plan (possible=false when a step would be too expensive)"
+                    },
+                    "422": {
+                        "description": "Invalid selection"
+                    }
+                }
+            }
+        },
         "/timetable": {
             "get": {
                 "tags": [
@@ -948,6 +1053,26 @@
         {
             "name": "Throw",
             "description": "Dart Throw Endpoints"
+        },
+        {
+            "name": "Acquaintances",
+            "description": "Acquaintances"
+        },
+        {
+            "name": "Minecraft",
+            "description": "Minecraft"
+        },
+        {
+            "name": "Timetables",
+            "description": "Timetables"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        },
+        {
+            "name": "Utillities",
+            "description": "Utillities"
         }
     ]
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
 use App\Http\Controllers\Api\v1\DartExpectationDataController;
+use App\Http\Controllers\Api\v1\MinecraftController;
 use App\Http\Controllers\Api\v1\NotificationController;
 use App\Http\Controllers\Api\v1\TimetableController;
 use App\Http\Controllers\Api\v1\UserTimetableController;
@@ -94,4 +95,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 
     Route::resource('notification', NotificationController::class)
         ->only(['index', 'show', 'update']);
+
+
+    // route: /minecraft/*
+    // name: minecraft.*
+    Route::prefix('minecraft')->name('api.minecraft.')
+        ->middleware(['permission:view.minecraft.anvil.planner', 'throttle:60,1'])
+        ->group(function () {
+            Route::get('/versions', [MinecraftController::class, 'versions'])->name('versions');
+            Route::get('/versions/{version}', [MinecraftController::class, 'version'])
+                ->where('version', '[0-9.]+')
+                ->name('version');
+            Route::post('/anvil/plan', [MinecraftController::class, 'plan'])->name('anvil.plan');
+        });
 });
