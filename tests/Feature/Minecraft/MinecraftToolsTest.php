@@ -76,20 +76,20 @@ class MinecraftToolsTest extends TestCase
     public function test_unbuilt_tools_do_not_appear(): void
     {
         config(['minecraft.tools' => array_merge(config('minecraft.tools'), [[
-            'id' => 'chain-planner',
-            'title' => 'farm chain planner',
+            'id' => 'unbuilt-test-tool',
+            'title' => 'unbuilt test tool',
             'description' => 'not built yet',
-            'icon' => 'fa-solid fa-diagram-project',
-            'route' => 'minecraft.chain-planner',
+            'icon' => 'fa-solid fa-flask',
+            'route' => 'minecraft.unbuilt-test-tool',
             'permission' => 'view.minecraft',
         ]])]);
 
-        $this->assertSame(['anvil-planner', 'farm-catalogue'], array_column(ToolRegistry::all(), 'id'));
-        $this->assertNull(ToolRegistry::find('chain-planner'));
+        $this->assertNotContains('unbuilt-test-tool', array_column(ToolRegistry::all(), 'id'));
+        $this->assertNull(ToolRegistry::find('unbuilt-test-tool'));
 
         $response = $this->actingAs($this->user())->get(route('minecraft.index'));
         $response->assertOk();
-        $response->assertDontSee('chain-planner', false);
+        $response->assertDontSee('unbuilt-test-tool', false);
     }
 
     public function test_api_lists_versions_and_version_data(): void
