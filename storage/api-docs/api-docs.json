@@ -480,6 +480,154 @@
                 }
             }
         },
+        "/minecraft/farms": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Minecraft versions with a farm catalogue",
+                "description": "Java versions that have a farm catalogue file, newest first",
+                "operationId": "minecraftFarmVersions",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/minecraft/farms/{version}": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Farm designs of one version, filtered and sorted",
+                "operationId": "minecraftFarms",
+                "parameters": [
+                    {
+                        "name": "version",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "26.3"
+                        }
+                    },
+                    {
+                        "name": "item",
+                        "in": "query",
+                        "description": "Search in the produced items",
+                        "schema": {
+                            "type": "string",
+                            "example": "iron"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Farm type id",
+                        "schema": {
+                            "type": "string",
+                            "example": "iron"
+                        }
+                    },
+                    {
+                        "name": "difficulty",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "easy",
+                                "medium",
+                                "hard"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "max_footprint",
+                        "in": "query",
+                        "description": "Longest horizontal side in blocks",
+                        "schema": {
+                            "type": "integer",
+                            "example": 32
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "rate",
+                                "footprint",
+                                "name"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Unknown version"
+                    },
+                    "422": {
+                        "description": "Invalid filter"
+                    }
+                }
+            }
+        },
+        "/minecraft/farms/{version}/designs/{design}": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "One farm design with the designs that make the same item",
+                "operationId": "minecraftFarmDesign",
+                "parameters": [
+                    {
+                        "name": "version",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "26.3"
+                        }
+                    },
+                    {
+                        "name": "design",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "booty-3-pod-iron-farm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Unknown version or design"
+                    }
+                }
+            }
+        },
         "/timetable": {
             "get": {
                 "tags": [

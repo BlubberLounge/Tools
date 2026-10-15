@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
 use App\Minecraft\EnchantmentData;
+use App\Minecraft\FarmCatalog;
 use App\Minecraft\ToolRegistry;
 
 class MinecraftController extends Controller
@@ -37,5 +38,23 @@ class MinecraftController extends Controller
         );
 
         return view('minecraft.anvil-planner', $data);
+    }
+
+    /**
+     * Farm module catalogue.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showFarmCatalogue()
+    {
+        $data['versions'] = array_map(
+            fn (string $version) => [
+                'id' => $version,
+                'name' => FarmCatalog::load($version)->name(),
+            ],
+            FarmCatalog::versions()
+        );
+
+        return view('minecraft.farm-catalogue', $data);
     }
 }

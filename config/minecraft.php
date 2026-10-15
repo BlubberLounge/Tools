@@ -29,6 +29,14 @@ return [
             'route' => 'minecraft.anvil-planner',
             'permission' => 'view.minecraft.anvil.planner',
         ],
+        [
+            'id' => 'farm-catalogue',
+            'title' => 'farm module catalogue',
+            'description' => 'Community farm designs per version with rates, footprint, materials and sources.',
+            'icon' => 'fa-solid fa-wheat-awn',
+            'route' => 'minecraft.farm-catalogue',
+            'permission' => 'view.minecraft.farm.catalogue',
+        ],
     ],
 
 ];

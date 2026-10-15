@@ -59,6 +59,7 @@ class ConnectRelationshipsSeeder extends Seeder
             'view.iec7064',
             'view.minecraft',
             'view.minecraft.anvil.planner',
+            'view.minecraft.farm.catalogue',
         ], [$roleUnverified]);
 
         // Trusted

@@ -108,4 +108,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
                 ->name('version');
             Route::post('/anvil/plan', [MinecraftController::class, 'plan'])->name('anvil.plan');
         });
+
+    // route: /minecraft/farms/*
+    // name: minecraft.farms.*
+    Route::prefix('minecraft/farms')->name('api.minecraft.farms.')
+        ->middleware(['permission:view.minecraft.farm.catalogue', 'throttle:60,1'])
+        ->group(function () {
+            Route::get('/', [MinecraftController::class, 'farmVersions'])->name('versions');
+            Route::get('/{version}', [MinecraftController::class, 'farms'])
+                ->where('version', '[0-9.]+')
+                ->name('index');
+            Route::get('/{version}/designs/{design}', [MinecraftController::class, 'farmDesign'])
+                ->where(['version' => '[0-9.]+', 'design' => '[a-z0-9-]+'])
+                ->name('design');
+        });
 });
