@@ -198,4 +198,20 @@ return [
 
     'same_site' => 'lax',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Session Serialization
+    |--------------------------------------------------------------------------
+    |
+    | This value controls the serialization strategy for session data. The
+    | Laravel 13 skeleton defaults to "json"; this app keeps "php" so active
+    | sessions survive the upgrade. Switching to "json" is safer against
+    | "gadget chain" attacks if the APP_KEY leaks, but logs every user out.
+    |
+    | Supported: "json", "php"
+    |
+    */
+
+    'serialization' => 'php',
+
 ];
