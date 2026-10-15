@@ -33,7 +33,9 @@ class X01EngineSubmitThrowTest extends TestCase
             'status' => DartGameStatus::CREATED,
             'type' => DartGameType::X01,
             'points' => $points,
+            'singleOut' => !$doubleOut,
             'doubleOut' => $doubleOut,
+            'trippleOut' => false,
         ]);
 
         $this->game->users()->attach($this->player->id, [
@@ -227,10 +229,10 @@ class X01EngineSubmitThrowTest extends TestCase
             'ring' => 'T',
         ]);
 
-        // After bust, throws should be deleted, remaining should be back to 40
+        // After bust, throws should be soft-deleted, remaining should be back to 40
         $this->assertEquals(40, $this->game->fresh()->remainingPointsByUser($this->player));
 
-        $this->assertDatabaseMissing('dart_throws', [
+        $this->assertSoftDeleted('dart_throws', [
             'user_id' => $this->player->id,
             'value' => 60,
         ]);
@@ -309,8 +311,8 @@ class X01EngineSubmitThrowTest extends TestCase
             'ring' => 'S',
         ]);
 
-        // Should bust because doubleOut is required
-        $this->assertEquals(20, $this->game->fresh()->remainingPointsByUser($this->player));
+        // Should bust because doubleOut is required, the whole turn is reset
+        $this->assertEquals(40, $this->game->fresh()->remainingPointsByUser($this->player));
     }
 
     /**
@@ -359,9 +361,9 @@ class X01EngineSubmitThrowTest extends TestCase
      */
     public function test_submit_throw_single_out_win(): void
     {
-        $this->createAndStartGame(40, false);
+        $this->createAndStartGame(20, false);
 
-        // Score exactly 40 with single → Win (doubleOut is false)
+        // Score exactly 20 with single → Win (doubleOut is false)
         $this->engine->submitThrow($this->game, $this->player, [
             'set' => 1,
             'leg' => 1,

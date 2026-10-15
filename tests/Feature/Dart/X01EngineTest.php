@@ -108,7 +108,8 @@ class X01EngineTest extends TestCase
 
         $this->assertEquals(40, $game->remainingPointsByUser($user));
 
-        $this->assertDatabaseMissing('dart_throws', [
+        // Bust throws are soft-deleted, they mark the turn as busted
+        $this->assertSoftDeleted('dart_throws', [
             'user_id' => $user->id,
             'value' => 60,
         ]);
