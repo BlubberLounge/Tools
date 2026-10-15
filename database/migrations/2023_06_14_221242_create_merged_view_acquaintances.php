@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-// use Illuminate\Support\Facades\Schema;
-use Staudenmeir\LaravelMergedRelations\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\User;
-
+/**
+ * Originally created the merged view 'acquaintances_view' via staudenmeir/laravel-merged-relations.
+ * The view is no longer used and the package was removed, so this migration is a no-op now.
+ * Existing databases drop the view in 2026_10_15_000001_drop_acquaintances_view.
+ */
 return new class extends Migration
 {
     /**
@@ -14,10 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::createMergeView(
-            'acquaintances_view',
-            [(new User())->acquaintancesSend(), (new User())->acquaintancesReceived()]
-        );
+        //
     }
 
     /**
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropView('acquaintances_view');
+        DB::statement('DROP VIEW IF EXISTS '.DB::getTablePrefix().'acquaintances_view');
     }
 };

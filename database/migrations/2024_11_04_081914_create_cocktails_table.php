@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\CocktailStatus;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,8 +24,8 @@ return new class extends Migration
                 ->nullable();
             $table->boolean('isPublic')
                 ->default(true);
-            $table->enum('status', array_column(CocktailStatus::cases(), 'value'))
-                ->default(CocktailStatus::UNKOWN);
+            $table->enum('status', ['unkown', 'created', 'waiting_for_review', 'review', 'reviewed', 'released', 'parties_only'])
+                ->default('unkown');
             $table->foreignId('created_by')
                 ->constrained('users')
                 ->onUpdate('cascade');
