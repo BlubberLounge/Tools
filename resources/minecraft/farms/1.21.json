@@ -1,0 +1,2742 @@
+{
+    "version": "1.21",
+    "name": "Java Edition 1.21",
+    "updated": "2026-10-15",
+    "sources": [
+        {
+            "title": "Shulkr schematic catalogue (incl. the TMC Catalogue archive)",
+            "url": "https://www.shulkr.com/en/schematics/categories/farm",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "YouTube farm tutorials (one link per design)",
+            "url": "https://www.youtube.com/",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "mc-mod.net schematics (measured designs)",
+            "url": "https://www.mc-mod.net/",
+            "retrieved": "2026-10-15"
+        },
+        {
+            "title": "Minecraft Wiki: Tutorials/Mechanisms (farm background)",
+            "url": "https://minecraft.wiki/w/Tutorials/Sugar_cane_farming",
+            "retrieved": "2026-10-15"
+        }
+    ],
+    "notes": "Rates are items per hour per module as stated by the designer (basis \"designer\"), measured by Max on a 26.3 test server (basis \"measured\") or not published (basis \"unknown\", per_hour null). Community rates differ a lot between designs and test conditions; read the condition and the source before relying on a number. Footprint null = not published. Material lists are the main blocks from the schematic or the tutorial, not always complete; count null = amount not published. Where a source says \"any slab\" or \"any trapdoor\", a representative block is listed.",
+    "farm_types": [
+        {
+            "id": "iron",
+            "name": "Iron"
+        },
+        {
+            "id": "gold",
+            "name": "Gold"
+        },
+        {
+            "id": "sugar_cane",
+            "name": "Sugar cane"
+        },
+        {
+            "id": "bamboo",
+            "name": "Bamboo"
+        },
+        {
+            "id": "kelp",
+            "name": "Kelp"
+        },
+        {
+            "id": "cactus",
+            "name": "Cactus"
+        },
+        {
+            "id": "bone",
+            "name": "Bone and bone meal"
+        },
+        {
+            "id": "gunpowder",
+            "name": "Gunpowder (creeper)"
+        },
+        {
+            "id": "string",
+            "name": "String (spider)"
+        },
+        {
+            "id": "slime",
+            "name": "Slime"
+        },
+        {
+            "id": "wool",
+            "name": "Wool (sheep)"
+        },
+        {
+            "id": "leather",
+            "name": "Leather"
+        },
+        {
+            "id": "wither_skeleton",
+            "name": "Wither skeleton"
+        },
+        {
+            "id": "enderman",
+            "name": "Enderman (XP)"
+        },
+        {
+            "id": "tree",
+            "name": "Tree / wood"
+        },
+        {
+            "id": "crops",
+            "name": "Crops"
+        },
+        {
+            "id": "trading_hall",
+            "name": "Villager trading hall"
+        }
+    ],
+    "items": [
+        {
+            "id": "activator_rail",
+            "name": "Activator Rail"
+        },
+        {
+            "id": "armor_stand",
+            "name": "Armor Stand"
+        },
+        {
+            "id": "arrow",
+            "name": "Arrow"
+        },
+        {
+            "id": "bamboo",
+            "name": "Bamboo"
+        },
+        {
+            "id": "barrel",
+            "name": "Barrel"
+        },
+        {
+            "id": "beef",
+            "name": "Beef"
+        },
+        {
+            "id": "birch_planks",
+            "name": "Birch Planks"
+        },
+        {
+            "id": "black_concrete",
+            "name": "Black Concrete"
+        },
+        {
+            "id": "black_stained_glass",
+            "name": "Black Stained Glass"
+        },
+        {
+            "id": "bone",
+            "name": "Bone"
+        },
+        {
+            "id": "bone_meal",
+            "name": "Bone Meal"
+        },
+        {
+            "id": "cactus",
+            "name": "Cactus"
+        },
+        {
+            "id": "calcite",
+            "name": "Calcite"
+        },
+        {
+            "id": "carrot",
+            "name": "Carrot"
+        },
+        {
+            "id": "chain",
+            "name": "Chain"
+        },
+        {
+            "id": "chest",
+            "name": "Chest"
+        },
+        {
+            "id": "coal",
+            "name": "Coal"
+        },
+        {
+            "id": "cobblestone",
+            "name": "Cobblestone"
+        },
+        {
+            "id": "cobblestone_slab",
+            "name": "Cobblestone Slab"
+        },
+        {
+            "id": "cobblestone_wall",
+            "name": "Cobblestone Wall"
+        },
+        {
+            "id": "composter",
+            "name": "Composter"
+        },
+        {
+            "id": "cooked_porkchop",
+            "name": "Cooked Porkchop"
+        },
+        {
+            "id": "copper_trapdoor",
+            "name": "Copper Trapdoor"
+        },
+        {
+            "id": "crafter",
+            "name": "Crafter"
+        },
+        {
+            "id": "dark_oak_fence_gate",
+            "name": "Dark Oak Fence Gate"
+        },
+        {
+            "id": "dark_oak_trapdoor",
+            "name": "Dark Oak Trapdoor"
+        },
+        {
+            "id": "deepslate_bricks",
+            "name": "Deepslate Bricks"
+        },
+        {
+            "id": "dirt",
+            "name": "Dirt"
+        },
+        {
+            "id": "dispenser",
+            "name": "Dispenser"
+        },
+        {
+            "id": "dropper",
+            "name": "Dropper"
+        },
+        {
+            "id": "emerald",
+            "name": "Emerald"
+        },
+        {
+            "id": "ender_pearl",
+            "name": "Ender Pearl"
+        },
+        {
+            "id": "experience",
+            "name": "Experience (points)"
+        },
+        {
+            "id": "furnace",
+            "name": "Furnace"
+        },
+        {
+            "id": "glass",
+            "name": "Glass"
+        },
+        {
+            "id": "glass_pane",
+            "name": "Glass Pane"
+        },
+        {
+            "id": "gold_ingot",
+            "name": "Gold Ingot"
+        },
+        {
+            "id": "grass_block",
+            "name": "Grass Block"
+        },
+        {
+            "id": "gray_concrete",
+            "name": "Gray Concrete"
+        },
+        {
+            "id": "gray_stained_glass",
+            "name": "Gray Stained Glass"
+        },
+        {
+            "id": "grindstone",
+            "name": "Grindstone"
+        },
+        {
+            "id": "gunpowder",
+            "name": "Gunpowder"
+        },
+        {
+            "id": "hopper",
+            "name": "Hopper"
+        },
+        {
+            "id": "hopper_minecart",
+            "name": "Hopper Minecart"
+        },
+        {
+            "id": "iron_bars",
+            "name": "Iron Bars"
+        },
+        {
+            "id": "iron_ingot",
+            "name": "Iron Ingot"
+        },
+        {
+            "id": "kelp",
+            "name": "Kelp"
+        },
+        {
+            "id": "ladder",
+            "name": "Ladder"
+        },
+        {
+            "id": "lantern",
+            "name": "Lantern"
+        },
+        {
+            "id": "lava_bucket",
+            "name": "Lava Bucket"
+        },
+        {
+            "id": "leather",
+            "name": "Leather"
+        },
+        {
+            "id": "lectern",
+            "name": "Lectern"
+        },
+        {
+            "id": "lever",
+            "name": "Lever"
+        },
+        {
+            "id": "lightning_rod",
+            "name": "Lightning Rod"
+        },
+        {
+            "id": "magma_block",
+            "name": "Magma Block"
+        },
+        {
+            "id": "minecart",
+            "name": "Minecart"
+        },
+        {
+            "id": "moss_block",
+            "name": "Moss Block"
+        },
+        {
+            "id": "mud",
+            "name": "Mud"
+        },
+        {
+            "id": "name_tag",
+            "name": "Name Tag"
+        },
+        {
+            "id": "oak_fence",
+            "name": "Oak Fence"
+        },
+        {
+            "id": "oak_fence_gate",
+            "name": "Oak Fence Gate"
+        },
+        {
+            "id": "oak_leaves",
+            "name": "Oak Leaves"
+        },
+        {
+            "id": "oak_log",
+            "name": "Oak Log"
+        },
+        {
+            "id": "oak_trapdoor",
+            "name": "Oak Trapdoor"
+        },
+        {
+            "id": "observer",
+            "name": "Observer"
+        },
+        {
+            "id": "obsidian",
+            "name": "Obsidian"
+        },
+        {
+            "id": "orange_bed",
+            "name": "Orange Bed"
+        },
+        {
+            "id": "orange_carpet",
+            "name": "Orange Carpet"
+        },
+        {
+            "id": "packed_ice",
+            "name": "Packed Ice"
+        },
+        {
+            "id": "piston",
+            "name": "Piston"
+        },
+        {
+            "id": "polished_andesite",
+            "name": "Polished Andesite"
+        },
+        {
+            "id": "polished_deepslate",
+            "name": "Polished Deepslate"
+        },
+        {
+            "id": "polished_granite",
+            "name": "Polished Granite"
+        },
+        {
+            "id": "poppy",
+            "name": "Poppy"
+        },
+        {
+            "id": "powder_snow_bucket",
+            "name": "Powder Snow Bucket"
+        },
+        {
+            "id": "powered_rail",
+            "name": "Powered Rail"
+        },
+        {
+            "id": "rail",
+            "name": "Rail"
+        },
+        {
+            "id": "red_wool",
+            "name": "Red Wool"
+        },
+        {
+            "id": "redstone",
+            "name": "Redstone"
+        },
+        {
+            "id": "redstone_block",
+            "name": "Redstone Block"
+        },
+        {
+            "id": "redstone_torch",
+            "name": "Redstone Torch"
+        },
+        {
+            "id": "repeater",
+            "name": "Repeater"
+        },
+        {
+            "id": "sand",
+            "name": "Sand"
+        },
+        {
+            "id": "scaffolding",
+            "name": "Scaffolding"
+        },
+        {
+            "id": "sea_lantern",
+            "name": "Sea Lantern"
+        },
+        {
+            "id": "shears",
+            "name": "Shears"
+        },
+        {
+            "id": "slime_ball",
+            "name": "Slime Ball"
+        },
+        {
+            "id": "slime_block",
+            "name": "Slime Block"
+        },
+        {
+            "id": "smoker",
+            "name": "Smoker"
+        },
+        {
+            "id": "smooth_stone",
+            "name": "Smooth Stone"
+        },
+        {
+            "id": "smooth_stone_slab",
+            "name": "Smooth Stone Slab"
+        },
+        {
+            "id": "snow",
+            "name": "Snow"
+        },
+        {
+            "id": "spider_eye",
+            "name": "Spider Eye"
+        },
+        {
+            "id": "spruce_fence",
+            "name": "Spruce Fence"
+        },
+        {
+            "id": "spruce_fence_gate",
+            "name": "Spruce Fence Gate"
+        },
+        {
+            "id": "spruce_sign",
+            "name": "Spruce Sign"
+        },
+        {
+            "id": "spruce_trapdoor",
+            "name": "Spruce Trapdoor"
+        },
+        {
+            "id": "sticky_piston",
+            "name": "Sticky Piston"
+        },
+        {
+            "id": "stone",
+            "name": "Stone"
+        },
+        {
+            "id": "string",
+            "name": "String"
+        },
+        {
+            "id": "sugar_cane",
+            "name": "Sugar Cane"
+        },
+        {
+            "id": "tinted_glass",
+            "name": "Tinted Glass"
+        },
+        {
+            "id": "tnt",
+            "name": "TNT"
+        },
+        {
+            "id": "torch",
+            "name": "Torch"
+        },
+        {
+            "id": "warped_slab",
+            "name": "Warped Slab"
+        },
+        {
+            "id": "water_bucket",
+            "name": "Water Bucket"
+        },
+        {
+            "id": "wheat",
+            "name": "Wheat"
+        },
+        {
+            "id": "wheat_seeds",
+            "name": "Wheat Seeds"
+        },
+        {
+            "id": "white_bed",
+            "name": "White Bed"
+        },
+        {
+            "id": "white_carpet",
+            "name": "White Carpet"
+        },
+        {
+            "id": "white_concrete",
+            "name": "White Concrete"
+        },
+        {
+            "id": "white_stained_glass",
+            "name": "White Stained Glass"
+        },
+        {
+            "id": "white_wool",
+            "name": "White Wool"
+        },
+        {
+            "id": "wither_skeleton_skull",
+            "name": "Wither Skeleton Skull"
+        }
+    ],
+    "designs": [
+        {
+            "id": "booty-3-pod-iron-farm",
+            "name": "Booty's 3 Pod Iron Farm",
+            "type": "iron",
+            "produces": [
+                {
+                    "item": "iron_ingot",
+                    "per_hour": 1200,
+                    "basis": "designer",
+                    "note": "Base rate stated by the designer (1.21.0-1.21.1 is before the MC-301649 slowdown of 1.21.2). Unlucky villager reloads drop it to about 800/h."
+                },
+                {
+                    "item": "poppy",
+                    "per_hour": null,
+                    "basis": "unknown"
+                }
+            ],
+            "versions": {
+                "min": "1.17",
+                "max": null
+            },
+            "footprint": {
+                "x": 15,
+                "y": 29,
+                "z": 15
+            },
+            "materials": [
+                {
+                    "item": "white_bed",
+                    "count": 18
+                },
+                {
+                    "item": "white_carpet",
+                    "count": 18
+                },
+                {
+                    "item": "oak_fence",
+                    "count": 39
+                },
+                {
+                    "item": "grass_block",
+                    "count": 57
+                },
+                {
+                    "item": "cobblestone",
+                    "count": 17
+                },
+                {
+                    "item": "ladder",
+                    "count": 16
+                },
+                {
+                    "item": "glass",
+                    "count": 13
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 8
+                },
+                {
+                    "item": "hopper",
+                    "count": 1
+                },
+                {
+                    "item": "chest",
+                    "count": 1
+                },
+                {
+                    "item": "lightning_rod",
+                    "count": 1
+                }
+            ],
+            "difficulty": "easy",
+            "author": "booty",
+            "community": "TMC Catalogue",
+            "condition": "One zombie scares the villagers of three pods. Villagers must have slept; skipping the night lowers the rate (hopper clock variant available). On 1.21.2+ build the zombie platform at least 8 blocks above ground (wandering trader llamas kill the zombie).",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/DlbQxsDpUHLV/booty-s-1-2k-3-pod-iron-farm",
+                "title": "Booty's 1.2k 3 Pod Iron Farm (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "fireblox-4-module-iron-farm",
+            "name": "4 Module Iron Farm",
+            "type": "iron",
+            "produces": [
+                {
+                    "item": "iron_ingot",
+                    "per_hour": 1211,
+                    "basis": "designer"
+                },
+                {
+                    "item": "poppy",
+                    "per_hour": 300,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.18",
+                "max": null
+            },
+            "footprint": {
+                "x": 36,
+                "y": 24,
+                "z": 36
+            },
+            "materials": [
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 1072
+                },
+                {
+                    "item": "white_stained_glass",
+                    "count": 584
+                },
+                {
+                    "item": "polished_deepslate",
+                    "count": 272
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 216
+                },
+                {
+                    "item": "polished_granite",
+                    "count": 216
+                },
+                {
+                    "item": "glass_pane",
+                    "count": 32
+                },
+                {
+                    "item": "orange_bed",
+                    "count": 24
+                },
+                {
+                    "item": "hopper",
+                    "count": 16
+                },
+                {
+                    "item": "oak_fence_gate",
+                    "count": 16
+                },
+                {
+                    "item": "chest",
+                    "count": 8
+                },
+                {
+                    "item": "lava_bucket",
+                    "count": 16
+                }
+            ],
+            "difficulty": "medium",
+            "author": "FireBlox",
+            "community": "Shulkr",
+            "condition": "Villagers must have slept before golems spawn; leaving the area and coming back can require another night. Saved in 1.18, tested by the designer in 26.2.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/JQ2eL9ApZo79/4-module-iron-farm-1200-ingots-per-hour",
+                "title": "4 Module Iron Farm - 1200+ Ingots Per Hour (Shulkr)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "shulkercraft-reliable-iron-farm",
+            "name": "Reliable Iron Farm (6 villagers)",
+            "type": "iron",
+            "produces": [
+                {
+                    "item": "iron_ingot",
+                    "per_hour": 600,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "white_bed",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Shulkercraft (inspired by MushoDen)",
+            "community": "YouTube",
+            "condition": "6 villagers and 1 zombie, no name tag. Footprint and full material list are only shown in the video and its litematic download.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=TTzDzMD5OEY",
+                "title": "Minecraft 1.21+ Reliable Iron Farm Tutorial - 600 Per Hour (Shulkercraft)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "ilmango-gold-xp-farm",
+            "name": "ilmango's Gold/XP Farm",
+            "type": "gold",
+            "produces": [
+                {
+                    "item": "gold_ingot",
+                    "per_hour": 1200,
+                    "basis": "designer",
+                    "note": "Stated as 'over 1200 gold' per hour (ingot equivalent, drops are mostly nuggets)."
+                },
+                {
+                    "item": "experience",
+                    "per_hour": 115000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "magma_block",
+                    "count": 5696
+                },
+                {
+                    "item": "glass",
+                    "count": 2472
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 189
+                },
+                {
+                    "item": "scaffolding",
+                    "count": 107
+                },
+                {
+                    "item": "snow",
+                    "count": 60
+                },
+                {
+                    "item": "chest",
+                    "count": 40
+                },
+                {
+                    "item": "hopper",
+                    "count": 20
+                },
+                {
+                    "item": "grindstone",
+                    "count": 56
+                },
+                {
+                    "item": "minecart",
+                    "count": 96
+                },
+                {
+                    "item": "hopper_minecart",
+                    "count": 4
+                },
+                {
+                    "item": "rail",
+                    "count": 8
+                },
+                {
+                    "item": "name_tag",
+                    "count": 4
+                }
+            ],
+            "difficulty": "hard",
+            "author": "ilmango (tutorial by Voomsley)",
+            "community": "YouTube",
+            "condition": "Nether roof in a nether wastes biome, magma platforms, minecart cramming kill. Rate with player kills and Looting III.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=P6TanacO3cA",
+                "title": "ilmango's Gold/XP Farm Tutorial | 1.21+ (Voomsley)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "adilgamez-easy-gold-farm",
+            "name": "Easy Gold Farm",
+            "type": "gold",
+            "produces": [
+                {
+                    "item": "gold_ingot",
+                    "per_hour": 1500,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "magma_block",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "Adil Gamez",
+            "community": "YouTube",
+            "condition": "Zombified piglin spawning platform with AFK spot, hopper storage. Material list only in the video and the paid download.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=VOb0dgRejqI",
+                "title": "Easy Gold Farm Minecraft Java 26.3 (1.21+) | 1500+ Gold Ingots/Hour (Adil Gamez)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "lazyperfection-detection-cane-bamboo",
+            "name": "Pre-Nether Detection Sugar Cane and Bamboo Module",
+            "type": "sugar_cane",
+            "produces": [
+                {
+                    "item": "sugar_cane",
+                    "per_hour": 90,
+                    "basis": "designer",
+                    "note": "Per module (one layer); stated 90/module/h for sugar cane, 480/module/h when planted with bamboo."
+                },
+                {
+                    "item": "bamboo",
+                    "per_hour": 480,
+                    "basis": "designer",
+                    "note": "When the module is planted with bamboo instead of sugar cane."
+                }
+            ],
+            "versions": {
+                "min": "1.5",
+                "max": null
+            },
+            "footprint": {
+                "x": 9,
+                "y": 5,
+                "z": 18
+            },
+            "materials": [
+                {
+                    "item": "glass",
+                    "count": 72
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 60
+                },
+                {
+                    "item": "piston",
+                    "count": 30
+                },
+                {
+                    "item": "grass_block",
+                    "count": 28
+                },
+                {
+                    "item": "sugar_cane",
+                    "count": 28
+                },
+                {
+                    "item": "redstone",
+                    "count": 17
+                },
+                {
+                    "item": "hopper",
+                    "count": 2
+                },
+                {
+                    "item": "red_wool",
+                    "count": 2
+                }
+            ],
+            "difficulty": "easy",
+            "author": "LazyPerfection (modified by Caribous)",
+            "community": "TMC Catalogue",
+            "condition": "Observerless: a BUD triggers all pistons. Vertically tileable, one module = one layer.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/EOMCcQLxqdJ1/pre-nether-detection-based-tileable-sugar-cane-and-bamboo-fa",
+                "title": "Pre-Nether Detection Based Tileable Sugar Cane and Bamboo Farms (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "kmond-flying-machine-sugar-cane",
+            "name": "Flying Machine Sugar Cane Farm",
+            "type": "sugar_cane",
+            "produces": [
+                {
+                    "item": "sugar_cane",
+                    "per_hour": 1700,
+                    "basis": "designer",
+                    "note": "The description says 1700+ per hour, the title 2000+; the lower figure is used."
+                }
+            ],
+            "versions": {
+                "min": "1.19",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "sugar_cane",
+                    "count": null
+                },
+                {
+                    "item": "observer",
+                    "count": null
+                },
+                {
+                    "item": "slime_block",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "Kmond",
+            "community": "YouTube",
+            "condition": "Flying machine harvester, player must stay in range. Block list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=yQQPVgZVIGg",
+                "title": "Sugar Cane Farm - 2000+ Per Hour - Minecraft 1.21+ Tutorial (Kmond)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "fireblox-lossless-sugar-cane",
+            "name": "Lossless Sugar Cane Farm (960 plants)",
+            "type": "sugar_cane",
+            "produces": [
+                {
+                    "item": "sugar_cane",
+                    "per_hour": null,
+                    "basis": "unknown",
+                    "note": "The designer gives no rate; 960 plants harvested by observers and pistons."
+                }
+            ],
+            "versions": {
+                "min": "1.19",
+                "max": null
+            },
+            "footprint": {
+                "x": 25,
+                "y": 21,
+                "z": 20
+            },
+            "materials": [
+                {
+                    "item": "redstone",
+                    "count": 1020
+                },
+                {
+                    "item": "sugar_cane",
+                    "count": 991
+                },
+                {
+                    "item": "mud",
+                    "count": 960
+                },
+                {
+                    "item": "piston",
+                    "count": 960
+                },
+                {
+                    "item": "calcite",
+                    "count": 660
+                },
+                {
+                    "item": "white_concrete",
+                    "count": 640
+                },
+                {
+                    "item": "white_stained_glass",
+                    "count": 513
+                },
+                {
+                    "item": "iron_bars",
+                    "count": 510
+                },
+                {
+                    "item": "observer",
+                    "count": 72
+                },
+                {
+                    "item": "repeater",
+                    "count": 56
+                },
+                {
+                    "item": "packed_ice",
+                    "count": 113
+                },
+                {
+                    "item": "chest",
+                    "count": 2
+                },
+                {
+                    "item": "hopper",
+                    "count": 1
+                }
+            ],
+            "difficulty": "hard",
+            "author": "FireBlox",
+            "community": "Shulkr",
+            "condition": "Saved in 26.1.2; stated to work in any Java version (mud needs 1.19+). Water streams on packed ice to one chest.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/wu3jGcdVYUTK/lossless-sugarcane-farm",
+                "title": "Lossless sugarcane farm (Shulkr)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "fireblox-automatic-bamboo-740",
+            "name": "Automatic Bamboo Farm (42 stalks)",
+            "type": "bamboo",
+            "produces": [
+                {
+                    "item": "bamboo",
+                    "per_hour": 740,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.14",
+                "max": null
+            },
+            "footprint": {
+                "x": 7,
+                "y": 8,
+                "z": 29
+            },
+            "materials": [
+                {
+                    "item": "glass",
+                    "count": 150
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 115
+                },
+                {
+                    "item": "rail",
+                    "count": 42
+                },
+                {
+                    "item": "grass_block",
+                    "count": 42
+                },
+                {
+                    "item": "bamboo",
+                    "count": 42
+                },
+                {
+                    "item": "piston",
+                    "count": 42
+                },
+                {
+                    "item": "observer",
+                    "count": 42
+                },
+                {
+                    "item": "redstone",
+                    "count": 20
+                },
+                {
+                    "item": "powered_rail",
+                    "count": 12
+                },
+                {
+                    "item": "hopper",
+                    "count": 7
+                },
+                {
+                    "item": "chest",
+                    "count": 6
+                },
+                {
+                    "item": "redstone_torch",
+                    "count": 4
+                }
+            ],
+            "difficulty": "easy",
+            "author": "FireBlox",
+            "community": "Shulkr",
+            "condition": "42 stalks with observer and piston harvest, hopper minecart collection. Stated to work in any version (bamboo exists since 1.14).",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/sRb2UGt8np9s/automatic-bamboo-farm-740hr",
+                "title": "Automatic Bamboo Farm 740hr (Shulkr)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "kmond-flying-machine-bamboo",
+            "name": "Flying Machine Bamboo Farm",
+            "type": "bamboo",
+            "produces": [
+                {
+                    "item": "bamboo",
+                    "per_hour": 10000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.19",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "bamboo",
+                    "count": null
+                },
+                {
+                    "item": "observer",
+                    "count": null
+                },
+                {
+                    "item": "slime_block",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "Kmond",
+            "community": "YouTube",
+            "condition": "Flying machine harvester over a large bamboo field; player must stay in range. Block list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=HEItI7AZQ0s",
+                "title": "Bamboo Farm - 10,000+ Per Hour - Minecraft 1.21+ Tutorial (Kmond)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "holyham-bone-meal-kelp-243k",
+            "name": "243k Bone Meal Kelp Farm",
+            "type": "kelp",
+            "produces": [
+                {
+                    "item": "kelp",
+                    "per_hour": 242700,
+                    "basis": "designer",
+                    "note": "Consumes 27,000 bone blocks per hour."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": {
+                "x": 6,
+                "y": 20,
+                "z": 8
+            },
+            "materials": [
+                {
+                    "item": "moss_block",
+                    "count": 142
+                },
+                {
+                    "item": "hopper",
+                    "count": 77
+                },
+                {
+                    "item": "observer",
+                    "count": 65
+                },
+                {
+                    "item": "white_stained_glass",
+                    "count": 51
+                },
+                {
+                    "item": "chest",
+                    "count": 36
+                },
+                {
+                    "item": "dispenser",
+                    "count": 34
+                },
+                {
+                    "item": "dark_oak_trapdoor",
+                    "count": 30
+                },
+                {
+                    "item": "kelp",
+                    "count": 30
+                },
+                {
+                    "item": "slime_block",
+                    "count": 30
+                },
+                {
+                    "item": "crafter",
+                    "count": 15
+                },
+                {
+                    "item": "composter",
+                    "count": 14
+                },
+                {
+                    "item": "activator_rail",
+                    "count": 13
+                }
+            ],
+            "difficulty": "hard",
+            "author": "holyham.",
+            "community": "TMC Catalogue",
+            "condition": "Fed with bone block shulker boxes through three unloaders; stops itself when they run low. Horizontally tileable.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/iSD7KSgI9I98/243k-bone-meal-kelp-farm",
+                "title": "243k Bone Meal Kelp Farm (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "reytgood-afk-kelp-farm",
+            "name": "AFK Kelp Farm",
+            "type": "kelp",
+            "produces": [
+                {
+                    "item": "kelp",
+                    "per_hour": 6000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "kelp",
+                    "count": null
+                },
+                {
+                    "item": "observer",
+                    "count": null
+                },
+                {
+                    "item": "piston",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "ReytGood (design inspired by TheySix)",
+            "community": "YouTube",
+            "condition": "AFK within simulation distance. Material list only in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=s_0d5Jw4MrM",
+                "title": "AFK Kelp Farm in Minecraft Java 1.21! (6000+ per hour) (ReytGood)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "mascota1-kelp-farm-and-smelter",
+            "name": "Automatic Kelp Farm and Smelter",
+            "type": "kelp",
+            "produces": [
+                {
+                    "item": "kelp",
+                    "per_hour": 3970,
+                    "basis": "measured",
+                    "note": "Measured by Max on a Java 26.3 test server (2026-10-14, schematic pasted into a flat world, chest contents counted per game hour). 576 stalks grow at the full rate (6.9 kelp per stalk); in the test copy only about 790/h reached the storage because items got stuck in the water streams, most likely a side effect of pasting the water."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": {
+                "x": 40,
+                "y": 48,
+                "z": 39
+            },
+            "materials": [
+                {
+                    "item": "observer",
+                    "count": 1768
+                },
+                {
+                    "item": "piston",
+                    "count": 577
+                },
+                {
+                    "item": "glass",
+                    "count": 772
+                },
+                {
+                    "item": "cobblestone_wall",
+                    "count": 848
+                },
+                {
+                    "item": "oak_leaves",
+                    "count": 576
+                },
+                {
+                    "item": "kelp",
+                    "count": 576
+                },
+                {
+                    "item": "birch_planks",
+                    "count": 357
+                },
+                {
+                    "item": "copper_trapdoor",
+                    "count": 292
+                },
+                {
+                    "item": "hopper",
+                    "count": 161
+                },
+                {
+                    "item": "powered_rail",
+                    "count": 48
+                },
+                {
+                    "item": "furnace",
+                    "count": 30
+                },
+                {
+                    "item": "smoker",
+                    "count": 6
+                },
+                {
+                    "item": "crafter",
+                    "count": 6
+                },
+                {
+                    "item": "composter",
+                    "count": 18
+                },
+                {
+                    "item": "chest",
+                    "count": 10
+                }
+            ],
+            "difficulty": "hard",
+            "author": "Mascota1",
+            "community": "mc-mod.net",
+            "condition": "Complete dried-kelp fuel line with 30 furnaces, 6 smokers and crafters. Saved in 1.21.1, measured in 26.3 at random tick speed 3.",
+            "source": {
+                "url": "https://www.mc-mod.net/schematics/automatic-kelp-farm-and-smelter/",
+                "title": "Automatic Kelp Farm and Smelter (mc-mod.net)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "cuyiswild-expandable-cactus-farm",
+            "name": "Expandable Cactus Farm",
+            "type": "cactus",
+            "produces": [
+                {
+                    "item": "cactus",
+                    "per_hour": 2150,
+                    "basis": "measured",
+                    "note": "Measured by Max on a Java 26.3 test server (2026-10-14, schematic pasted into a flat world, chest contents counted per game hour). 2.2 cactus per plant, 71 % of the growth; the rest lands on cactus and is destroyed."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": {
+                "x": 43,
+                "y": 23,
+                "z": 43
+            },
+            "materials": [
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 4044
+                },
+                {
+                    "item": "black_concrete",
+                    "count": 1780
+                },
+                {
+                    "item": "sand",
+                    "count": 972
+                },
+                {
+                    "item": "cactus",
+                    "count": 970
+                },
+                {
+                    "item": "white_stained_glass",
+                    "count": 960
+                },
+                {
+                    "item": "spruce_fence",
+                    "count": 540
+                },
+                {
+                    "item": "spruce_fence_gate",
+                    "count": 240
+                },
+                {
+                    "item": "lantern",
+                    "count": 64
+                },
+                {
+                    "item": "hopper",
+                    "count": 48
+                },
+                {
+                    "item": "chest",
+                    "count": 32
+                }
+            ],
+            "difficulty": "medium",
+            "author": "CuyisWild",
+            "community": "mc-mod.net",
+            "condition": "970 cactus, no redstone, 32 chests. Saved in 1.21.1, measured in 26.3 at random tick speed 3 (cactus flowers exist since 1.21.5).",
+            "source": {
+                "url": "https://www.mc-mod.net/?p=537057",
+                "title": "Expandable Cactus Farm (mc-mod.net)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "shulkercraft-cactus-farm",
+            "name": "Efficient Cactus Farm",
+            "type": "cactus",
+            "produces": [
+                {
+                    "item": "cactus",
+                    "per_hour": 1000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 337
+                },
+                {
+                    "item": "glass",
+                    "count": 260
+                },
+                {
+                    "item": "sand",
+                    "count": 162
+                },
+                {
+                    "item": "cactus",
+                    "count": 162
+                },
+                {
+                    "item": "oak_fence",
+                    "count": 90
+                },
+                {
+                    "item": "oak_fence_gate",
+                    "count": 40
+                },
+                {
+                    "item": "hopper",
+                    "count": 7
+                },
+                {
+                    "item": "chest",
+                    "count": 6
+                },
+                {
+                    "item": "water_bucket",
+                    "count": 2
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Shulkercraft (inspired by ilmango)",
+            "community": "YouTube",
+            "condition": "162 cactus on fence-gate stacks, no redstone. Since 1.21.5 cactus flowers can block growth spots that have no solid neighbour.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=8mQgZnSQpRE",
+                "title": "Minecraft 1.21+ Cactus Farm - 1000+ Per Hour (Shulkercraft)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "raysworks-skeleton-spawner-farm",
+            "name": "Skeleton Spawner Auto Farm",
+            "type": "bone",
+            "produces": [
+                {
+                    "item": "bone",
+                    "per_hour": 500,
+                    "basis": "designer"
+                },
+                {
+                    "item": "arrow",
+                    "per_hour": null,
+                    "basis": "unknown"
+                }
+            ],
+            "versions": {
+                "min": "1.17",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "powder_snow_bucket",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "Rays Works",
+            "community": "YouTube",
+            "condition": "Skeleton spawner, powder snow turns skeletons into strays, a tamed wolf kills them. Needs a skeleton spawner.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=X2NsjIlsWRo",
+                "title": "Perfect Skeleton Spawner Auto Farm! (Rays Works)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "dustmoss-v2-moss-bone-meal-farm",
+            "name": "Tileable Cheap Moss Farm (Dustmoss v2)",
+            "type": "bone",
+            "produces": [
+                {
+                    "item": "bone_meal",
+                    "per_hour": 41650,
+                    "basis": "designer",
+                    "note": "Stated 8.33k per layer per hour with composting; the published schematic has 5 layers."
+                },
+                {
+                    "item": "moss_block",
+                    "per_hour": 415000,
+                    "basis": "designer",
+                    "note": "Stated 83k per layer per hour; the published schematic has 5 layers. Moss composted for bone meal is not counted twice by the designer."
+                }
+            ],
+            "versions": {
+                "min": "1.17",
+                "max": null
+            },
+            "footprint": {
+                "x": 17,
+                "y": 47,
+                "z": 24
+            },
+            "materials": [
+                {
+                    "item": "moss_block",
+                    "count": 1051
+                },
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 879
+                },
+                {
+                    "item": "stone",
+                    "count": 440
+                },
+                {
+                    "item": "slime_block",
+                    "count": 345
+                },
+                {
+                    "item": "hopper",
+                    "count": 285
+                },
+                {
+                    "item": "redstone",
+                    "count": 201
+                },
+                {
+                    "item": "composter",
+                    "count": 146
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 143
+                },
+                {
+                    "item": "sticky_piston",
+                    "count": 82
+                },
+                {
+                    "item": "dropper",
+                    "count": 46
+                },
+                {
+                    "item": "dispenser",
+                    "count": 23
+                },
+                {
+                    "item": "chest",
+                    "count": 12
+                }
+            ],
+            "difficulty": "hard",
+            "author": "booty, Sam. (based on Chromoss by MaidofMoss)",
+            "community": "TMC Catalogue",
+            "condition": "Playerless, 5 layers; composting arrays scale with the number of layers.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/ZqzbkahWUjcZ/tileable-cheap-moss-farm-dustmoss-v2",
+                "title": "Tileable Cheap Moss Farm (Dustmoss v2) (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "fireblox-creeper-farm-33k",
+            "name": "Creeper Farm 33k (1 Dimension)",
+            "type": "gunpowder",
+            "produces": [
+                {
+                    "item": "gunpowder",
+                    "per_hour": 33000,
+                    "basis": "designer",
+                    "note": "Tested by the designer in a 1.18 superflat world; expect closer to 30k in a survival world."
+                }
+            ],
+            "versions": {
+                "min": "1.18",
+                "max": null
+            },
+            "footprint": {
+                "x": 29,
+                "y": 136,
+                "z": 29
+            },
+            "materials": [
+                {
+                    "item": "polished_andesite",
+                    "count": 7536
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 7344
+                },
+                {
+                    "item": "polished_deepslate",
+                    "count": 5168
+                },
+                {
+                    "item": "deepslate_bricks",
+                    "count": 2941
+                },
+                {
+                    "item": "orange_carpet",
+                    "count": 819
+                },
+                {
+                    "item": "spruce_sign",
+                    "count": 680
+                },
+                {
+                    "item": "tinted_glass",
+                    "count": 664
+                },
+                {
+                    "item": "iron_bars",
+                    "count": 539
+                },
+                {
+                    "item": "hopper",
+                    "count": 49
+                },
+                {
+                    "item": "observer",
+                    "count": 38
+                },
+                {
+                    "item": "chest",
+                    "count": 22
+                }
+            ],
+            "difficulty": "hard",
+            "author": "FireBlox",
+            "community": "Shulkr",
+            "condition": "Single dimension, no spawn proofing, built over an ocean. Needs many cats, a dual beacon (Strength II, Regeneration) and an auto clicker.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/aSpP4HrPdSNc/creeper-farm-33-000-gunpowder-per-hour-1-dimension",
+                "title": "Creeper Farm - 33,000 Gunpowder Per Hour (1 Dimension) (Shulkr)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "shulkercraft-easy-creeper-farm",
+            "name": "Easy Creeper Farm (no cats)",
+            "type": "gunpowder",
+            "produces": [
+                {
+                    "item": "gunpowder",
+                    "per_hour": 1000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "spruce_trapdoor",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Shulkercraft (inspired by MushoDen)",
+            "community": "YouTube",
+            "condition": "No cats and no redstone. Material list and litematic in the video description.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=WqdEYzLSV3s",
+                "title": "Minecraft 1.21+ Easy Creeper Farm - 1000+ Gunpowder Per Hour (Shulkercraft)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "digitalchaos-spider-farm",
+            "name": "Spider Farm (no spawner, on/off switch)",
+            "type": "string",
+            "produces": [
+                {
+                    "item": "string",
+                    "per_hour": 20000,
+                    "basis": "designer"
+                },
+                {
+                    "item": "spider_eye",
+                    "per_hour": 13000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.18",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                },
+                {
+                    "item": "lever",
+                    "count": null
+                }
+            ],
+            "difficulty": "hard",
+            "author": "DigitalChaos119",
+            "community": "YouTube",
+            "condition": "Natural spawning drop farm with an on/off switch for spider spawns; updated for the 1.18 light rules, stated to work in 1.19.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=QgHU1PYThi0",
+                "title": "Minecraft Spider Farm - No Spawner - 20,000 string/hr 13,000 spider eyes/hr (DigitalChaos119)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "theysix-infinite-string-farm",
+            "name": "Infinite String Farm",
+            "type": "string",
+            "produces": [
+                {
+                    "item": "string",
+                    "per_hour": null,
+                    "basis": "unknown",
+                    "note": "Stated 8,000 to 72,000 items per hour in total (string, spider eyes, bones, arrows) depending on layers and Looting; no split per item."
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": "1.21.10"
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "TheySix",
+            "community": "YouTube",
+            "condition": "Spawning platforms move spiders into one-hit chambers; rate scales with the number of layers. Listed for 1.16 to 1.21.10.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=qq4O9bbXQpE",
+                "title": "ULTIMATE Infinite String Farm In Minecraft 1.21 & Above! (TheySix)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "soi-swamp-slime-farm-22k",
+            "name": "22k Swamp Slime Farm",
+            "type": "slime",
+            "produces": [
+                {
+                    "item": "slime_ball",
+                    "per_hour": 22000,
+                    "basis": "designer",
+                    "note": "Varies with local difficulty and moon phase."
+                }
+            ],
+            "versions": {
+                "min": "1.18",
+                "max": null
+            },
+            "footprint": {
+                "x": 59,
+                "y": 133,
+                "z": 59
+            },
+            "materials": [
+                {
+                    "item": "cobblestone_slab",
+                    "count": 4807
+                },
+                {
+                    "item": "cobblestone",
+                    "count": 245
+                },
+                {
+                    "item": "gray_stained_glass",
+                    "count": 140
+                },
+                {
+                    "item": "cobblestone_wall",
+                    "count": 48
+                },
+                {
+                    "item": "obsidian",
+                    "count": 36
+                },
+                {
+                    "item": "oak_trapdoor",
+                    "count": 10
+                },
+                {
+                    "item": "hopper",
+                    "count": 1
+                },
+                {
+                    "item": "dispenser",
+                    "count": 1
+                }
+            ],
+            "difficulty": "hard",
+            "author": "soi (Nether portal elevator by IanXO4)",
+            "community": "TMC Catalogue",
+            "condition": "Built in the water of a swamp or mangrove swamp. Player kills with Looting III at a 14 game tick interval; light up land within the despawn sphere.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/ku8xbIjhkmJV/22k-swamp-slime-farm",
+                "title": "22k Swamp Slime Farm (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "kmond-efficient-slime-farm",
+            "name": "Efficient Swamp Slime Farm",
+            "type": "slime",
+            "produces": [
+                {
+                    "item": "slime_ball",
+                    "per_hour": 5000,
+                    "basis": "designer"
+                }
+            ],
+            "versions": {
+                "min": "1.19",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "slime_block",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "Kmond",
+            "community": "YouTube",
+            "condition": "Swamp biome, no slime chunk and no cave lighting needed. Block list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=AoobuSPUA24",
+                "title": "Efficient Slime Farm - 5000 Per Hour - Minecraft 1.21+ Tutorial (Kmond)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "shulkercraft-easy-wool-farm",
+            "name": "Easy Wool Farm",
+            "type": "wool",
+            "produces": [
+                {
+                    "item": "white_wool",
+                    "per_hour": 800,
+                    "basis": "designer",
+                    "note": "Sheep colour decides the wool colour."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "dispenser",
+                    "count": null
+                },
+                {
+                    "item": "shears",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Shulkercraft (design by Jetmaymendo)",
+            "community": "YouTube",
+            "condition": "Sheep sheared by dispensers. Material list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=3srocpDIWU0",
+                "title": "Minecraft Easy Wool Farm - 800 Wool Per Hour in 1.21+ (Shulkercraft)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "justacutedoggo-wool-farm",
+            "name": "Efficient Wool Farm",
+            "type": "wool",
+            "produces": [
+                {
+                    "item": "white_wool",
+                    "per_hour": 2700,
+                    "basis": "designer",
+                    "note": "Sheep colour decides the wool colour."
+                }
+            ],
+            "versions": {
+                "min": "1.14",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "dispenser",
+                    "count": null
+                },
+                {
+                    "item": "shears",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "medium",
+            "author": "JustACuteDoggo",
+            "community": "YouTube",
+            "condition": "Compact automatic AFK farm, sheep sheared automatically. Material list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=6BSY-T_U-r0",
+                "title": "Efficient Wool Farm for 1.21 Minecraft (2700/Hour) (JustACuteDoggo)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "autumn-hoglin-farm",
+            "name": "47k-276k Hoglin Farm",
+            "type": "leather",
+            "produces": [
+                {
+                    "item": "leather",
+                    "per_hour": 7900,
+                    "basis": "designer",
+                    "note": "Mini variant as stated (Max variant 46k/h). Which variant the 43x14x41 schematic shows is not stated."
+                },
+                {
+                    "item": "cooked_porkchop",
+                    "per_hour": 47200,
+                    "basis": "designer",
+                    "note": "Mini variant; switchable to raw porkchop."
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": null
+            },
+            "footprint": {
+                "x": 43,
+                "y": 14,
+                "z": 41
+            },
+            "materials": [
+                {
+                    "item": "warped_slab",
+                    "count": 2316
+                },
+                {
+                    "item": "obsidian",
+                    "count": 1617
+                },
+                {
+                    "item": "white_stained_glass",
+                    "count": 749
+                },
+                {
+                    "item": "torch",
+                    "count": 363
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 132
+                }
+            ],
+            "difficulty": "hard",
+            "author": "Autumn (Overworld side by Terra)",
+            "community": "TMC Catalogue",
+            "condition": "Nether roof in a crimson forest, portal based with Overworld collection; AFK at y 242 in the Nether.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/fz9WPDyIb02D/47k-276k-hoglin-farm",
+                "title": "47k-276k Hoglin Farm (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "reytgood-cow-farm",
+            "name": "Easiest Cow Farm",
+            "type": "leather",
+            "produces": [
+                {
+                    "item": "leather",
+                    "per_hour": null,
+                    "basis": "unknown",
+                    "note": "The tutorial gives no rate."
+                },
+                {
+                    "item": "beef",
+                    "per_hour": null,
+                    "basis": "unknown"
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                },
+                {
+                    "item": "wheat",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "ReytGood",
+            "community": "YouTube",
+            "condition": "Beginner cow breeder and killer. Material list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=pYqUOXFWMHM",
+                "title": "Easiest 1.21 Cow Farm (Unlimited Beef, Leather & XP!) (ReytGood)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "fortun8diamond-wither-skeleton-farm",
+            "name": "Wither Skeleton Farm (400 skulls)",
+            "type": "wither_skeleton",
+            "produces": [
+                {
+                    "item": "wither_skeleton_skull",
+                    "per_hour": 400,
+                    "basis": "designer"
+                },
+                {
+                    "item": "coal",
+                    "per_hour": null,
+                    "basis": "unknown"
+                },
+                {
+                    "item": "bone",
+                    "per_hour": null,
+                    "basis": "unknown"
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "obsidian",
+                    "count": null
+                },
+                {
+                    "item": "torch",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "hard",
+            "author": "Fortun8diamond",
+            "community": "YouTube",
+            "condition": "Inside a nether fortress bounding box with portals. Stated to work from 1.16 to 26.3; build a mob switch first.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=-SIWj_Tc2oA",
+                "title": "Wither Skeleton Farm 400 Skulls per Hour for Minecraft 1.21+, 26.1-26.3 (Fortun8diamond)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "ijevin-enderman-xp-farm",
+            "name": "Enderman XP Farm",
+            "type": "enderman",
+            "produces": [
+                {
+                    "item": "ender_pearl",
+                    "per_hour": 4000,
+                    "basis": "designer"
+                },
+                {
+                    "item": "experience",
+                    "per_hour": 83700,
+                    "basis": "designer",
+                    "note": "Stated as level 0 to 30 in one minute (1,395 XP per minute)."
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "stone",
+                    "count": 1312
+                },
+                {
+                    "item": "oak_leaves",
+                    "count": 128
+                },
+                {
+                    "item": "white_carpet",
+                    "count": 128
+                },
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 31
+                },
+                {
+                    "item": "ender_pearl",
+                    "count": 32
+                },
+                {
+                    "item": "hopper",
+                    "count": 12
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 8
+                },
+                {
+                    "item": "dropper",
+                    "count": 3
+                },
+                {
+                    "item": "redstone",
+                    "count": 3
+                },
+                {
+                    "item": "observer",
+                    "count": 2
+                },
+                {
+                    "item": "minecart",
+                    "count": 1
+                },
+                {
+                    "item": "rail",
+                    "count": 1
+                },
+                {
+                    "item": "lever",
+                    "count": 1
+                },
+                {
+                    "item": "chain",
+                    "count": 1
+                },
+                {
+                    "item": "water_bucket",
+                    "count": 1
+                },
+                {
+                    "item": "name_tag",
+                    "count": 1
+                }
+            ],
+            "difficulty": "medium",
+            "author": "iJevin (tutorial by moretingz)",
+            "community": "YouTube",
+            "condition": "End dimension, one-hit kill with a named endermite. Stated for 1.16 to 26.1+.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=6s5GpWuguAM",
+                "title": "Enderman XP Farm Minecraft 1.21.11 - 26.1+ - BEST DESIGN (moretingz)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "dashpum4-effortless-enderman-farm",
+            "name": "Effortless Enderman XP Farm (no endermite)",
+            "type": "enderman",
+            "produces": [
+                {
+                    "item": "experience",
+                    "per_hour": null,
+                    "basis": "unknown",
+                    "note": "The video only claims 'max XP per hour'."
+                },
+                {
+                    "item": "ender_pearl",
+                    "per_hour": null,
+                    "basis": "unknown"
+                }
+            ],
+            "versions": {
+                "min": "1.13",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "oak_leaves",
+                    "count": 561
+                },
+                {
+                    "item": "smooth_stone_slab",
+                    "count": 18
+                },
+                {
+                    "item": "water_bucket",
+                    "count": 3
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 2
+                },
+                {
+                    "item": "armor_stand",
+                    "count": 1
+                },
+                {
+                    "item": "barrel",
+                    "count": 1
+                },
+                {
+                    "item": "hopper",
+                    "count": 1
+                },
+                {
+                    "item": "lava_bucket",
+                    "count": 1
+                }
+            ],
+            "difficulty": "easy",
+            "author": "DashPum4",
+            "community": "YouTube",
+            "condition": "Cheapest design, no endermite; about 15 minutes to gather and 15 to build.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=zgFMPbPcOQ0",
+                "title": "Effortless Enderman XP Farm (1.13 - 1.21+) (DashPum4)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "ncolyer-vuntf-v2-tree-farm",
+            "name": "12 Type Tree Farm (VUNTF v2)",
+            "type": "tree",
+            "produces": [
+                {
+                    "item": "oak_log",
+                    "per_hour": 6100,
+                    "basis": "designer",
+                    "note": "Stated 6.1k to 12.9k logs per hour depending on tree type and mode; the lower bound is listed."
+                }
+            ],
+            "versions": {
+                "min": "1.16",
+                "max": null
+            },
+            "footprint": {
+                "x": 21,
+                "y": 52,
+                "z": 19
+            },
+            "materials": [
+                {
+                    "item": "grass_block",
+                    "count": 207
+                },
+                {
+                    "item": "smooth_stone",
+                    "count": 166
+                },
+                {
+                    "item": "scaffolding",
+                    "count": 46
+                },
+                {
+                    "item": "dirt",
+                    "count": 43
+                },
+                {
+                    "item": "redstone",
+                    "count": 22
+                },
+                {
+                    "item": "chest",
+                    "count": 16
+                },
+                {
+                    "item": "hopper",
+                    "count": 11
+                },
+                {
+                    "item": "dark_oak_fence_gate",
+                    "count": 10
+                },
+                {
+                    "item": "repeater",
+                    "count": 8
+                },
+                {
+                    "item": "observer",
+                    "count": 5
+                },
+                {
+                    "item": "piston",
+                    "count": 3
+                },
+                {
+                    "item": "tnt",
+                    "count": 1
+                }
+            ],
+            "difficulty": "medium",
+            "author": "ncolyer (inspired by IanXO4)",
+            "community": "TMC Catalogue",
+            "condition": "Explosion based, needs bone meal. Planting mangrove kills the player (bee nests).",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/uwAk39JsITwV/6-1k-12-9k-12-type-tree-farm-vuntf-v2",
+                "title": "6.1k-12.9k 12 Type Tree Farm (VUNTF v2) (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "justluke-tileable-villager-wheat-farm",
+            "name": "Tileable Villager Wheat Farm",
+            "type": "crops",
+            "produces": [
+                {
+                    "item": "wheat",
+                    "per_hour": 158.99,
+                    "basis": "designer",
+                    "note": "Per layer; 10 and 50 layer variants exist."
+                },
+                {
+                    "item": "wheat_seeds",
+                    "per_hour": 272.07,
+                    "basis": "designer",
+                    "note": "Per layer."
+                }
+            ],
+            "versions": {
+                "min": "1.19",
+                "max": null
+            },
+            "footprint": {
+                "x": 18,
+                "y": 7,
+                "z": 21
+            },
+            "materials": [
+                {
+                    "item": "gray_concrete",
+                    "count": 429
+                },
+                {
+                    "item": "black_stained_glass",
+                    "count": 305
+                },
+                {
+                    "item": "powered_rail",
+                    "count": 161
+                },
+                {
+                    "item": "wheat_seeds",
+                    "count": 160
+                },
+                {
+                    "item": "rail",
+                    "count": 29
+                },
+                {
+                    "item": "redstone_block",
+                    "count": 21
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 9
+                },
+                {
+                    "item": "observer",
+                    "count": 5
+                },
+                {
+                    "item": "sea_lantern",
+                    "count": 4
+                },
+                {
+                    "item": "hopper",
+                    "count": 2
+                },
+                {
+                    "item": "dropper",
+                    "count": 1
+                },
+                {
+                    "item": "dispenser",
+                    "count": 1
+                }
+            ],
+            "difficulty": "medium",
+            "author": "justluke",
+            "community": "TMC Catalogue",
+            "condition": "Villager inventories pre-filled with seeds or bread; the player must sleep through every night for full rates.",
+            "source": {
+                "url": "https://www.shulkr.com/en/schematics/QXJgFDqFCNUz/tileable-villager-wheat-farm",
+                "title": "Tileable Villager Wheat Farm (Shulkr, TMC Catalogue)",
+                "kind": "schematic",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "shulkercraft-multi-crop-farm",
+            "name": "Easy Multi Crop Farm",
+            "type": "crops",
+            "produces": [
+                {
+                    "item": "carrot",
+                    "per_hour": 850,
+                    "basis": "designer",
+                    "note": "Stated as 'up to 850 crops per hour'; planted with carrots here, works the same with potatoes or beetroots."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "composter",
+                    "count": null
+                },
+                {
+                    "item": "hopper",
+                    "count": null
+                },
+                {
+                    "item": "chest",
+                    "count": null
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Shulkercraft",
+            "community": "YouTube",
+            "condition": "Farmer villagers harvest, an item sorter keeps their inventory free. Material list in the video.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=Jx7bDuEznnU",
+                "title": "Minecraft Easy Multi Crop Farm - 850 Per Hour (Shulkercraft)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        },
+        {
+            "id": "kysen-trading-hall",
+            "name": "Easy Villager Trading Hall",
+            "type": "trading_hall",
+            "produces": [
+                {
+                    "item": "emerald",
+                    "per_hour": null,
+                    "basis": "unknown",
+                    "note": "A trading hall has no fixed rate: it depends on the trades and restocks."
+                }
+            ],
+            "versions": {
+                "min": "1.21",
+                "max": null
+            },
+            "footprint": null,
+            "materials": [
+                {
+                    "item": "stone",
+                    "count": 182
+                },
+                {
+                    "item": "dirt",
+                    "count": 64
+                },
+                {
+                    "item": "redstone",
+                    "count": 20
+                },
+                {
+                    "item": "lectern",
+                    "count": 10
+                },
+                {
+                    "item": "lever",
+                    "count": 10
+                },
+                {
+                    "item": "spruce_trapdoor",
+                    "count": 10
+                },
+                {
+                    "item": "piston",
+                    "count": 10
+                },
+                {
+                    "item": "name_tag",
+                    "count": 1
+                }
+            ],
+            "difficulty": "easy",
+            "author": "Kysen (inspired by LogicalGeekBoy)",
+            "community": "YouTube",
+            "condition": "Materials for 10 villagers, scales freely. Trades lowered to 1 emerald by curing zombie villagers.",
+            "source": {
+                "url": "https://www.youtube.com/watch?v=uxvApVVWE0Q",
+                "title": "EASY Minecraft 1.21 Villager Trading Hall - All Trades 1 Emerald! (Kysen)",
+                "kind": "video",
+                "retrieved": "2026-10-15"
+            },
+            "model": null
+        }
+    ]
+}
