@@ -3,24 +3,17 @@
     "file": "assets/_commonjsHelpers-CqkleIqs.js",
     "name": "_commonjsHelpers"
   },
-  "_dartCalculator-fkbJvLza.js": {
-    "file": "assets/dartCalculator-fkbJvLza.js",
+  "_dartCalculator-D2kpludo.js": {
+    "file": "assets/dartCalculator-D2kpludo.js",
     "name": "dartCalculator",
     "imports": [
-      "_utils-CWqVBBAg.js",
-      "_dartDefinition-_kwebtcw.js"
+      "_utils-DmpZVvjm.js",
+      "_dartboard-5OMmFi3g.js"
     ]
   },
-  "_dartDefinition-_kwebtcw.js": {
-    "file": "assets/dartDefinition-_kwebtcw.js",
-    "name": "dartDefinition"
-  },
-  "_dartboard-Bp3U0q_v.js": {
-    "file": "assets/dartboard-Bp3U0q_v.js",
-    "name": "dartboard",
-    "imports": [
-      "_dartDefinition-_kwebtcw.js"
-    ]
+  "_dartboard-5OMmFi3g.js": {
+    "file": "assets/dartboard-5OMmFi3g.js",
+    "name": "dartboard"
   },
   "_heatmap-L35ZS6ea.js": {
     "file": "assets/heatmap-L35ZS6ea.js",
@@ -36,13 +29,29 @@
       "__commonjsHelpers-CqkleIqs.js"
     ]
   },
-  "_utils-CWqVBBAg.js": {
-    "file": "assets/utils-CWqVBBAg.js",
+  "_utils-DmpZVvjm.js": {
+    "file": "assets/utils-DmpZVvjm.js",
     "name": "utils"
   },
-  "resources/css/tailwind.css": {
-    "file": "assets/tailwind-BTWdZbwa.css",
-    "src": "resources/css/tailwind.css",
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
+    "file": "assets/fa-brands-400-BfBXV7Mm.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
+    "file": "assets/fa-regular-400-BVHPE7da.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
+    "file": "assets/fa-solid-900-8GirhLYJ.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+  },
+  "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2": {
+    "file": "assets/fa-v4compatibility-DnhYSyY-.woff2",
+    "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BA648SOw.css",
+    "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/IEC7064_page.js": {
@@ -52,7 +61,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-NCDi6pKw.js",
+    "file": "assets/app-5eRRBWsP.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -67,52 +76,49 @@
     "isEntry": true
   },
   "resources/js/dark-mode.js": {
-    "file": "assets/dark-mode-DAce_kXm.js",
+    "file": "assets/dark-mode-D5NSVGDn.js",
     "name": "dark-mode",
     "src": "resources/js/dark-mode.js",
     "isEntry": true
   },
   "resources/js/dart/dartIndex.js": {
-    "file": "assets/dartIndex-Cs-KYsxm.js",
+    "file": "assets/dartIndex-Xf7kq-nH.js",
     "name": "dartIndex",
     "src": "resources/js/dart/dartIndex.js",
     "isEntry": true,
     "imports": [
       "_heatmap-L35ZS6ea.js",
-      "_dartboard-Bp3U0q_v.js",
-      "_dartCalculator-fkbJvLza.js",
-      "_dartDefinition-_kwebtcw.js",
+      "_dartboard-5OMmFi3g.js",
+      "_dartCalculator-D2kpludo.js",
       "__commonjsHelpers-CqkleIqs.js",
-      "_utils-CWqVBBAg.js"
+      "_utils-DmpZVvjm.js"
     ]
   },
   "resources/js/dart/dartInfo.js": {
-    "file": "assets/dartInfo-CpFDM4Uz.js",
+    "file": "assets/dartInfo-CwjWRPrs.js",
     "name": "dartInfo",
     "src": "resources/js/dart/dartInfo.js",
     "isEntry": true,
     "imports": [
-      "_heatmap-L35ZS6ea.js",
       "_plotly-BuoUn_6p.js",
-      "_dartDefinition-_kwebtcw.js",
-      "_dartCalculator-fkbJvLza.js",
+      "_dartboard-5OMmFi3g.js",
+      "_dartCalculator-D2kpludo.js",
       "__commonjsHelpers-CqkleIqs.js",
-      "_utils-CWqVBBAg.js"
+      "_utils-DmpZVvjm.js"
     ]
   },
   "resources/js/dart/dartPlayground.js": {
-    "file": "assets/dartPlayground-B02QSNDW.js",
+    "file": "assets/dartPlayground-i4e1JTz0.js",
     "name": "dartPlayground",
     "src": "resources/js/dart/dartPlayground.js",
     "isEntry": true,
     "imports": [
       "_heatmap-L35ZS6ea.js",
       "_plotly-BuoUn_6p.js",
-      "_utils-CWqVBBAg.js",
-      "_dartboard-Bp3U0q_v.js",
-      "_dartCalculator-fkbJvLza.js",
-      "__commonjsHelpers-CqkleIqs.js",
-      "_dartDefinition-_kwebtcw.js"
+      "_utils-DmpZVvjm.js",
+      "_dartboard-5OMmFi3g.js",
+      "_dartCalculator-D2kpludo.js",
+      "__commonjsHelpers-CqkleIqs.js"
     ]
   },
   "resources/js/dart/game/dartResult.js": {
@@ -122,15 +128,14 @@
     "isEntry": true
   },
   "resources/js/dart/game/dartResultHeatmap.js": {
-    "file": "assets/dartResultHeatmap-AFdl-t-r.js",
+    "file": "assets/dartResultHeatmap-Ccu6LGY7.js",
     "name": "dartResultHeatmap",
     "src": "resources/js/dart/game/dartResultHeatmap.js",
     "isEntry": true,
     "imports": [
       "_heatmap-L35ZS6ea.js",
-      "_dartboard-Bp3U0q_v.js",
-      "__commonjsHelpers-CqkleIqs.js",
-      "_dartDefinition-_kwebtcw.js"
+      "_dartboard-5OMmFi3g.js",
+      "__commonjsHelpers-CqkleIqs.js"
     ]
   },
   "resources/js/dart/game/dartSetup.js": {
@@ -146,13 +151,12 @@
     "isEntry": true
   },
   "resources/js/dart/game/show.js": {
-    "file": "assets/show-0C8TGIyV.js",
+    "file": "assets/show-8uz_js2P.js",
     "name": "show",
     "src": "resources/js/dart/game/show.js",
     "isEntry": true,
     "imports": [
-      "_dartboard-Bp3U0q_v.js",
-      "_dartDefinition-_kwebtcw.js",
+      "_dartboard-5OMmFi3g.js",
       "__commonjsHelpers-CqkleIqs.js"
     ]
   },
@@ -175,7 +179,7 @@
     "isEntry": true
   },
   "resources/js/home.js": {
-    "file": "assets/home-DWeukn9i.js",
+    "file": "assets/home-Ut3_WR-p.js",
     "name": "home",
     "src": "resources/js/home.js",
     "isEntry": true
@@ -203,12 +207,12 @@
     "isEntry": true
   },
   "resources/js/simApp.js": {
-    "file": "assets/simApp-Bznlg1pA.js",
+    "file": "assets/simApp-Bj1mYDnO.js",
     "name": "simApp",
     "src": "resources/js/simApp.js",
     "isEntry": true,
     "imports": [
-      "_utils-CWqVBBAg.js"
+      "_utils-DmpZVvjm.js"
     ]
   },
   "resources/js/user-profilepicture.js": {
