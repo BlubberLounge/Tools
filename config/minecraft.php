@@ -37,6 +37,14 @@ return [
             'route' => 'minecraft.farm-catalogue',
             'permission' => 'view.minecraft.farm.catalogue',
         ],
+        [
+            'id' => 'chain-planner',
+            'title' => 'farm chain planner',
+            'description' => 'Production chain of an item down to raw resources, with farm modules, furnaces and hopper lines.',
+            'icon' => 'fa-solid fa-diagram-project',
+            'route' => 'minecraft.chain-planner',
+            'permission' => 'view.minecraft.chain.planner',
+        ],
     ],
 
 ];

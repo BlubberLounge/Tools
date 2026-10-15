@@ -90,6 +90,12 @@ Breadcrumbs::for('minecraft.farm-catalogue', function (BreadcrumbTrail $trail)
     $trail->push(__('farm module catalogue'), route('minecraft.farm-catalogue'));
 });
 
+Breadcrumbs::for('minecraft.chain-planner', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('farm chain planner'), route('minecraft.chain-planner'));
+});
+
 /**
  *
  * User

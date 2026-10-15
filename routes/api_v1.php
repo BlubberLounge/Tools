@@ -122,4 +122,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
                 ->where(['version' => '[0-9.]+', 'design' => '[a-z0-9-]+'])
                 ->name('design');
         });
+
+    // route: /minecraft/chains/*
+    // name: minecraft.chains.*
+    Route::prefix('minecraft/chains')->name('api.minecraft.chains.')
+        ->middleware(['permission:view.minecraft.chain.planner', 'throttle:60,1'])
+        ->group(function () {
+            Route::get('/', [MinecraftController::class, 'chainVersions'])->name('versions');
+            Route::post('/plan', [MinecraftController::class, 'chainPlan'])->name('plan');
+            Route::get('/{version}', [MinecraftController::class, 'chainVersion'])
+                ->where('version', '[0-9.]+')
+                ->name('version');
+        });
 });

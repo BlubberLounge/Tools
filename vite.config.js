@@ -29,6 +29,7 @@ export default defineConfig({
                 // Minecraft
                 'resources/js/minecraft/anvilPlanner.js',
                 'resources/js/minecraft/farmCatalogue.js',
+                'resources/js/minecraft/chainPlanner.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',

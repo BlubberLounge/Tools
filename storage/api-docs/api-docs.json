@@ -628,6 +628,139 @@
                 }
             }
         },
+        "/minecraft/chains": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Minecraft versions with recipe data for the farm chain planner",
+                "description": "Java versions that have a recipe file and a farm catalogue, newest first",
+                "operationId": "minecraftChainVersions",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/minecraft/chains/{version}": {
+            "get": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Items, fuels and defaults of one version for the farm chain planner",
+                "operationId": "minecraftChainVersion",
+                "parameters": [
+                    {
+                        "name": "version",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "26.3"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Unknown version"
+                    }
+                }
+            }
+        },
+        "/minecraft/chains/plan": {
+            "post": {
+                "tags": [
+                    "Minecraft"
+                ],
+                "summary": "Value chain of an item down to raw resources and farm modules",
+                "operationId": "minecraftChainPlan",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "version",
+                                    "item",
+                                    "rate"
+                                ],
+                                "properties": {
+                                    "version": {
+                                        "type": "string",
+                                        "example": "26.3"
+                                    },
+                                    "item": {
+                                        "type": "string",
+                                        "example": "book"
+                                    },
+                                    "rate": {
+                                        "description": "Items per hour",
+                                        "type": "number",
+                                        "example": 1000
+                                    },
+                                    "mode": {
+                                        "type": "string",
+                                        "enum": [
+                                            "manual",
+                                            "auto"
+                                        ]
+                                    },
+                                    "choices": {
+                                        "description": "Recipe id or 'source' per item",
+                                        "type": "object",
+                                        "example": {
+                                            "emerald": "trade_librarian_paper_emerald"
+                                        }
+                                    },
+                                    "designs": {
+                                        "type": "object",
+                                        "example": {
+                                            "iron_ingot": "booty-3-pod-iron-farm"
+                                        }
+                                    },
+                                    "module_rates": {
+                                        "type": "object",
+                                        "example": {
+                                            "iron_ingot": 400
+                                        }
+                                    },
+                                    "furnace_rates": {
+                                        "type": "object",
+                                        "example": {
+                                            "smelting": 360
+                                        }
+                                    },
+                                    "restocks_per_day": {
+                                        "type": "number",
+                                        "example": 2
+                                    },
+                                    "fuel": {
+                                        "type": "string",
+                                        "example": "coal"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plan"
+                    },
+                    "422": {
+                        "description": "Invalid input, or the recipes loop (data.loop lists the items)"
+                    }
+                }
+            }
+        },
         "/timetable": {
             "get": {
                 "tags": [

@@ -253,6 +253,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.farm.catalogue',
                 'description'   => 'Can use the Minecraft farm module catalogue and its API',
             ],
+            [
+                'name'          => 'Can Use Minecraft Chain Planner',
+                'slug'          => 'view.minecraft.chain.planner',
+                'description'   => 'Can use the Minecraft farm chain planner and its API',
+            ],
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
 use App\Minecraft\EnchantmentData;
+use App\Http\Controllers\Api\v1\MinecraftController as MinecraftApiController;
 use App\Minecraft\FarmCatalog;
 use App\Minecraft\ToolRegistry;
 
@@ -56,5 +57,17 @@ class MinecraftController extends Controller
         );
 
         return view('minecraft.farm-catalogue', $data);
+    }
+
+    /**
+     * Farm chain planner.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showChainPlanner()
+    {
+        $data['versions'] = MinecraftApiController::chainVersionList();
+
+        return view('minecraft.chain-planner', $data);
     }
 }
