@@ -19,9 +19,17 @@ class ScoringService
      *
      * Valid rings: S (single), D (double), T (triple), O (outside/miss).
      * Bullseye: field=25, ring=S → 25pts (outer bull), ring=D → 50pts (inner bull).
+     * Segments that do not exist on a dartboard (e.g. triple bull, field 50) score 0.
      */
     public function calculateValue(string $field, string $ring): int
     {
+        $number = (int) $field;
+
+        // Valid fields: 0-20 and 25 (bull); the bull has no triple ring
+        if ($number < 0 || ($number > 20 && $number !== 25) || ($number === 25 && $ring === 'T')) {
+            return 0;
+        }
+
         return match ($ring) {
             'S' => (int) $field,
             'D' => (int) $field * 2,

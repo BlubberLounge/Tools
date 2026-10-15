@@ -130,15 +130,15 @@ class ScoringServiceTest extends TestCase
      */
     public function test_calculate_value_special_fields(): void
     {
-        // Field 25 with different rings
+        // Field 25 (bull) with different rings - there is no triple bull
         $this->assertEquals(25, $this->scoringService->calculateValue('25', 'S'));
         $this->assertEquals(50, $this->scoringService->calculateValue('25', 'D'));
-        $this->assertEquals(75, $this->scoringService->calculateValue('25', 'T'));
+        $this->assertEquals(0, $this->scoringService->calculateValue('25', 'T'));
 
-        // Field 50 with different rings
-        $this->assertEquals(50, $this->scoringService->calculateValue('50', 'S'));
-        $this->assertEquals(100, $this->scoringService->calculateValue('50', 'D'));
-        $this->assertEquals(150, $this->scoringService->calculateValue('50', 'T'));
+        // Field 50 does not exist on a dartboard
+        $this->assertEquals(0, $this->scoringService->calculateValue('50', 'S'));
+        $this->assertEquals(0, $this->scoringService->calculateValue('50', 'D'));
+        $this->assertEquals(0, $this->scoringService->calculateValue('50', 'T'));
     }
 
     /**
