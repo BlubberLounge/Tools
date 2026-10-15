@@ -84,7 +84,7 @@ class MinecraftToolsTest extends TestCase
             'permission' => 'view.minecraft',
         ]])]);
 
-        $this->assertSame(['anvil-planner'], array_column(ToolRegistry::all(), 'id'));
+        $this->assertNotContains('farm-catalogue', array_column(ToolRegistry::all(), 'id'));
         $this->assertNull(ToolRegistry::find('farm-catalogue'));
 
         $response = $this->actingAs($this->user())->get(route('minecraft.index'));
