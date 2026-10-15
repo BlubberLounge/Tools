@@ -16,6 +16,7 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        // The index route sends guests to the login page
+        $response->assertRedirect(route('login'));
     }
 }

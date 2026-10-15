@@ -19,7 +19,10 @@ class UserWebRouteAccessTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        // The index route sends guests to the login page
+        $response->assertRedirect(route('login'));
+
+        $this->get(route('login'))->assertStatus(200);
     }
 
     public function test_models_can_be_instantiated(): void
@@ -30,10 +33,10 @@ class UserWebRouteAccessTest extends TestCase
 
     public function test_route_test_example(): void
     {
-        $this->seed();
+        // The database is already seeded by RefreshDatabase ($seed in TestCase)
         // $this->withoutExceptionHandling();
         $user = User::getRootUser();
-        $response = $this->actingAs($user)->get('/abc');
+        $response = $this->actingAs($user)->get(route('home'));
         $response->assertSuccessful();
     }
 }
