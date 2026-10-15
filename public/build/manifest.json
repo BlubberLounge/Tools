@@ -50,13 +50,18 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CJ1m8zo-.css",
+    "file": "assets/app-B9wKCEVz.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/minecraft-anvil.css": {
     "file": "assets/minecraft-anvil-B08cCnnX.css",
     "src": "resources/css/minecraft-anvil.css",
+    "isEntry": true
+  },
+  "resources/css/minecraft-farm-viewer.css": {
+    "file": "assets/minecraft-farm-viewer-ClX3w1K5.css",
+    "src": "resources/css/minecraft-farm-viewer.css",
     "isEntry": true
   },
   "resources/js/IEC7064_page.js": {
@@ -212,6 +217,24 @@
     "name": "farmCatalogue",
     "src": "resources/js/minecraft/farmCatalogue.js",
     "isEntry": true
+  },
+  "resources/js/minecraft/farmViewer.js": {
+    "file": "assets/farmViewer-qrthABCK.js",
+    "name": "farmViewer",
+    "src": "resources/js/minecraft/farmViewer.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/minecraft/viewer/renderer.js"
+    ]
+  },
+  "resources/js/minecraft/viewer/renderer.js": {
+    "file": "assets/renderer-BpJPjPDn.js",
+    "name": "renderer",
+    "src": "resources/js/minecraft/viewer/renderer.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/minecraft/farmViewer.js"
+    ]
   },
   "resources/js/moving-average.js": {
     "file": "assets/moving-average-B7gtVYto.js",
