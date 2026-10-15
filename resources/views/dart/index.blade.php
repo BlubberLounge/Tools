@@ -11,28 +11,28 @@
 @section('content')
 <div class="container">
     <div class="flex flex-wrap justify-around items-center mb-4">
-        <div class="col-12 col-md rounded mb-4 mb-md-0 mr-md-4" style="height: 600px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)">
+        <div class="w-full md:flex-1 rounded mb-4 md:mb-0 md:mr-4 bg-base-200" style="height: 600px;">
             <div id="skillsGraph" style="height: 100%"></div>
         </div>
-        <div class="col-12 col-md">
-            <div id="winRateGraph" class="flex flex-wrap rounded mb-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
-            <div id="positionGraph" class="flex flex-wrap rounded" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        <div class="w-full md:flex-1">
+            <div id="winRateGraph" class="flex flex-wrap rounded mb-4 bg-base-200" style="height:280px;"></div>
+            <div id="positionGraph" class="flex flex-wrap rounded bg-base-200" style="height:280px;"></div>
         </div>
     </div>
 
     <div class="flex flex-wrap justify-center items-center mb-4">
-        <div id="activityGraph" class="col rounded" style="height:300px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        <div id="activityGraph" class="flex-1 rounded bg-base-200" style="height:300px;"></div>
     </div>
 
     <div class="flex flex-wrap justify-around items-center mb-4">
-        <div id="gameTypesGraph" class="col-12 col-md  rounded mr-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
-        <div id="" class="col-12 col-md hidden d-md-none rounded mr-4" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
-        <div id="" class="col-12 col-md hidden d-md-none rounded" style="height:280px;background-color: rgba(var(--bs-tertiary-bg-rgb), 1)"></div>
+        <div id="gameTypesGraph" class="w-full md:flex-1 rounded mr-4 bg-base-200" style="height:280px;"></div>
+        <div id="" class="w-full md:flex-1 hidden rounded mr-4 bg-base-200" style="height:280px;"></div>
+        <div id="" class="w-full md:flex-1 hidden rounded bg-base-200" style="height:280px;"></div>
     </div>
 
     <div class="flex flex-wrap mb-5 justify-center">
-        <div class="col-10 col-md-7">
-            <select id="gameSelection" class="form-select">
+        <div class="w-10/12 md:w-7/12">
+            <select id="gameSelection" class="select select-bordered w-full">
                 {{-- <option selected>Open this select menu</option> --}}
                 @foreach ($games as $game)
                     <option value="{{ $game->id }}" {{ $loop->first ? 'selected' : null }}>
@@ -42,7 +42,7 @@
                         @desktop
                             {{ $game->title }}
                         @enddesktop
-                        {{-- <span class="badge rounded-pill" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span> --}}
+                        {{-- <span class="badge" style="background-color: {{ $game->status->color() }}"> {{ $game->status }} </span> --}}
                     </option>
                 @endforeach
             </select>
@@ -50,22 +50,22 @@
     </div>
 
     <div class="flex flex-wrap mb-5">
-        <div class="col col-md-6" style="height: 400px">
-            <div id="dartboardContainer" class="flex relative justify-center items-center p-2 h-100 w-100">
-                <div id="skeleton-dartboard" class="absolute top-50 start-50 translate-middle">
-                    <div class="spinner-border">
-                        <span class="visually-hidden">Loading...</span>
+        <div class="flex-1 md:w-6/12" style="height: 400px">
+            <div id="dartboardContainer" class="flex relative justify-center items-center p-2 h-full w-full">
+                <div id="skeleton-dartboard" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="loading loading-spinner loading-md">
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col col-md-6 flex justify-center items-center h-100">
+        <div class="flex-1 md:w-6/12 flex justify-center items-center h-full">
             <div id="graph01"></div>
         </div>
     </div>
 
     <div class="flex flex-wrap justify-center items-center mb-5">
-        <div id="expectationDataGraph" class="col" style="height: 500px;"></div>
+        <div id="expectationDataGraph" class="flex-1" style="height: 500px;"></div>
     </div>
 </div>
 @endsection

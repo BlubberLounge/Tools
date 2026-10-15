@@ -8,18 +8,13 @@
     @vite(['resources/sass/dartboardResult.scss', 'resources/sass/dartboard.scss'])
     <style>
         .info-card {
-            background-color: #ffffff;
+            background-color: oklch(var(--b1));
             border-radius: 1rem;
             padding: 1.5rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid oklch(var(--b3));
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             margin-bottom: 1.5rem;
             break-inside: avoid;
-        }
-        .dark .info-card {
-            background-color: #1e293b;
-            border-color: #334155;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
         }
         .info-card-header {
             display: flex;
@@ -27,31 +22,22 @@
             gap: 0.75rem;
             margin-bottom: 1rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .dark .info-card-header {
-            border-bottom-color: #334155;
+            border-bottom: 1px solid oklch(var(--b3));
         }
         .info-card-header i {
-            color: #f97316;
+            color: oklch(var(--p));
             font-size: 1.25rem;
         }
         .info-card-header h3 {
             margin: 0;
             font-weight: 600;
             font-size: 1.125rem;
-            color: #1e293b;
-        }
-        .dark .info-card-header h3 {
-            color: #e2e8f0;
+            color: oklch(var(--bc));
         }
         .info-card p {
-            color: #64748b;
+            color: oklch(var(--bc) / 0.6);
             font-size: 0.875rem;
             line-height: 1.6;
-        }
-        .dark .info-card p {
-            color: #94a3b8;
         }
         .dartboard-wrapper {
             position: relative;
@@ -74,15 +60,12 @@
             text-align: center;
             pointer-events: none;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.95);
+            background: oklch(var(--b1) / 0.95);
             padding: 0.75rem 1.25rem;
             border-radius: 0.75rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             opacity: 0;
             transition: opacity 0.2s ease;
-        }
-        .dark .dartboard-tooltip {
-            background: rgba(30, 41, 59, 0.95);
         }
         .dartboard-tooltip.visible {
             opacity: 1;
@@ -91,19 +74,16 @@
             display: block;
             font-size: 2rem;
             font-weight: 700;
-            color: #f97316;
+            color: oklch(var(--p));
             line-height: 1;
         }
         .dartboard-tooltip .tooltip-label {
             display: block;
             font-size: 0.75rem;
-            color: #64748b;
+            color: oklch(var(--bc) / 0.5);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-top: 0.25rem;
-        }
-        .dark .dartboard-tooltip .tooltip-label {
-            color: #94a3b8;
         }
         .stat-grid {
             display: grid;
@@ -118,25 +98,19 @@
         .stat-item {
             text-align: center;
             padding: 1rem;
-            background: #f1f5f9;
+            background: oklch(var(--b2));
             border-radius: 0.75rem;
-        }
-        .dark .stat-item {
-            background: #334155;
         }
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #f97316;
+            color: oklch(var(--p));
         }
         .stat-label {
             font-size: 0.75rem;
-            color: #64748b;
+            color: oklch(var(--bc) / 0.5);
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-        .dark .stat-label {
-            color: #94a3b8;
         }
         .graph-container {
             min-height: 300px;
@@ -149,26 +123,18 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
+            background: oklch(var(--wa) / 0.15);
+            border: 1px solid oklch(var(--wa) / 0.5);
             border-radius: 0.75rem;
-            color: #92400e;
+            color: oklch(var(--wa));
             margin-bottom: 1.5rem;
-        }
-        .dark .rotate-hint {
-            background: #78350f;
-            border-color: #b45309;
-            color: #fef3c7;
         }
         .legend-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.875rem;
-            color: #475569;
-        }
-        .dark .legend-item {
-            color: #94a3b8;
+            color: oklch(var(--bc) / 0.6);
         }
         .legend-color {
             width: 1rem;
@@ -209,20 +175,14 @@
             gap: 1rem;
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        .dark .overlay-legend {
-            border-top-color: #334155;
+            border-top: 1px solid oklch(var(--b3));
         }
         .overlay-legend-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.875rem;
-            color: #475569;
-        }
-        .dark .overlay-legend-item {
-            color: #94a3b8;
+            color: oklch(var(--bc) / 0.6);
         }
         .legend-dot {
             width: 0.75rem;
@@ -243,13 +203,9 @@
             gap: 0.5rem;
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid oklch(var(--b3));
             font-size: 0.75rem;
-            color: #64748b;
-        }
-        .dark .heatmap-legend {
-            border-top-color: #334155;
-            color: #94a3b8;
+            color: oklch(var(--bc) / 0.5);
         }
         .legend-gradient {
             width: 8rem;
@@ -265,10 +221,7 @@
         .strategic-legend {
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        .dark .strategic-legend {
-            border-top-color: #334155;
+            border-top: 1px solid oklch(var(--b3));
         }
         .legend-scale {
             display: flex;
@@ -276,15 +229,12 @@
             justify-content: center;
             gap: 0.75rem;
             font-size: 0.75rem;
-            color: #64748b;
-        }
-        .dark .legend-scale {
-            color: #94a3b8;
+            color: oklch(var(--bc) / 0.5);
         }
         .scale-gradient {
             width: 6rem;
             height: 0.5rem;
-            background: linear-gradient(to right, #22c55e, #f97316);
+            background: linear-gradient(to right, oklch(var(--su)), oklch(var(--p)));
             border-radius: 9999px;
         }
 
@@ -295,8 +245,8 @@
             justify-content: center;
             width: 2.5rem;
             height: 2.5rem;
-            background: linear-gradient(135deg, #f97316, #ea580c);
-            color: white;
+            background: oklch(var(--p));
+            color: oklch(var(--pc));
             font-weight: 600;
             font-size: 0.875rem;
             border-radius: 0.5rem;
@@ -306,7 +256,7 @@
         }
         .field-pill:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 4px 12px oklch(var(--p) / 0.4);
         }
         .field-pill:active {
             cursor: grabbing;
@@ -319,8 +269,8 @@
             transform: scale(0.9);
         }
         #fieldOrderPills.drag-active {
-            background: rgba(249, 115, 22, 0.1);
-            border-color: #f97316;
+            background: oklch(var(--p) / 0.1);
+            border-color: oklch(var(--p));
         }
     </style>
 @endpush
@@ -330,11 +280,11 @@
 
     <!-- Header -->
     <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-500/10 mb-4">
-            <i class="fa-solid fa-circle-info text-3xl text-orange-500"></i>
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+            <i class="fa-solid fa-circle-info text-3xl text-primary"></i>
         </div>
-        <h1 class="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">{{ __('Dart Information') }}</h1>
-        <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-base-content mb-2">{{ __('Dart Information') }}</h1>
+        <p class="text-base-content/50 max-w-2xl mx-auto">
             {{ __('Explore statistics, field values, and heatmaps to improve your dart game strategy.') }}
         </p>
     </div>
@@ -347,10 +297,10 @@
         </div>
         <p class="mb-4">{{ __('Customize the dartboard field arrangement to see how different layouts affect scoring patterns.') }}</p>
         <div>
-            <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
+            <label class="block text-sm font-medium text-base-content/70 mb-2">
                 {{ __('Field Order (clockwise from top)') }}
             </label>
-            <div id="fieldOrderPills" class="flex flex-wrap gap-2 p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-slate-50 dark:bg-slate-800/50 min-h-[60px] mb-3">
+            <div id="fieldOrderPills" class="flex flex-wrap gap-2 p-3 border border-base-300 rounded-lg bg-base-200/50 min-h-15 mb-3">
                 @foreach([20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5] as $number)
                     <div class="field-pill" draggable="true" data-value="{{ $number }}">
                         {{ $number }}
@@ -361,7 +311,7 @@
                 <button
                     type="button"
                     id="resetFieldOrderBtn"
-                    class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg transition-colors"
+                    class="px-4 py-2 text-sm font-medium text-base-content/70 bg-base-200 hover:bg-base-300 rounded-lg transition-colors"
                 >
                     <i class="fa-solid fa-rotate-left mr-1"></i>
                     {{ __('Reset') }}
@@ -369,13 +319,13 @@
                 <button
                     type="button"
                     id="applyFieldOrderBtn"
-                    class="px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                    class="px-4 py-2 text-sm font-medium text-primary-content bg-primary hover:bg-primary/80 rounded-lg transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                     <i class="fa-solid fa-check mr-1"></i>
                     {{ __('Apply') }}
                 </button>
             </div>
-            <p class="mt-2 text-xs text-slate-500 dark:text-slate-500">{{ __('Drag and drop to reorder fields. Click Apply to update all dartboards.') }}</p>
+            <p class="mt-2 text-xs text-base-content/50">{{ __('Drag and drop to reorder fields. Click Apply to update all dartboards.') }}</p>
         </div>
     </div>
 

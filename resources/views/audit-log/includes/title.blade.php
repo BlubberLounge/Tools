@@ -1,15 +1,15 @@
 @if(Request::path() !== 'audit-log')
-    <div class="row">
+    <div>
         <a href="{{ url()->previous() }}">
             <i class="fa-solid fa-caret-left"></i>
             {{ __('Back') }}
-        </a> 
+        </a>
     </div>
 @endif
 
-<div class="flex flex-wrap pb-4 pt-2">
-    <h3 class="col-8">
+<div class="flex justify-between items-center pb-4 pt-2">
+    <h3>
         Audit Log
-        <small class="text-muted">{{ substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@") + 1) }}</small>
+        <small class="text-base-content/50">{{ substr(Route::currentRouteAction(), strpos(Route::currentRouteAction(), "@") + 1) }}</small>
     </h3>
 </div>

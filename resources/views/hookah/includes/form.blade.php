@@ -5,27 +5,27 @@
             @method('PUT')
         @endif
         <div class="mb-3">
-            <label for="name" class="form-check-label">{{ __('Name') }}</label>
+            <label for="name" class="block text-sm font-medium mb-1">{{ __('Name') }}</label>
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') || $action === 'create' ? old('name') : $hookah->name }}" required autocomplete="off" autofocus>
             @error('name')
-                <span class="invalid-feedback" role="alert">
+                <span class="text-error text-sm mt-1" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-check-label">{{ __('Description') }}</label>
+            <label for="description" class="block text-sm font-medium mb-1">{{ __('Description') }}</label>
             <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') || $action === 'create' ? old('description') : $hookah->description }}" autocomplete="off">
             @error('description')
-                <span class="invalid-feedback" role="alert">
+                <span class="text-error text-sm mt-1" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
 
         <div class="mb-3">
-            <label for="manufacturer" class="form-check-label">{{ __('Manufacturer') }}</label>
+            <label for="manufacturer" class="block text-sm font-medium mb-1">{{ __('Manufacturer') }}</label>
             <select id="manufacturer" name="manufacturer" form="hookahForm" class="form-select" size="5" aria-label="size 5 select example" required>
                 @foreach($manufacturers as $manufacturer)
                     <option value="{{ $manufacturer->id }}" {{ isset($hookah) ? ($hookah->role_id === $manufacturer->id) ? 'selected' : '' : '' }}>{{ $manufacturer->name }}</option>

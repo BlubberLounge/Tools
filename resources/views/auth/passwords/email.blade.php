@@ -1,13 +1,13 @@
 @extends('layouts.auth')
 
 @section('content')
-<div class="container">
-    <div class="flex flex-wrap justify-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
+<div class="container mx-auto px-4">
+    <div class="flex justify-center">
+        <div class="w-full max-w-2xl">
+            <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
+                    <h2 class="card-title text-base">{{ __('Reset Password') }}</h2>
+
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -17,22 +17,22 @@
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
-                        <div class="flex flex-wrap mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                        <div class="md:flex md:items-start mb-3">
+                            <label for="email" class="md:w-1/3 label md:justify-end md:pr-4"><span class="label-text">{{ __('Email Address') }}</span></label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                            <div class="md:w-1/2">
+                                <input id="email" type="email" class="input input-bordered w-full @error('email') input-error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <div class="label">
+                                        <span class="label-text-alt text-error">{{ $message }}</span>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap mb-0">
-                            <div class="col-md-6 offset-md-4">
+                        <div class="md:flex">
+                            <div class="md:w-1/3"></div>
+                            <div class="md:w-1/2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Send Password Reset Link') }}
                                 </button>

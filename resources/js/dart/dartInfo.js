@@ -474,12 +474,12 @@ function setupFieldOrderInput()
             updateAllDartboards();
 
             // Show success feedback
-            applyBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600');
+            applyBtn.classList.remove('bg-blue-500', 'hover:bg-orange-600');
             applyBtn.classList.add('bg-green-500');
             applyBtn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Applied';
             setTimeout(() => {
                 applyBtn.classList.remove('bg-green-500');
-                applyBtn.classList.add('bg-orange-500', 'hover:bg-orange-600');
+                applyBtn.classList.add('bg-blue-500', 'hover:bg-orange-600');
                 applyBtn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Apply';
             }, 1500);
         }

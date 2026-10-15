@@ -17,34 +17,34 @@
         <div id="scroll-text"> {{ Str::repeat('  WINNER: '.$firstPlaceUser->full_name, 5 ) }} </div>
     </div>
 </div> --}}
-<div class="container-fluid px-4 p-md-0">
+<div class="container mx-auto px-4 md:px-0">
     <div class="flex flex-wrap mr-0 justify-center">
-        <div class="col col-md-10 col-lg-8">
+        <div class="flex-1 md:w-10/12 lg:w-8/12 md:max-w-[83%] lg:max-w-[66%]">
             <input type="hidden" id="gameId" name="id" value="{{ $id }}">
-            <div class="flex flex-wrap px-2 mt-5 align-items-end podium-container">
-                <div class="col-4 p-0">
+            <div class="flex flex-wrap px-2 mt-5 items-end podium-container">
+                <div class="w-4/12 p-0">
                     <div @class(["podium podium-bronze", "podium-bronze-outline" => count($users) <= 2])>
                         <span class="podium-place"> #3 </span>
                         <span class="podium-user"> {{ $thirdPlaceUser->full_name ?? $thirdPlaceUser }} </span>
                     </div>
                 </div>
-                {{-- <div @class(["col-4 p-0", "offset-4" => count($users) <= 2])> --}}
-                <div class="col-4 p-0">
+                {{-- <div @class(["w-4/12 p-0", "ml-[33%]" => count($users) <= 2])> --}}
+                <div class="w-4/12 p-0">
                     <div class="podium podium-gold">
                         <i id="confetti" class="fa-solid fa-trophy mb-3" style="font-size: 1.1em"></i>
                         {{-- <span class="podium-place"> #1 </span> --}}
                         <span class="podium-user"> {{ $firstPlaceUser->full_name }} </span>
                     </div>
                 </div>
-                <div class="col-4 p-0">
+                <div class="w-4/12 p-0">
                     <div @class(["podium podium-silver", "podium-silver-outline" => count($users) <= 1])>
                         <span class="podium-place"> #2 </span>
                         <span class="podium-user"> {{ $secondPlaceUser->full_name ?? $secondPlaceUser }} </span>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <table class="table table-striped table-hover">
+            <div class="flex flex-wrap">
+                <table class="table table-zebra">
                     <thead>
                         <tr>
                             <th scope="col"> # </th>
@@ -74,7 +74,7 @@
 
             <h2> Quick Statistics </h2>
             <div class="flex flex-wrap mb-4">
-                <table class="table table-striped table-hover">
+                <table class="table table-zebra">
                     <thead>
                         <tr>
                             <th scope="col"> # </th>
@@ -142,13 +142,13 @@
                 </table>
             </div>
 
-            <div class="flex flex-wrap row-cols-1 row-cols-xl-4">
+            <div class="grid grid-cols-1 xl:grid-cols-4">
                 @foreach ($users as $i => $user)
-                    <div class="col pb-5">
+                    <div class="pb-5">
                         <div id="heatmap{{ $i+1 }}" class="flex relative justify-center items-center p-2 heatmap heatmap{{ $i+1 }}" style="width: 100%; height: 300px;">
-                            <div id="skeleton-heatmap{{ $i+1 }}" class="absolute top-50 start-50 translate-middle">
-                                <div class="spinner-border">
-                                    <span class="visually-hidden">Loading...</span>
+                            <div id="skeleton-heatmap{{ $i+1 }}" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                <div class="loading loading-spinner loading-md">
+                                    <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
             </div>
 
             <!-- Floating Button -->
-            <a class="btn btn-primary border-primary-subtle btn-floating" href="{{ route('dart.game.index') }}" role="button">
+            <a class="btn btn-primary btn-floating" href="{{ route('dart.game.index') }}" role="button">
                 <i class="fa-solid fa-house-chimney"></i>
             </a>
         </div>

@@ -9,9 +9,9 @@
 @endpush
 
 @section('content')
-<div class="container-fluid px-2 p-md-0 mt-3">
+<div class="container mx-auto px-2 md:px-0 mt-3">
     <div class="flex flex-wrap mr-0 justify-center">
-        <div class="col col-md-8 col-lg-6">
+        <div class="flex-1 md:w-8/12 lg:w-6/12 md:max-w-[66%] lg:max-w-[50%]">
             <input type="hidden" id="gameId" name="id" value="{{ $id }}">
             <input type="hidden" id="gameType" name="type" value="{{ $type }}">
 
@@ -28,9 +28,9 @@
                     {{-- <div id="skeleton-dartboard" class="placeholder-wave" style="position:relative; display:flex; justify-content:center; width: 360px; height: 360px;">
                         <span class="placeholder col"></span>
                     </div> --}}
-                    <div id="skeleton-dartboard" class=" flex justify-center items-center" style="width: 360px; height: 360px;">
-                        <div class="spinner-border">
-                            <span class="visually-hidden">Loading...</span>
+                    <div id="skeleton-dartboard" class="flex justify-center items-center" style="width: 360px; height: 360px;">
+                        <div class="loading loading-spinner loading-md">
+                            <span class="sr-only">Loading...</span>
                         </div>
                     </div>
 
@@ -40,21 +40,19 @@
 
             <section class="mt-3 mb-4">
                 <div class="flex flex-wrap justify-center items-center">
-                    <div class="btn-group col-8 col-md-7">
-                        <button type="button" class="btn btn-danger"> Abort </button>
-                        <button type="button" class="btn btn-warning disabled"> Pause </button>
-                        <button type="button" id="keepOn" class="btn btn-danger"> noSleep </button>
-
-                        </button>
+                    <div class="join w-8/12 md:w-7/12">
+                        <button type="button" class="btn btn-error join-item"> Abort </button>
+                        <button type="button" class="btn btn-warning join-item disabled"> Pause </button>
+                        <button type="button" id="keepOn" class="btn btn-error join-item"> noSleep </button>
                     </div>
                 </div>
                 <div class="flex flex-wrap justify-center items-center mt-4">
-                    <div class="col-8 col-md-7">
-                        <label for="volume-control" class="form-label">
+                    <div class="w-8/12 md:w-7/12">
+                        <label for="volume-control" class="label">
                             Volume
                             <span id="volume-percentage"> 65 </span> %
                         </label>
-                        <input type="range" class="form-range" id="volume-control" min="0" max="1" step=".05" value=".65">
+                        <input type="range" class="range range-primary" id="volume-control" min="0" max="1" step=".05" value=".65">
                     </div>
                 </div>
             </section>

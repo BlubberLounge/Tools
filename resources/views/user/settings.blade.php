@@ -6,24 +6,24 @@
 
 @section('content')
 <div class="container max-w-4xl mx-auto px-4">
-    <div class="sticky top-0 z-10 pt-3 pb-2 bg-[var(--tw-body-bg)]">
-        <nav id="navbar-spy" class="flex flex-wrap gap-2 p-2 bg-[var(--tw-body-tertiary-bg)] rounded-lg">
-            <a href="#settingsNotifications" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-white transition-colors">
+    <div class="sticky top-0 z-10 pt-3 pb-2 bg-base-300">
+        <nav id="navbar-spy" class="flex flex-wrap gap-2 p-2 bg-base-200 rounded-lg">
+            <a href="#settingsNotifications" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-primary-content transition-colors">
                 Benachrichtigungen
             </a>
-            <a href="#settingsPrivacyAndSecurity" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-white transition-colors">
+            <a href="#settingsPrivacyAndSecurity" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-primary-content transition-colors">
                 Privatsphäre & Sicherheit
             </a>
             <a href="#settingsDesign" class="flex-1 text-center px-3 py-2 text-sm rounded-md opacity-50 cursor-not-allowed">
                 Design
             </a>
-            <a href="#settingsPresets" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-white transition-colors">
+            <a href="#settingsPresets" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-primary-content transition-colors">
                 Voreinstellungen
             </a>
             <a href="#settingsLanguage" class="flex-1 text-center px-3 py-2 text-sm rounded-md opacity-50 cursor-not-allowed">
                 Sprache
             </a>
-            <a href="#settingsAccount" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-white transition-colors">
+            <a href="#settingsAccount" class="flex-1 text-center px-3 py-2 text-sm rounded-md hover:bg-primary hover:text-primary-content transition-colors">
                 Konto
             </a>
         </nav>
@@ -35,14 +35,14 @@
             <h4 id="settingsNotifications" class="text-xl font-semibold mb-2">
                 Benachrichtigungen
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, wann und wie du benachrichtigt wirst <br>
                 Wähle Push- und E-Mail-Benachrichtigungen aus, die du erhalten möchtest
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Allgemein</div>
+                    <div class="text-sm font-medium text-base-content/50">Allgemein</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="receiveNewsletter"
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Geräte</div>
+                    <div class="text-sm font-medium text-base-content/50">Geräte</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="receiveNewDeviceLogin"
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Dart</div>
+                    <div class="text-sm font-medium text-base-content/50">Dart</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="receiveDartGameInvitation"
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Konto</div>
+                    <div class="text-sm font-medium text-base-content/50">Konto</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="receiveAccountChanges"
@@ -95,21 +95,21 @@
             </div>
         </section>
 
-        <hr class="border-[var(--tw-border-color)] my-8">
+        <hr class="border-base-300 my-8">
 
         {{-- Privacy & Security --}}
         <section class="mb-10">
             <h4 id="settingsPrivacyAndSecurity" class="text-xl font-semibold mb-2">
                 Privatsphäre & Sicherheit
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, wann und wie du benachrichtigt wirst <br>
                 Wähle Push- und E-Mail-Benachrichtigungen aus, die du erhalten möchtest
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Allgemein</div>
+                    <div class="text-sm font-medium text-base-content/50">Allgemein</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="isProfilePicturePublic"
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Dart</div>
+                    <div class="text-sm font-medium text-base-content/50">Dart</div>
                     <div class="md:col-span-3">
                         <x-form.settings.input-switch
                             id="dartGameInvitation"
@@ -145,20 +145,20 @@
             </div>
         </section>
 
-        <hr class="border-[var(--tw-border-color)] my-8">
+        <hr class="border-base-300 my-8">
 
         {{-- Design --}}
         <section class="mb-10">
             <h4 id="settingsDesign" class="text-xl font-semibold mb-2">
                 Design
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, wie die Oberfläche aussehen soll
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Theme</div>
+                    <div class="text-sm font-medium text-base-content/50">Theme</div>
                     <div class="md:col-span-3">
                         <x-form.settings.info-text
                             description="Dieses Feature ist derzeit in Entwicklung und wird in Kürze verfügbar sein. Freue dich auf aufregende Updates!" />
@@ -166,7 +166,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Modus</div>
+                    <div class="text-sm font-medium text-base-content/50">Modus</div>
                     <div class="md:col-span-3">
                         <x-form.settings.info-text
                             description="siehe Sidebar" />
@@ -175,41 +175,41 @@
             </div>
         </section>
 
-        <hr class="border-[var(--tw-border-color)] my-8">
+        <hr class="border-base-300 my-8">
 
         {{-- Presets --}}
         <section class="mb-10">
             <h4 id="settingsPresets" class="text-xl font-semibold mb-2">
                 Voreinstellungen
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, von werten die standardmäßig verwendet werden.
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Dart</div>
+                    <div class="text-sm font-medium text-base-content/50">Dart</div>
                     <div class="md:col-span-3">
-                        <input type="text" id="dartGameTitle" class="form-control" placeholder="{{ Auth::user()->getGameTitle() }} - keine Funktion">
+                        <input type="text" id="dartGameTitle" class="input input-bordered w-full" placeholder="{{ Auth::user()->getGameTitle() }} - keine Funktion">
                     </div>
                 </div>
             </div>
         </section>
 
-        <hr class="border-[var(--tw-border-color)] my-8">
+        <hr class="border-base-300 my-8">
 
         {{-- Language --}}
         <section class="mb-10">
             <h4 id="settingsLanguage" class="text-xl font-semibold mb-2">
                 Sprache
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, der Spracheinstellungen
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Allgemein</div>
+                    <div class="text-sm font-medium text-base-content/50">Allgemein</div>
                     <div class="md:col-span-3">
                         <x-form.settings.info-text
                             description="siehe Sidebar" />
@@ -217,7 +217,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Email</div>
+                    <div class="text-sm font-medium text-base-content/50">Email</div>
                     <div class="md:col-span-3">
                         <x-form.settings.info-text
                             description="Dieses aufregende Feature ist für die Zukunft geplant, jedoch aktuell noch nicht verfügbar. Wir arbeiten hart daran, um es baldmöglichst für dich bereitzustellen. Freue dich auf zukünftige Updates, die diese Funktion integrieren werden!" />
@@ -226,31 +226,31 @@
             </div>
         </section>
 
-        <hr class="border-[var(--tw-border-color)] my-8">
+        <hr class="border-base-300 my-8">
 
         {{-- Account --}}
         <section class="mb-10">
             <h4 id="settingsAccount" class="text-xl font-semibold mb-2">
                 Konto
             </h4>
-            <p class="text-[var(--tw-muted-color)] mb-6">
+            <p class="text-base-content/50 mb-6">
                 Festlegen, von Konto relevanten Einstellungen
             </p>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-sm font-medium text-[var(--tw-muted-color)]">Allgemein</div>
+                    <div class="text-sm font-medium text-base-content/50">Allgemein</div>
                     <div class="md:col-span-3 space-y-6">
                         <div>
-                            <button type="button" class="btn btn-outline-warning mb-2">Archiv anfordern</button>
-                            <p class="text-sm text-[var(--tw-muted-color)]">
+                            <button type="button" class="btn btn-outline btn-warning mb-2">Archiv anfordern</button>
+                            <p class="text-sm text-base-content/50">
                                 Noch keine Funktion. Du kannst hier ein Archiv Deiner Daten anfordern.<br />
-                                Mit dem Klick auf "Archiv anfordern" stimmst du zu, dass wir Dir Deine Benutzerdaten an die Adresse <span class="text-white">{{ Auth::user()->email }}</span> zusenden.
+                                Mit dem Klick auf "Archiv anfordern" stimmst du zu, dass wir Dir Deine Benutzerdaten an die Adresse <span class="text-base-content font-medium">{{ Auth::user()->email }}</span> zusenden.
                             </p>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-outline-danger mb-2">Konto löschen</button>
-                            <p class="text-sm text-[var(--tw-muted-color)]">
+                            <button type="button" class="btn btn-outline btn-error mb-2">Konto löschen</button>
+                            <p class="text-sm text-base-content/50">
                                 Bist du sicher, dass du unsere großartige Plattform verlassen möchtest?<br />
                                 Bedenke, dass du mit dem Löschen deines Kontos dauerhaft den Zugriff auf all die nützlichen Werkzeuge und Ressourcen verlierst, die wir bieten.
                                 Du würdest damit auch die Möglichkeit einbüßen, von unseren zukünftigen Innovationen zu profitieren.<br />

@@ -1,9 +1,9 @@
 <div class="flex flex-wrap mb-3">
-    <div class="col-2 flex justify-center">
+    <div class="w-1/6 flex justify-center">
         <i class="{{ $deviceTypeIcon }} device-browser-icon"></i>
     </div>
-    <div class="col ml-1">
-        <div class="row">
+    <div class="flex-1 ml-1">
+        <div class="flex flex-wrap">
             <span>
                 <i class="{{ $familyIcon }}" style="font-size: .9rem"></i>
                 <i class="{{ $platformIcon }}" style="font-size: .9rem"></i>
@@ -16,14 +16,14 @@
                 @endif
             </span>
         </div>
-        <div class="row">
-            <div class="col">
-                <span class="text-muted">
+        <div class="flex flex-wrap">
+            <div class="flex-1">
+                <span class="text-base-content/50">
                     Letzte aktivität: {{ $lastActivity }}
                 </span>
             </div>
-            <div class="col-auto">
-                <span class="text-muted">
+            <div class="shrink-0">
+                <span class="text-base-content/50">
                     {{ $loginCounter }}
                 </span>
             </div>

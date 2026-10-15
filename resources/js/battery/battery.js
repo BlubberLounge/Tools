@@ -96,16 +96,13 @@ export default class Battery
         if(this.loadBuffer.length < 1)
             return;
 
-        // add current buffer content to the log/history array
-        this.loadBuffer.forEach((e, i) => {
-            if(!e.timer)    // ignore running periods / last period in the best case
-                return;
+        // process completed buffer entries (those with a timer value)
+        const completed = this.loadBuffer.filter(e => e.timer);
+        this.loadBuffer = this.loadBuffer.filter(e => !e.timer);
 
+        completed.forEach(e => {
             this.log.push(e);
-            // clear buffer
-            this.loadBuffer.splice(i, 1);
-
-            this.discharge(e.dischargeCurrent, this.toMS(e.timer))
+            this.discharge(e.dischargeCurrent, this.toMS(e.timer));
         });
     }
 

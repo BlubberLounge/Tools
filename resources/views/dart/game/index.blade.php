@@ -10,33 +10,33 @@
             justify-content: center;
             min-width: 100px;
             padding: 1.5rem 1rem;
-            @apply bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900;
-            @apply border-2 border-slate-300 dark:border-slate-700;
+            @apply bg-gradient-to-br from-base-200 to-base-300;
+            @apply border-2 border-base-300;
             border-radius: 1rem;
             text-decoration: none;
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .game-card:hover {
             transform: translateY(-4px);
-            @apply border-orange-500;
-            box-shadow: 0 12px 24px rgba(249, 115, 22, 0.2);
-            @apply text-orange-500;
+            @apply border-primary;
+            box-shadow: 0 12px 24px oklch(var(--p) / 0.2);
+            @apply text-primary;
         }
         .game-card:hover .game-icon {
             transform: scale(1.1);
-            @apply text-orange-500;
+            @apply text-primary;
         }
         .game-card.featured {
-            @apply bg-gradient-to-br from-orange-500 to-orange-600 border-orange-500 text-white;
+            @apply bg-primary border-primary text-primary-content;
         }
         .game-card.featured:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(249, 115, 22, 0.4);
-            @apply text-white;
+            box-shadow: 0 12px 24px oklch(var(--p) / 0.4);
+            @apply text-primary-content;
         }
         .game-card.featured .game-icon {
-            @apply text-white;
+            @apply text-primary-content;
         }
         .game-card.disabled {
             opacity: 0.4;
@@ -67,18 +67,18 @@
 
     <!-- Header -->
     <div class="text-center mb-10">
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 bg-orange-500/10">
-            <i class="fa-solid fa-bullseye text-4xl text-orange-500"></i>
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 bg-primary/10">
+            <i class="fa-solid fa-bullseye text-4xl text-primary"></i>
         </div>
         <h1 class="text-3xl font-bold mb-2">{{ __('dart game') }}</h1>
-        <p class="max-w-xl mx-auto text-sm text-slate-500 dark:text-slate-400">
+        <p class="max-w-xl mx-auto text-sm text-base-content/50">
             {{ __('darts or dart-throwing is a competitive sport in which two or more players bare-handedly throw small sharp-pointed missiles known as darts at a round target known as a dartboard.') }}
         </p>
     </div>
 
     <!-- X01 Games -->
     <div class="mb-8">
-        <h2 class="text-lg font-semibold text-center mb-4 text-slate-500 dark:text-slate-400">
+        <h2 class="text-lg font-semibold text-center mb-4 text-base-content/50">
             <i class="fa-solid fa-crosshairs mr-2"></i>X01 {{ __('games') }}
         </h2>
         <div class="flex flex-wrap gap-3 justify-center">
@@ -99,7 +99,7 @@
 
     <!-- Special Games -->
     <div class="mb-8">
-        <h2 class="text-lg font-semibold text-center mb-4 text-slate-500 dark:text-slate-400">
+        <h2 class="text-lg font-semibold text-center mb-4 text-base-content/50">
             <i class="fa-solid fa-star mr-2"></i>{{ __('special modes') }}
         </h2>
         <div class="flex flex-wrap gap-3 justify-center">

@@ -12,24 +12,23 @@ import LiPo from './battery/lipo';
 import LiOn from './battery/lion';
 Chart.register(annotationPlugin);
 
-var ddddd = () => {let d=[];for(var i=100; i >= 0; i-=1) {d.push(i);} return d;}
-
 var app;
 var delayed;
 
 /**
  * main class
- * 
+ *
  */
 class SimApp
 {
-    // state enum
-    states = [
-        'NOT_STARTED',
-        'STARTED',
-        'PAUSED',
-        'STOPPED'
-    ];
+    static STATE = Object.freeze({
+        NOT_STARTED: 0,
+        STARTED: 1,
+        PAUSED: 2,
+        STOPPED: 3,
+    });
+
+    static STATE_LABELS = ['NOT_STARTED', 'STARTED', 'PAUSED', 'STOPPED'];
     
     cycleTime = 100; //ms
 
@@ -58,7 +57,7 @@ class SimApp
     iconsAsUnits = true;
 
 
-    constructor(state = 0, readInterval, staticLoad)
+    constructor(state = SimApp.STATE.NOT_STARTED, readInterval, staticLoad)
     {
         this.instance = this;
         this.state = state;
@@ -108,7 +107,7 @@ class SimApp
         };
 
         this.initDDCData = {
-            labels: ddddd(),
+            labels: Array.from({length: 101}, (_, i) => 100 - i),
             datasets: [
                 {
                     hidden: false,
@@ -219,8 +218,8 @@ class SimApp
             app.pause();
         });
 
-        UTILS.toggleChartAnnotaion('switch50Marks', 1, this.dcc);
-        UTILS.toggleChartAnnotaion('switchCutOffs', 2, this.dcc);
+        UTILS.toggleChartAnnotation('switch50Marks', 1, this.dcc);
+        UTILS.toggleChartAnnotation('switchCutOffs', 2, this.dcc);
 
         console.log("Simulation application loaded.");
     }
@@ -234,13 +233,13 @@ class SimApp
             this.battery.calculateStats();
             this.dischargeTime = this.dynamicTimeUnit((this.battery.capacity/this.staticLoad), 3); // 3 = hours, because capacity is in mAh
 
-            if(this.state == 1) this.addData(this.ldc, this.battery.capacity);
+            if(this.state == SimApp.STATE.STARTED) this.addData(this.ldc, this.battery.capacity);
         }
 
         if(this.battery.capacity <= 0)
-            this.state = 2;
+            this.state = SimApp.STATE.PAUSED;
 
-        if(this.state == 1) {
+        if(this.state == SimApp.STATE.STARTED) {
             this.battery.currentLoad(this.staticLoad);
         }   
 
@@ -257,8 +256,8 @@ class SimApp
 
     start()
     {
-        if(this.state == 1 || this.state == 3) return;
-        this.state = 1;
+        if(this.state == SimApp.STATE.STARTED || this.state == SimApp.STATE.STOPPED) return;
+        this.state = SimApp.STATE.STARTED;
         this.startTime = UTILS.now();
 
         this.displayInfo();     // immediately update the info
@@ -273,16 +272,16 @@ class SimApp
 
     pause()
     {
-        if(this.state == 1) {
-            this.state = 2;
+        if(this.state == SimApp.STATE.STARTED) {
+            this.state = SimApp.STATE.PAUSED;
             this.displayInfo();     // immediately update the info
         }
     }
 
     stop()
     {
-        if(this.state == 0 || this.state == 3) return;
-        this.state = 3;
+        if(this.state == SimApp.STATE.NOT_STARTED || this.state == SimApp.STATE.STOPPED) return;
+        this.state = SimApp.STATE.STOPPED;
         this.displayInfo();     // immediately update the info
         UTILS.enableInputs();
     }
@@ -294,30 +293,17 @@ class SimApp
 
     displayInfo()
     {
-        if(UTILS.updateIHIfDifferent('stateInfo', this.states[this.state].replace('_', ' ').toUpperCase()))
+        if(UTILS.updateIHIfDifferent('stateInfo', SimApp.STATE_LABELS[this.state].replace('_', ' ').toUpperCase()))
         {
-            let sicL = UTILS.getEl('stateInfo').classList;
-            switch(this.state)
-            {
-                case 0:
-                    sicL.remove('text-success', 'text-danger', 'text-warning');
-                    sicL.add('text-primary');
-                    break;
-                case 1:
-                    sicL.remove('text-primary', 'text-danger', 'text-warning');
-                    sicL.add('text-success');
-                    break;
-                case 2:
-                    sicL.remove('text-primary', 'text-success', 'text-danger');
-                    sicL.add('text-warning');
-                    break;
-                case 3:
-                    sicL.remove('text-primary', 'text-success', 'text-warning');
-                    sicL.add('text-danger');
-                    break;
-                default:
-                break;
-            }
+            const stateColors = {
+                0: 'text-blue-500',   // NOT_STARTED
+                1: 'text-green-500',    // STARTED
+                2: 'text-amber-500',    // PAUSED
+                3: 'text-red-500',      // STOPPED
+            };
+            let sicL = UTILS.getEl('stateInfo');
+            Object.values(stateColors).forEach(c => sicL.classList.remove(c));
+            sicL.classList.add(stateColors[this.state] || 'text-blue-500');
         }
 
         UTILS.uInfo('startTime', UTILS.msToString(this.startTime) || 'not started');
@@ -655,5 +641,5 @@ class SimApp
 
 window.addEventListener('DOMContentLoaded', () =>
 {
-    app = new SimApp(0, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
+    app = new SimApp(SimApp.STATE.NOT_STARTED, UTILS.getVal('readInterval'), UTILS.getVal('staticLoad'));
 });

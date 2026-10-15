@@ -13,12 +13,12 @@ if (btnQueueAdd) {
             const newItem = document.createElement('div');
             newItem.className = 'queue-item';
             newItem.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-500 font-semibold text-sm">
+                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 font-semibold text-sm">
                     ${queueList.children.length + 1}
                 </div>
                 <div class="flex-1">
-                    <span class="font-medium text-slate-800 dark:text-slate-200">{{ __('me') }}</span>
-                    <span class="text-slate-400 dark:text-slate-500 text-sm ml-2">gerade eben</span>
+                    <span class="font-medium text-base-content">{{ __('me') }}</span>
+                    <span class="text-base-content/50 text-sm ml-2">gerade eben</span>
                 </div>
                 <button id="btnQueueRemove" class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                     <i class="fa-solid fa-xmark"></i>
@@ -37,8 +37,8 @@ if (btnQueueAdd) {
             const statusBadges = document.querySelectorAll('.status-badge');
             statusBadges.forEach(badge => {
                 if (badge.classList.contains('danger')) {
-                    badge.classList.remove('danger', 'bg-red-500/20', 'text-red-600', 'dark:text-red-400');
-                    badge.classList.add('success', 'bg-green-500/20', 'text-green-600', 'dark:text-green-400');
+                    badge.classList.remove('danger', 'badge-error');
+                    badge.classList.add('success', 'badge-success');
                     badge.innerHTML = '<i class="fa-solid fa-check text-xs"></i> in queue';
                 }
             });
@@ -79,8 +79,8 @@ function addRemoveEventListener(element) {
             const statusBadges = document.querySelectorAll('.status-badge');
             statusBadges.forEach(badge => {
                 if (badge.classList.contains('success')) {
-                    badge.classList.remove('success', 'bg-green-500/20', 'text-green-600', 'dark:text-green-400');
-                    badge.classList.add('danger', 'bg-red-500/20', 'text-red-600', 'dark:text-red-400');
+                    badge.classList.remove('success', 'badge-success');
+                    badge.classList.add('danger', 'badge-error');
                     badge.innerHTML = '<i class="fa-solid fa-xmark text-xs"></i> not in queue';
                 }
             });
@@ -96,10 +96,10 @@ function addRemoveEventListener(element) {
             if (queueList && queueList.querySelectorAll('.queue-item').length === 0) {
                 queueList.innerHTML = `
                     <div class="text-center py-8">
-                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-                            <i class="fa-solid fa-inbox text-xl text-slate-400 dark:text-slate-500"></i>
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-base-200 flex items-center justify-center">
+                            <i class="fa-solid fa-inbox text-xl text-base-content/50"></i>
                         </div>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm">queue is empty</p>
+                        <p class="text-base-content/50 text-sm">queue is empty</p>
                     </div>
                 `;
             }

@@ -7,7 +7,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
                 initialView: 'dayGridMonth', // dayGridWeek
-                themeSystem: 'bootstrap5',
+                themeSystem: 'standard',
                 locale: 'de',
                 firstDay: 1,
                 weekNumbers: true,
@@ -53,14 +53,14 @@
 @endpush
 
 @section('content')
-<div class="container">
+<div class="container mx-auto px-4">
     <div id="section-timetable" class="container-timetable" style="max-width: 100vw; overflow-x: scroll;">
         <table id="timetable" class="timetable pt-2">
             <thead>
                 <tr>
                     <th></th>
                     <th></th>
-                    <th class="border-end border-0 border-3" colspan="{{ $timeTable['monthCut'] }}"> {{ now()->format('F') }} </th>
+                    <th class="border-r-[3px]" colspan="{{ $timeTable['monthCut'] }}"> {{ now()->format('F') }} </th>
                     <th colspan="{{ 30-$timeTable['monthCut'] }}"> {{ now()->addMonth()->format('F') }} </th>
                 </tr>
                 <tr>
@@ -78,7 +78,7 @@
                         <td class="timeTableUser">{{ $dat['user']->id === Auth::user()->id ? '(Ich)' : (strlen($dat['user']->name) >= 10 ? substr($dat['user']->name, 0, 10).'...' : $dat['user']->name) }}</td>
                         @foreach ($dat['days'] as $day)
                             @if($dat['user']->id === Auth::user()->id)
-                                <td data-bl-timetable-status="{{ $day->status }}" data-bl-timetable-date="{{ $day->date }}" data-bs-toggle="popover" data-bs-placement="top"></td>
+                                <td data-bl-timetable-status="{{ $day->status }}" data-bl-timetable-date="{{ $day->date }}" x-data x-tooltip=""></td>
                             @else
                                 <td data-bl-timetable-status="{{ $day->status }}"></td>
                             @endif

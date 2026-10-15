@@ -34,7 +34,7 @@
 @push('styles')
     <style>
         body {
-            @apply bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200;
+            @apply bg-base-300 text-base-content;
         }
 
         .theme-toggle {
@@ -44,7 +44,7 @@
             z-index: 100;
             display: flex;
             gap: 0.25rem;
-            @apply bg-slate-200 dark:bg-slate-700;
+            @apply bg-base-200;
             padding: 0.25rem;
             border-radius: 0.5rem;
         }
@@ -53,20 +53,20 @@
             border: none;
             padding: 0.5rem 0.75rem;
             border-radius: 0.375rem;
-            @apply text-slate-500 dark:text-slate-400;
+            @apply text-base-content/50;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .theme-toggle button:hover {
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
         }
         .theme-toggle button.active {
-            @apply bg-orange-500 text-white;
+            @apply bg-primary text-primary-content;
         }
 
         .lobby-card {
-            @apply bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900;
-            @apply border border-slate-300 dark:border-slate-700;
+            @apply bg-gradient-to-br from-base-200 to-base-300;
+            @apply border border-base-300;
             border-radius: 1rem;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -77,32 +77,32 @@
             gap: 0.75rem;
             margin-bottom: 1rem;
             padding-bottom: 0.75rem;
-            @apply border-b border-slate-300 dark:border-slate-700;
+            @apply border-b border-base-300;
         }
         .lobby-card-header i {
             font-size: 1.25rem;
-            @apply text-orange-500;
+            @apply text-primary;
         }
         .lobby-card-header h5 {
             margin: 0;
             font-weight: 600;
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
         }
         .game-type-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            @apply bg-gradient-to-br from-orange-500 to-orange-600;
+            @apply bg-primary;
             border-radius: 0.5rem;
-            color: white;
+            @apply text-primary-content;
             font-weight: 600;
             font-size: 1.25rem;
         }
         .btn-start {
-            @apply bg-gradient-to-br from-green-500 to-green-600;
+            @apply bg-success;
             border: none;
-            color: white;
+            @apply text-success-content;
             padding: 0.75rem 2rem;
             border-radius: 0.5rem;
             font-weight: 600;
@@ -111,14 +111,14 @@
         }
         .btn-start:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
-            color: white;
+            box-shadow: 0 8px 16px oklch(var(--su) / 0.3);
+            @apply text-success-content;
         }
         .btn-cancel {
             display: inline-flex;
             align-items: center;
             background: transparent;
-            @apply border-2 border-red-500 text-red-500;
+            @apply border-2 border-error text-error;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 600;
@@ -126,20 +126,20 @@
             text-decoration: none;
         }
         .btn-cancel:hover {
-            @apply bg-red-500 text-white;
+            @apply bg-error text-error-content;
         }
         .player-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             padding: 0.75rem 1rem;
-            @apply bg-slate-100 dark:bg-slate-700;
+            @apply bg-base-200;
             border-radius: 0.75rem;
             margin-bottom: 0.5rem;
             transition: all 0.2s ease;
         }
         .player-item:hover {
-            @apply bg-slate-200 dark:bg-slate-600;
+            @apply bg-base-300;
         }
         .player-item img, .player-item svg {
             border-radius: 50%;
@@ -149,28 +149,28 @@
         .player-item .player-name {
             flex: 1;
             font-weight: 500;
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
         }
         .player-item .actions button {
             background: transparent;
             border: none;
             padding: 0.25rem 0.5rem;
-            @apply text-slate-500 dark:text-slate-400;
+            @apply text-base-content/50;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .player-item .actions .btn-remove-player:hover {
-            @apply text-red-500;
+            @apply text-error;
         }
         .player-item .actions .btn-down-player:hover {
-            @apply text-orange-500;
+            @apply text-primary;
         }
         .queue-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             padding: 0.75rem 1rem;
-            @apply bg-slate-100 dark:bg-slate-700;
+            @apply bg-base-200;
             border-radius: 0.75rem;
             margin-bottom: 0.5rem;
         }
@@ -183,7 +183,7 @@
         .queue-item .btn-add-all-players {
             background: transparent;
             border: none;
-            @apply text-green-500;
+            @apply text-success;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -193,17 +193,17 @@
         }
         .input-type-btn {
             padding: 0.75rem 1.25rem;
-            @apply border-2 border-slate-300 dark:border-slate-700;
+            @apply border-2 border-base-300;
             background: transparent;
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
             transition: all 0.3s ease;
             cursor: pointer;
         }
         .input-type-btn:hover {
-            @apply border-orange-500 text-orange-500;
+            @apply border-primary text-primary;
         }
         .btn-check:checked + .input-type-btn {
-            @apply bg-gradient-to-br from-orange-500 to-orange-600 border-orange-500 text-white;
+            @apply bg-primary border-primary text-primary-content;
         }
         .btn-check:disabled + .input-type-btn {
             opacity: 0.5;
@@ -217,18 +217,18 @@
         .search-input-group {
             display: flex;
             align-items: center;
-            @apply bg-slate-100 dark:bg-slate-700;
+            @apply bg-base-200;
             border-radius: 0.75rem;
             padding: 0.5rem 1rem;
             border: 2px solid transparent;
             transition: all 0.3s ease;
         }
         .search-input-group:focus-within {
-            @apply border-orange-500;
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+            @apply border-primary;
+            box-shadow: 0 0 0 3px oklch(var(--p) / 0.15);
         }
         .search-input-group i {
-            @apply text-slate-500 dark:text-slate-400;
+            @apply text-base-content/50;
             margin-right: 0.75rem;
         }
         .search-input-group input {
@@ -236,38 +236,35 @@
             background: transparent;
             border: none;
             outline: none;
-            @apply text-slate-800 dark:text-slate-200;
+            @apply text-base-content;
         }
         .search-input-group input::placeholder {
-            @apply text-slate-500 dark:text-slate-400;
+            @apply text-base-content/50;
         }
         .empty-queue-placeholder {
             text-align: center;
             padding: 2rem;
-            @apply text-slate-500 dark:text-slate-400;
+            @apply text-base-content/50;
         }
 
         /* Form inputs override */
-        .form-control, .form-check-input {
-            @apply bg-slate-100 dark:bg-slate-700;
-            @apply border-slate-300 dark:border-slate-600;
-            @apply text-slate-800 dark:text-slate-200;
+        .input, .checkbox {
+            @apply bg-base-200;
+            @apply border-base-300;
+            @apply text-base-content;
         }
-        .form-control:focus {
-            @apply bg-slate-100 dark:bg-slate-700 border-orange-500 text-slate-800 dark:text-slate-200;
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+        .input:focus {
+            @apply bg-base-200 border-primary text-base-content;
+            box-shadow: 0 0 0 3px oklch(var(--p) / 0.15);
         }
-        .form-label {
-            @apply text-slate-800 dark:text-slate-200;
-        }
-        .form-text {
-            @apply text-slate-500 dark:text-slate-400;
+        .label {
+            @apply text-base-content;
         }
     </style>
 @endpush
 
 @section('content')
-<div class="container-fluid px-4 py-4">
+<div class="container mx-auto px-4 py-4">
     <!-- Theme Toggle -->
     <div class="theme-toggle">
         <button type="button" id="theme-light" title="Light mode">
@@ -279,13 +276,13 @@
     </div>
 
     <div class="flex flex-wrap justify-center">
-        <form method="POST" id="dartGameCreateForm" action="{{ route('dart.game.store') }}" class="col col-md-10 col-lg-8 col-xl-6">
+        <form method="POST" id="dartGameCreateForm" action="{{ route('dart.game.store') }}" class="flex-1 md:w-10/12 lg:w-8/12 xl:w-6/12 md:max-w-[83%] lg:max-w-[66%] xl:max-w-[50%]">
             @csrf
 
             <!-- Header -->
             <section id="dart-game-header" class="text-center mb-5">
-                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-3" style="background: rgba(249, 115, 22, 0.1);">
-                    <i class="fa-solid fa-crosshairs text-3xl" style="color: #f97316;"></i>
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-3 bg-primary/10">
+                    <i class="fa-solid fa-crosshairs text-3xl text-primary"></i>
                 </div>
                 <h1 class="text-2xl font-bold mb-3">{{ __('create dart lobby') }}</h1>
                 <div class="game-type-badge mx-auto mb-4">
@@ -314,12 +311,12 @@
                 <x-form.input-checkbox attribute="private" label="private" bottomSpacing="3" />
 
                 <div class="flex flex-wrap items-center mb-4">
-                    <div class="col flex items-center font-medium">
-                        <i class="fa-solid fa-keyboard mr-2 text-slate-500 dark:text-slate-400"></i>
+                    <div class="flex-1 flex items-center font-medium">
+                        <i class="fa-solid fa-keyboard mr-2 text-base-content/50"></i>
                         {{ __('input') }}
                     </div>
-                    <div class="col-auto">
-                        <div class="btn-group" role="group">
+                    <div class="w-auto">
+                        <div class="join" role="group">
                             <input type="radio" class="btn-check" name="inputType" id="inputType1" value="NUMPAD" autocomplete="off" disabled>
                             <label class="input-type-btn rounded-l-lg" for="inputType1">
                                 <i class="fa-solid fa-calculator mr-1"></i>
@@ -350,9 +347,9 @@
                         <x-form.input-checkbox attribute="trippleOut" label="tripple out" helptext="last dart may be a tripple field" isChecked="true" />
                     </div>
                 @elseif($dartGameType == 'cricket')
-                    <p class="text-center text-muted py-3">Cricket - {{ __('no settings available') }}</p>
+                    <p class="text-center text-base-content/50 py-3">Cricket - {{ __('no settings available') }}</p>
                 @else
-                    <p class="text-center text-muted py-3">{{ __('no settings available') }}</p>
+                    <p class="text-center text-base-content/50 py-3">{{ __('no settings available') }}</p>
                 @endif
             </section>
 
@@ -412,7 +409,7 @@
                                 {!! Avatar::create($queueItem->parentUser->name)->setDimension(36)->setFontSize(16)->toSvg() !!}
                             @endif
                             <span class="flex-1 font-medium">{{ $queueItem->parentUser->name }}</span>
-                            <span class="text-sm text-slate-500 dark:text-slate-400">{{ $queueItem->created_at->diffForHumans() }}</span>
+                            <span class="text-sm text-base-content/50">{{ $queueItem->created_at->diffForHumans() }}</span>
                             @if($queueItem->parentUser->hasDartQueueChilds())
                                 <button type="button" class="btn btn-add-all-players" title="{{ __('add all') }}">
                                     <i class="fa-solid fa-users fa-lg"></i>

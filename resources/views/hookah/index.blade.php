@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    
+<div class="container mx-auto px-4">
+
     @include('hookah.includes.title')
 
     <div class="flex flex-wrap justify-center">
-        <table class="table table-striped table-hover">
+        <table class="table table-zebra">
             <thead>
                 <tr>
                     <th scope="col">#</th>

@@ -65,7 +65,7 @@ export function dateNow()
     let dd = Z(d.getDate());
     let mm = Z(d.getMonth()+1);
     let yyyy = Z(d.getFullYear());
-    return "<span class='small text-muted'>"+ [dd, mm, yyyy].join('.') + "</span>";;
+    return "<span class='text-xs text-zinc-400'>"+ [dd, mm, yyyy].join('.') + "</span>";
 }
 
 export function now()
@@ -136,7 +136,7 @@ export function chartGradient(id)
     return g
 }
 
-export function toggleChartAnnotaion(switchId, AnnId, chart)
+export function toggleChartAnnotation(switchId, AnnId, chart)
 {
     onChange(switchId, function(e)
     {
@@ -357,15 +357,15 @@ export class CRGB
         blue: 'rgb(54, 162, 235)',
         purple: 'rgb(153, 102, 255)',
         grey: 'rgb(201, 203, 207)',
-        // Bootstrap colors
-        primary: '#0d6efd',
-        secondary: '#6c757d',
-        success: '#198754',
-        info: '#0dcaf0',
-        warning: '#ffc107',
-        danger: '#dc3545',
-        light: '#f8f9fa',
-        dark: '#212529',
+        // Theme colors (Tailwind)
+        primary: '#3b82f6',
+        secondary: '#64748b',
+        success: '#16a34a',
+        info: '#06b6d4',
+        warning: '#f59e0b',
+        danger: '#dc2626',
+        light: '#f1f5f9',
+        dark: '#1e293b',
     };
 
     // get r()

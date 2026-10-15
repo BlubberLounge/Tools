@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid px-0">
+<div class="container mx-auto px-4">
     <x-buttons.back urlAddition="#settingsDevice" />
     <section id="device-description" class="text-center" style="padding: 2rem 3rem 1rem 3rem;">
         <i class="fa-solid fa-computer" style="font-size: 4rem"></i>
@@ -12,7 +12,7 @@
         @forelse ($devices as $device)
             <x-listItem.item-device :device="$device" />
         @empty
-            <div class="row">
+            <div class="flex">
                 Keine Geräte gefunden
             </div>
         @endforelse

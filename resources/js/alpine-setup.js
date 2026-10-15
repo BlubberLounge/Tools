@@ -31,11 +31,11 @@ Alpine.directive('tooltip', (el, { expression, modifiers }, { evaluate, cleanup 
 
     const showTooltip = () => {
         tooltipEl = document.createElement('div');
-        tooltipEl.className = 'fixed z-[99999] px-2 py-1 text-sm text-white bg-gray-900 dark:bg-gray-700 rounded shadow-lg pointer-events-none';
+        tooltipEl.className = 'fixed z-[99999] px-2 py-1 text-sm text-white bg-neutral rounded shadow-lg pointer-events-none';
         tooltipEl.innerHTML = text;
 
         arrowEl = document.createElement('div');
-        arrowEl.className = 'absolute w-2 h-2 bg-gray-900 dark:bg-gray-700 rotate-45';
+        arrowEl.className = 'absolute w-2 h-2 bg-neutral rotate-45';
         tooltipEl.appendChild(arrowEl);
 
         document.body.appendChild(tooltipEl);

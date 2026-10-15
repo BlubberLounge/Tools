@@ -4,33 +4,33 @@
 <div class="container">
 
     <div class="flex flex-wrap pb-4 pt-2">
-        <h3 class="col-8">
+        <h3 class="w-8/12">
             Checkout Calculator
         </h3>
-        <small class="text-muted">
+        <small class="text-base-content/50">
             Description: TODO Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, nesciunt earum. Voluptatibus tempore corrupti odio ut cumque Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, nesciunt earum. porro enim, iste optio molestiae dignissimos soluta sapiente nam similique officia fugiat sit.
         </small>
     </div>
 
-    <div class="flex flex-wrap flex justify-between">
-        <div class="col-6 flex justify-content-end items-center">
+    <div class="flex flex-wrap justify-between">
+        <div class="w-6/12 flex justify-end items-center">
             <form action="{{ route('dart.show-checkout-calculator') }}" method="GET" id="checkoutForm">
                 @csrf
-                <div class="flex flex-wrap g-3 items-center pb-4">
-                    <div class="col-auto">
-                        <label for="score" class="col-form-label"> Score </label>
+                <div class="flex flex-wrap gap-3 items-center pb-4">
+                    <div class="w-auto">
+                        <label for="score" class="font-medium"> Score </label>
                     </div>
-                    <div class="col-auto">
-                        <input type="number" id="score" name="score" class="form-control form-control-lg" value="{{ old('score')?old('score'):$score }}" min="2" max="170" required>
+                    <div class="w-auto">
+                        <input type="number" id="score" name="score" class="input input-bordered input-lg w-full" value="{{ old('score')?old('score'):$score }}" min="2" max="170" required>
                     </div>
-                    <div class="col-auto">
-                        <span id="passwordHelpInline" class="form-text">
+                    <div class="w-auto">
+                        <span id="passwordHelpInline" class="text-sm text-base-content/50">
                             2 - 170
                         </span>
                     </div>
                 </div>
                 <div class="flex flex-wrap pb-4">
-                    <div class="col flex justify-center items-center">
+                    <div class="flex-1 flex justify-center items-center">
                         <button type="submit" class="btn btn-primary">
                             let's go...
                         </button>
@@ -39,45 +39,45 @@
                 @csrf
             </form>
         </div>
-        <div class="col-5 flex flex-col justify-center">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="limitResults" name="limitResults" form="checkoutForm" {{ $limitResults ? 'checked' : null}}>
-                <label class="form-check-label" for="limitResults">Limit to 150 results</label>
+        <div class="w-5/12 flex flex-col justify-center">
+            <div class="flex items-center mb-1">
+                <input class="checkbox checkbox-primary checkbox-sm mr-2" type="checkbox" role="switch" id="limitResults" name="limitResults" form="checkoutForm" {{ $limitResults ? 'checked' : null}}>
+                <label class="cursor-pointer text-sm" for="limitResults">Limit to 150 results</label>
             </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="highlightBestOption" name="highlightBestOption" form="checkoutForm" {{ $highlightBestOption ? 'checked' : null}}>
-                <label class="form-check-label" for="highlightBestOption">Highlight best option</label>
+            <div class="flex items-center mb-1">
+                <input class="checkbox checkbox-primary checkbox-sm mr-2" type="checkbox" role="switch" id="highlightBestOption" name="highlightBestOption" form="checkoutForm" {{ $highlightBestOption ? 'checked' : null}}>
+                <label class="cursor-pointer text-sm" for="highlightBestOption">Highlight best option</label>
             </div>
-            <div class="form-check form-switch pb-2">
-                <input class="form-check-input" type="checkbox" role="switch" id="showWeights" name="showWeights" form="checkoutForm" {{ $showWeights ? 'checked' : null}}>
-                <label class="form-check-label"  for="showWeights"><span class="text-muted" style="font-size: .75em;">(debug)</span> Show Weights</label>
+            <div class="flex items-center pb-2">
+                <input class="checkbox checkbox-primary checkbox-sm mr-2" type="checkbox" role="switch" id="showWeights" name="showWeights" form="checkoutForm" {{ $showWeights ? 'checked' : null}}>
+                <label class="cursor-pointer text-sm" for="showWeights"><span class="text-base-content/50" style="font-size: .75em;">(debug)</span> Show Weights</label>
             </div>
             <div class="text-center">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="true" id="singleOut" name="singleOut" form="checkoutForm" {{ $singleOut ? 'checked' : null}}>
-                    <label class="form-check-label" for="singleOut">Single-Out</label>
+                <div class="inline-flex items-center mr-3">
+                    <input class="checkbox checkbox-primary checkbox-sm mr-1" type="checkbox" value="true" id="singleOut" name="singleOut" form="checkoutForm" {{ $singleOut ? 'checked' : null}}>
+                    <label class="cursor-pointer text-sm" for="singleOut">Single-Out</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="true" id="doubleOut" name="doubleOut" form="checkoutForm" {{ $doubleOut ? 'checked' : null}}>
-                    <label class="form-check-label" for="doubleOut">Double-Out</label>
+                <div class="inline-flex items-center mr-3">
+                    <input class="checkbox checkbox-primary checkbox-sm mr-1" type="checkbox" value="true" id="doubleOut" name="doubleOut" form="checkoutForm" {{ $doubleOut ? 'checked' : null}}>
+                    <label class="cursor-pointer text-sm" for="doubleOut">Double-Out</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="true" id="trippleOut" name="trippleOut" form="checkoutForm" {{ $trippleOut ? 'checked' : null}}>
-                    <label class="form-check-label" for="trippleOut">Tripple-Out</label>
+                <div class="inline-flex items-center">
+                    <input class="checkbox checkbox-primary checkbox-sm mr-1" type="checkbox" value="true" id="trippleOut" name="trippleOut" form="checkoutForm" {{ $trippleOut ? 'checked' : null}}>
+                    <label class="cursor-pointer text-sm" for="trippleOut">Tripple-Out</label>
                 </div>
             </div>
         </div>
     </div>
 
     @if($checkoutNumOfPossibilities)
-        <div class="row">
+        <div class="flex flex-wrap">
             <p> Calculated {{ $checkoutNumOfPossibilities }} possible checkouts ({{ $execTime }} seconds)</p>
         </div>
     @endif
 
     <div class="flex flex-wrap justify-center">
-        <div class="col">
-            <table class="table table-striped table-hover" id="checkoutTable">
+        <div class="flex-1">
+            <table class="table table-zebra" id="checkoutTable">
                 <thead>
                     <tr>
                         <th scope="col" style="width:100px;"><i class="fa-solid fa-hashtag"></i></th>
@@ -93,21 +93,21 @@
                     @if($checkouts_0)
                         @if($highlightBestOption)
                             @if($checkoutBestOption >= 0 && $checkoutBestOption <= count($checkouts_0)-1)
-                                <tr class="table-success">
+                                <tr class="bg-success/10">
                                     <th scope="row"> BEST #{{ $checkoutBestOption }}</th>
-                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                    <td scope="row">{!! $checkouts_0[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
                                     @if($showWeights)
                                         <td scope="row">{{ $checkouts_0[$checkoutBestOption][3] }}</td>
                                     @endif
                                 </tr>
                             @else
-                                <tr class="table-success">
+                                <tr class="bg-success/10">
                                     <th scope="row"> BEST #{{ $checkoutBestOption }}</th>
-                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][0] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][1] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                    <td scope="row">{!!  $checkouts_1[$checkoutBestOption][2] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
                                     @if($showWeights)
                                         <td scope="row">{{ $checkouts_1[$checkoutBestOption][3] }}</td>
                                     @endif
@@ -115,18 +115,18 @@
                             @endif
                         @endif
                         @foreach ($checkouts_0 as $key => $checkout )
-                            <tr class="{{ $checkoutBestOption == $key && $highlightBestOption ? 'table-dark' : null }}">
+                            <tr class="{{ $checkoutBestOption == $key && $highlightBestOption ? 'bg-base-content text-base-100' : null }}">
                                 <th scope="row">{{ $key }}</th>
-                                <td scope="row">{!! $checkout[0] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                <td scope="row">{!! $checkout[1] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
-                                <td scope="row">{!! $checkout[2] ?? '<i class="fa-solid fa-xmark text-danger"></i>' !!}</td>
+                                <td scope="row">{!! $checkout[0] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                <td scope="row">{!! $checkout[1] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
+                                <td scope="row">{!! $checkout[2] ?? '<i class="fa-solid fa-xmark text-error"></i>' !!}</td>
                                 @if($showWeights)
                                     <td scope="row">{{ $checkout[3] }}</td>
                                 @endif
                             </tr>
                         @endforeach
                     @else
-                        <tr class="text-center table-danger">
+                        <tr class="text-center bg-error/10">
                             <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}" >not enough data.</th>
                         </tr>
                         @foreach([".....", "....", "...", "..", "."] as $c)
@@ -139,8 +139,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="col">
-            <table class="table table-striped table-hover">
+        <div class="flex-1">
+            <table class="table table-zebra">
                 <thead>
                     <tr>
                         <th scope="col"><i class="fa-solid fa-hashtag"></i></th>
@@ -155,7 +155,7 @@
                 <tbody>
                     @if($checkouts_1)
                         @foreach ($checkouts_1 as $key => $checkout )
-                            <tr class="{{ $checkoutBestOption == $key && $highlightBestOption ? 'table-dark' : null }}">
+                            <tr class="{{ $checkoutBestOption == $key && $highlightBestOption ? 'bg-base-content text-base-100' : null }}">
                                 <th scope="row">{{ $key }}</th>
                                 <td scope="row">{{ $checkout[0] }}</td>
                                 <td scope="row">{{ $checkout[1] }}</td>
@@ -166,7 +166,7 @@
                             </tr>
                         @endforeach
                     @else
-                        <tr class="text-center table-danger">
+                        <tr class="text-center bg-error/10">
                             <th scope="row" colspan="{{ $showWeights ? 5 : 4 }}" >not enough data.</th>
                         </tr>
                         @foreach([".....", "....", "...", "..", "."] as $c)

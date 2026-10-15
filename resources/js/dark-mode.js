@@ -1,60 +1,58 @@
 /*!
- * Color mode toggler for Tailwind CSS dark mode
- * Modified from Bootstrap's docs
+ * Theme toggler for DaisyUI themes
+ * Switches between 'corporate' (light) and 'business' (dark)
  */
 
 (() => {
     'use strict'
 
-    const storedTheme = localStorage.getItem('theme')
+    const LIGHT_THEME = 'corporate'
+    const DARK_THEME = 'business'
 
-    const getPreferredTheme = () => {
-        if (storedTheme) {
-            return storedTheme
+    const getStoredTheme = () => localStorage.getItem('theme')
+
+    const getPreferredTheme = () => getStoredTheme() || 'auto'
+
+    const getEffectiveTheme = (theme) => {
+        if (theme === 'auto') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        return theme
     }
 
     const setTheme = (theme) => {
-        const isDark = theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const effective = getEffectiveTheme(theme)
+        const daisyTheme = effective === 'dark' ? DARK_THEME : LIGHT_THEME
 
-        if (isDark) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
+        document.documentElement.setAttribute('data-theme', daisyTheme)
 
-        // Update logo based on theme
-        const logo = document.querySelector('.nav-brand');
+        // Update logo
+        const logo = document.querySelector('.nav-brand')
         if (logo) {
-            if (isDark) {
-                logo.src = 'https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg'
-            } else {
-                logo.src = 'https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg'
-            }
+            logo.src = effective === 'dark'
+                ? 'https://media.blubber-lounge.de/images/blubber_lounge_rebrand_try_white_optimized.svg'
+                : 'https://media.blubber-lounge.de/project/bl/blubber_lounge_rebrand_try.svg'
         }
     }
-
-    // Set initial theme immediately to prevent flash
-    setTheme(getPreferredTheme())
 
     const showActiveTheme = (theme) => {
-        const btnToActive = document.querySelector(`[data-theme-value="${theme}"]`)
-
-        document.querySelectorAll('[data-theme-value]').forEach(element => {
-            element.classList.remove('active')
+        document.querySelectorAll('[data-theme-value]').forEach(el => {
+            el.classList.remove('active', 'btn-primary')
         })
-
-        if (btnToActive) {
-            btnToActive.classList.add('active')
+        const active = document.querySelector(`[data-theme-value="${theme}"]`)
+        if (active) {
+            active.classList.add('active', 'btn-primary')
         }
     }
 
-    // Listen for system theme changes
+    // Set immediately to prevent flash
+    setTheme(getPreferredTheme())
+
+    // Listen for system changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        const currentTheme = localStorage.getItem('theme')
-        if (currentTheme !== 'light' && currentTheme !== 'dark') {
-            setTheme(getPreferredTheme())
+        const current = getStoredTheme()
+        if (!current || current === 'auto') {
+            setTheme('auto')
         }
     })
 

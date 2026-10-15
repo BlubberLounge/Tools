@@ -5,46 +5,46 @@
 @endpush
 
 @section('content')
-<div class="container-fluid px-4">
+<div class="container mx-auto px-4">
     <div class="flex flex-wrap text-center my-5">
         <h1> Feedback </h1>
     </div>
     <div id="container-feedback">
         <div class="flex flex-wrap justify-center">
-            <div class="col-auto">
+            <div class="w-auto">
                 <button class="btn btn-dark btn-feedback" value="{{ App\Enums\FeedbackType::ENHANCEMENT }}">
-                    <div class="card">
-                        <div class="card-body flex flex-col" style="min-width: 125px;">
+                    <div class="card card-bordered bg-base-100 p-4">
+                        <div class="p-4 flex flex-col" style="min-width: 125px;">
                             <i class="fa-solid fa-wand-magic-sparkles mb-2" style="font-size: 1.2em"></i>
                             Enhancement
                         </div>
                     </div>
                 </button>
             </div>
-            <div class="col-auto">
+            <div class="w-auto">
                 <button class="btn btn-dark btn-feedback" value="{{ App\Enums\FeedbackType::BUG }}">
-                    <div class="card">
-                        <div class="card-body flex flex-col" style="min-width: 125px;">
+                    <div class="card card-bordered bg-base-100 p-4">
+                        <div class="p-4 flex flex-col" style="min-width: 125px;">
                             <i class="fa-solid fa-bug mb-2" style="font-size: 1.2em"></i>
                             Bug
                         </div>
                     </div>
                 </button>
             </div>
-            <div class="col-auto">
+            <div class="w-auto">
                 <button class="btn btn-dark btn-feedback" value="{{ App\Enums\FeedbackType::INFORMATION }}">
-                    <div class="card">
-                        <div class="card-body flex flex-col" style="min-width: 125px;">
+                    <div class="card card-bordered bg-base-100 p-4">
+                        <div class="p-4 flex flex-col" style="min-width: 125px;">
                             <i class="fa-solid fa-circle-info mb-2" style="font-size: 1.2em"></i>
                             Information
                         </div>
                     </div>
                 </button>
             </div>
-            <div class="col-auto">
+            <div class="w-auto">
                 <button class="btn btn-dark btn-feedback" value="{{ App\Enums\FeedbackType::GENERAL }}">
-                    <div class="card">
-                        <div class="card-body flex flex-col" style="min-width: 125px;">
+                    <div class="card card-bordered bg-base-100 p-4">
+                        <div class="p-4 flex flex-col" style="min-width: 125px;">
                             <i class="fa-regular fa-comments mb-2" style="font-size: 1.2em"></i>
                             Other
                         </div>
@@ -55,7 +55,7 @@
 
         <hr class="my-4" />
 
-        <table class="table table-striped table-hover">
+        <table class="table table-zebra">
             <thead>
                 <tr>
                     <th scope="col"> # </th>
@@ -70,10 +70,10 @@
                         {{-- <th scope="row">{{ $loop->index + 1 }}</th> --}}
                         <th scope="row"> {{ $f->created_at->format('d.m.Y') }} </th>
                         <td>
-                            <span class="badge rounded-pill" style="background-color:{{ $f->status->color() }};"> {{ $f->status }} </span>
+                            <span class="badge" style="background-color:{{ $f->status->color() }};"> {{ $f->status }} </span>
                         </td>
                         <td>
-                            <span class="badge rounded-pill" style="background-color:{{ $f->type->color() }};"> {{ $f->type }} </span>
+                            <span class="badge" style="background-color:{{ $f->type->color() }};"> {{ $f->type }} </span>
                         </td>
                         <td>
                             {{ Str::limit($f->subject, 50) }}
@@ -87,26 +87,6 @@
             </tbody>
         </table>
     </div>
-
-    {{-- @forelse (Auth::user()->feedback as $f)
-        <div class="flex flex-wrap my-1">
-            <div class="col-2">
-                <span class="badge rounded-pill" style="background-color:{{ $f->status->color() }};"> {{ $f->status }} </span>
-            </div>
-            <div class="col-3">
-                <span class="badge rounded-pill" style="background-color:{{ $f->type->color() }};"> {{ $f->type }} </span>
-            </div>
-            <div class="col">
-                {{ Str::limit($f->subject, 20) }}
-            </div>
-        </div>
-    @empty
-        <div class="row" style="color:var(--bl-clr-background-light);">
-            <div class="col">
-                no feedback has been send yet
-            </div>
-        </div>
-    @endforelse --}}
 
     <div class="flex flex-wrap justify-center mt-3 px-5" id="container-form-feedback-create" style="display: none">
         @include('feedback.feedback-create', ['options' => $options])

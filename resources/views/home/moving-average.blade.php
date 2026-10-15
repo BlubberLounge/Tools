@@ -5,10 +5,12 @@
 @endpush
 
 @section('content')
-<div class="container">
+<div class="container mx-auto px-4 py-6">
 
-    <div class="flex flex-wrap justify-center items-center mb-5">
-        <div id="movingAveragePlot"></div>
+    <div class="card card-bordered bg-base-100 p-4">
+        <div class="flex justify-center items-center">
+            <div id="movingAveragePlot"></div>
+        </div>
     </div>
 
 </div>

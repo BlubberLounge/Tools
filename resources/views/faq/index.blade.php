@@ -1,38 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid px-0" id="container-faq">
-    <section id="faq-description" class="text-center" style="padding: 2rem 3rem 1rem 3rem;">
+<div class="container mx-auto px-4" id="container-faq">
+    <section id="faq-description" class="text-center pt-8 pb-4 px-6">
         <i class="fa-solid fa-comment-dots mb-3" style="font-size: 4rem"></i>
         <h1> FAQ </h1>
         <p> Frequently asked questions with their answers </p>
     </section>
-    <section class="px-0">
-        <div class="accordion accordion-flush" id="accordionfeedback">
+    <section>
+        <div class="space-y-2" x-data="{ openId: null }">
             @forelse ($FAQList as $QA)
-                @php($headerID = 'header-'.$QA->id)
-                @php($bodyID = 'body-'.$QA->id)
-                <div class="accordion-item relative">
-                    <h2 class="accordion-header" id="{{ $headerID }}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $bodyID }}" aria-expanded="false" aria-controls="{{ $bodyID }}">
-                            <span style="margin-right: auto">
-                                {{ Str::limit($QA->title, 45) }}
-                            </span>
-                        </button>
-                    </h2>
-                    <div id="{{ $bodyID }}" class="accordion-collapse collapse" aria-labelledby="{{ $headerID }}" data-bs-parent="#accordionfeedback">
-                        <div class="accordion-body p-4" style="word-break: break-all;">
-                            <div class="row">
-                                {{ $QA->content }}
-                            </div>
-                        </div>
+                <div class="card card-bordered bg-base-100 p-4">
+                    <button @click="openId = openId === {{ $QA->id }} ? null : {{ $QA->id }}"
+                        class="flex items-center justify-between w-full text-left font-medium py-2 px-2">
+                        <span class="mr-auto">
+                            {{ Str::limit($QA->title, 45) }}
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200" :class="openId === {{ $QA->id }} ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="openId === {{ $QA->id }}" x-collapse class="mt-3 p-4 break-all">
+                        {{ $QA->content }}
                     </div>
                 </div>
             @empty
-            <div class="row" style="color:var(--bl-clr-background-light);">
-                <div class="col">
-                    no FAQ
-                </div>
+            <div class="text-base-content/50">
+                no FAQ
             </div>
             @endforelse
         </div>
