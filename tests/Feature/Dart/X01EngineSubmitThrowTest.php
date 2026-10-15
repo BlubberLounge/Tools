@@ -237,6 +237,49 @@ class X01EngineSubmitThrowTest extends TestCase
     }
 
     /**
+     * Test: Bust in a later turn only resets that turn
+     */
+    public function test_submit_throw_bust_in_later_turn_keeps_previous_turns(): void
+    {
+        $this->createAndStartGame(101, false);
+
+        // Turn 1: T20, S1, S1 → 39 remaining
+        foreach ([[20, 'T'], [1, 'S'], [1, 'S']] as $throw => [$field, $ring]) {
+            $this->engine->submitThrow($this->game, $this->player, [
+                'set' => 1,
+                'leg' => 1,
+                'turn' => 1,
+                'throw' => $throw + 1,
+                'field' => $field,
+                'ring' => $ring,
+            ]);
+        }
+
+        $this->assertEquals(39, $this->game->fresh()->remainingPointsByUser($this->player));
+
+        // Turn 2: T20 = 60 > 39 → Bust
+        $this->engine->submitThrow($this->game, $this->player, [
+            'set' => 1,
+            'leg' => 1,
+            'turn' => 2,
+            'throw' => 1,
+            'field' => 20,
+            'ring' => 'T',
+        ]);
+
+        $this->assertEquals(39, $this->game->fresh()->remainingPointsByUser($this->player));
+        $this->assertSoftDeleted('dart_throws', [
+            'user_id' => $this->player->id,
+            'turn' => 2,
+        ]);
+        $this->assertNotSoftDeleted('dart_throws', [
+            'user_id' => $this->player->id,
+            'turn' => 1,
+            'value' => 60,
+        ]);
+    }
+
+    /**
      * Test: Bust - invalid double out (remaining is 0 but last throw is not double)
      */
     public function test_submit_throw_bust_invalid_double_out(): void

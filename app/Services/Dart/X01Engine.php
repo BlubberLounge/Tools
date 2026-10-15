@@ -183,15 +183,15 @@ class X01Engine extends AbstractGameEngine
             };
         }
 
-        // Legacy fallback: check boolean fields
-        if ($game->doubleOut && !$game->singleOut && !$game->trippleOut) {
-            return 'double';
+        // Legacy fallback: each flag allows that ring for the last dart
+        if ($game->singleOut || (!$game->doubleOut && !$game->trippleOut)) {
+            return 'single';
         }
-        if ($game->trippleOut && !$game->singleOut && !$game->doubleOut) {
-            return 'triple';
+        if ($game->doubleOut && $game->trippleOut) {
+            return 'master';
         }
 
-        return 'single';
+        return $game->doubleOut ? 'double' : 'triple';
     }
 
     /**
@@ -281,6 +281,9 @@ class X01Engine extends AbstractGameEngine
                 return $this->canCheckoutDouble($remainingPoints, $dartsLeft);
             case 'triple':
                 return $this->canCheckoutTriple($remainingPoints, $dartsLeft);
+            case 'master':
+                return $this->canCheckoutDouble($remainingPoints, $dartsLeft)
+                    || $this->canCheckoutTriple($remainingPoints, $dartsLeft);
             default:
                 return false;
         }
@@ -360,7 +363,9 @@ class X01Engine extends AbstractGameEngine
         $turn = $this->stateService->determineCurrentTurn($game, $user);
         $game->dartThrows()
             ->where('user_id', $user->id)
-            ->where('turn', $turn)
+            ->where('set', $turn['set'])
+            ->where('leg', $turn['leg'])
+            ->where('turn', $turn['turn'])
             ->delete();
     }
 
