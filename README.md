@@ -23,7 +23,7 @@ A collection of more or less useful management software written by the BlubberLo
 - User feedback system
 - FAQ
 - Api (+ OpenApi/Swagger Documentation)
-- Minecraft tools (anvil enchantment planner)
+- Minecraft tools (anvil enchantment planner, farm module catalogue)
 
 ## 💭 Future ideas
 
@@ -168,6 +168,44 @@ whose route does not exist are skipped, so unbuilt tools never show up.
 - API (session or Sanctum token, 60 requests per minute): `GET /api/v1/minecraft/versions`,
   `GET /api/v1/minecraft/versions/{version}`, `POST /api/v1/minecraft/anvil/plan` with
   `version`, `item`, `enchantments` (`{id: level}`), optional `present` and `prior_work`.
+
+**Farm module catalogue** (`/minecraft/farm-catalogue`, permission `view.minecraft.farm.catalogue`):
+
+- Data: one JSON file per Java version in `resources/minecraft/farms/{version}.json`, written by hand.
+  It lists public, community-documented farm designs only (Minecraft Wiki, schematic catalogues such
+  as Shulkr / the TMC Catalogue, well-known designers' videos), each with its source link. A file
+  holds `version`, `name`, `updated`, `sources` (title, url, retrieved), `notes`, `farm_types`
+  (`{id, name}`), `items` (`{id, name}`, vanilla ids without namespace like the enchantment data;
+  `experience` stands for XP points) and `designs`.
+- A design has `id` (kebab-case), `name`, `type` (a farm type id), `produces` (list of
+  `{item, per_hour, basis, note?}`), `versions` (`{min, max}`, `max` null = still works),
+  `footprint` (`{x, y, z}` in blocks, or null when the source does not publish it), `materials`
+  (`{item, count}`, count null when no amount is published), `difficulty` (`easy`, `medium`,
+  `hard`), `condition` (how the rate was measured: AFK spot, mob cap, player kills, random tick
+  speed ...), `author`, `community` and `source` (`{url, title, kind: schematic|video|wiki,
+  retrieved}`). Optional: `notes`, and `model`, reserved for the 3D farm viewer (path of the
+  design's block model, null until it exists).
+- `per_hour` is items per hour for one module (the unit the footprint describes). `basis` says where
+  the number comes from: `designer` (stated by the designer or tutorial), `measured` (measured by Max
+  on a test server; the note says when and how) or `unknown` (no published number, `per_hour` is
+  null). Never guess a rate; use `unknown` and say why in the note. The first entry of `produces` is
+  the item the design is built for.
+- Adding a design: research it, add the entry to every version file whose version lies inside its
+  range (a design must not appear in a file it does not work in), add new item ids to `items` (every
+  item must be used) and run `php artisan test tests/Unit/Minecraft` - `FarmCatalogTest` validates
+  every file (unknown item ids, missing rates, missing sources, duplicate ids, version ranges) and
+  checks that the latest file still covers the required farm types with at least 25 designs.
+- Adding a version: copy the newest file, set `version`, `name` and `updated`, drop designs that stop
+  working, adjust rates and item ids that changed and run the tests.
+- `App\Minecraft\FarmCatalog` is the only loader of these files (the farm chain planner reads module
+  rates through `rate()` and `designsProducing()`). It also does the filtering (item search, farm
+  type, difficulty, longest horizontal side) and sorting (rate, footprint area, name; missing values
+  last) for the page, so the logic is tested in PHP.
+- API (session or Sanctum token, 60 requests per minute): `GET /api/v1/minecraft/farms`,
+  `GET /api/v1/minecraft/farms/{version}` with optional `item`, `type`, `difficulty`,
+  `max_footprint`, `sort` (`rate`, `footprint`, `name`) and `direction` (`asc`, `desc`), and
+  `GET /api/v1/minecraft/farms/{version}/designs/{id}` (design plus the other designs that make its
+  main item, highest rate first). The page keeps its filters in `sessionStorage`.
 
 ## ✌️ Other
 
