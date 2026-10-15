@@ -23,7 +23,7 @@ A collection of more or less useful management software written by the BlubberLo
 - User feedback system
 - FAQ
 - Api (+ OpenApi/Swagger Documentation)
-- Minecraft tools (anvil enchantment planner, farm module catalogue)
+- Minecraft tools (anvil enchantment planner, farm module catalogue, farm chain planner)
 
 ## 💭 Future ideas
 
@@ -206,6 +206,69 @@ whose route does not exist are skipped, so unbuilt tools never show up.
   `max_footprint`, `sort` (`rate`, `footprint`, `name`) and `direction` (`asc`, `desc`), and
   `GET /api/v1/minecraft/farms/{version}/designs/{id}` (design plus the other designs that make its
   main item, highest rate first). The page keeps its filters in `sessionStorage`.
+
+**Farm chain planner** (`/minecraft/chain-planner`, permission `view.minecraft.chain.planner`):
+
+A production calculator in the style of the Factorio calculators: pick a version, an item and a rate
+(items per hour) and get the chain down to raw resources, with items and crafts per hour per node,
+furnaces and fuel for cooking, villagers for trades, farm modules per raw resource and hopper lines
+per edge (one hopper line moves 9000 items per hour at 20 TPS).
+
+- Data: one JSON file per Java version in `resources/minecraft/recipes/{version}.json` next to the
+  farm catalogue of the same version (the planner needs both). It holds only the recipes farm chains
+  need, not the whole recipe book: `version`, `name`, `updated`, `sources` (title, url, retrieved),
+  `notes`, `defaults` (`fuel`, `restocks_per_day`, `hopper_items_per_hour`), `fuels`
+  (`{item, smelts}`: items one fuel item smelts), `items` (`{id, name}`) and `recipes`.
+- A recipe has `id`, `type` (`crafting`, `smelting`, `blasting`, `smoking`, `trading`), `output`
+  (`{item, count}`) and `inputs` (list of `{item, count}`). Cooking recipes add `seconds` (time per
+  item in that furnace: 10 for a furnace, 5 for a blast furnace or smoker; fuel per item is the same
+  for all three). Trades add `profession`, `level` (`novice` ... `master`) and `max_uses` (trades per
+  restock); a villager restocks twice per Minecraft day (20 minutes), so it makes
+  `max_uses * 2 * 3` trades per hour. Where the game accepts several items (any planks, any log, sand
+  or red sand) one representative item is listed; the coal/charcoal torch is split into two recipes.
+- The 26.3 file comes from the official 26.3 server jar data (`recipe`, `villager_trade`, cooking fuel
+  providers) and is cross-checked with the Minecraft Wiki; the 1.21 file follows the wiki for 1.21.0
+  to 1.21.8 (same recipes, `chain` instead of `iron_chain`). Default trades only, not the trade
+  rebalance experiment.
+- Adding a recipe: add it to every version file it exists in, add new item ids to `items` (every item
+  must be used) and run `php artisan test tests/Unit/Minecraft` - `RecipeDataTest` validates every
+  file: known fields, unknown item ids, missing rates (cooking time, trade limits, fuel values) and
+  recipe loops. A loop is fine when it can reach a raw resource (ingot to block and back, kelp smelted
+  with dried kelp blocks); a loop that cannot, or one that makes items out of nothing, is an error.
+  Items a farm design makes count as raw resources for this check.
+- Adding a farm design: see the farm catalogue above; the planner picks it up through
+  `FarmCatalog::designsProducing()` (highest rate first).
+- Adding a version: copy the newest recipe file, apply the changes and make sure the farm catalogue
+  has the same version.
+- Options per item: its recipes or `source` (take it as a raw resource: from a farm design of the
+  catalogue, or by hand when no design makes it). The default is the option with the fewest raw items
+  per item made (fuel included); villager trades are only a default when nothing else makes the item.
+  `App\Minecraft\RecipeData::cheapest()` computes these costs with a loop-safe fixed-point iteration.
+- Planner: `App\Minecraft\ChainPlanner` walks the chosen recipes from the target to raw resources,
+  then solves the linear system `p = d + A p` (items per hour per item) directly, so a fuel loop that
+  pays back works and a loop that never reaches a raw resource is reported (`ChainLoopException` with
+  the items on the loop). Modules per raw resource = `ceil(rate / module rate)`; a design without a
+  published rate shows the need without a module count until the user enters a rate.
+- Automatic mode: `App\Minecraft\ChainSolver` builds a linear program over every recipe that can take
+  part (crafts per hour) and every raw resource (items per hour), with "production minus use covers
+  the demand" per item, and minimises the sum of raw items per hour divided by the module rate. It
+  runs a dense two-phase simplex with Bland's rule and an iteration cap, and reports `infeasible`
+  (loop without raw resource), `unbounded` or `iteration_limit` instead of hanging. Farms without a
+  published rate count as 1000 items per hour per module, raw resources no farm makes as 1 per hour
+  (used only when nothing else makes the item). Nothing caps a recipe, so the optimum uses one option
+  per item; the planner then runs with those choices.
+- Overrides (marked in the UI, kept in `sessionStorage`, one "Reset overrides" button): recipe per
+  node, farm design and module rate per raw resource, furnace / blast furnace / smoker speed, villager
+  restocks per day and the fuel.
+- Views: raw resources with module counts and the crafting steps, an indented tree, and a flow graph
+  (own layered DAG layout in `resources/js/minecraft/chainGraph.js`, SVG, no graph library). The graph
+  is desktop only; phones get the list and the tree.
+- API (session or Sanctum token, 60 requests per minute): `GET /api/v1/minecraft/chains`,
+  `GET /api/v1/minecraft/chains/{version}` (items, fuels, defaults) and
+  `POST /api/v1/minecraft/chains/plan` with `version`, `item`, `rate` and optional `mode`
+  (`manual`, `auto`), `choices` (`{item: recipe id | "source"}`), `designs` (`{item: design id}`),
+  `module_rates` (`{item: items per hour}`), `furnace_rates` (`{smelting|blasting|smoking: items per
+  hour}`), `restocks_per_day` and `fuel`. A loop answers 422 with `data.loop`.
 
 ## ✌️ Other
 
