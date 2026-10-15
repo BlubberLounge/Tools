@@ -50,7 +50,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BBdqGXs8.css",
+    "file": "assets/app-CJ1m8zo-.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -199,6 +199,12 @@
     "file": "assets/anvilPlanner-DrozqlSo.js",
     "name": "anvilPlanner",
     "src": "resources/js/minecraft/anvilPlanner.js",
+    "isEntry": true
+  },
+  "resources/js/minecraft/chainPlanner.js": {
+    "file": "assets/chainPlanner-3ZQPO1JL.js",
+    "name": "chainPlanner",
+    "src": "resources/js/minecraft/chainPlanner.js",
     "isEntry": true
   },
   "resources/js/minecraft/farmCatalogue.js": {
