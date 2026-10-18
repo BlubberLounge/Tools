@@ -7,12 +7,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Process;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ZipArchive;
 
-// Plain base controller: the app controller adds the auth middleware, the
-// webhook authenticates with its bearer token instead.
 // Plain base controller: the app's Controller adds the auth middleware, the
 // webhook authenticates with its bearer token instead.
 class DeployWebhookController extends Controller
@@ -72,13 +71,15 @@ class DeployWebhookController extends Controller
         }
 
         // Run deploy command (handles migrations, caching, etc.)
-        $exitCode = Artisan::call('app:deploy', [
-            '--force' => true,
-            '--skip-build' => true,
+        // Separate process: this request still has the old release's classes
+        // loaded, so running migrations in-process mixes old and new code.
+        $result = Process::path(base_path())->timeout(280)->run([
+            config('deploy.php_binary'), 'artisan', 'app:deploy', '--force', '--skip-build',
         ]);
+        $exitCode = $result->exitCode();
 
         $log[] = 'Deploy command finished with exit code '.$exitCode;
-        Log::info('Deploy webhook: app:deploy output', ['exit_code' => $exitCode, 'output' => Artisan::output()]);
+        Log::info('Deploy webhook: app:deploy output', ['exit_code' => $exitCode, 'output' => $result->output().$result->errorOutput()]);
 
         return response()->json([
             'success' => $exitCode === 0,

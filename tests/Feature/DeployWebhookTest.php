@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Process;
 use Tests\TestCase;
 
 class DeployWebhookTest extends TestCase
@@ -36,15 +36,14 @@ class DeployWebhookTest extends TestCase
     {
         $this->assertFileDoesNotExist(base_path('_deploy.zip'));
 
-        Artisan::shouldReceive('call')
-            ->once()
-            ->with('app:deploy', ['--force' => true, '--skip-build' => true])
-            ->andReturn(0);
-        Artisan::shouldReceive('output')->andReturn('done');
+        config(['deploy.php_binary' => 'php-test-cli']);
+        Process::fake(['*' => Process::result('done')]);
 
         $this->withToken('test-deploy-secret')
             ->postJson(self::URL)
             ->assertOk()
             ->assertJson(['success' => true]);
+
+        Process::assertRan(fn ($process) => $process->command === ['php-test-cli', 'artisan', 'app:deploy', '--force', '--skip-build']);
     }
 }
