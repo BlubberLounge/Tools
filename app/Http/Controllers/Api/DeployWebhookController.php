@@ -57,10 +57,12 @@ class DeployWebhookController extends Controller
                 $log[] = "Extracted {$extracted} files from release ZIP";
             } catch (\Throwable $e) {
                 Artisan::call('up');
+                // details stay in the server log: the CI job prints the response
+                Log::error('Deploy webhook: ZIP extraction failed', ['exception' => $e]);
 
                 return response()->json([
                     'success' => false,
-                    'error' => 'ZIP extraction failed: '.$e->getMessage(),
+                    'error' => 'ZIP extraction failed',
                     'log' => $log,
                 ], 500);
             }
@@ -76,11 +78,11 @@ class DeployWebhookController extends Controller
         ]);
 
         $log[] = 'Deploy command finished with exit code '.$exitCode;
+        Log::info('Deploy webhook: app:deploy output', ['exit_code' => $exitCode, 'output' => Artisan::output()]);
 
         return response()->json([
             'success' => $exitCode === 0,
             'log' => $log,
-            'output' => Artisan::output(),
         ], $exitCode === 0 ? 200 : 500);
     }
 
