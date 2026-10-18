@@ -1,10 +1,15 @@
 {
     "private": true,
     "type": "module",
+    "version": "0.1.0",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
         "test:js": "vitest run",
+        "version:major": "node dump-app-version.js --major",
+        "version:minor": "node dump-app-version.js --minor",
+        "version:patch": "node dump-app-version.js --patch",
+        "version:set": "node dump-app-version.js --set",
         "version:bump": "node dump-app-version.js"
     },
     "dependencies": {

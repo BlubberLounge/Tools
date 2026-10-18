@@ -1,0 +1,156 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - 'patch'
+          - 'minor'
+          - 'major'
+        default: 'patch'
+      tag:
+        description: 'Version tag (leave empty to auto-bump from package.json)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      app_version: ${{ steps.version.outputs.version }}
+      zip_name: ${{ steps.zip.outputs.zip_name }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-ansi --no-interaction --no-progress --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      # Only bump version after build passes
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ inputs.tag }}" ]; then
+            VERSION="${{ inputs.tag }}"
+            # Update package.json and version.json with specified version
+            npm run version:set "$VERSION"
+          else
+            # Bump version based on input
+            npm run version:${{ inputs.version_bump }}
+            VERSION=$(node -p "require('./version.json').version")
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
+
+      # Commit version bump AFTER successful build
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add package.json version.json
+
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
+          git push
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Rename .env
+        run: mv .env .env.release-gen
+
+      - name: Prepare release directory
+        run: |
+          rm -rf build-release
+          mkdir -p build-release
+          rsync -av \
+            --exclude=node_modules \
+            --exclude=tests \
+            --exclude=storage/logs \
+            --exclude=.git \
+            --exclude=.env \
+            --exclude=.env.release-gen \
+            --exclude=build-release \
+            ./ ./build-release/
+
+      - name: Create ZIP archive
+        id: zip
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+          ZIP_NAME="blubberlounge-tools-v${VERSION}-${TIMESTAMP}.zip"
+
+          cd build-release
+          zip -r "../$ZIP_NAME" .
+          cd ..
+
+          echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-build
+          path: ${{ steps.zip.outputs.zip_name }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Download release artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: release-build
+          path: ./artifact
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: v${{ needs.build.outputs.app_version }}
+          name: v${{ needs.build.outputs.app_version }}
+          body: |
+            ## Release v${{ needs.build.outputs.app_version }}
+
+            ### Installation
+            1. Download the ZIP file
+            2. Upload to your server via SFTP
+            3. Extract and configure `.env`
+            4. Run `php artisan migrate --force`
+          files: ./artifact/${{ needs.build.outputs.zip_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

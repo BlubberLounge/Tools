@@ -1,0 +1,148 @@
+name: Deploy via SFTP
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: "Deployment target"
+        required: true
+        options:
+          - dev
+          - production
+      tag:
+        description: "Tag to deploy (leave empty to use latest release)"
+        required: false
+        default: ""
+      dry_run:
+        type: choice
+        description: "Run deployment without uploading any files?"
+        required: true
+        default: "no"
+        options:
+          - "no"
+          - "yes"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Resolve tag (use latest if empty)
+        id: tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "${{ github.event.inputs.tag }}" ]; then
+            echo "No tag provided, selecting latest release..."
+            latest=$(gh api repos/${{ github.repository }}/releases/latest --jq .tag_name)
+            echo "Auto-selected latest tag: $latest"
+            echo "resolved_tag=$latest" >> $GITHUB_OUTPUT
+          else
+            echo "Using manually provided tag: ${{ github.event.inputs.tag }}"
+            echo "resolved_tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download release asset (ZIP)
+        id: asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf release-download
+          mkdir -p release-download
+
+          TAG="${{ steps.tag.outputs.resolved_tag }}"
+
+          echo "Downloading assets for tag: $TAG"
+          gh release download "$TAG" \
+            --repo "${{ github.repository }}" \
+            --dir "release-download" \
+            --pattern "*.zip"
+
+          file=$(ls release-download/*.zip | head -n 1)
+
+          if [ -z "$file" ]; then
+            echo "ERROR: No ZIP asset found for release $TAG"
+            exit 1
+          fi
+
+          echo "Downloaded ZIP: $(basename "$file")"
+          echo "asset_path=$file" >> $GITHUB_OUTPUT
+
+      - name: Determine target paths and URLs
+        id: env
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "dev" ]; then
+            echo "target_path=${{ secrets.DEV_PROJECT_PATH }}" >> $GITHUB_OUTPUT
+            echo "app_url=${{ secrets.DEV_APP_URL }}" >> $GITHUB_OUTPUT
+          else
+            echo "target_path=${{ secrets.PROD_PROJECT_PATH }}" >> $GITHUB_OUTPUT
+            echo "app_url=${{ secrets.PROD_APP_URL }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: DRY-RUN summary
+        if: ${{ github.event.inputs.dry_run == 'yes' }}
+        run: |
+          echo "===================================="
+          echo " DRY RUN ENABLED — NO FILES UPLOADED"
+          echo "===================================="
+          echo ""
+          echo "Tag that WOULD be deployed:"
+          echo "  ${{ steps.tag.outputs.resolved_tag }}"
+          echo ""
+          echo "Asset that WOULD be uploaded:"
+          echo "  ${{ steps.asset.outputs.asset_path }}"
+          echo ""
+          echo "Target SFTP path:"
+          echo "  ${{ steps.env.outputs.target_path }}"
+          echo ""
+          echo "ZIP size:"
+          ls -lh ${{ steps.asset.outputs.asset_path }}
+          echo ""
+          echo "Dry run finished."
+          echo "===================================="
+
+      - name: Prepare ZIP for upload
+        if: ${{ github.event.inputs.dry_run == 'no' }}
+        run: |
+          cp "${{ steps.asset.outputs.asset_path }}" ./_deploy.zip
+          echo "ZIP ready for upload ($(du -h ./_deploy.zip | cut -f1))"
+
+      - name: Upload release ZIP via SFTP
+        if: ${{ github.event.inputs.dry_run == 'no' }}
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          local_path: "./_deploy.zip"
+          remote_path: ${{ steps.env.outputs.target_path }}/_deploy.zip
+          sftp_only: true
+
+      - name: Trigger deploy webhook
+        if: ${{ github.event.inputs.dry_run == 'no' }}
+        run: |
+          echo "Calling deploy webhook..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ steps.env.outputs.app_url }}/api/deploy/webhook" \
+            -H "Authorization: Bearer ${{ secrets.DEPLOY_WEBHOOK_SECRET }}" \
+            -H "Accept: application/json" \
+            --max-time 300)
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::Deploy webhook failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
+
+          echo "Deployment completed successfully."

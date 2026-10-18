@@ -102,7 +102,7 @@
             @endif
         @endpermission
         <div class="text-center text-xs text-base-content/30 mt-3">
-            <span class="font-semibold">Tools</span> v{{ env('APP_VERSION', 'VERSION_invalid') }}
+            <span class="font-semibold">Tools</span> v{{ config('version.version') }}
         </div>
     </div>
 </nav>

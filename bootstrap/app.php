@@ -66,5 +66,11 @@ return Application::configure(basePath: dirname(__DIR__))
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(500)->by($request->user()?->id ?: $request->ip());
         });
+
+        // Deploy webhook: few calls per minute, so a wrong token cannot be
+        // brute-forced silently.
+        RateLimiter::for('deploy', function (Request $request) {
+            return Limit::perMinute((int) env('DEPLOY_RATE_LIMIT', 10))->by($request->ip());
+        });
     })
     ->create();

@@ -1,80 +1,50 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-// Convert __dirname to work in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const envFilePath = path.resolve(__dirname, '.env');
-const envExampleFilePath = path.resolve(__dirname, '.env.example');
+const root = process.cwd();
+const pkgPath = path.resolve(root, 'package.json');
+const versionJsonPath = path.resolve(root, 'version.json');
 
-// Function to increment the minor version
-function incrementMinorVersion(version) {
-    const [major, minor, patch, build] = version.split('.').map(Number);
-    return `${major}.${Math.max(minor + 1, 0)}.${patch}.${build}`;
-}
+// ---- Parse command line arguments ------------------------------------------
 
-function incrementBuildVersion(version) {
-    const [major, minor, patch, build] = version.split('.').map(Number);
-    return `${major}.${minor}.${patch}.${Math.max(build + 1, 0)}`;
-}
+const args = process.argv.slice(2);
+const setIndex = args.indexOf('--set');
+const isMajor = args.includes('--major');
+const isMinor = args.includes('--minor');
 
-const timestamp = new Date().toISOString();
-let envContent = fs.existsSync(envFilePath) ? fs.readFileSync(envFilePath, 'utf-8') : '';
-let currentVersionMatch = envContent.match(/APP_VERSION=(\d+\.\d+\.\d+\.\d+)/);
+// ---- Read current version from package.json --------------------------------
+
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+const [major, minor, patch] = pkg.version.split('.').map(Number);
+
 let newVersion;
 
-if (currentVersionMatch) {
-    const currentVersion = currentVersionMatch[1];
-    // newVersion = incrementMinorVersion(currentVersion);
-    newVersion = incrementBuildVersion(currentVersion);
+if (setIndex !== -1 && args[setIndex + 1]) {
+    // Set specific version: node dump-app-version.js --set 1.0.0
+    newVersion = args[setIndex + 1];
+} else if (isMajor) {
+    // Bump major: 0.0.0 → 1.0.0
+    newVersion = `${major + 1}.0.0`;
+} else if (isMinor) {
+    // Bump minor: 0.0.0 → 0.1.0
+    newVersion = `${major}.${minor + 1}.0`;
 } else {
-    // Default to 1.0.0 if APP_VERSION does not exist
-    newVersion = '0.0.0.1';
+    // Bump patch (default): 0.0.0 → 0.0.1
+    newVersion = `${major}.${minor}.${patch + 1}`;
 }
 
-const versionString = `APP_VERSION=${newVersion}`;
-const timestampString = `APP_VERSION_TIMESTAMP=${timestamp}`;
-const lines = envContent.split('\n');
-const appVersionIndex = lines.findIndex(line => line.startsWith('APP_VERSION='));
+// ---- Update package.json ---------------------------------------------------
 
-if (appVersionIndex !== -1) {
-    // Replace APP_VERSION with the new version string
-    lines[appVersionIndex] = versionString;
+pkg.version = newVersion;
+fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 4) + '\n', 'utf-8');
 
-    // Insert APP_VERSION_TIMESTAMP right after APP_VERSION
-    if (lines[appVersionIndex + 1] && lines[appVersionIndex + 1].startsWith('APP_VERSION_TIMESTAMP=')) {
-        // If APP_VERSION_TIMESTAMP already exists after APP_VERSION, replace it
-        lines[appVersionIndex + 1] = timestampString;
-    } else {
-        // Otherwise, insert APP_VERSION_TIMESTAMP as a new line
-        lines.splice(appVersionIndex + 1, 0, timestampString);
-    }
-} else {
-    // If APP_VERSION doesn't exist, find APP_URL or add both at the end
-    const appUrlIndex = lines.findIndex(line => line.startsWith('APP_URL='));
+// ---- Write version.json ----------------------------------------------------
 
-    if (appUrlIndex !== -1) {
-        // Insert APP_VERSION and APP_VERSION_TIMESTAMP after APP_URL
-        lines.splice(appUrlIndex + 1, 0, versionString, timestampString);
-    } else {
-        // Append both APP_VERSION and APP_VERSION_TIMESTAMP at the end
-        lines.push(versionString, timestampString);
-    }
-}
+const versionData = {
+    version: newVersion,
+    timestamp: new Date().toISOString(),
+};
 
-const date = new Date(timestamp);
-const datetime = new Intl.DateTimeFormat('de-DE', {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit'
-}).format(date);
+fs.writeFileSync(versionJsonPath, JSON.stringify(versionData, null, 4) + '\n', 'utf-8');
 
-// Write the updated content back to the .env file
-envContent = lines.join('\n');
-fs.writeFileSync(envFilePath, envContent, 'utf-8');
-fs.writeFileSync(envExampleFilePath, envContent, 'utf-8');
-console.log(`Updated .env APP_VERSION from version: ${currentVersionMatch ?? currentVersion} to ${newVersion} on ${datetime}`);
+console.log(`Bumped version → ${newVersion}`);
