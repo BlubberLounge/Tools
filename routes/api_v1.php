@@ -47,7 +47,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     });
 
     Route::apiResource('user', UserController::class)
-        ->only(['show']);
+        ->only(['show'])
+        ->names('api.user'); // web routes already use user.*
         Route::apiResource('user.timetable', UserTimetableController::class)
         ->except(['store', 'update', 'destroy']);
     Route::get('/user/{user}/timetable/between/{dateFrom}/{dateTo}', [UserTimetableController::class, 'betweenDates'])->name('user.timetable.between');
@@ -84,10 +85,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     });
     Route::apiResource('dart', DartGameController::class)
         ->only(['show', 'update'])
+        ->names('api.dart') // web routes already use dart.*
         ->parameter('dart', 'dartGame'); // dart to dartGame for currect auto-mapping;
 
     Route::apiResource('appointment', AppointmentController::class)
-        ->only(['index']);
+        ->only(['index'])
+        ->names('api.appointment'); // web routes already use appointment.*
 
     Route::apiResource('throw', DartThrowController::class)
         ->only(['store'])
