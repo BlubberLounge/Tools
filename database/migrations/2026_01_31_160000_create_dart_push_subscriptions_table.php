@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('dart_push_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->string('device_id')->index();
-            $table->text('endpoint')->unique();
+            // string, not text: MySQL cannot put a unique index on a TEXT column
+            $table->string('endpoint', 500)->unique();
             $table->string('p256dh_key');
             $table->string('auth_key');
             $table->string('user_agent')->nullable();
