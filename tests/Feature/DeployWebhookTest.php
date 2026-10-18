@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Process;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class DeployWebhookTest extends TestCase
@@ -45,5 +47,14 @@ class DeployWebhookTest extends TestCase
             ->assertJson(['success' => true]);
 
         Process::assertRan(fn ($process) => $process->command === ['php-test-cli', 'artisan', 'app:deploy', '--force', '--skip-build']);
+    }
+
+    public function test_webhook_route_skips_csrf(): void
+    {
+        // CSRF is never checked in tests, so look at the route itself: the
+        // CI call has no session and failed with 419 when this was missing.
+        $route = Route::getRoutes()->getByName('deploy.webhook');
+
+        $this->assertContains(PreventRequestForgery::class, $route->excludedMiddleware());
     }
 }

@@ -192,6 +192,6 @@ Route::get('/t/{notification}/t.gif', [MailTrackerController::class, 'handle'])-
  * Bearer token instead of a session, so CSRF does not apply.
  */
 Route::post('/api/deploy/webhook', \App\Http\Controllers\Api\DeployWebhookController::class)
-    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class])
     ->middleware('throttle:deploy')
     ->name('deploy.webhook');
