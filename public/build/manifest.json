@@ -50,7 +50,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-C8d_XPLB.css",
+    "file": "assets/app-C6FznyLL.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -226,6 +226,12 @@
     "dynamicImports": [
       "resources/js/minecraft/viewer/renderer.js"
     ]
+  },
+  "resources/js/minecraft/portalCalculator.js": {
+    "file": "assets/portalCalculator-DJH6PJGe.js",
+    "name": "portalCalculator",
+    "src": "resources/js/minecraft/portalCalculator.js",
+    "isEntry": true
   },
   "resources/js/minecraft/viewer/renderer.js": {
     "file": "assets/renderer-BpJPjPDn.js",

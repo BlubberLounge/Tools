@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\DartGameController;
 use App\Http\Controllers\Api\v1\DartThrowController;
 use App\Http\Controllers\Api\v1\DartExpectationDataController;
 use App\Http\Controllers\Api\v1\MinecraftController;
+use App\Http\Controllers\Api\v1\MinecraftPortalController;
 use App\Http\Controllers\Api\v1\NotificationController;
 use App\Http\Controllers\Api\v1\TimetableController;
 use App\Http\Controllers\Api\v1\UserTimetableController;
@@ -133,5 +134,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
             Route::get('/{version}', [MinecraftController::class, 'chainVersion'])
                 ->where('version', '[0-9.]+')
                 ->name('version');
+        });
+
+    // route: /minecraft/portals/*
+    // name: minecraft.portals.*
+    Route::prefix('minecraft')->name('api.minecraft.')
+        ->middleware(['permission:view.minecraft.portal.calculator', 'throttle:60,1'])
+        ->group(function () {
+            Route::apiResource('portals', MinecraftPortalController::class)
+                ->only(['index', 'store', 'update', 'destroy'])
+                ->where(['portal' => '[0-9]+']);
         });
 });

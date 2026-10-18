@@ -92,4 +92,15 @@ class MinecraftController extends Controller
 
         return view('minecraft.farm-viewer', $data);
     }
+
+    /**
+     * Nether portal calculator. The page loads the saved portals from
+     * /api/v1/minecraft/portals.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showPortalCalculator()
+    {
+        return view('minecraft.portal-calculator');
+    }
 }

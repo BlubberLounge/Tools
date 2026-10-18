@@ -102,6 +102,12 @@ Breadcrumbs::for('minecraft.farm-viewer', function (BreadcrumbTrail $trail)
     $trail->push(__('3D farm viewer'), route('minecraft.farm-viewer'));
 });
 
+Breadcrumbs::for('minecraft.portal-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('nether portal calculator'), route('minecraft.portal-calculator'));
+});
+
 /**
  *
  * User

@@ -263,6 +263,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.farm.viewer',
                 'description'   => 'Can use the Minecraft 3D farm viewer',
             ],
+            [
+                'name'          => 'Can Use Minecraft Portal Calculator',
+                'slug'          => 'view.minecraft.portal.calculator',
+                'description'   => 'Can use the Minecraft nether portal calculator and save portals',
+            ],
         ];
     }
 }

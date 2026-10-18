@@ -53,6 +53,14 @@ return [
             'route' => 'minecraft.farm-viewer',
             'permission' => 'view.minecraft.farm.viewer',
         ],
+        [
+            'id' => 'portal-calculator',
+            'title' => 'nether portal calculator',
+            'description' => 'Overworld and Nether coordinates, portal links, frame materials and 3D distances.',
+            'icon' => 'fa-solid fa-dungeon',
+            'route' => 'minecraft.portal-calculator',
+            'permission' => 'view.minecraft.portal.calculator',
+        ],
     ],
 
 ];

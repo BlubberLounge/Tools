@@ -104,6 +104,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/farm-viewer', [MinecraftController::class, 'showFarmViewer'])
             ->middleware('permission:view.minecraft.farm.viewer')
             ->name('farm-viewer');
+        Route::get('/portal-calculator', [MinecraftController::class, 'showPortalCalculator'])
+            ->middleware('permission:view.minecraft.portal.calculator')
+            ->name('portal-calculator');
     });
 
     // route: /appointment/*
