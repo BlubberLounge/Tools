@@ -22,8 +22,8 @@
       "__commonjsHelpers-CqkleIqs.js"
     ]
   },
-  "_plotly-BuoUn_6p.js": {
-    "file": "assets/plotly-BuoUn_6p.js",
+  "_plotly-C7Kkt3RY.js": {
+    "file": "assets/plotly-C7Kkt3RY.js",
     "name": "plotly",
     "imports": [
       "__commonjsHelpers-CqkleIqs.js"
@@ -34,23 +34,23 @@
     "name": "utils"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
-    "file": "assets/fa-brands-400-BfBXV7Mm.woff2",
+    "file": "assets/fa-brands-400-Bs6tcqqs.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
-    "file": "assets/fa-regular-400-BVHPE7da.woff2",
+    "file": "assets/fa-regular-400-DRN8N0d1.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
-    "file": "assets/fa-solid-900-8GirhLYJ.woff2",
+    "file": "assets/fa-solid-900-IAB4Droh.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2": {
-    "file": "assets/fa-v4compatibility-DnhYSyY-.woff2",
+    "file": "assets/fa-v4compatibility-CErXDOsT.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-D5cPmv2g.css",
+    "file": "assets/app-C8d_XPLB.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -71,7 +71,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-5eRRBWsP.js",
+    "file": "assets/app-D42ATWR6.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -92,7 +92,7 @@
     "isEntry": true
   },
   "resources/js/dart/dartIndex.js": {
-    "file": "assets/dartIndex-Xf7kq-nH.js",
+    "file": "assets/dartIndex-s0KXmuQG.js",
     "name": "dartIndex",
     "src": "resources/js/dart/dartIndex.js",
     "isEntry": true,
@@ -105,12 +105,12 @@
     ]
   },
   "resources/js/dart/dartInfo.js": {
-    "file": "assets/dartInfo-CwjWRPrs.js",
+    "file": "assets/dartInfo-BqXSBFzA.js",
     "name": "dartInfo",
     "src": "resources/js/dart/dartInfo.js",
     "isEntry": true,
     "imports": [
-      "_plotly-BuoUn_6p.js",
+      "_plotly-C7Kkt3RY.js",
       "_dartboard-5OMmFi3g.js",
       "_dartCalculator-D2kpludo.js",
       "__commonjsHelpers-CqkleIqs.js",
@@ -118,13 +118,13 @@
     ]
   },
   "resources/js/dart/dartPlayground.js": {
-    "file": "assets/dartPlayground-i4e1JTz0.js",
+    "file": "assets/dartPlayground-MdEtFNTM.js",
     "name": "dartPlayground",
     "src": "resources/js/dart/dartPlayground.js",
     "isEntry": true,
     "imports": [
       "_heatmap-L35ZS6ea.js",
-      "_plotly-BuoUn_6p.js",
+      "_plotly-C7Kkt3RY.js",
       "_utils-DmpZVvjm.js",
       "_dartboard-5OMmFi3g.js",
       "_dartCalculator-D2kpludo.js",
@@ -237,12 +237,12 @@
     ]
   },
   "resources/js/moving-average.js": {
-    "file": "assets/moving-average-B7gtVYto.js",
+    "file": "assets/moving-average-CZDQGHSX.js",
     "name": "moving-average",
     "src": "resources/js/moving-average.js",
     "isEntry": true,
     "imports": [
-      "_plotly-BuoUn_6p.js",
+      "_plotly-C7Kkt3RY.js",
       "__commonjsHelpers-CqkleIqs.js"
     ]
   },
@@ -253,7 +253,7 @@
     "isEntry": true
   },
   "resources/js/simApp.js": {
-    "file": "assets/simApp-Bj1mYDnO.js",
+    "file": "assets/simApp-Bv0vEbg8.js",
     "name": "simApp",
     "src": "resources/js/simApp.js",
     "isEntry": true,
@@ -262,12 +262,12 @@
     ]
   },
   "resources/js/user-profilepicture.js": {
-    "file": "assets/user-profilepicture-DYQQa4me.js",
+    "file": "assets/user-profilepicture-4Scscxk2.js",
     "name": "user-profilepicture",
     "src": "resources/js/user-profilepicture.js",
     "isEntry": true,
     "css": [
-      "assets/user-profilepicture-BuvTG44M.css"
+      "assets/user-profilepicture-CG727uc-.css"
     ]
   },
   "resources/sass/dart.scss": {
