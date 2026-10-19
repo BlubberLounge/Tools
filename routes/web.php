@@ -125,6 +125,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/circle-generator', [MinecraftController::class, 'showCircleGenerator'])
             ->middleware('permission:view.minecraft.circle.generator')
             ->name('circle-generator');
+        Route::get('/slime-finder', [MinecraftController::class, 'showSlimeFinder'])
+            ->middleware('permission:view.minecraft.slime.finder')
+            ->name('slime-finder');
     });
 
     // route: /appointment/*

@@ -265,6 +265,12 @@
     "src": "resources/js/minecraft/portalCalculator.js",
     "isEntry": true
   },
+  "resources/js/minecraft/slimeFinder.js": {
+    "file": "assets/slimeFinder-D36VRQAL.js",
+    "name": "slimeFinder",
+    "src": "resources/js/minecraft/slimeFinder.js",
+    "isEntry": true
+  },
   "resources/js/minecraft/smeltCalculator.js": {
     "file": "assets/smeltCalculator-Bj3qV0WE.js",
     "name": "smeltCalculator",

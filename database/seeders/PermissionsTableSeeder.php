@@ -298,6 +298,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.circle.generator',
                 'description'   => 'Can use the Minecraft circle and sphere generator',
             ],
+            [
+                'name'          => 'Can Use Minecraft Slime Chunk Finder',
+                'slug'          => 'view.minecraft.slime.finder',
+                'description'   => 'Can use the Minecraft slime chunk finder',
+            ],
         ];
     }
 }

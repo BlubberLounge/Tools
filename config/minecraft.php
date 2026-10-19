@@ -109,6 +109,14 @@ return [
             'route' => 'minecraft.circle-generator',
             'permission' => 'view.minecraft.circle.generator',
         ],
+        [
+            'id' => 'slime-finder',
+            'title' => 'slime chunk finder',
+            'description' => 'Slime chunks for a world seed and the best AFK spot for a slime farm.',
+            'icon' => 'fa-solid fa-droplet',
+            'route' => 'minecraft.slime-finder',
+            'permission' => 'view.minecraft.slime.finder',
+        ],
     ],
 
 ];

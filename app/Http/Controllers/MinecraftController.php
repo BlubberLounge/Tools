@@ -192,4 +192,15 @@ class MinecraftController extends Controller
     {
         return view('minecraft.circle-generator');
     }
+
+    /**
+     * Slime chunk finder. Works fully in the browser; the seed never
+     * leaves it.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showSlimeFinder()
+    {
+        return view('minecraft.slime-finder');
+    }
 }

@@ -505,5 +505,21 @@
     "Blocks in total": "Blöcke gesamt",
     "Size": "Größe",
     "Row": "Reihe",
-    "Point at a row to see its block runs.": "Zeige auf eine Reihe, um ihre Blockabschnitte zu sehen."
+    "Point at a row to see its block runs.": "Zeige auf eine Reihe, um ihre Blockabschnitte zu sehen.",
+
+    "slime chunk finder": "Slime-Chunk-Finder",
+    "Slime chunks for a world seed and the best AFK spot for a slime farm.": "Slime-Chunks für einen Welt-Seed und der beste AFK-Punkt für eine Slime-Farm.",
+    "Slime chunk finder": "Slime-Chunk-Finder",
+    "Slime chunks for a world seed (Java Edition). Slimes spawn there below Y 40, except in mushroom fields and the deep dark. Get the seed with /seed.": "Slime-Chunks für einen Welt-Seed (Java Edition). Slimes spawnen dort unter Y 40, außer in Pilzfeldern und im Tiefdunkel. Den Seed zeigt /seed.",
+    "Seed": "Seed",
+    "Chunk": "Chunk",
+    "Map radius in chunks": "Kartenradius in Chunks",
+    "AFK spot": "AFK-Punkt",
+    "slime chunks 24 to 128 blocks from your position.": "Slime-Chunks 24 bis 128 Blöcke von deiner Position entfernt.",
+    "Best spot on the map (orange)": "Bester Punkt auf der Karte (orange)",
+    "slime chunks": "Slime-Chunks",
+    "Nearest slime chunks": "Nächste Slime-Chunks",
+    "Enter a seed to see the slime chunks.": "Gib einen Seed ein, um die Slime-Chunks zu sehen.",
+    "slime chunk": "Slime-Chunk",
+    "Green: slime chunk. Red: your position with the 24 and 128 block spawn ring.": "Grün: Slime-Chunk. Rot: deine Position mit dem Spawnring von 24 und 128 Blöcken."
 }

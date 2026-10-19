@@ -38,6 +38,7 @@ export default defineConfig({
                 'resources/js/minecraft/smeltCalculator.js',
                 'resources/js/minecraft/craftCalculator.js',
                 'resources/js/minecraft/circleGenerator.js',
+                'resources/js/minecraft/slimeFinder.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',
