@@ -132,6 +132,12 @@ Breadcrumbs::for('minecraft.smelt-calculator', function (BreadcrumbTrail $trail)
     $trail->push(__('smelting calculator'), route('minecraft.smelt-calculator'));
 });
 
+Breadcrumbs::for('minecraft.craft-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('crafting calculator'), route('minecraft.craft-calculator'));
+});
+
 /**
  *
  * User

@@ -31,6 +31,7 @@ class CalculatorPagesTest extends TestCase
             'material calculator' => ['material-calculator', ['material-parts', 'material-result']],
             'xp calculator' => ['xp-calculator', ['xp-levels', 'xp-sources', 'xp-extras']],
             'smelting calculator' => ['smelt-calculator', ['smelt-input', 'smelt-result', 'smelt-fuels']],
+            'crafting calculator' => ['craft-calculator', ['craft-input', 'craft-ways', 'craft-steps']],
         ];
     }
 
@@ -74,5 +75,21 @@ class CalculatorPagesTest extends TestCase
         $this->actingAs($this->user('unverified'))
             ->get(route('minecraft.'.$id))
             ->assertForbidden();
+    }
+
+    public function test_crafting_calculator_gets_recipes_and_default_ways(): void
+    {
+        $response = $this->actingAs($this->user())->get(route('minecraft.craft-calculator'));
+        $this->assertSame(1, preg_match('#<script type="application/json" id="craft-calculator-config">(.*?)</script>#s', $response->getContent(), $m));
+        $config = json_decode(trim($m[1]), true);
+
+        $ids = array_column($config['recipes'], 'id');
+        $this->assertContains('stick_from_bamboo', $ids);
+        $this->assertNotContains('trading', array_column($config['recipes'], 'type'));
+
+        // sticks from planks need the fewest raw items; every default is a listed recipe or 'source'
+        $this->assertSame('stick', $config['choices']['stick']);
+        foreach ($config['choices'] as $choice)
+            $this->assertTrue($choice === 'source' || in_array($choice, $ids, true), $choice);
     }
 }

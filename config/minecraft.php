@@ -93,6 +93,14 @@ return [
             'route' => 'minecraft.smelt-calculator',
             'permission' => 'view.minecraft.smelt.calculator',
         ],
+        [
+            'id' => 'craft-calculator',
+            'title' => 'crafting calculator',
+            'description' => 'Crafts and raw materials for any amount of an item, with every way compared.',
+            'icon' => 'fa-solid fa-hammer',
+            'route' => 'minecraft.craft-calculator',
+            'permission' => 'view.minecraft.craft.calculator',
+        ],
     ],
 
 ];

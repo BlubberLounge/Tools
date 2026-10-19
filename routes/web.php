@@ -119,6 +119,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/smelt-calculator', [MinecraftController::class, 'showSmeltCalculator'])
             ->middleware('permission:view.minecraft.smelt.calculator')
             ->name('smelt-calculator');
+        Route::get('/craft-calculator', [MinecraftController::class, 'showCraftCalculator'])
+            ->middleware('permission:view.minecraft.craft.calculator')
+            ->name('craft-calculator');
     });
 
     // route: /appointment/*

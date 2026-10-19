@@ -467,5 +467,25 @@
     "Needed": "Benötigt",
     "Blast furnaces and smokers cook twice as fast and burn fuel twice as fast, so the fuel per item is the same. Each furnace needs whole fuel items for its own share.": "Schmelz- und Räucheröfen garen doppelt so schnell und verbrennen Brennstoff doppelt so schnell, der Brennstoff pro Item bleibt also gleich. Jeder Ofen braucht ganze Brennstoff-Items für seinen Anteil.",
     "Left over": "Übrig",
-    "smelts": "Schmelzvorgänge"
+    "smelts": "Schmelzvorgänge",
+
+    "crafting calculator": "Crafting-Rechner",
+    "Crafts and raw materials for any amount of an item, with every way compared.": "Crafts und Rohstoffe für beliebige Mengen eines Items, mit Vergleich aller Wege.",
+    "Crafting calculator": "Crafting-Rechner",
+    "Crafts and raw materials for any amount of an item. Switch any step to another recipe and compare the ways to make it.": "Crafts und Rohstoffe für beliebige Mengen eines Items. Jeder Schritt lässt sich auf ein anderes Rezept umstellen, die Wege werden verglichen.",
+    "recipes of the farm chain planner": "Rezepte des Farm-Ketten-Planers",
+    "Gather / farm": "Sammeln / farmen",
+    "furnace": "Ofen",
+    "blast furnace": "Schmelzofen",
+    "smoker": "Räucherofen",
+    "Default ways": "Standardwege",
+    "Ways to make it": "Wege zur Herstellung",
+    "Fewest raw items first, with the ways chosen for the other steps.": "Wenigste Rohstoffe zuerst, mit den gewählten Wegen der übrigen Schritte.",
+    "Raw materials": "Rohstoffe",
+    "Way": "Weg",
+    "furnace operations": "Schmelzvorgänge",
+    "These ways loop back to themselves, so the item is gathered instead:": "Diese Wege führen im Kreis, das Item wird deshalb gesammelt:",
+    "Crafts": "Crafts",
+    "Made": "Hergestellt",
+    "Steps are in crafting order: start at the top. Only the recipes the farm chain planner needs are included; where any planks or logs work, oak stands for all of them.": "Die Schritte stehen in Crafting-Reihenfolge: oben anfangen. Enthalten sind nur die Rezepte, die der Farm-Ketten-Planer braucht; wo beliebige Bretter oder Stämme gehen, steht Eiche für alle."
 }

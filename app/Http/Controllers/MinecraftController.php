@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\MinecraftController as MinecraftApiController;
 use App\Minecraft\FarmCatalog;
 use App\Minecraft\FarmModels;
 use App\Minecraft\ToolRegistry;
+use App\Minecraft\ChainPlanner;
 use App\Minecraft\RecipeData;
 
 class MinecraftController extends Controller
@@ -149,5 +150,36 @@ class MinecraftController extends Controller
         $recipes = RecipeData::load(RecipeData::versions()[0]);
 
         return view('minecraft.smelt-calculator', ['fuels' => $recipes->meta()['fuels']]);
+    }
+
+    /**
+     * Crafting calculator. Recipes and default ways come from the newest
+     * recipe data file (villager trades left out).
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showCraftCalculator()
+    {
+        $version = RecipeData::versions()[0];
+        $recipes = RecipeData::load($version);
+        $meta = $recipes->meta();
+
+        $list = array_values(array_filter($recipes->recipes(), fn (array $recipe) => $recipe['type'] !== 'trading'));
+        $ids = array_column($list, 'id');
+
+        // default ways of the chain planner; a trade becomes 'gather'
+        $planner = new ChainPlanner($recipes, FarmCatalog::load($version));
+        $choices = array_map(
+            fn (string $choice) => in_array($choice, $ids, true) ? $choice : ChainPlanner::SOURCE,
+            $planner->defaultChoices($meta['defaults']['fuel'])
+        );
+
+        return view('minecraft.craft-calculator', [
+            'items' => $meta['items'],
+            'recipes' => $list,
+            'choices' => $choices,
+            'fuels' => $meta['fuels'],
+            'versionName' => $recipes->name(),
+        ]);
     }
 }

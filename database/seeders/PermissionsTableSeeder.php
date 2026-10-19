@@ -288,6 +288,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.smelt.calculator',
                 'description'   => 'Can use the Minecraft smelting and fuel calculator',
             ],
+            [
+                'name'          => 'Can Use Minecraft Crafting Calculator',
+                'slug'          => 'view.minecraft.craft.calculator',
+                'description'   => 'Can use the Minecraft crafting calculator',
+            ],
         ];
     }
 }

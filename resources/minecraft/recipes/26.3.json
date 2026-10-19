@@ -91,6 +91,14 @@
             "name": "Bamboo"
         },
         {
+            "id": "bamboo_block",
+            "name": "Block of Bamboo"
+        },
+        {
+            "id": "bamboo_planks",
+            "name": "Bamboo Planks"
+        },
+        {
             "id": "barrel",
             "name": "Barrel"
         },
@@ -590,6 +598,62 @@
             "inputs": [
                 {
                     "item": "oak_planks",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "stick_from_bamboo",
+            "type": "crafting",
+            "output": {
+                "item": "stick",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "bamboo",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "id": "bamboo_block",
+            "type": "crafting",
+            "output": {
+                "item": "bamboo_block",
+                "count": 1
+            },
+            "inputs": [
+                {
+                    "item": "bamboo",
+                    "count": 9
+                }
+            ]
+        },
+        {
+            "id": "bamboo_planks",
+            "type": "crafting",
+            "output": {
+                "item": "bamboo_planks",
+                "count": 2
+            },
+            "inputs": [
+                {
+                    "item": "bamboo_block",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "id": "stick_from_bamboo_planks",
+            "type": "crafting",
+            "output": {
+                "item": "stick",
+                "count": 4
+            },
+            "inputs": [
+                {
+                    "item": "bamboo_planks",
                     "count": 2
                 }
             ]
