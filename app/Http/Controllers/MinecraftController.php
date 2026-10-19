@@ -114,4 +114,15 @@ class MinecraftController extends Controller
     {
         return view('minecraft.stack-calculator');
     }
+
+    /**
+     * Material calculator for boxes, rooms, walls and frames. Works fully
+     * in the browser.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showMaterialCalculator()
+    {
+        return view('minecraft.material-calculator');
+    }
 }

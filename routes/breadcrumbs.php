@@ -114,6 +114,12 @@ Breadcrumbs::for('minecraft.stack-calculator', function (BreadcrumbTrail $trail)
     $trail->push(__('stack calculator'), route('minecraft.stack-calculator'));
 });
 
+Breadcrumbs::for('minecraft.material-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('material calculator'), route('minecraft.material-calculator'));
+});
+
 /**
  *
  * User

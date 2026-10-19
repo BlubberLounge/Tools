@@ -377,5 +377,21 @@
     "Items per unit": "Items pro Einheit",
     "Amount": "Menge",
     "Use as input": "Als Eingabe übernehmen",
-    "A full shulker box takes one slot. Player inventory = 36 slots without armour and offhand.": "Eine volle Shulkerkiste belegt einen Slot. Spielerinventar = 36 Slots ohne Rüstung und Zweithand."
+    "A full shulker box takes one slot. Player inventory = 36 slots without armour and offhand.": "Eine volle Shulkerkiste belegt einen Slot. Spielerinventar = 36 Slots ohne Rüstung und Zweithand.",
+
+    "material calculator": "Material-Rechner",
+    "Blocks for boxes, rooms, walls and frames, in stacks and shulker boxes.": "Blöcke für Quader, Räume, Wände und Rahmen, in Stacks und Shulkerkisten.",
+    "Material calculator": "Material-Rechner",
+    "Blocks for boxes, rooms, walls and frames, split into stacks, chests and shulker boxes. Add several parts to plan a whole build.": "Blöcke für Quader, Räume, Wände und Rahmen, aufgeteilt in Stacks, Kisten und Shulkerkisten. Mehrere Teile ergeben einen ganzen Bau.",
+    "Solid": "Voll",
+    "Hollow (walls, floor and ceiling)": "Hohl (Wände, Boden und Decke)",
+    "Walls only": "Nur Wände",
+    "Walls and floor": "Wände und Boden",
+    "Frame (edges only)": "Rahmen (nur Kanten)",
+    "Part": "Teil",
+    "Length": "Länge",
+    "Wall thickness": "Wandstärke",
+    "Blocks": "Blöcke",
+    "Inside": "Innenraum",
+    "Add part": "Teil hinzufügen"
 }

@@ -110,6 +110,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/stack-calculator', [MinecraftController::class, 'showStackCalculator'])
             ->middleware('permission:view.minecraft.stack.calculator')
             ->name('stack-calculator');
+        Route::get('/material-calculator', [MinecraftController::class, 'showMaterialCalculator'])
+            ->middleware('permission:view.minecraft.material.calculator')
+            ->name('material-calculator');
     });
 
     // route: /appointment/*

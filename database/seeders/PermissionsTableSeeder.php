@@ -273,6 +273,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.stack.calculator',
                 'description'   => 'Can use the Minecraft stack calculator',
             ],
+            [
+                'name'          => 'Can Use Minecraft Material Calculator',
+                'slug'          => 'view.minecraft.material.calculator',
+                'description'   => 'Can use the Minecraft material calculator',
+            ],
         ];
     }
 }

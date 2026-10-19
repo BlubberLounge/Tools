@@ -29,6 +29,10 @@
       "__commonjsHelpers-CqkleIqs.js"
     ]
   },
+  "_stackMath-DP_LM8PH.js": {
+    "file": "assets/stackMath-DP_LM8PH.js",
+    "name": "stackMath"
+  },
   "_utils-DmpZVvjm.js": {
     "file": "assets/utils-DmpZVvjm.js",
     "name": "utils"
@@ -227,6 +231,15 @@
       "resources/js/minecraft/viewer/renderer.js"
     ]
   },
+  "resources/js/minecraft/materialCalculator.js": {
+    "file": "assets/materialCalculator-BPzQCOnm.js",
+    "name": "materialCalculator",
+    "src": "resources/js/minecraft/materialCalculator.js",
+    "isEntry": true,
+    "imports": [
+      "_stackMath-DP_LM8PH.js"
+    ]
+  },
   "resources/js/minecraft/portalCalculator.js": {
     "file": "assets/portalCalculator-DJH6PJGe.js",
     "name": "portalCalculator",
@@ -234,10 +247,13 @@
     "isEntry": true
   },
   "resources/js/minecraft/stackCalculator.js": {
-    "file": "assets/stackCalculator-BLj-SIvz.js",
+    "file": "assets/stackCalculator-B3kmUC88.js",
     "name": "stackCalculator",
     "src": "resources/js/minecraft/stackCalculator.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_stackMath-DP_LM8PH.js"
+    ]
   },
   "resources/js/minecraft/viewer/renderer.js": {
     "file": "assets/renderer-BpJPjPDn.js",

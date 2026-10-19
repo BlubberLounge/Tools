@@ -69,6 +69,14 @@ return [
             'route' => 'minecraft.stack-calculator',
             'permission' => 'view.minecraft.stack.calculator',
         ],
+        [
+            'id' => 'material-calculator',
+            'title' => 'material calculator',
+            'description' => 'Blocks for boxes, rooms, walls and frames, in stacks and shulker boxes.',
+            'icon' => 'fa-solid fa-cube',
+            'route' => 'minecraft.material-calculator',
+            'permission' => 'view.minecraft.material.calculator',
+        ],
     ],
 
 ];
