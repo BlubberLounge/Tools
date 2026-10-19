@@ -57,4 +57,15 @@ class DeployWebhookTest extends TestCase
 
         $this->assertContains(PreventRequestForgery::class, $route->excludedMiddleware());
     }
+
+    public function test_without_a_configured_binary_the_webhook_picks_one(): void
+    {
+        config(['deploy.php_binary' => null]);
+        Process::fake(['*' => Process::result('done')]);
+
+        $this->withToken('test-deploy-secret')->postJson(self::URL)->assertOk();
+
+        Process::assertRan(fn ($process) => is_string($process->command[0]) && $process->command[0] !== ''
+            && $process->command[1] === 'artisan');
+    }
 }

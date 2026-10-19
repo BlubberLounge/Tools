@@ -74,7 +74,7 @@ class DeployWebhookController extends Controller
         // Separate process: this request still has the old release's classes
         // loaded, so running migrations in-process mixes old and new code.
         $result = Process::path(base_path())->timeout(280)->run([
-            config('deploy.php_binary'), 'artisan', 'app:deploy', '--force', '--skip-build',
+            $this->phpBinary(), 'artisan', 'app:deploy', '--force', '--skip-build',
         ]);
         $exitCode = $result->exitCode();
 
@@ -85,6 +85,21 @@ class DeployWebhookController extends Controller
             'success' => $exitCode === 0,
             'log' => $log,
         ], $exitCode === 0 ? 200 : 500);
+    }
+
+    /**
+     * PHP CLI for app:deploy. The web process may run a CGI build (IONOS:
+     * /usr/lib/cgi-bin/php8.5), so prefer the CLI of the same version.
+     */
+    private function phpBinary(): string
+    {
+        if ($configured = config('deploy.php_binary')) {
+            return $configured;
+        }
+
+        $cli = '/usr/bin/php'.PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'-cli';
+
+        return is_executable($cli) ? $cli : PHP_BINARY;
     }
 
     private function extractRelease(string $zipPath): int
