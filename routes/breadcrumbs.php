@@ -126,6 +126,12 @@ Breadcrumbs::for('minecraft.xp-calculator', function (BreadcrumbTrail $trail)
     $trail->push(__('XP calculator'), route('minecraft.xp-calculator'));
 });
 
+Breadcrumbs::for('minecraft.smelt-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('smelting calculator'), route('minecraft.smelt-calculator'));
+});
+
 /**
  *
  * User

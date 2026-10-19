@@ -116,6 +116,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/xp-calculator', [MinecraftController::class, 'showXpCalculator'])
             ->middleware('permission:view.minecraft.xp.calculator')
             ->name('xp-calculator');
+        Route::get('/smelt-calculator', [MinecraftController::class, 'showSmeltCalculator'])
+            ->middleware('permission:view.minecraft.smelt.calculator')
+            ->name('smelt-calculator');
     });
 
     // route: /appointment/*

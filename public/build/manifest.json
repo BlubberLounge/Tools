@@ -37,6 +37,10 @@
     "file": "assets/utils-DmpZVvjm.js",
     "name": "utils"
   },
+  "_xpMath-DB-RA19W.js": {
+    "file": "assets/xpMath-DB-RA19W.js",
+    "name": "xpMath"
+  },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
     "file": "assets/fa-brands-400-Bs6tcqqs.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
@@ -246,6 +250,16 @@
     "src": "resources/js/minecraft/portalCalculator.js",
     "isEntry": true
   },
+  "resources/js/minecraft/smeltCalculator.js": {
+    "file": "assets/smeltCalculator-Bj3qV0WE.js",
+    "name": "smeltCalculator",
+    "src": "resources/js/minecraft/smeltCalculator.js",
+    "isEntry": true,
+    "imports": [
+      "_xpMath-DB-RA19W.js",
+      "_stackMath-DP_LM8PH.js"
+    ]
+  },
   "resources/js/minecraft/stackCalculator.js": {
     "file": "assets/stackCalculator-B3kmUC88.js",
     "name": "stackCalculator",
@@ -265,10 +279,13 @@
     ]
   },
   "resources/js/minecraft/xpCalculator.js": {
-    "file": "assets/xpCalculator-zEq7ky8l.js",
+    "file": "assets/xpCalculator-DvWkUK2V.js",
     "name": "xpCalculator",
     "src": "resources/js/minecraft/xpCalculator.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_xpMath-DB-RA19W.js"
+    ]
   },
   "resources/js/moving-average.js": {
     "file": "assets/moving-average-CZDQGHSX.js",

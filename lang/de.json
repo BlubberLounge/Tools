@@ -448,5 +448,24 @@
     "Mending: points to repair": "Reparatur: Punkte zum Reparieren",
     "Durability": "Haltbarkeit",
     "Dropped on death at level": "Beim Tod fallengelassen auf Level",
-    "7 points per level, at most 100.": "7 Punkte pro Level, höchstens 100."
+    "7 points per level, at most 100.": "7 Punkte pro Level, höchstens 100.",
+
+    "smelting calculator": "Schmelz-Rechner",
+    "Time, fuel and XP for a furnace array, with every fuel compared.": "Zeit, Brennstoff und XP für eine Ofenreihe, mit Vergleich aller Brennstoffe.",
+    "Smelting calculator": "Schmelz-Rechner",
+    "Time, fuel and XP to smelt a batch in a furnace array, and how much of every fuel that takes.": "Zeit, Brennstoff und XP, um eine Ladung in einer Ofenreihe zu schmelzen, und wie viel von jedem Brennstoff das braucht.",
+    "Furnace (10 s)": "Ofen (10 s)",
+    "Blast furnace / smoker (5 s)": "Schmelzofen / Räucherofen (5 s)",
+    "items": "Items",
+    "Number of furnaces": "Anzahl Öfen",
+    "Smelted item (for XP)": "Geschmolzenes Item (für XP)",
+    "Time": "Zeit",
+    "Throughput": "Durchsatz",
+    "Hoppers needed to feed it": "Trichter nötig zum Befüllen",
+    "Every fuel": "Alle Brennstoffe",
+    "Items each": "Items pro Stück",
+    "Needed": "Benötigt",
+    "Blast furnaces and smokers cook twice as fast and burn fuel twice as fast, so the fuel per item is the same. Each furnace needs whole fuel items for its own share.": "Schmelz- und Räucheröfen garen doppelt so schnell und verbrennen Brennstoff doppelt so schnell, der Brennstoff pro Item bleibt also gleich. Jeder Ofen braucht ganze Brennstoff-Items für seinen Anteil.",
+    "Left over": "Übrig",
+    "smelts": "Schmelzvorgänge"
 }

@@ -85,6 +85,14 @@ return [
             'route' => 'minecraft.xp-calculator',
             'permission' => 'view.minecraft.xp.calculator',
         ],
+        [
+            'id' => 'smelt-calculator',
+            'title' => 'smelting calculator',
+            'description' => 'Time, fuel and XP for a furnace array, with every fuel compared.',
+            'icon' => 'fa-solid fa-fire',
+            'route' => 'minecraft.smelt-calculator',
+            'permission' => 'view.minecraft.smelt.calculator',
+        ],
     ],
 
 ];

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\MinecraftController as MinecraftApiController;
 use App\Minecraft\FarmCatalog;
 use App\Minecraft\FarmModels;
 use App\Minecraft\ToolRegistry;
+use App\Minecraft\RecipeData;
 
 class MinecraftController extends Controller
 {
@@ -136,5 +137,17 @@ class MinecraftController extends Controller
         $data = EnchantmentData::load(EnchantmentData::latestVersion());
 
         return view('minecraft.xp-calculator', ['mobs' => $data->xpSources()['mobs']]);
+    }
+
+    /**
+     * Smelting and fuel calculator. Fuels come from the newest recipe data file.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showSmeltCalculator()
+    {
+        $recipes = RecipeData::load(RecipeData::versions()[0]);
+
+        return view('minecraft.smelt-calculator', ['fuels' => $recipes->meta()['fuels']]);
     }
 }

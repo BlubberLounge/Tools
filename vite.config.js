@@ -35,6 +35,7 @@ export default defineConfig({
                 'resources/js/minecraft/stackCalculator.js',
                 'resources/js/minecraft/materialCalculator.js',
                 'resources/js/minecraft/xpCalculator.js',
+                'resources/js/minecraft/smeltCalculator.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',
