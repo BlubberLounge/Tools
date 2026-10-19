@@ -101,6 +101,14 @@ return [
             'route' => 'minecraft.craft-calculator',
             'permission' => 'view.minecraft.craft.calculator',
         ],
+        [
+            'id' => 'circle-generator',
+            'title' => 'circle and sphere generator',
+            'description' => 'Block patterns for circles, ellipses, spheres and domes, layer by layer.',
+            'icon' => 'fa-regular fa-circle',
+            'route' => 'minecraft.circle-generator',
+            'permission' => 'view.minecraft.circle.generator',
+        ],
     ],
 
 ];

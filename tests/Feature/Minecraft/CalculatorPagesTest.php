@@ -32,6 +32,7 @@ class CalculatorPagesTest extends TestCase
             'xp calculator' => ['xp-calculator', ['xp-levels', 'xp-sources', 'xp-extras']],
             'smelting calculator' => ['smelt-calculator', ['smelt-input', 'smelt-result', 'smelt-fuels']],
             'crafting calculator' => ['craft-calculator', ['craft-input', 'craft-ways', 'craft-steps']],
+            'circle generator' => ['circle-generator', ['circle-settings', 'circle-canvas']],
         ];
     }
 

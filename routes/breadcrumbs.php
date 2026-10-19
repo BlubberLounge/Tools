@@ -138,6 +138,12 @@ Breadcrumbs::for('minecraft.craft-calculator', function (BreadcrumbTrail $trail)
     $trail->push(__('crafting calculator'), route('minecraft.craft-calculator'));
 });
 
+Breadcrumbs::for('minecraft.circle-generator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('circle and sphere generator'), route('minecraft.circle-generator'));
+});
+
 /**
  *
  * User

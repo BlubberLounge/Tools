@@ -182,4 +182,14 @@ class MinecraftController extends Controller
             'versionName' => $recipes->name(),
         ]);
     }
+
+    /**
+     * Circle and sphere generator. Works fully in the browser.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showCircleGenerator()
+    {
+        return view('minecraft.circle-generator');
+    }
 }

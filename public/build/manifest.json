@@ -58,7 +58,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-XInf51xP.css",
+    "file": "assets/app-BREx0Rdj.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -219,6 +219,15 @@
     "name": "chainPlanner",
     "src": "resources/js/minecraft/chainPlanner.js",
     "isEntry": true
+  },
+  "resources/js/minecraft/circleGenerator.js": {
+    "file": "assets/circleGenerator-CQIUT8gL.js",
+    "name": "circleGenerator",
+    "src": "resources/js/minecraft/circleGenerator.js",
+    "isEntry": true,
+    "imports": [
+      "_stackMath-DP_LM8PH.js"
+    ]
   },
   "resources/js/minecraft/craftCalculator.js": {
     "file": "assets/craftCalculator---JIO9lF.js",

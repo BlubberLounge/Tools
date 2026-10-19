@@ -122,6 +122,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/craft-calculator', [MinecraftController::class, 'showCraftCalculator'])
             ->middleware('permission:view.minecraft.craft.calculator')
             ->name('craft-calculator');
+        Route::get('/circle-generator', [MinecraftController::class, 'showCircleGenerator'])
+            ->middleware('permission:view.minecraft.circle.generator')
+            ->name('circle-generator');
     });
 
     // route: /appointment/*

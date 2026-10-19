@@ -293,6 +293,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.craft.calculator',
                 'description'   => 'Can use the Minecraft crafting calculator',
             ],
+            [
+                'name'          => 'Can Use Minecraft Circle Generator',
+                'slug'          => 'view.minecraft.circle.generator',
+                'description'   => 'Can use the Minecraft circle and sphere generator',
+            ],
         ];
     }
 }

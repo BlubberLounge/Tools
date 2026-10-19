@@ -487,5 +487,23 @@
     "These ways loop back to themselves, so the item is gathered instead:": "Diese Wege führen im Kreis, das Item wird deshalb gesammelt:",
     "Crafts": "Crafts",
     "Made": "Hergestellt",
-    "Steps are in crafting order: start at the top. Only the recipes the farm chain planner needs are included; where any planks or logs work, oak stands for all of them.": "Die Schritte stehen in Crafting-Reihenfolge: oben anfangen. Enthalten sind nur die Rezepte, die der Farm-Ketten-Planer braucht; wo beliebige Bretter oder Stämme gehen, steht Eiche für alle."
+    "Steps are in crafting order: start at the top. Only the recipes the farm chain planner needs are included; where any planks or logs work, oak stands for all of them.": "Die Schritte stehen in Crafting-Reihenfolge: oben anfangen. Enthalten sind nur die Rezepte, die der Farm-Ketten-Planer braucht; wo beliebige Bretter oder Stämme gehen, steht Eiche für alle.",
+
+    "circle and sphere generator": "Kreis- und Kugel-Generator",
+    "Block patterns for circles, ellipses, spheres and domes, layer by layer.": "Blockmuster für Kreise, Ellipsen, Kugeln und Kuppeln, Ebene für Ebene.",
+    "Circle and sphere generator": "Kreis- und Kugel-Generator",
+    "Block patterns for circles, ellipses, spheres and domes, layer by layer, with block counts. The red lines mark the centre.": "Blockmuster für Kreise, Ellipsen, Kugeln und Kuppeln, Ebene für Ebene, mit Blockanzahl. Die roten Linien markieren die Mitte.",
+    "Circle": "Kreis",
+    "Ellipse": "Ellipse",
+    "Sphere": "Kugel",
+    "Dome": "Kuppel",
+    "Shape": "Form",
+    "Diameter": "Durchmesser",
+    "Depth": "Tiefe",
+    "Hollow (outline only)": "Hohl (nur Umriss)",
+    "bottom first": "von unten",
+    "Blocks in total": "Blöcke gesamt",
+    "Size": "Größe",
+    "Row": "Reihe",
+    "Point at a row to see its block runs.": "Zeige auf eine Reihe, um ihre Blockabschnitte zu sehen."
 }

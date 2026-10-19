@@ -37,6 +37,7 @@ export default defineConfig({
                 'resources/js/minecraft/xpCalculator.js',
                 'resources/js/minecraft/smeltCalculator.js',
                 'resources/js/minecraft/craftCalculator.js',
+                'resources/js/minecraft/circleGenerator.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',
