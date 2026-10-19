@@ -303,6 +303,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.slime.finder',
                 'description'   => 'Can use the Minecraft slime chunk finder',
             ],
+            [
+                'name'          => 'Can Use Minecraft Mob Farm Rates',
+                'slug'          => 'view.minecraft.mob.farm',
+                'description'   => 'Can use the Minecraft mob farm rate calculator',
+            ],
         ];
     }
 }

@@ -150,6 +150,12 @@ Breadcrumbs::for('minecraft.slime-finder', function (BreadcrumbTrail $trail)
     $trail->push(__('slime chunk finder'), route('minecraft.slime-finder'));
 });
 
+Breadcrumbs::for('minecraft.mob-farm', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('mob farm rates'), route('minecraft.mob-farm'));
+});
+
 /**
  *
  * User

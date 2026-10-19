@@ -34,6 +34,7 @@ class CalculatorPagesTest extends TestCase
             'crafting calculator' => ['craft-calculator', ['craft-input', 'craft-ways', 'craft-steps']],
             'circle generator' => ['circle-generator', ['circle-settings', 'circle-canvas']],
             'slime chunk finder' => ['slime-finder', ['slime-settings', 'slime-results', 'slime-map']],
+            'mob farm rates' => ['mob-farm', ['mob-input', 'mob-result']],
         ];
     }
 

@@ -117,6 +117,14 @@ return [
             'route' => 'minecraft.slime-finder',
             'permission' => 'view.minecraft.slime.finder',
         ],
+        [
+            'id' => 'mob-farm',
+            'title' => 'mob farm rates',
+            'description' => 'Drops, storage and XP per hour of a mob farm, with and without Looting.',
+            'icon' => 'fa-solid fa-skull',
+            'route' => 'minecraft.mob-farm',
+            'permission' => 'view.minecraft.mob.farm',
+        ],
     ],
 
 ];

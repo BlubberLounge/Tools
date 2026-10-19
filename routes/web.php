@@ -128,6 +128,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/slime-finder', [MinecraftController::class, 'showSlimeFinder'])
             ->middleware('permission:view.minecraft.slime.finder')
             ->name('slime-finder');
+        Route::get('/mob-farm', [MinecraftController::class, 'showMobFarm'])
+            ->middleware('permission:view.minecraft.mob.farm')
+            ->name('mob-farm');
     });
 
     // route: /appointment/*

@@ -37,8 +37,8 @@
     "file": "assets/utils-DmpZVvjm.js",
     "name": "utils"
   },
-  "_xpMath-DB-RA19W.js": {
-    "file": "assets/xpMath-DB-RA19W.js",
+  "_xpMath-DcifTO8_.js": {
+    "file": "assets/xpMath-DcifTO8_.js",
     "name": "xpMath"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
@@ -259,6 +259,15 @@
       "_stackMath-DP_LM8PH.js"
     ]
   },
+  "resources/js/minecraft/mobFarm.js": {
+    "file": "assets/mobFarm-D8dyhV2-.js",
+    "name": "mobFarm",
+    "src": "resources/js/minecraft/mobFarm.js",
+    "isEntry": true,
+    "imports": [
+      "_xpMath-DcifTO8_.js"
+    ]
+  },
   "resources/js/minecraft/portalCalculator.js": {
     "file": "assets/portalCalculator-DJH6PJGe.js",
     "name": "portalCalculator",
@@ -272,12 +281,12 @@
     "isEntry": true
   },
   "resources/js/minecraft/smeltCalculator.js": {
-    "file": "assets/smeltCalculator-Bj3qV0WE.js",
+    "file": "assets/smeltCalculator-JwwGr7s0.js",
     "name": "smeltCalculator",
     "src": "resources/js/minecraft/smeltCalculator.js",
     "isEntry": true,
     "imports": [
-      "_xpMath-DB-RA19W.js",
+      "_xpMath-DcifTO8_.js",
       "_stackMath-DP_LM8PH.js"
     ]
   },
@@ -300,12 +309,12 @@
     ]
   },
   "resources/js/minecraft/xpCalculator.js": {
-    "file": "assets/xpCalculator-DvWkUK2V.js",
+    "file": "assets/xpCalculator-BibyTPjh.js",
     "name": "xpCalculator",
     "src": "resources/js/minecraft/xpCalculator.js",
     "isEntry": true,
     "imports": [
-      "_xpMath-DB-RA19W.js"
+      "_xpMath-DcifTO8_.js"
     ]
   },
   "resources/js/moving-average.js": {

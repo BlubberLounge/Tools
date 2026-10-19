@@ -1,0 +1,942 @@
+{
+    "version": "26.3",
+    "name": "Java Edition 26.3",
+    "updated": "2026-10-19",
+    "sources": [
+        {
+            "title": "Java Edition 26.3 server jar data (loot_table/entities)",
+            "url": "https://www.minecraft.net/en-us/download/server",
+            "retrieved": "2026-10-19"
+        }
+    ],
+    "notes": "Expected drops per kill, computed from the entity loot tables of the official 26.3 server jar. \"auto\" is a kill without a player (no Looting, no player-only drops); \"player\" lists Looting 0 to 3. Not on fire, not killed by a frog, no zombie horse rider. Equipment drops (armour, bows, tridents) are not part of the loot tables and are left out. XP per player kill; animals give 1 to 3 (average 2), slimes and magma cubes XP equal to their size.",
+    "mobs": [
+        {
+            "id": "zombie",
+            "name": "Zombie",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "rotten_flesh",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "potato",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "iron_ingot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "carrot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "husk",
+            "name": "Husk",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "rotten_flesh",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "potato",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "iron_ingot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "carrot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "drowned",
+            "name": "Drowned",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "rotten_flesh",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "copper_ingot",
+                    "auto": 0,
+                    "player": [
+                        0.11,
+                        0.13,
+                        0.15,
+                        0.17
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "zombie_villager",
+            "name": "Zombie Villager",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "rotten_flesh",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "potato",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "iron_ingot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                },
+                {
+                    "item": "carrot",
+                    "auto": 0,
+                    "player": [
+                        0.008333,
+                        0.011667,
+                        0.015,
+                        0.018333
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "zombified_piglin",
+            "name": "Zombified Piglin",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "gold_nugget",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                },
+                {
+                    "item": "rotten_flesh",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                },
+                {
+                    "item": "gold_ingot",
+                    "auto": 0,
+                    "player": [
+                        0.025,
+                        0.035,
+                        0.045,
+                        0.055
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "skeleton",
+            "name": "Skeleton",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "arrow",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "bone",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "stray",
+            "name": "Stray",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "arrow",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "bone",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "tipped_arrow",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        0.75,
+                        0.875,
+                        0.916667
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "bogged",
+            "name": "Bogged",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "arrow",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "bone",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "tipped_arrow",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        0.75,
+                        0.875,
+                        0.916667
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "wither_skeleton",
+            "name": "Wither Skeleton",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "bone",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "coal",
+                    "auto": 0.333333,
+                    "player": [
+                        0.333333,
+                        0.666667,
+                        1.083333,
+                        1.555556
+                    ]
+                },
+                {
+                    "item": "wither_skeleton_skull",
+                    "auto": 0,
+                    "player": [
+                        0.025,
+                        0.035,
+                        0.045,
+                        0.055
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "creeper",
+            "name": "Creeper",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "gunpowder",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "spider",
+            "name": "Spider",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "string",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "spider_eye",
+                    "auto": 0,
+                    "player": [
+                        0.333333,
+                        0.666667,
+                        1.083333,
+                        1.555556
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "cave_spider",
+            "name": "Cave Spider",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "string",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "spider_eye",
+                    "auto": 0,
+                    "player": [
+                        0.333333,
+                        0.666667,
+                        1.083333,
+                        1.555556
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "enderman",
+            "name": "Enderman",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "ender_pearl",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "witch",
+            "name": "Witch",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "redstone",
+                    "auto": 6.0,
+                    "player": [
+                        6.0,
+                        6.5,
+                        7.0,
+                        7.5
+                    ]
+                },
+                {
+                    "item": "stick",
+                    "auto": 0.571429,
+                    "player": [
+                        0.571429,
+                        0.857143,
+                        1.142857,
+                        1.428571
+                    ]
+                },
+                {
+                    "item": "glowstone_dust",
+                    "auto": 0.285714,
+                    "player": [
+                        0.285714,
+                        0.428571,
+                        0.571429,
+                        0.714286
+                    ]
+                },
+                {
+                    "item": "sugar",
+                    "auto": 0.285714,
+                    "player": [
+                        0.285714,
+                        0.428571,
+                        0.571429,
+                        0.714286
+                    ]
+                },
+                {
+                    "item": "glass_bottle",
+                    "auto": 0.285714,
+                    "player": [
+                        0.285714,
+                        0.428571,
+                        0.571429,
+                        0.714286
+                    ]
+                },
+                {
+                    "item": "gunpowder",
+                    "auto": 0.285714,
+                    "player": [
+                        0.285714,
+                        0.428571,
+                        0.571429,
+                        0.714286
+                    ]
+                },
+                {
+                    "item": "spider_eye",
+                    "auto": 0.285714,
+                    "player": [
+                        0.285714,
+                        0.428571,
+                        0.571429,
+                        0.714286
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "blaze",
+            "name": "Blaze",
+            "xp": 10,
+            "drops": [
+                {
+                    "item": "blaze_rod",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "breeze",
+            "name": "Breeze",
+            "xp": 10,
+            "drops": [
+                {
+                    "item": "breeze_rod",
+                    "auto": 0,
+                    "player": [
+                        1.5,
+                        3.0,
+                        4.5,
+                        6.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "slime",
+            "name": "Slime (small)",
+            "xp": 1,
+            "drops": [
+                {
+                    "item": "slime_ball",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "magma_cube",
+            "name": "Magma Cube (medium)",
+            "xp": 2,
+            "drops": [
+                {
+                    "item": "magma_cream",
+                    "auto": 0.25,
+                    "player": [
+                        0.25,
+                        0.5,
+                        0.8125,
+                        1.208333
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "guardian",
+            "name": "Guardian",
+            "xp": 10,
+            "drops": [
+                {
+                    "item": "prismarine_shard",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "cod",
+                    "auto": 0.4,
+                    "player": [
+                        0.415,
+                        0.621,
+                        0.827,
+                        1.033
+                    ]
+                },
+                {
+                    "item": "prismarine_crystals",
+                    "auto": 0.4,
+                    "player": [
+                        0.4,
+                        0.6,
+                        0.8,
+                        1.0
+                    ]
+                },
+                {
+                    "item": "salmon",
+                    "auto": 0,
+                    "player": [
+                        0.00625,
+                        0.00875,
+                        0.01125,
+                        0.01375
+                    ]
+                },
+                {
+                    "item": "pufferfish",
+                    "auto": 0,
+                    "player": [
+                        0.00325,
+                        0.00455,
+                        0.00585,
+                        0.00715
+                    ]
+                },
+                {
+                    "item": "tropical_fish",
+                    "auto": 0,
+                    "player": [
+                        0.0005,
+                        0.0007,
+                        0.0009,
+                        0.0011
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "phantom",
+            "name": "Phantom",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "phantom_membrane",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "shulker",
+            "name": "Shulker",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "shulker_shell",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        0.5625,
+                        0.625,
+                        0.6875
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ghast",
+            "name": "Ghast",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "gunpowder",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "ghast_tear",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "hoglin",
+            "name": "Hoglin",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "porkchop",
+                    "auto": 3.0,
+                    "player": [
+                        3.0,
+                        3.5,
+                        4.0,
+                        4.5
+                    ]
+                },
+                {
+                    "item": "leather",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "vindicator",
+            "name": "Vindicator",
+            "xp": 5,
+            "drops": [
+                {
+                    "item": "emerald",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "evoker",
+            "name": "Evoker",
+            "xp": 10,
+            "drops": [
+                {
+                    "item": "emerald",
+                    "auto": 0,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                },
+                {
+                    "item": "totem_of_undying",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ravager",
+            "name": "Ravager",
+            "xp": 20,
+            "drops": [
+                {
+                    "item": "saddle",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "iron_golem",
+            "name": "Iron Golem",
+            "xp": 0,
+            "drops": [
+                {
+                    "item": "iron_ingot",
+                    "auto": 4.0,
+                    "player": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ]
+                },
+                {
+                    "item": "poppy",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "cow",
+            "name": "Cow",
+            "xp": 2,
+            "drops": [
+                {
+                    "item": "beef",
+                    "auto": 2.0,
+                    "player": [
+                        2.0,
+                        2.5,
+                        3.0,
+                        3.5
+                    ]
+                },
+                {
+                    "item": "leather",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "chicken",
+            "name": "Chicken",
+            "xp": 2,
+            "drops": [
+                {
+                    "item": "feather",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "chicken",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "pig",
+            "name": "Pig",
+            "xp": 2,
+            "drops": [
+                {
+                    "item": "porkchop",
+                    "auto": 2.0,
+                    "player": [
+                        2.0,
+                        2.5,
+                        3.0,
+                        3.5
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "rabbit",
+            "name": "Rabbit",
+            "xp": 2,
+            "drops": [
+                {
+                    "item": "rabbit",
+                    "auto": 1.0,
+                    "player": [
+                        1.0,
+                        1.5,
+                        2.0,
+                        2.5
+                    ]
+                },
+                {
+                    "item": "rabbit_hide",
+                    "auto": 0.5,
+                    "player": [
+                        0.5,
+                        1.0,
+                        1.5,
+                        2.0
+                    ]
+                },
+                {
+                    "item": "rabbit_foot",
+                    "auto": 0,
+                    "player": [
+                        0.1,
+                        0.13,
+                        0.16,
+                        0.19
+                    ]
+                }
+            ]
+        }
+    ]
+}

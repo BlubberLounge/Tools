@@ -203,4 +203,19 @@ class MinecraftController extends Controller
     {
         return view('minecraft.slime-finder');
     }
+
+    /**
+     * Mob farm rates. Drops per kill come from the newest file in
+     * resources/minecraft/mobs (made by scripts/minecraft/mob-drops.py).
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showMobFarm()
+    {
+        $files = glob(resource_path('minecraft/mobs/*.json')) ?: [];
+        usort($files, fn ($a, $b) => version_compare(basename($b, '.json'), basename($a, '.json')));
+        $data = json_decode(file_get_contents($files[0]), true);
+
+        return view('minecraft.mob-farm', ['mobs' => $data['mobs'], 'versionName' => $data['name']]);
+    }
 }

@@ -521,5 +521,24 @@
     "Nearest slime chunks": "Nächste Slime-Chunks",
     "Enter a seed to see the slime chunks.": "Gib einen Seed ein, um die Slime-Chunks zu sehen.",
     "slime chunk": "Slime-Chunk",
-    "Green: slime chunk. Red: your position with the 24 and 128 block spawn ring.": "Grün: Slime-Chunk. Rot: deine Position mit dem Spawnring von 24 und 128 Blöcken."
+    "Green: slime chunk. Red: your position with the 24 and 128 block spawn ring.": "Grün: Slime-Chunk. Rot: deine Position mit dem Spawnring von 24 und 128 Blöcken.",
+
+    "mob farm rates": "Mob-Farm-Raten",
+    "Drops, storage and XP per hour of a mob farm, with and without Looting.": "Drops, Lagerplatz und XP pro Stunde einer Mob-Farm, mit und ohne Plünderung.",
+    "Mob farm rates": "Mob-Farm-Raten",
+    "Drops, storage and XP per hour of a mob farm from its kill rate. Average drops per kill come from the loot tables.": "Drops, Lagerplatz und XP pro Stunde einer Mob-Farm aus ihrer Kill-Rate. Die durchschnittlichen Drops pro Kill stammen aus den Loot-Tables.",
+    "Farm": "Farm",
+    "Mob": "Mob",
+    "Kills": "Kills",
+    "Killed by": "Getötet von",
+    "the farm": "der Farm",
+    "a player": "einem Spieler",
+    "Looting": "Plünderung",
+    "Farm kills (fall, lava, suffocation, entity cramming) get no Looting, no player-only drops and no XP. A player kill counts when the player hit the mob in the last 5 seconds.": "Farm-Kills (Fall, Lava, Ersticken, Entity Cramming) bekommen keine Plünderung, keine Spieler-Drops und keine XP. Als Spieler-Kill zählt es, wenn der Spieler den Mob in den letzten 5 Sekunden getroffen hat.",
+    "Per hour": "Pro Stunde",
+    "slots": "Slots",
+    "Level 0 to 30": "Level 0 bis 30",
+    "Per kill": "Pro Kill",
+    "This mob only drops items when a player kills it.": "Dieser Mob lässt nur Items fallen, wenn ein Spieler ihn tötet.",
+    "Averages per kill. Armour, bows and other equipment a mob carries are not included, nor the extra XP for it.": "Durchschnitt pro Kill. Rüstung, Bögen und andere Ausrüstung des Mobs sind nicht enthalten, ebenso wenig die zusätzlichen XP dafür."
 }
