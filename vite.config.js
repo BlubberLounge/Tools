@@ -34,6 +34,7 @@ export default defineConfig({
                 'resources/js/minecraft/portalCalculator.js',
                 'resources/js/minecraft/stackCalculator.js',
                 'resources/js/minecraft/materialCalculator.js',
+                'resources/js/minecraft/xpCalculator.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',

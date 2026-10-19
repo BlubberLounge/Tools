@@ -77,6 +77,14 @@ return [
             'route' => 'minecraft.material-calculator',
             'permission' => 'view.minecraft.material.calculator',
         ],
+        [
+            'id' => 'xp-calculator',
+            'title' => 'XP calculator',
+            'description' => 'Levels and experience points, and how many mobs, bottles or smelted items a level takes.',
+            'icon' => 'fa-solid fa-star',
+            'route' => 'minecraft.xp-calculator',
+            'permission' => 'view.minecraft.xp.calculator',
+        ],
     ],
 
 ];

@@ -120,6 +120,12 @@ Breadcrumbs::for('minecraft.material-calculator', function (BreadcrumbTrail $tra
     $trail->push(__('material calculator'), route('minecraft.material-calculator'));
 });
 
+Breadcrumbs::for('minecraft.xp-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('XP calculator'), route('minecraft.xp-calculator'));
+});
+
 /**
  *
  * User

@@ -125,4 +125,16 @@ class MinecraftController extends Controller
     {
         return view('minecraft.material-calculator');
     }
+
+    /**
+     * XP calculator. Mob XP comes from the newest enchantment data file.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showXpCalculator()
+    {
+        $data = EnchantmentData::load(EnchantmentData::latestVersion());
+
+        return view('minecraft.xp-calculator', ['mobs' => $data->xpSources()['mobs']]);
+    }
 }

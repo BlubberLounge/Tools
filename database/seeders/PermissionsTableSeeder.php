@@ -278,6 +278,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.material.calculator',
                 'description'   => 'Can use the Minecraft material calculator',
             ],
+            [
+                'name'          => 'Can Use Minecraft XP Calculator',
+                'slug'          => 'view.minecraft.xp.calculator',
+                'description'   => 'Can use the Minecraft XP calculator',
+            ],
         ];
     }
 }

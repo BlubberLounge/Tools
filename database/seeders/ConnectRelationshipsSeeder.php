@@ -65,6 +65,7 @@ class ConnectRelationshipsSeeder extends Seeder
             'view.minecraft.portal.calculator',
             'view.minecraft.stack.calculator',
             'view.minecraft.material.calculator',
+            'view.minecraft.xp.calculator',
         ], [$roleUnverified]);
 
         // Trusted

@@ -29,6 +29,7 @@ class CalculatorPagesTest extends TestCase
     {
         return [
             'material calculator' => ['material-calculator', ['material-parts', 'material-result']],
+            'xp calculator' => ['xp-calculator', ['xp-levels', 'xp-sources', 'xp-extras']],
         ];
     }
 

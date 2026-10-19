@@ -54,7 +54,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CY5zr8ws.css",
+    "file": "assets/app-Dnszh0ZI.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -263,6 +263,12 @@
     "imports": [
       "resources/js/minecraft/farmViewer.js"
     ]
+  },
+  "resources/js/minecraft/xpCalculator.js": {
+    "file": "assets/xpCalculator-zEq7ky8l.js",
+    "name": "xpCalculator",
+    "src": "resources/js/minecraft/xpCalculator.js",
+    "isEntry": true
   },
   "resources/js/moving-average.js": {
     "file": "assets/moving-average-CZDQGHSX.js",
