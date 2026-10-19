@@ -118,6 +118,9 @@ return [
     |
     */
 
-    'serializable_classes' => false,
+    // hisorange/browser-detect caches its parse results (DeviceActivity middleware)
+    'serializable_classes' => [
+        hisorange\BrowserDetect\Result::class,
+    ],
 
 ];
