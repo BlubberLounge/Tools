@@ -107,6 +107,9 @@ Route::middleware(['auth', 'verified'])->group(function ()
         Route::get('/portal-calculator', [MinecraftController::class, 'showPortalCalculator'])
             ->middleware('permission:view.minecraft.portal.calculator')
             ->name('portal-calculator');
+        Route::get('/stack-calculator', [MinecraftController::class, 'showStackCalculator'])
+            ->middleware('permission:view.minecraft.stack.calculator')
+            ->name('stack-calculator');
     });
 
     // route: /appointment/*

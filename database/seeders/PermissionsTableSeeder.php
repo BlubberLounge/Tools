@@ -268,6 +268,11 @@ class PermissionsTableSeeder extends Seeder
                 'slug'          => 'view.minecraft.portal.calculator',
                 'description'   => 'Can use the Minecraft nether portal calculator and save portals',
             ],
+            [
+                'name'          => 'Can Use Minecraft Stack Calculator',
+                'slug'          => 'view.minecraft.stack.calculator',
+                'description'   => 'Can use the Minecraft stack calculator',
+            ],
         ];
     }
 }

@@ -63,6 +63,7 @@ class ConnectRelationshipsSeeder extends Seeder
             'view.minecraft.chain.planner',
             'view.minecraft.farm.viewer',
             'view.minecraft.portal.calculator',
+            'view.minecraft.stack.calculator',
         ], [$roleUnverified]);
 
         // Trusted

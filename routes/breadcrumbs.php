@@ -108,6 +108,12 @@ Breadcrumbs::for('minecraft.portal-calculator', function (BreadcrumbTrail $trail
     $trail->push(__('nether portal calculator'), route('minecraft.portal-calculator'));
 });
 
+Breadcrumbs::for('minecraft.stack-calculator', function (BreadcrumbTrail $trail)
+{
+    $trail->parent('minecraft.index');
+    $trail->push(__('stack calculator'), route('minecraft.stack-calculator'));
+});
+
 /**
  *
  * User

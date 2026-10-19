@@ -61,6 +61,14 @@ return [
             'route' => 'minecraft.portal-calculator',
             'permission' => 'view.minecraft.portal.calculator',
         ],
+        [
+            'id' => 'stack-calculator',
+            'title' => 'stack calculator',
+            'description' => 'Convert between items, stacks, chests and shulker boxes, in any mix.',
+            'icon' => 'fa-solid fa-boxes-stacked',
+            'route' => 'minecraft.stack-calculator',
+            'permission' => 'view.minecraft.stack.calculator',
+        ],
     ],
 
 ];

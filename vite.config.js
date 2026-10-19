@@ -32,6 +32,7 @@ export default defineConfig({
                 'resources/js/minecraft/chainPlanner.js',
                 'resources/js/minecraft/farmViewer.js',
                 'resources/js/minecraft/portalCalculator.js',
+                'resources/js/minecraft/stackCalculator.js',
 
                 // Battery simulator
                 'resources/js/simApp.js',

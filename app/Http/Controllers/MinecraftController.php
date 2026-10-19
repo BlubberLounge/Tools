@@ -103,4 +103,15 @@ class MinecraftController extends Controller
     {
         return view('minecraft.portal-calculator');
     }
+
+    /**
+     * Stack calculator: items, stacks, chests and shulker boxes. Works fully
+     * in the browser.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showStackCalculator()
+    {
+        return view('minecraft.stack-calculator');
+    }
 }
