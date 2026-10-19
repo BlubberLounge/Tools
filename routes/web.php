@@ -18,12 +18,13 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MailTrackerController;
 use App\Http\Controllers\MinecraftController;
+use App\Http\Controllers\Auth\BlubberLoungeController;
+use App\Http\Controllers\Auth\BlubberLoungeBackChannelLogoutController;
 
 use App\Mail\InvitationMail;
 use App\Models\Invitation;
 use App\Enums\InvitationStatus;
 use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\Auth\BlubberLoungeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -197,13 +198,6 @@ Route::middleware(['auth', 'verified'])->group(function ()
     });
 });
 
-Route::middleware('guest')->group(function () {
-    Route::get('/auth/blubberlounge/redirect', [BlubberLoungeController::class, 'redirect'])
-        ->name('blubberlounge.redirect');
-
-    Route::get('/auth/blubberlounge/callback', [BlubberLoungeController::class, 'callback'])
-        ->name('blubberlounge.callback');
-});
 
 
 /*
@@ -219,3 +213,29 @@ Route::post('/api/deploy/webhook', \App\Http\Controllers\Api\DeployWebhookContro
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class])
     ->middleware('throttle:deploy')
     ->name('deploy.webhook');
+
+/**
+ * Sign in with BlubberLounge (App\Services\BlubberLoungeAuth)
+ */
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/blubberlounge/redirect', [BlubberLoungeController::class, 'redirect'])
+        ->name('blubberlounge.redirect');
+
+    Route::get('/auth/blubberlounge/callback', [BlubberLoungeController::class, 'callback'])
+        ->name('blubberlounge.callback');
+});
+
+// OIDC back-channel logout: server-to-server call from the Auth server, so no
+// session, cookies, CSRF token or session based web middleware.
+Route::post('/auth/blubberlounge/backchannel-logout', BlubberLoungeBackChannelLogoutController::class)
+    ->withoutMiddleware([
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
+        \App\Http\Middleware\DeviceActivity::class,
+        \App\Http\Middleware\Localization::class,
+    ])
+    ->middleware('throttle:60,1')
+    ->name('blubberlounge.backchannel-logout');

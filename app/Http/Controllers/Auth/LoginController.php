@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\BlubberLoungeAuth\OidcSessionManager;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -43,5 +45,14 @@ class LoginController extends Controller
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
         request()->merge([$field => $login]);
         return $field;
+    }
+
+    /**
+     * Log the user out. Sessions started with "Sign in with BlubberLounge"
+     * are ended at BlubberLounge Auth as well.
+     */
+    public function logout(Request $request)
+    {
+        return app(OidcSessionManager::class)->logoutResponse($request, '/');
     }
 }

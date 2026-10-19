@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\OidcSession;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,6 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+// Old "Sign in with BlubberLounge" session mappings (only needed for back-channel logout)
+Schedule::command('model:prune', ['--model' => [OidcSession::class]])->daily();

@@ -86,6 +86,21 @@ class User extends Authenticatable implements MustVerifyEmail, Auditable, HasLoc
     ];
 
     /**
+     * A user name that is not taken yet: the given name, or the name with a
+     * number appended ("Max", "Max 2", ...). User names are unique.
+     */
+    public static function uniqueName(string $name): string
+    {
+        $name = trim($name) !== '' ? trim($name) : 'user';
+        $candidate = $name;
+
+        for ($i = 2; static::where('name', $candidate)->exists(); $i++)
+            $candidate = "{$name} {$i}";
+
+        return $candidate;
+    }
+
+    /**
      * Profile picture Accessor
      */
     protected function img(): Attribute
